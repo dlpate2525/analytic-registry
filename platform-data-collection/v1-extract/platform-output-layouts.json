@@ -1,0 +1,690 @@
+[
+  {
+    "platform": "Tableau",
+    "tabName": "Tableau_Output",
+    "sourceFiles": [
+      "../tableau/export.sql",
+      "tableau-identity-export.sql",
+      "../tableau/README.md",
+      "workbook-contract.json"
+    ],
+    "sections": [
+      {
+        "sheet": "Workspaces",
+        "file": "workspaces.csv",
+        "status": "Implemented SQL export",
+        "note": "Project rows. Keep project LUID and raw technical-owner repository ID. Completeness requires site/scope validation.",
+        "headers": [
+          "RunKey",
+          "PlatformCode",
+          "PlatformInstanceKey",
+          "NativeScopeKey",
+          "ObservedAt",
+          "NativeWorkspaceID",
+          "NativeRepositoryID",
+          "NativeWorkspaceType",
+          "DisplayName",
+          "NativeOwnerID",
+          "NativeLifecycleCode",
+          "CapacityKey"
+        ]
+      },
+      {
+        "sheet": "Assets",
+        "file": "assets.csv",
+        "status": "Implemented SQL export",
+        "note": "Workbook and published-data-source rows in one file. Native LUID keys remain distinct by type; original creator stays blank.",
+        "headers": [
+          "RunKey",
+          "PlatformCode",
+          "PlatformInstanceKey",
+          "NativeScopeKey",
+          "ObservedAt",
+          "NativeAssetID",
+          "NativeRepositoryID",
+          "NativeAssetType",
+          "AssetTypeCode",
+          "DisplayName",
+          "NativeVersionReference",
+          "CreatedByNativeID",
+          "ModifiedByNativeID",
+          "NativeOwnerID",
+          "CreatedAtNative",
+          "ModifiedAtNative",
+          "NativeLifecycleCode"
+        ]
+      },
+      {
+        "sheet": "Workspace_Assets",
+        "file": "workspace_assets.csv",
+        "status": "Implemented SQL export",
+        "note": "Observed project-content links. The source inventory retains objects even when links are absent.",
+        "headers": [
+          "RunKey",
+          "PlatformCode",
+          "PlatformInstanceKey",
+          "NativeScopeKey",
+          "ObservedAt",
+          "NativeWorkspaceID",
+          "NativeAssetID",
+          "NativeAssetType",
+          "NativeAssociationType"
+        ]
+      },
+      {
+        "sheet": "Connections",
+        "file": "connections.csv",
+        "status": "Implemented SQL export",
+        "note": "Repository connection rows. Nullable endpoint/authentication details remain unknown.",
+        "headers": [
+          "RunKey",
+          "PlatformCode",
+          "PlatformInstanceKey",
+          "NativeScopeKey",
+          "ObservedAt",
+          "NativeConnectionID",
+          "NativeRepositoryID",
+          "NativeConnectionType",
+          "DisplayName",
+          "TechnologyCode",
+          "ServerHostname",
+          "Port",
+          "DatabaseName",
+          "HasExtract",
+          "AuthenticationTypeCode",
+          "IdentityClassificationCode",
+          "GatewayID",
+          "NativeStatusCode",
+          "EvidenceStatusCode"
+        ]
+      },
+      {
+        "sheet": "Asset_Connections",
+        "file": "asset_connections.csv",
+        "status": "Implemented SQL export; Partial lineage",
+        "note": "Direct connection-owner links only. This is not complete workbook-to-published-source-to-external-source lineage.",
+        "headers": [
+          "RunKey",
+          "PlatformCode",
+          "PlatformInstanceKey",
+          "NativeScopeKey",
+          "ObservedAt",
+          "NativeAssetID",
+          "NativeAssetType",
+          "NativeConnectionID",
+          "EvidenceStatusCode"
+        ]
+      },
+      {
+        "sheet": "Platform_Users",
+        "file": "platform_users.csv",
+        "status": "Implemented identity SQL supplement",
+        "note": "User LUID primary key; repository user ID retained. SourceEmail comes from system_users.email; SourceStatus labels the Tableau site role.",
+        "headers": [
+          "RunKey",
+          "PlatformCode",
+          "PlatformInstanceKey",
+          "NativeScopeKey",
+          "ObservedAt",
+          "NativePrincipalID",
+          "IdentifierNamespace",
+          "PrincipalTypeCode",
+          "DisplayName",
+          "SourceLogin",
+          "SourceEmail",
+          "SourceStatus",
+          "SourceDirectoryObjectID",
+          "DirectoryTenantKey",
+          "NativeRepositoryID"
+        ]
+      },
+      {
+        "sheet": "Object_Users",
+        "file": "object_users.csv",
+        "status": "Implemented identity SQL supplement",
+        "note": "TechnicalOwner for project/workbook/source; ModifiedBy for workbook/source. Preserve unresolved native references. Do not infer CreatedBy.",
+        "headers": [
+          "RunKey",
+          "PlatformCode",
+          "PlatformInstanceKey",
+          "NativeScopeKey",
+          "ObservedAt",
+          "NativeObjectType",
+          "NativeObjectID",
+          "ObjectDisplayName",
+          "PrincipalRoleCode",
+          "SourcePrincipalReference",
+          "SourceReferenceNamespace",
+          "NativePrincipalID",
+          "IdentifierNamespace",
+          "NativeRole",
+          "SourceEmail",
+          "SourceReferenceStatusCode"
+        ]
+      },
+      {
+        "sheet": "Views_Optional",
+        "file": "views_optional.csv",
+        "status": "Emitted supplemental detail; optional for V1 review",
+        "note": "Current export.sql always writes this file. It is not one of the nine V1 load sheets or staging tables. Keep as supplemental evidence.",
+        "headers": [
+          "RunKey",
+          "PlatformCode",
+          "PlatformInstanceKey",
+          "NativeScopeKey",
+          "ObservedAt",
+          "NativeViewID",
+          "NativeRepositoryID",
+          "NativeWorkbookID",
+          "DisplayName",
+          "NativeViewType",
+          "NativeVersionReference",
+          "ModifiedAtNative",
+          "NativeLifecycleCode"
+        ]
+      },
+      {
+        "sheet": "Asset_Dependencies",
+        "file": "asset_dependencies.csv",
+        "status": "NotCollected; no file emitted",
+        "note": "The current Tableau SQL does not write asset_dependencies.csv. Existing CSV-header template is a layout only, not extracted evidence.",
+        "headers": [
+          "RunKey",
+          "PlatformCode",
+          "PlatformInstanceKey",
+          "NativeScopeKey",
+          "ObservedAt",
+          "NativeAssetID",
+          "NativeAssetType",
+          "UpstreamNativeAssetID",
+          "UpstreamNativeAssetType",
+          "UpstreamNativeWorkspaceID",
+          "RelationshipCode",
+          "EvidenceStatusCode"
+        ]
+      },
+      {
+        "sheet": "Directory_Users",
+        "file": "directory_users.csv",
+        "status": "Separate directory extract; not emitted by Tableau SQL",
+        "note": "Shared corporate-directory evidence is collected separately. Preserve its own RunKey and ObservedAt; never populate it from Tableau site roles.",
+        "headers": [
+          "RunKey",
+          "DirectoryTenantKey",
+          "DirectoryObjectID",
+          "DisplayName",
+          "Mail",
+          "UserPrincipalName",
+          "AccountEnabled",
+          "ObservedAt"
+        ]
+      }
+    ],
+    "supplementalFiles": [
+      {
+        "file": "samples/tableau-manifest.template.json",
+        "status": "Template completed separately",
+        "note": "The SQL does not generate the manifest. Fill actual coverage and counts after validation; NotStarted is not an executed run."
+      }
+    ],
+    "caveats": [
+      "No installed Tableau server was queried during preparation. Run the existing preflight before extraction.",
+      "The core inventory and identity supplement are separate scripts. Do not present them as one atomic database snapshot.",
+      "Optional views are supplemental output, not a new registry asset classification or new SQL staging table.",
+      "Names and emails never replace the platform instance, native scope, type, and native object ID."
+    ]
+  },
+  {
+    "platform": "PowerBI",
+    "tabName": "PowerBI_Output",
+    "sourceFiles": [
+      "../powerbi/normalize-scan.mjs",
+      "../powerbi/collector-pseudocode.md",
+      "powerbi-identity-extract.md",
+      "workbook-contract.json"
+    ],
+    "sections": [
+      {
+        "sheet": "Workspaces",
+        "file": "workspaces.csv",
+        "status": "Implemented offline inventory adapter",
+        "note": "Normalizes supplied successful scan JSON. The adapter does not authenticate or call the Power BI API.",
+        "headers": [
+          "RunKey",
+          "PlatformCode",
+          "PlatformInstanceKey",
+          "NativeScopeKey",
+          "ObservedAt",
+          "NativeWorkspaceID",
+          "NativeRepositoryID",
+          "NativeWorkspaceType",
+          "DisplayName",
+          "NativeOwnerID",
+          "NativeLifecycleCode",
+          "CapacityKey"
+        ]
+      },
+      {
+        "sheet": "Assets",
+        "file": "assets.csv",
+        "status": "Implemented offline inventory adapter",
+        "note": "Reports, paginated reports, and semantic models. Report createdById is technical-owner evidence; CreatedByNativeID stays blank. Not a full Fabric item inventory.",
+        "headers": [
+          "RunKey",
+          "PlatformCode",
+          "PlatformInstanceKey",
+          "NativeScopeKey",
+          "ObservedAt",
+          "NativeAssetID",
+          "NativeRepositoryID",
+          "NativeAssetType",
+          "AssetTypeCode",
+          "DisplayName",
+          "NativeVersionReference",
+          "CreatedByNativeID",
+          "ModifiedByNativeID",
+          "NativeOwnerID",
+          "CreatedAtNative",
+          "ModifiedAtNative",
+          "NativeLifecycleCode"
+        ]
+      },
+      {
+        "sheet": "Workspace_Assets",
+        "file": "workspace_assets.csv",
+        "status": "Implemented offline inventory adapter",
+        "note": "Observed ContainedIn links. Scope completeness follows the expected-workspace list and available report/model arrays.",
+        "headers": [
+          "RunKey",
+          "PlatformCode",
+          "PlatformInstanceKey",
+          "NativeScopeKey",
+          "ObservedAt",
+          "NativeWorkspaceID",
+          "NativeAssetID",
+          "NativeAssetType",
+          "NativeAssociationType"
+        ]
+      },
+      {
+        "sheet": "Connections",
+        "file": "connections.csv",
+        "status": "Implemented offline inventory adapter; Partial/NotCollected coverage",
+        "note": "Normalizes returned source instances. Blank source IDs are warnings, not invented keys. No credential identity is inferred.",
+        "headers": [
+          "RunKey",
+          "PlatformCode",
+          "PlatformInstanceKey",
+          "NativeScopeKey",
+          "ObservedAt",
+          "NativeConnectionID",
+          "NativeRepositoryID",
+          "NativeConnectionType",
+          "DisplayName",
+          "TechnologyCode",
+          "ServerHostname",
+          "Port",
+          "DatabaseName",
+          "HasExtract",
+          "AuthenticationTypeCode",
+          "IdentityClassificationCode",
+          "GatewayID",
+          "NativeStatusCode",
+          "EvidenceStatusCode"
+        ]
+      },
+      {
+        "sheet": "Asset_Connections",
+        "file": "asset_connections.csv",
+        "status": "Implemented offline inventory adapter; Partial/NotCollected coverage",
+        "note": "Direct semantic-model connection usage. The adapter does not invent direct report-to-connection rows.",
+        "headers": [
+          "RunKey",
+          "PlatformCode",
+          "PlatformInstanceKey",
+          "NativeScopeKey",
+          "ObservedAt",
+          "NativeAssetID",
+          "NativeAssetType",
+          "NativeConnectionID",
+          "EvidenceStatusCode"
+        ]
+      },
+      {
+        "sheet": "Asset_Dependencies",
+        "file": "asset_dependencies.csv",
+        "status": "Implemented offline inventory adapter; Partial/NotCollected coverage",
+        "note": "Report-to-model and supported upstream dependencies. Out-of-scope provider references remain unresolved evidence.",
+        "headers": [
+          "RunKey",
+          "PlatformCode",
+          "PlatformInstanceKey",
+          "NativeScopeKey",
+          "ObservedAt",
+          "NativeAssetID",
+          "NativeAssetType",
+          "UpstreamNativeAssetID",
+          "UpstreamNativeAssetType",
+          "UpstreamNativeWorkspaceID",
+          "RelationshipCode",
+          "EvidenceStatusCode"
+        ]
+      },
+      {
+        "sheet": "Platform_Users",
+        "file": "platform_users.csv",
+        "status": "Identity pseudocode only; not emitted by inventory adapter",
+        "note": "Specified in powerbi-identity-extract.md. Requires the documented principal collection and projection to be implemented; the current adapter emits no platform_users.csv.",
+        "headers": [
+          "RunKey",
+          "PlatformCode",
+          "PlatformInstanceKey",
+          "NativeScopeKey",
+          "ObservedAt",
+          "NativePrincipalID",
+          "IdentifierNamespace",
+          "PrincipalTypeCode",
+          "DisplayName",
+          "SourceLogin",
+          "SourceEmail",
+          "SourceStatus",
+          "SourceDirectoryObjectID",
+          "DirectoryTenantKey",
+          "NativeRepositoryID"
+        ]
+      },
+      {
+        "sheet": "Object_Users",
+        "file": "object_users.csv",
+        "status": "Identity pseudocode only; not emitted by inventory adapter",
+        "note": "Specified technical-owner/modifier/access references remain a proposed separate identity output. Do not label the existing inventory adapter as producing this file.",
+        "headers": [
+          "RunKey",
+          "PlatformCode",
+          "PlatformInstanceKey",
+          "NativeScopeKey",
+          "ObservedAt",
+          "NativeObjectType",
+          "NativeObjectID",
+          "ObjectDisplayName",
+          "PrincipalRoleCode",
+          "SourcePrincipalReference",
+          "SourceReferenceNamespace",
+          "NativePrincipalID",
+          "IdentifierNamespace",
+          "NativeRole",
+          "SourceEmail",
+          "SourceReferenceStatusCode"
+        ]
+      },
+      {
+        "sheet": "Directory_Users",
+        "file": "directory_users.csv",
+        "status": "Shared directory pseudocode only; separate source",
+        "note": "Documented Graph directory projection in the identity handoff. It is not Power BI scan data, and it retains its own RunKey and ObservedAt.",
+        "headers": [
+          "RunKey",
+          "DirectoryTenantKey",
+          "DirectoryObjectID",
+          "DisplayName",
+          "Mail",
+          "UserPrincipalName",
+          "AccountEnabled",
+          "ObservedAt"
+        ]
+      }
+    ],
+    "supplementalFiles": [
+      {
+        "file": "manifest.json",
+        "status": "Emitted by offline adapter",
+        "note": "Run metadata, dataset scope/coverage, counts, and warnings."
+      },
+      {
+        "file": "normalized.json",
+        "status": "Emitted by offline adapter",
+        "note": "Same six inventory datasets plus manifest in JSON form."
+      }
+    ],
+    "caveats": [
+      "The six inventory CSVs are executable offline output. Source API collection and new identity/directory output remain pseudocode.",
+      "Missing or failed user-list payloads do not prove there are no users.",
+      "A blank CSV with a header does not establish complete empty inventory; use manifest coverage.",
+      "Any illustrated scan rows must be identified as fictional samples, not live tenant data."
+    ]
+  },
+  {
+    "platform": "Alteryx",
+    "tabName": "Alteryx_Output",
+    "sourceFiles": [
+      "alteryx-backend-extract.mongosh.js",
+      "alteryx-backend-extract.md",
+      "workbook-contract.json"
+    ],
+    "sections": [
+      {
+        "sheet": "Workspaces",
+        "file": "workspaces.csv",
+        "status": "Candidate MongoDB extract; Partial",
+        "note": "Reads AlteryxGallery.collections. CollectionId is the workspace key; Mongo _id remains an alternate repository ID.",
+        "headers": [
+          "RunKey",
+          "PlatformCode",
+          "PlatformInstanceKey",
+          "NativeScopeKey",
+          "ObservedAt",
+          "NativeWorkspaceID",
+          "NativeRepositoryID",
+          "NativeWorkspaceType",
+          "DisplayName",
+          "NativeOwnerID",
+          "NativeLifecycleCode",
+          "CapacityKey"
+        ]
+      },
+      {
+        "sheet": "Assets",
+        "file": "assets.csv",
+        "status": "Candidate MongoDB extract; Partial",
+        "note": "Reads appInfos and a uniquely identified published revision/primary application. Original CreatedBy remains distinct; current technical owner is blank and unresolved.",
+        "headers": [
+          "RunKey",
+          "PlatformCode",
+          "PlatformInstanceKey",
+          "NativeScopeKey",
+          "ObservedAt",
+          "NativeAssetID",
+          "NativeRepositoryID",
+          "NativeAssetType",
+          "AssetTypeCode",
+          "DisplayName",
+          "NativeVersionReference",
+          "CreatedByNativeID",
+          "ModifiedByNativeID",
+          "NativeOwnerID",
+          "CreatedAtNative",
+          "ModifiedAtNative",
+          "NativeLifecycleCode"
+        ]
+      },
+      {
+        "sheet": "Workspace_Assets",
+        "file": "workspace_assets.csv",
+        "status": "Candidate MongoDB extract; Partial",
+        "note": "Reads collections.Apps[].ApplicationId. Retains unmatched workflow references for Platform Manager review.",
+        "headers": [
+          "RunKey",
+          "PlatformCode",
+          "PlatformInstanceKey",
+          "NativeScopeKey",
+          "ObservedAt",
+          "NativeWorkspaceID",
+          "NativeAssetID",
+          "NativeAssetType",
+          "NativeAssociationType"
+        ]
+      },
+      {
+        "sheet": "Platform_Users",
+        "file": "platform_users.csv",
+        "status": "Candidate MongoDB extract; Partial",
+        "note": "Reads users._id and explicit Email. Native Active/Locked/Validated/Pending flags remain labeled source evidence, not directory state.",
+        "headers": [
+          "RunKey",
+          "PlatformCode",
+          "PlatformInstanceKey",
+          "NativeScopeKey",
+          "ObservedAt",
+          "NativePrincipalID",
+          "IdentifierNamespace",
+          "PrincipalTypeCode",
+          "DisplayName",
+          "SourceLogin",
+          "SourceEmail",
+          "SourceStatus",
+          "SourceDirectoryObjectID",
+          "DirectoryTenantKey",
+          "NativeRepositoryID"
+        ]
+      },
+      {
+        "sheet": "Object_Users",
+        "file": "object_users.csv",
+        "status": "Candidate MongoDB extract; Partial",
+        "note": "Collection TechnicalOwner and observed Access, workflow CreatedBy, plus unresolved workflow TechnicalOwner placeholder. No owner inference from studio membership.",
+        "headers": [
+          "RunKey",
+          "PlatformCode",
+          "PlatformInstanceKey",
+          "NativeScopeKey",
+          "ObservedAt",
+          "NativeObjectType",
+          "NativeObjectID",
+          "ObjectDisplayName",
+          "PrincipalRoleCode",
+          "SourcePrincipalReference",
+          "SourceReferenceNamespace",
+          "NativePrincipalID",
+          "IdentifierNamespace",
+          "NativeRole",
+          "SourceEmail",
+          "SourceReferenceStatusCode"
+        ]
+      },
+      {
+        "sheet": "Connections",
+        "file": "connections.csv",
+        "status": "Header-only output; NotCollected",
+        "note": "The script writes connections.csv with the contract header and no data rows. This is unsupported collection scope, not evidence of zero connections.",
+        "headers": [
+          "RunKey",
+          "PlatformCode",
+          "PlatformInstanceKey",
+          "NativeScopeKey",
+          "ObservedAt",
+          "NativeConnectionID",
+          "NativeRepositoryID",
+          "NativeConnectionType",
+          "DisplayName",
+          "TechnologyCode",
+          "ServerHostname",
+          "Port",
+          "DatabaseName",
+          "HasExtract",
+          "AuthenticationTypeCode",
+          "IdentityClassificationCode",
+          "GatewayID",
+          "NativeStatusCode",
+          "EvidenceStatusCode"
+        ]
+      },
+      {
+        "sheet": "Asset_Connections",
+        "file": "asset_connections.csv",
+        "status": "Header-only output; NotCollected",
+        "note": "The script writes asset_connections.csv with the contract header only. No workflow connection lineage is established.",
+        "headers": [
+          "RunKey",
+          "PlatformCode",
+          "PlatformInstanceKey",
+          "NativeScopeKey",
+          "ObservedAt",
+          "NativeAssetID",
+          "NativeAssetType",
+          "NativeConnectionID",
+          "EvidenceStatusCode"
+        ]
+      },
+      {
+        "sheet": "Asset_Dependencies",
+        "file": "asset_dependencies.csv",
+        "status": "Header-only output; NotCollected",
+        "note": "The script writes asset_dependencies.csv with the contract header only. No dependency collection is implemented.",
+        "headers": [
+          "RunKey",
+          "PlatformCode",
+          "PlatformInstanceKey",
+          "NativeScopeKey",
+          "ObservedAt",
+          "NativeAssetID",
+          "NativeAssetType",
+          "UpstreamNativeAssetID",
+          "UpstreamNativeAssetType",
+          "UpstreamNativeWorkspaceID",
+          "RelationshipCode",
+          "EvidenceStatusCode"
+        ]
+      },
+      {
+        "sheet": "Directory_Users",
+        "file": "directory_users.csv",
+        "status": "Separate directory extract; not emitted by MongoDB extractor",
+        "note": "The backend script does not create directory_users.csv. Use the shared directory process and preserve its separate extract context.",
+        "headers": [
+          "RunKey",
+          "DirectoryTenantKey",
+          "DirectoryObjectID",
+          "DisplayName",
+          "Mail",
+          "UserPrincipalName",
+          "AccountEnabled",
+          "ObservedAt"
+        ]
+      }
+    ],
+    "supplementalFiles": [
+      {
+        "file": "preflight.json",
+        "status": "Emitted in extract mode",
+        "note": "Observed field types and structural validation outcome; preflight mode prints its report and returns before delivery writing."
+      },
+      {
+        "file": "exceptions.json",
+        "status": "Emitted in extract mode",
+        "note": "Unresolved fields, identity mappings, and relationships assigned to Platform Manager."
+      },
+      {
+        "file": "supplemental-evidence.json",
+        "status": "Emitted in extract mode",
+        "note": "Revision authors, studio associations, and source access flags; not assumed current ownership."
+      },
+      {
+        "file": "normalized.json",
+        "status": "Emitted in extract mode",
+        "note": "The same eight CSV datasets as JSON arrays, including three empty arrays for NotCollected data."
+      },
+      {
+        "file": "dataset-coverage.json",
+        "status": "Emitted in extract mode",
+        "note": "Five candidate datasets remain Partial. Connections, lineage, dependencies, and effective access are NotCollected."
+      }
+    ],
+    "caveats": [
+      "Backend-only layout: no Alteryx REST collector is implied.",
+      "Server 2025.2 maps to Gallery schema 79; the documented candidate fields still require installed-schema preflight.",
+      "Separate MongoDB reads are not an atomic snapshot; candidate dataset coverage stays Partial.",
+      "The extractor emits five datasets with potential rows plus three header-only CSVs; it never emits directory_users.csv.",
+      "A passing type preflight does not prove undocumented ownership semantics or source completeness."
+    ]
+  }
+]

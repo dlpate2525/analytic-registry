@@ -33,8 +33,13 @@ Keep the existing `RunKey`, `ObservedAt`, and manifest format. Do not add `RunDa
 | Platform_Users | Platform principal identifiers, types, source email, and account evidence when available. |
 | Directory_Users | Directory tenant, user ID, mail, UPN, enabled state, and supporting observation context. |
 | Object_Users | Technical owner, modifier, or access relationships between native objects and principals. |
+| Tableau_Output | Exact CSV layouts from the PostgreSQL queries, with optional views and separate directory evidence labeled. |
+| PowerBI_Output | Exact inventory adapter layouts and separate identity/directory pseudocode formats. |
+| Alteryx_Output | Backend MongoDB output layouts, including header-only and uncollected datasets. |
 
-The workbook has 12 sheets: three guides and nine empty data tables. The six inventory tables retain the existing [delivery contract](../data-contract.md) and exact header names. Source_Map documents the additional identity tables. The workbook contains no formulas. Normalization and matching occur only after manual SQL staging. Do not paste calculated matches over raw source identifiers or email values.
+The workbook has 15 sheets: three guides, nine empty data tables, and three platform output reference tabs. Each platform tab groups exact column headers by output file and identifies the destination import sheet. It also labels implemented, planned, supplemental, and uncollected output. These tabs show blank layouts, not source records. Load data into the nine import sheets rather than importing a whole platform reference tab.
+
+The six inventory tables retain the existing [delivery contract](../data-contract.md) and exact header names. Source_Map documents the additional identity tables. The workbook contains no formulas. Normalization and matching occur only after manual SQL staging. Do not paste calculated matches over raw source identifiers or email values.
 
 Keep the existing manifest with the delivery. Directory_Users retains its own directory extract's RunKey and ObservedAt. Do not overwrite those with the platform extract's values. A workbook row count does not prove complete platform coverage. Retain the collector's omitted scope and failure notes. Treat optional or uncollected datasets as such; an empty sheet is not proof of no assets, no access, or no connections.
 
