@@ -1,0 +1,412 @@
+[
+  {
+    "Platform": "Alteryx",
+    "Entity": "Platform_Users",
+    "NativeField": "users._id",
+    "JoinPath": "Exact hexadecimal text of users._id",
+    "TargetColumn": "NativePrincipalID",
+    "SQLType": "nvarchar(200)",
+    "Notes": "IdentifierNamespace=AlteryxMongoUserID; retain native key.",
+    "SourceURL": "https://help.alteryx.com/current/en/server/configure/database-management/mongodb-management/mongodb-schema-reference/alteryxgallery-mongodb-schema.html"
+  },
+  {
+    "Platform": "Alteryx",
+    "Entity": "Platform_Users",
+    "NativeField": "users.FirstName + LastName",
+    "JoinPath": "Exact hexadecimal text of users._id",
+    "TargetColumn": "DisplayName",
+    "SQLType": "nvarchar(200)",
+    "Notes": "Display only; never a join key.",
+    "SourceURL": "https://help.alteryx.com/current/en/server/configure/database-management/mongodb-management/mongodb-schema-reference/alteryxgallery-mongodb-schema.html"
+  },
+  {
+    "Platform": "Alteryx",
+    "Entity": "Platform_Users",
+    "NativeField": "users.WindowsIdentity.Name",
+    "JoinPath": "Exact hexadecimal text of users._id",
+    "TargetColumn": "SourceLogin",
+    "SQLType": "nvarchar(320)",
+    "Notes": "Only one observed Windows identity; otherwise blank.",
+    "SourceURL": "https://help.alteryx.com/current/en/server/configure/database-management/mongodb-management/mongodb-schema-reference/alteryxgallery-mongodb-schema.html"
+  },
+  {
+    "Platform": "Alteryx",
+    "Entity": "Platform_Users",
+    "NativeField": "users.Email",
+    "JoinPath": "Exact hexadecimal text of users._id",
+    "TargetColumn": "SourceEmail",
+    "SQLType": "nvarchar(320)",
+    "Notes": "Raw email; compare separately with Directory_Users.Mail.",
+    "SourceURL": "https://help.alteryx.com/current/en/server/configure/database-management/mongodb-management/mongodb-schema-reference/alteryxgallery-mongodb-schema.html"
+  },
+  {
+    "Platform": "Alteryx",
+    "Entity": "Platform_Users",
+    "NativeField": "users.Role",
+    "JoinPath": "Exact hexadecimal text of users._id",
+    "TargetColumn": "SourceStatus",
+    "SQLType": "nvarchar(500)",
+    "Notes": "Labeled native JSON property; not directory status.",
+    "SourceURL": "https://help.alteryx.com/current/en/server/configure/database-management/mongodb-management/mongodb-schema-reference/alteryxgallery-mongodb-schema.html"
+  },
+  {
+    "Platform": "Alteryx",
+    "Entity": "Platform_Users",
+    "NativeField": "users.Active",
+    "JoinPath": "Exact hexadecimal text of users._id",
+    "TargetColumn": "SourceStatus",
+    "SQLType": "nvarchar(500)",
+    "Notes": "Labeled native JSON property; not employment status.",
+    "SourceURL": "https://help.alteryx.com/current/en/server/configure/database-management/mongodb-management/mongodb-schema-reference/alteryxgallery-mongodb-schema.html"
+  },
+  {
+    "Platform": "Alteryx",
+    "Entity": "Platform_Users",
+    "NativeField": "users.AccountLocked",
+    "JoinPath": "Exact hexadecimal text of users._id",
+    "TargetColumn": "SourceStatus",
+    "SQLType": "nvarchar(500)",
+    "Notes": "Labeled native JSON property; missing remains unknown.",
+    "SourceURL": "https://help.alteryx.com/current/en/server/configure/database-management/mongodb-management/mongodb-schema-reference/alteryxgallery-mongodb-schema.html"
+  },
+  {
+    "Platform": "Alteryx",
+    "Entity": "Platform_Users",
+    "NativeField": "users.Validated",
+    "JoinPath": "Exact hexadecimal text of users._id",
+    "TargetColumn": "SourceStatus",
+    "SQLType": "nvarchar(500)",
+    "Notes": "Labeled native JSON property; preserve true/false/null.",
+    "SourceURL": "https://help.alteryx.com/current/en/server/configure/database-management/mongodb-management/mongodb-schema-reference/alteryxgallery-mongodb-schema.html"
+  },
+  {
+    "Platform": "Alteryx",
+    "Entity": "Platform_Users",
+    "NativeField": "users.Pending",
+    "JoinPath": "Exact hexadecimal text of users._id",
+    "TargetColumn": "SourceStatus",
+    "SQLType": "nvarchar(500)",
+    "Notes": "Labeled native JSON property; preserve true/false/null.",
+    "SourceURL": "https://help.alteryx.com/current/en/server/configure/database-management/mongodb-management/mongodb-schema-reference/alteryxgallery-mongodb-schema.html"
+  },
+  {
+    "Platform": "Alteryx",
+    "Entity": "Platform_Users",
+    "NativeField": "[not supplied by reviewed backend fields]",
+    "JoinPath": "Exact hexadecimal text of users._id",
+    "TargetColumn": "SourceDirectoryObjectID",
+    "SQLType": "nvarchar(200)",
+    "Notes": "Blank. Windows SID is not an Entra object ID.",
+    "SourceURL": "https://help.alteryx.com/current/en/server/configure/database-management/mongodb-management/mongodb-schema-reference/alteryxgallery-mongodb-schema.html"
+  },
+  {
+    "Platform": "Alteryx",
+    "Entity": "Platform_Users",
+    "NativeField": "[configured directory tenant]",
+    "JoinPath": "Existing delivery context",
+    "TargetColumn": "DirectoryTenantKey",
+    "SQLType": "nvarchar(200)",
+    "Notes": "Selects the corporate directory tenant for email matching.",
+    "SourceURL": "https://help.alteryx.com/current/en/server/configure/database-management/mongodb-management/mongodb-schema-reference/alteryxgallery-mongodb-schema.html"
+  },
+  {
+    "Platform": "Alteryx",
+    "Entity": "Workspaces",
+    "NativeField": "collections.CollectionId",
+    "JoinPath": "collections.CollectionId",
+    "TargetColumn": "NativeWorkspaceID",
+    "SQLType": "nvarchar(200)",
+    "Notes": "Keep distinct from the Mongo document _id.",
+    "SourceURL": "https://help.alteryx.com/current/en/server/configure/database-management/mongodb-management/mongodb-schema-reference/alteryxgallery-mongodb-schema.html"
+  },
+  {
+    "Platform": "Alteryx",
+    "Entity": "Workspaces",
+    "NativeField": "collections._id",
+    "JoinPath": "collections.CollectionId",
+    "TargetColumn": "NativeRepositoryID",
+    "SQLType": "nvarchar(200)",
+    "Notes": "Alternate Mongo document key serialized as text.",
+    "SourceURL": "https://help.alteryx.com/current/en/server/configure/database-management/mongodb-management/mongodb-schema-reference/alteryxgallery-mongodb-schema.html"
+  },
+  {
+    "Platform": "Alteryx",
+    "Entity": "Workspaces",
+    "NativeField": "collections.Name",
+    "JoinPath": "collections.CollectionId",
+    "TargetColumn": "DisplayName",
+    "SQLType": "nvarchar(200)",
+    "Notes": "Source collection label.",
+    "SourceURL": "https://help.alteryx.com/current/en/server/configure/database-management/mongodb-management/mongodb-schema-reference/alteryxgallery-mongodb-schema.html"
+  },
+  {
+    "Platform": "Alteryx",
+    "Entity": "Workspaces",
+    "NativeField": "collections.OwnerId",
+    "JoinPath": "collections.CollectionId",
+    "TargetColumn": "NativeOwnerID",
+    "SQLType": "nvarchar(200)",
+    "Notes": "Documented technical collection owner; not business ownership approval.",
+    "SourceURL": "https://help.alteryx.com/current/en/server/configure/database-management/mongodb-management/mongodb-schema-reference/alteryxgallery-mongodb-schema.html"
+  },
+  {
+    "Platform": "Alteryx",
+    "Entity": "Object_Users",
+    "NativeField": "collections.OwnerId",
+    "JoinPath": "OwnerId = string(users._id) -> users.Email",
+    "TargetColumn": "SourcePrincipalReference",
+    "SQLType": "nvarchar(200)",
+    "Notes": "Collection TechnicalOwner relation; preserve unmatched raw reference.",
+    "SourceURL": "https://help.alteryx.com/current/en/server/configure/database-management/mongodb-management/mongodb-schema-reference/alteryxgallery-mongodb-schema.html"
+  },
+  {
+    "Platform": "Alteryx",
+    "Entity": "Object_Users",
+    "NativeField": "collections.OwnerId -> users._id",
+    "JoinPath": "Unique exact source-key equality",
+    "TargetColumn": "NativePrincipalID",
+    "SQLType": "nvarchar(200)",
+    "Notes": "Set only when resolved; IdentifierNamespace=AlteryxMongoUserID.",
+    "SourceURL": "https://help.alteryx.com/current/en/server/configure/database-management/mongodb-management/mongodb-schema-reference/alteryxgallery-mongodb-schema.html"
+  },
+  {
+    "Platform": "Alteryx",
+    "Entity": "Object_Users",
+    "NativeField": "collections.OwnerId -> users.Email",
+    "JoinPath": "Unique source user -> raw Email",
+    "TargetColumn": "SourceEmail",
+    "SQLType": "nvarchar(320)",
+    "Notes": "Missing reference/email routes to Platform Manager.",
+    "SourceURL": "https://help.alteryx.com/current/en/server/configure/database-management/mongodb-management/mongodb-schema-reference/alteryxgallery-mongodb-schema.html"
+  },
+  {
+    "Platform": "Alteryx",
+    "Entity": "Assets",
+    "NativeField": "appInfos._id",
+    "JoinPath": "Exact ObjectId hexadecimal text",
+    "TargetColumn": "NativeAssetID",
+    "SQLType": "nvarchar(200)",
+    "Notes": "NativeAssetType=Workflow; stable source identity.",
+    "SourceURL": "https://help.alteryx.com/current/en/server/configure/database-management/mongodb-management/mongodb-schema-reference/alteryxgallery-mongodb-schema.html"
+  },
+  {
+    "Platform": "Alteryx",
+    "Entity": "Assets",
+    "NativeField": "appInfos.Revisions[].IsPublishedRevision + RevisionId",
+    "JoinPath": "Exactly one published revision",
+    "TargetColumn": "NativeVersionReference",
+    "SQLType": "nvarchar(100)",
+    "Notes": "Missing/multiple candidates remain unresolved.",
+    "SourceURL": "https://help.alteryx.com/current/en/server/configure/database-management/mongodb-management/mongodb-schema-reference/alteryxgallery-mongodb-schema.html"
+  },
+  {
+    "Platform": "Alteryx",
+    "Entity": "Assets",
+    "NativeField": "appInfos.Revisions[].Applications[].MetaInfo.Name",
+    "JoinPath": "Selected published revision -> one IsPrimaryApp=true",
+    "TargetColumn": "DisplayName",
+    "SQLType": "nvarchar(200)",
+    "Notes": "Blank or ambiguous name is retained and held for Platform Manager.",
+    "SourceURL": "https://help.alteryx.com/current/en/server/configure/database-management/mongodb-management/mongodb-schema-reference/alteryxgallery-mongodb-schema.html"
+  },
+  {
+    "Platform": "Alteryx",
+    "Entity": "Assets",
+    "NativeField": "appInfos.Revisions[].PackageType",
+    "JoinPath": "Selected published revision",
+    "TargetColumn": "AssetTypeCode",
+    "SQLType": "nvarchar(50)",
+    "Notes": "Adapter labels: 0 Analytic App; 1 Workflow; 2 Macro; unknown Undefined.",
+    "SourceURL": "https://help.alteryx.com/current/en/server/configure/database-management/mongodb-management/mongodb-schema-reference/alteryxgallery-mongodb-schema.html"
+  },
+  {
+    "Platform": "Alteryx",
+    "Entity": "Assets",
+    "NativeField": "appInfos.CreatedBy",
+    "JoinPath": "CreatedBy = string(users._id)",
+    "TargetColumn": "CreatedByNativeID",
+    "SQLType": "nvarchar(200)",
+    "Notes": "Original author only; never current owner.",
+    "SourceURL": "https://help.alteryx.com/current/en/server/configure/database-management/mongodb-management/mongodb-schema-reference/alteryxgallery-mongodb-schema.html"
+  },
+  {
+    "Platform": "Alteryx",
+    "Entity": "Assets",
+    "NativeField": "[no proven current-owner field]",
+    "JoinPath": "No verified current-owner join in reviewed backend guide",
+    "TargetColumn": "NativeOwnerID",
+    "SQLType": "nvarchar(200)",
+    "Notes": "Blank; emit TechnicalOwner stub with UnverifiedMapping.",
+    "SourceURL": "https://help.alteryx.com/current/en/server/configure/database-management/mongodb-management/mongodb-schema-reference/alteryxgallery-mongodb-schema.html"
+  },
+  {
+    "Platform": "Alteryx",
+    "Entity": "Assets",
+    "NativeField": "appInfos.IsDeleted",
+    "JoinPath": "appInfos._id",
+    "TargetColumn": "NativeLifecycleCode",
+    "SQLType": "nvarchar(40)",
+    "Notes": "Adapter renders IsDeleted=true/false; absent stays blank.",
+    "SourceURL": "https://help.alteryx.com/current/en/server/configure/database-management/mongodb-management/mongodb-schema-reference/alteryxgallery-mongodb-schema.html"
+  },
+  {
+    "Platform": "Alteryx",
+    "Entity": "Object_Users",
+    "NativeField": "appInfos.CreatedBy",
+    "JoinPath": "CreatedBy = string(users._id) -> users.Email",
+    "TargetColumn": "SourcePrincipalReference",
+    "SQLType": "nvarchar(200)",
+    "Notes": "Workflow CreatedBy relation.",
+    "SourceURL": "https://help.alteryx.com/current/en/server/configure/database-management/mongodb-management/mongodb-schema-reference/alteryxgallery-mongodb-schema.html"
+  },
+  {
+    "Platform": "Alteryx",
+    "Entity": "Object_Users",
+    "NativeField": "[no proven current-owner field]",
+    "JoinPath": "Workflow identity retained; principal blank",
+    "TargetColumn": "SourceReferenceStatusCode",
+    "SQLType": "nvarchar(40)",
+    "Notes": "UnverifiedMapping; assign Platform Manager.",
+    "SourceURL": "https://help.alteryx.com/current/en/server/configure/database-management/mongodb-management/mongodb-schema-reference/alteryxgallery-mongodb-schema.html"
+  },
+  {
+    "Platform": "Alteryx",
+    "Entity": "Workspace_Assets",
+    "NativeField": "collections.CollectionId",
+    "JoinPath": "Flatten collections.Apps[]",
+    "TargetColumn": "NativeWorkspaceID",
+    "SQLType": "nvarchar(200)",
+    "Notes": "One row per observed collection-workflow edge.",
+    "SourceURL": "https://help.alteryx.com/current/en/server/configure/database-management/mongodb-management/mongodb-schema-reference/alteryxgallery-mongodb-schema.html"
+  },
+  {
+    "Platform": "Alteryx",
+    "Entity": "Workspace_Assets",
+    "NativeField": "collections.Apps[].ApplicationId",
+    "JoinPath": "ApplicationId = string(appInfos._id)",
+    "TargetColumn": "NativeAssetID",
+    "SQLType": "nvarchar(200)",
+    "Notes": "Retain unmatched edges; never match by name.",
+    "SourceURL": "https://help.alteryx.com/current/en/server/configure/database-management/mongodb-management/mongodb-schema-reference/alteryxgallery-mongodb-schema.html"
+  },
+  {
+    "Platform": "Alteryx",
+    "Entity": "Workspace_Assets",
+    "NativeField": "[adapter relationship label]",
+    "JoinPath": "collections.Apps[]",
+    "TargetColumn": "NativeAssociationType",
+    "SQLType": "nvarchar(40)",
+    "Notes": "CollectionMembership; not accountable business-workspace assignment.",
+    "SourceURL": "https://help.alteryx.com/current/en/server/configure/database-management/mongodb-management/mongodb-schema-reference/alteryxgallery-mongodb-schema.html"
+  },
+  {
+    "Platform": "Alteryx",
+    "Entity": "Object_Users",
+    "NativeField": "collections.Users[].UserId",
+    "JoinPath": "UserId = string(users._id)",
+    "TargetColumn": "SourcePrincipalReference",
+    "SQLType": "nvarchar(200)",
+    "Notes": "Collection Access relation.",
+    "SourceURL": "https://help.alteryx.com/current/en/server/configure/database-management/mongodb-management/mongodb-schema-reference/alteryxgallery-mongodb-schema.html"
+  },
+  {
+    "Platform": "Alteryx",
+    "Entity": "Object_Users",
+    "NativeField": "collections.Users[].UserId -> users._id",
+    "JoinPath": "Unique source-key equality",
+    "TargetColumn": "NativePrincipalID",
+    "SQLType": "nvarchar(200)",
+    "Notes": "IdentifierNamespace=AlteryxMongoUserID when resolved.",
+    "SourceURL": "https://help.alteryx.com/current/en/server/configure/database-management/mongodb-management/mongodb-schema-reference/alteryxgallery-mongodb-schema.html"
+  },
+  {
+    "Platform": "Alteryx",
+    "Entity": "Object_Users",
+    "NativeField": "collections.Users[].UserId -> users.Email",
+    "JoinPath": "Unique source user -> raw Email",
+    "TargetColumn": "SourceEmail",
+    "SQLType": "nvarchar(320)",
+    "Notes": "ReadyForEmailMatch refers to source resolution only.",
+    "SourceURL": "https://help.alteryx.com/current/en/server/configure/database-management/mongodb-management/mongodb-schema-reference/alteryxgallery-mongodb-schema.html"
+  },
+  {
+    "Platform": "Alteryx",
+    "Entity": "Object_Users",
+    "NativeField": "collections.Users[].ActiveDirectoryObject.Sid",
+    "JoinPath": "Unique match to users.WindowsIdentity.Sid, only for user assignments",
+    "TargetColumn": "SourcePrincipalReference",
+    "SQLType": "nvarchar(200)",
+    "Notes": "SourceReferenceNamespace=ActiveDirectorySID; never invent email from SID.",
+    "SourceURL": "https://help.alteryx.com/current/en/server/configure/database-management/mongodb-management/mongodb-schema-reference/alteryxgallery-mongodb-schema.html"
+  },
+  {
+    "Platform": "Alteryx",
+    "Entity": "Object_Users",
+    "NativeField": "collections.Users[].ActiveDirectoryObject.Category",
+    "JoinPath": "0 user; 1 group",
+    "TargetColumn": "SourceReferenceStatusCode",
+    "SQLType": "nvarchar(40)",
+    "Notes": "Groups/ambiguous AD entries remain UnverifiedMapping.",
+    "SourceURL": "https://help.alteryx.com/current/en/server/configure/database-management/mongodb-management/mongodb-schema-reference/alteryxgallery-mongodb-schema.html"
+  },
+  {
+    "Platform": "Alteryx",
+    "Entity": "Object_Users",
+    "NativeField": "[native permission flags preserved separately]",
+    "JoinPath": "collections.Users[].Permissions",
+    "TargetColumn": "NativeRole",
+    "SQLType": "nvarchar(100)",
+    "Notes": "Blank; detailed flags in supplemental-evidence.json, no invented role equivalence.",
+    "SourceURL": "https://help.alteryx.com/current/en/server/configure/database-management/mongodb-management/mongodb-schema-reference/alteryxgallery-mongodb-schema.html"
+  },
+  {
+    "Platform": "Alteryx",
+    "Entity": "Supplemental evidence",
+    "NativeField": "appInfos.Revisions[].AuthorId",
+    "JoinPath": "RevisionId + observed author reference",
+    "TargetColumn": "RevisionAuthorID",
+    "SQLType": "nvarchar(200)",
+    "Notes": "Publication author; not automatically latest modifier.",
+    "SourceURL": "https://help.alteryx.com/current/en/server/configure/database-management/mongodb-management/mongodb-schema-reference/alteryxgallery-mongodb-schema.html"
+  },
+  {
+    "Platform": "Alteryx",
+    "Entity": "Supplemental evidence",
+    "NativeField": "appInfos.Revisions[].DateCreated",
+    "JoinPath": "RevisionId",
+    "TargetColumn": "PublishedAt",
+    "SQLType": "datetimeoffset(7)",
+    "Notes": "Revision publication time; not asset creation or extraction time.",
+    "SourceURL": "https://help.alteryx.com/current/en/server/configure/database-management/mongodb-management/mongodb-schema-reference/alteryxgallery-mongodb-schema.html"
+  },
+  {
+    "Platform": "Alteryx",
+    "Entity": "Supplemental evidence",
+    "NativeField": "appInfos.SubscriptionId; users.SubscriptionId; subscriptions._id",
+    "JoinPath": "Exact subscription-key equality",
+    "TargetColumn": "SubscriptionId",
+    "SQLType": "nvarchar(200)",
+    "Notes": "Studio relationship only; multiple users prevent inferred ownership.",
+    "SourceURL": "https://help.alteryx.com/current/en/server/configure/database-management/mongodb-management/mongodb-schema-reference/alteryxgallery-mongodb-schema.html"
+  },
+  {
+    "Platform": "Alteryx",
+    "Entity": "Supplemental evidence",
+    "NativeField": "collections.Users[].ExpirationDate",
+    "JoinPath": "CollectionId + principal reference",
+    "TargetColumn": "ExpirationDate",
+    "SQLType": "datetimeoffset(7)",
+    "Notes": "Preserve for access review.",
+    "SourceURL": "https://help.alteryx.com/current/en/server/configure/database-management/mongodb-management/mongodb-schema-reference/alteryxgallery-mongodb-schema.html"
+  },
+  {
+    "Platform": "Alteryx",
+    "Entity": "Supplemental evidence",
+    "NativeField": "collections.Users[].Permissions.Collection.IsAdmin",
+    "JoinPath": "CollectionId + principal reference",
+    "TargetColumn": "Permissions.Collection.IsAdmin",
+    "SQLType": "bit",
+    "Notes": "Preserve native flag; never auto-assign registry approval role.",
+    "SourceURL": "https://help.alteryx.com/current/en/server/configure/database-management/mongodb-management/mongodb-schema-reference/alteryxgallery-mongodb-schema.html"
+  }
+]

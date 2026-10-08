@@ -18,3 +18,8 @@
 
 /* Audit: readable supporting text and keyboard navigation. */
 .skip-link{position:fixed;top:8px;left:8px;transform:translateY(-200%);z-index:200;padding:10px 16px;background:white;border:2px solid #246653}.skip-link:focus{transform:none}small,.field small,.panel-heading p,.metric>small,.page-title p,.quiet-help{color:#52665a}.business-view .process-help{display:block}main:focus{outline:none}.model-canvas .diagram-node:focus{outline:2px solid #246653}@media(max-width:680px){.topbar{gap:6px}.topbar .icon-button{min-width:32px}.business-view h1{font-size:25px}.steps>button{overflow-wrap:anywhere}.compact-group-row>button{max-width:145px;white-space:normal}.home-task{gap:10px}.panel-heading{flex-wrap:wrap}.dictionary-filters{grid-template-columns:1fr}}
+
+/* Versioned prototype resources reuse the existing button and panel styles. */
+.resource-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:14px 0}.prototype-resources p{margin:0 0 12px;max-width:940px}.prototype-resources .resource-note{font-size:13px;color:var(--muted,#62756d);margin-bottom:0}footer a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+
+.business-view footer>span.release-meta{display:inline}footer{flex-wrap:wrap;gap:8px}

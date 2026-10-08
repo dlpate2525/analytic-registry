@@ -1,0 +1,532 @@
+[
+  {
+    "Platform": "Power BI / Fabric",
+    "Entity": "Workspaces",
+    "NativeField": "workspaces[].id",
+    "JoinPath": "scan -> workspace",
+    "TargetColumn": "NativeWorkspaceID",
+    "SQLType": "nvarchar(200)",
+    "Notes": "Exact source text; scope by tenant.",
+    "SourceURL": "https://learn.microsoft.com/en-us/rest/api/power-bi/admin/workspace-info-get-scan-result"
+  },
+  {
+    "Platform": "Power BI / Fabric",
+    "Entity": "Workspaces",
+    "NativeField": "workspaces[].name",
+    "JoinPath": "scan -> workspace",
+    "TargetColumn": "DisplayName",
+    "SQLType": "nvarchar(200)",
+    "Notes": "Label only.",
+    "SourceURL": "https://learn.microsoft.com/en-us/rest/api/power-bi/admin/workspace-info-get-scan-result"
+  },
+  {
+    "Platform": "Power BI / Fabric",
+    "Entity": "Workspaces",
+    "NativeField": "workspaces[].type",
+    "JoinPath": "scan -> workspace",
+    "TargetColumn": "NativeWorkspaceType",
+    "SQLType": "nvarchar(50)",
+    "Notes": "Preserve native value.",
+    "SourceURL": "https://learn.microsoft.com/en-us/rest/api/power-bi/admin/workspace-info-get-scan-result"
+  },
+  {
+    "Platform": "Power BI / Fabric",
+    "Entity": "Workspaces",
+    "NativeField": "workspaces[].state",
+    "JoinPath": "scan -> workspace",
+    "TargetColumn": "NativeLifecycleCode",
+    "SQLType": "nvarchar(40)",
+    "Notes": "Workspace state; not user state.",
+    "SourceURL": "https://learn.microsoft.com/en-us/rest/api/power-bi/admin/workspace-info-get-scan-result"
+  },
+  {
+    "Platform": "Power BI / Fabric",
+    "Entity": "Workspaces",
+    "NativeField": "not supplied as one business-owner field",
+    "JoinPath": "none",
+    "TargetColumn": "NativeOwnerID",
+    "SQLType": "nvarchar(200) NULL",
+    "Notes": "Do not nominate a workspace administrator as business owner.",
+    "SourceURL": "https://learn.microsoft.com/en-us/rest/api/power-bi/admin/groups-get-group-users-as-admin"
+  },
+  {
+    "Platform": "Power BI / Fabric",
+    "Entity": "Assets (Report)",
+    "NativeField": "workspaces[].reports[].id",
+    "JoinPath": "workspace -> report",
+    "TargetColumn": "NativeAssetID",
+    "SQLType": "nvarchar(200)",
+    "Notes": "Preserve report identity.",
+    "SourceURL": "https://learn.microsoft.com/en-us/rest/api/power-bi/admin/workspace-info-get-scan-result"
+  },
+  {
+    "Platform": "Power BI / Fabric",
+    "Entity": "Assets (Report)",
+    "NativeField": "workspaces[].id",
+    "JoinPath": "parent workspace -> report",
+    "TargetColumn": "NativeWorkspaceID",
+    "SQLType": "nvarchar(200)",
+    "Notes": "Physical membership; not a new asset identity.",
+    "SourceURL": "https://learn.microsoft.com/en-us/rest/api/power-bi/admin/workspace-info-get-scan-result"
+  },
+  {
+    "Platform": "Power BI / Fabric",
+    "Entity": "Assets (Report)",
+    "NativeField": "reports[].name",
+    "JoinPath": "workspace -> report",
+    "TargetColumn": "DisplayName",
+    "SQLType": "nvarchar(200)",
+    "Notes": "Label only.",
+    "SourceURL": "https://learn.microsoft.com/en-us/rest/api/power-bi/admin/reports-get-reports-as-admin"
+  },
+  {
+    "Platform": "Power BI / Fabric",
+    "Entity": "Assets (Report)",
+    "NativeField": "reports[].reportType",
+    "JoinPath": "workspace -> report",
+    "TargetColumn": "AssetTypeCode",
+    "SQLType": "nvarchar(50)",
+    "Notes": "Map PowerBIReport/PaginatedReport explicitly.",
+    "SourceURL": "https://learn.microsoft.com/en-us/rest/api/power-bi/admin/reports-get-reports-as-admin"
+  },
+  {
+    "Platform": "Power BI / Fabric",
+    "Entity": "AssetPeople (Report)",
+    "NativeField": "reports[].createdById",
+    "JoinPath": "workspace -> report",
+    "TargetColumn": "NativeOwnerID",
+    "SQLType": "nvarchar(200) NULL",
+    "Notes": "Owner ID; retain field namespace. Not independently documented as Graph ID.",
+    "SourceURL": "https://learn.microsoft.com/en-us/rest/api/power-bi/admin/workspace-info-get-scan-result"
+  },
+  {
+    "Platform": "Power BI / Fabric",
+    "Entity": "AssetPeople (Report)",
+    "NativeField": "reports[].createdBy",
+    "JoinPath": "workspace -> report",
+    "TargetColumn": "OwnerIdentifierRaw",
+    "SQLType": "nvarchar(500) NULL",
+    "Notes": "Owner string; available only for reports created after June 2019.",
+    "SourceURL": "https://learn.microsoft.com/en-us/rest/api/power-bi/admin/reports-get-reports-as-admin"
+  },
+  {
+    "Platform": "Power BI / Fabric",
+    "Entity": "AssetPeople (Report)",
+    "NativeField": "reports[].createdBy; only a validated email-shaped candidate",
+    "JoinPath": "workspace -> report -> exact directory mail",
+    "TargetColumn": "OwnerEmailCandidate",
+    "SQLType": "nvarchar(254) NULL",
+    "Notes": "V1 design: candidate only. No fuzzy or UPN fallback; ambiguity goes to Platform Manager.",
+    "SourceURL": "https://learn.microsoft.com/en-us/rest/api/power-bi/admin/reports-get-reports-as-admin"
+  },
+  {
+    "Platform": "Power BI / Fabric",
+    "Entity": "AssetPeople (Report)",
+    "NativeField": "reports[].modifiedById",
+    "JoinPath": "workspace -> report",
+    "TargetColumn": "ModifiedByNativeID",
+    "SQLType": "nvarchar(200) NULL",
+    "Notes": "Retain native field namespace; do not infer Graph identity.",
+    "SourceURL": "https://learn.microsoft.com/en-us/rest/api/power-bi/admin/workspace-info-get-scan-result"
+  },
+  {
+    "Platform": "Power BI / Fabric",
+    "Entity": "AssetPeople (Report)",
+    "NativeField": "reports[].modifiedBy",
+    "JoinPath": "workspace -> report",
+    "TargetColumn": "ModifiedByIdentifierRaw",
+    "SQLType": "nvarchar(500) NULL",
+    "Notes": "Last-modifier string, never business owner.",
+    "SourceURL": "https://learn.microsoft.com/en-us/rest/api/power-bi/admin/reports-get-reports-as-admin"
+  },
+  {
+    "Platform": "Power BI / Fabric",
+    "Entity": "AssetPeople (Report)",
+    "NativeField": "reports[].modifiedBy; only a validated email-shaped candidate",
+    "JoinPath": "workspace -> report -> exact directory mail",
+    "TargetColumn": "ModifiedByEmailCandidate",
+    "SQLType": "nvarchar(254) NULL",
+    "Notes": "V1 design: preserve raw string separately.",
+    "SourceURL": "https://learn.microsoft.com/en-us/rest/api/power-bi/admin/reports-get-reports-as-admin"
+  },
+  {
+    "Platform": "Power BI / Fabric",
+    "Entity": "Assets (Report)",
+    "NativeField": "reports[].createdDateTime",
+    "JoinPath": "workspace -> report",
+    "TargetColumn": "CreatedAtNative",
+    "SQLType": "datetime2(7) NULL",
+    "Notes": "Preserve source time; confirm timezone before conversion.",
+    "SourceURL": "https://learn.microsoft.com/en-us/rest/api/power-bi/admin/reports-get-reports-as-admin"
+  },
+  {
+    "Platform": "Power BI / Fabric",
+    "Entity": "Assets (Report)",
+    "NativeField": "reports[].modifiedDateTime",
+    "JoinPath": "workspace -> report",
+    "TargetColumn": "ModifiedAtNative",
+    "SQLType": "datetime2(7) NULL",
+    "Notes": "Not last-viewed time.",
+    "SourceURL": "https://learn.microsoft.com/en-us/rest/api/power-bi/admin/reports-get-reports-as-admin"
+  },
+  {
+    "Platform": "Power BI / Fabric",
+    "Entity": "AssetDependencies",
+    "NativeField": "reports[].datasetId",
+    "JoinPath": "report -> dataset ID",
+    "TargetColumn": "UpstreamNativeAssetID",
+    "SQLType": "nvarchar(200) NULL",
+    "Notes": "No value means unresolved/not supplied.",
+    "SourceURL": "https://learn.microsoft.com/en-us/rest/api/power-bi/admin/reports-get-reports-as-admin"
+  },
+  {
+    "Platform": "Power BI / Fabric",
+    "Entity": "AssetDependencies",
+    "NativeField": "reports[].datasetWorkspaceId",
+    "JoinPath": "report -> external model workspace",
+    "TargetColumn": "UpstreamNativeWorkspaceID",
+    "SQLType": "nvarchar(200) NULL",
+    "Notes": "Cross-workspace model location when returned.",
+    "SourceURL": "https://learn.microsoft.com/en-us/rest/api/power-bi/admin/workspace-info-get-scan-result"
+  },
+  {
+    "Platform": "Power BI / Fabric",
+    "Entity": "Assets (Dataset)",
+    "NativeField": "workspaces[].datasets[].id",
+    "JoinPath": "workspace -> dataset",
+    "TargetColumn": "NativeAssetID",
+    "SQLType": "nvarchar(200)",
+    "Notes": "Keep Dataset native type; display Semantic Model.",
+    "SourceURL": "https://learn.microsoft.com/en-us/rest/api/power-bi/admin/datasets-get-datasets-as-admin"
+  },
+  {
+    "Platform": "Power BI / Fabric",
+    "Entity": "Assets (Dataset)",
+    "NativeField": "workspaces[].id",
+    "JoinPath": "parent workspace -> dataset",
+    "TargetColumn": "NativeWorkspaceID",
+    "SQLType": "nvarchar(200)",
+    "Notes": "Physical location.",
+    "SourceURL": "https://learn.microsoft.com/en-us/rest/api/power-bi/admin/datasets-get-datasets-as-admin"
+  },
+  {
+    "Platform": "Power BI / Fabric",
+    "Entity": "Assets (Dataset)",
+    "NativeField": "datasets[].name",
+    "JoinPath": "workspace -> dataset",
+    "TargetColumn": "DisplayName",
+    "SQLType": "nvarchar(200)",
+    "Notes": "Label only.",
+    "SourceURL": "https://learn.microsoft.com/en-us/rest/api/power-bi/admin/datasets-get-datasets-as-admin"
+  },
+  {
+    "Platform": "Power BI / Fabric",
+    "Entity": "AssetPeople (Dataset)",
+    "NativeField": "datasets[].configuredBy",
+    "JoinPath": "workspace -> dataset",
+    "TargetColumn": "OwnerIdentifierRaw",
+    "SQLType": "nvarchar(500) NULL",
+    "Notes": "Technical model owner; not the creator or registry business owner.",
+    "SourceURL": "https://learn.microsoft.com/en-us/rest/api/power-bi/admin/datasets-get-datasets-as-admin"
+  },
+  {
+    "Platform": "Power BI / Fabric",
+    "Entity": "AssetPeople (Dataset)",
+    "NativeField": "datasets[].configuredBy; only a validated email-shaped candidate",
+    "JoinPath": "workspace -> dataset -> exact directory mail",
+    "TargetColumn": "OwnerEmailCandidate",
+    "SQLType": "nvarchar(254) NULL",
+    "Notes": "V1 design: no creator substitution.",
+    "SourceURL": "https://learn.microsoft.com/en-us/rest/api/power-bi/admin/datasets-get-datasets-as-admin"
+  },
+  {
+    "Platform": "Power BI / Fabric",
+    "Entity": "AssetPeople (Dataset)",
+    "NativeField": "no configuredById in WorkspaceInfoDataset contract",
+    "JoinPath": "none",
+    "TargetColumn": "NativeOwnerID",
+    "SQLType": "nvarchar(200) NULL",
+    "Notes": "Leave absent unless a separately evidenced native identity binding exists.",
+    "SourceURL": "https://learn.microsoft.com/en-us/rest/api/power-bi/admin/workspace-info-get-scan-result"
+  },
+  {
+    "Platform": "Power BI / Fabric",
+    "Entity": "Assets (Dataset)",
+    "NativeField": "datasets[].createdDate",
+    "JoinPath": "workspace -> dataset",
+    "TargetColumn": "CreatedAtNative",
+    "SQLType": "datetime2(7) NULL",
+    "Notes": "Creation time; does not identify the creator.",
+    "SourceURL": "https://learn.microsoft.com/en-us/rest/api/power-bi/admin/datasets-get-datasets-as-admin"
+  },
+  {
+    "Platform": "Power BI / Fabric",
+    "Entity": "WorkspaceAccess",
+    "NativeField": "identifier",
+    "JoinPath": "GET admin/groups/{workspaceId}/users -> value[]",
+    "TargetColumn": "NativePrincipalID",
+    "SQLType": "nvarchar(200) NULL",
+    "Notes": "Opaque source identifier; never substitute it for email.",
+    "SourceURL": "https://learn.microsoft.com/en-us/rest/api/power-bi/admin/groups-get-group-users-as-admin"
+  },
+  {
+    "Platform": "Power BI / Fabric",
+    "Entity": "WorkspaceAccess",
+    "NativeField": "graphId",
+    "JoinPath": "GET admin/groups/{workspaceId}/users -> value[]",
+    "TargetColumn": "SourceGraphID",
+    "SQLType": "nvarchar(150) NULL",
+    "Notes": "Graph identity evidence; preserve independently of V1 email matching.",
+    "SourceURL": "https://learn.microsoft.com/en-us/rest/api/power-bi/admin/groups-get-group-users-as-admin"
+  },
+  {
+    "Platform": "Power BI / Fabric",
+    "Entity": "WorkspaceAccess",
+    "NativeField": "emailAddress",
+    "JoinPath": "GET admin/groups/{workspaceId}/users -> value[]",
+    "TargetColumn": "SourceEmail",
+    "SQLType": "nvarchar(254) NULL",
+    "Notes": "Email match input for User entries only.",
+    "SourceURL": "https://learn.microsoft.com/en-us/rest/api/power-bi/admin/groups-get-group-users-as-admin"
+  },
+  {
+    "Platform": "Power BI / Fabric",
+    "Entity": "WorkspaceAccess",
+    "NativeField": "principalType",
+    "JoinPath": "GET admin/groups/{workspaceId}/users -> value[]",
+    "TargetColumn": "PrincipalTypeCode",
+    "SQLType": "nvarchar(30) NULL",
+    "Notes": "User/Group/App/None; absent remains unknown.",
+    "SourceURL": "https://learn.microsoft.com/en-us/rest/api/power-bi/admin/groups-get-group-users-as-admin"
+  },
+  {
+    "Platform": "Power BI / Fabric",
+    "Entity": "WorkspaceAccess",
+    "NativeField": "displayName",
+    "JoinPath": "GET admin/groups/{workspaceId}/users -> value[]",
+    "TargetColumn": "PrincipalDisplayName",
+    "SQLType": "nvarchar(200) NULL",
+    "Notes": "Display only.",
+    "SourceURL": "https://learn.microsoft.com/en-us/rest/api/power-bi/admin/groups-get-group-users-as-admin"
+  },
+  {
+    "Platform": "Power BI / Fabric",
+    "Entity": "WorkspaceAccess",
+    "NativeField": "groupUserAccessRight",
+    "JoinPath": "GET admin/groups/{workspaceId}/users -> value[]",
+    "TargetColumn": "NativeAccessLevelCode",
+    "SQLType": "nvarchar(50) NULL",
+    "Notes": "Permission evidence; does not assign registry accountability.",
+    "SourceURL": "https://learn.microsoft.com/en-us/rest/api/power-bi/admin/groups-get-group-users-as-admin"
+  },
+  {
+    "Platform": "Power BI / Fabric",
+    "Entity": "ReportAccess",
+    "NativeField": "identifier",
+    "JoinPath": "GET admin/reports/{reportId}/users -> value[]",
+    "TargetColumn": "NativePrincipalID",
+    "SQLType": "nvarchar(200) NULL",
+    "Notes": "Opaque source identifier; never substitute it for email.",
+    "SourceURL": "https://learn.microsoft.com/en-us/rest/api/power-bi/admin/reports-get-report-users-as-admin"
+  },
+  {
+    "Platform": "Power BI / Fabric",
+    "Entity": "ReportAccess",
+    "NativeField": "graphId",
+    "JoinPath": "GET admin/reports/{reportId}/users -> value[]",
+    "TargetColumn": "SourceGraphID",
+    "SQLType": "nvarchar(150) NULL",
+    "Notes": "Graph identity evidence; preserve independently of V1 email matching.",
+    "SourceURL": "https://learn.microsoft.com/en-us/rest/api/power-bi/admin/reports-get-report-users-as-admin"
+  },
+  {
+    "Platform": "Power BI / Fabric",
+    "Entity": "ReportAccess",
+    "NativeField": "emailAddress",
+    "JoinPath": "GET admin/reports/{reportId}/users -> value[]",
+    "TargetColumn": "SourceEmail",
+    "SQLType": "nvarchar(254) NULL",
+    "Notes": "Email match input for User entries only.",
+    "SourceURL": "https://learn.microsoft.com/en-us/rest/api/power-bi/admin/reports-get-report-users-as-admin"
+  },
+  {
+    "Platform": "Power BI / Fabric",
+    "Entity": "ReportAccess",
+    "NativeField": "principalType",
+    "JoinPath": "GET admin/reports/{reportId}/users -> value[]",
+    "TargetColumn": "PrincipalTypeCode",
+    "SQLType": "nvarchar(30) NULL",
+    "Notes": "User/Group/App/None; absent remains unknown.",
+    "SourceURL": "https://learn.microsoft.com/en-us/rest/api/power-bi/admin/reports-get-report-users-as-admin"
+  },
+  {
+    "Platform": "Power BI / Fabric",
+    "Entity": "ReportAccess",
+    "NativeField": "displayName",
+    "JoinPath": "GET admin/reports/{reportId}/users -> value[]",
+    "TargetColumn": "PrincipalDisplayName",
+    "SQLType": "nvarchar(200) NULL",
+    "Notes": "Display only.",
+    "SourceURL": "https://learn.microsoft.com/en-us/rest/api/power-bi/admin/reports-get-report-users-as-admin"
+  },
+  {
+    "Platform": "Power BI / Fabric",
+    "Entity": "ReportAccess",
+    "NativeField": "reportUserAccessRight",
+    "JoinPath": "GET admin/reports/{reportId}/users -> value[]",
+    "TargetColumn": "NativeAccessLevelCode",
+    "SQLType": "nvarchar(50) NULL",
+    "Notes": "Permission evidence; does not assign registry accountability.",
+    "SourceURL": "https://learn.microsoft.com/en-us/rest/api/power-bi/admin/reports-get-report-users-as-admin"
+  },
+  {
+    "Platform": "Power BI / Fabric",
+    "Entity": "ModelAccess",
+    "NativeField": "identifier",
+    "JoinPath": "GET admin/datasets/{datasetId}/users -> value[]",
+    "TargetColumn": "NativePrincipalID",
+    "SQLType": "nvarchar(200) NULL",
+    "Notes": "Opaque source identifier; never substitute it for email.",
+    "SourceURL": "https://learn.microsoft.com/en-us/rest/api/power-bi/admin/datasets-get-dataset-users-as-admin"
+  },
+  {
+    "Platform": "Power BI / Fabric",
+    "Entity": "ModelAccess",
+    "NativeField": "graphId",
+    "JoinPath": "GET admin/datasets/{datasetId}/users -> value[]",
+    "TargetColumn": "SourceGraphID",
+    "SQLType": "nvarchar(150) NULL",
+    "Notes": "Graph identity evidence; preserve independently of V1 email matching.",
+    "SourceURL": "https://learn.microsoft.com/en-us/rest/api/power-bi/admin/datasets-get-dataset-users-as-admin"
+  },
+  {
+    "Platform": "Power BI / Fabric",
+    "Entity": "ModelAccess",
+    "NativeField": "emailAddress",
+    "JoinPath": "GET admin/datasets/{datasetId}/users -> value[]",
+    "TargetColumn": "SourceEmail",
+    "SQLType": "nvarchar(254) NULL",
+    "Notes": "Email match input for User entries only.",
+    "SourceURL": "https://learn.microsoft.com/en-us/rest/api/power-bi/admin/datasets-get-dataset-users-as-admin"
+  },
+  {
+    "Platform": "Power BI / Fabric",
+    "Entity": "ModelAccess",
+    "NativeField": "principalType",
+    "JoinPath": "GET admin/datasets/{datasetId}/users -> value[]",
+    "TargetColumn": "PrincipalTypeCode",
+    "SQLType": "nvarchar(30) NULL",
+    "Notes": "User/Group/App/None; absent remains unknown.",
+    "SourceURL": "https://learn.microsoft.com/en-us/rest/api/power-bi/admin/datasets-get-dataset-users-as-admin"
+  },
+  {
+    "Platform": "Power BI / Fabric",
+    "Entity": "ModelAccess",
+    "NativeField": "displayName",
+    "JoinPath": "GET admin/datasets/{datasetId}/users -> value[]",
+    "TargetColumn": "PrincipalDisplayName",
+    "SQLType": "nvarchar(200) NULL",
+    "Notes": "Display only.",
+    "SourceURL": "https://learn.microsoft.com/en-us/rest/api/power-bi/admin/datasets-get-dataset-users-as-admin"
+  },
+  {
+    "Platform": "Power BI / Fabric",
+    "Entity": "ModelAccess",
+    "NativeField": "datasetUserAccessRight",
+    "JoinPath": "GET admin/datasets/{datasetId}/users -> value[]",
+    "TargetColumn": "NativeAccessLevelCode",
+    "SQLType": "nvarchar(50) NULL",
+    "Notes": "Permission evidence; does not assign registry accountability.",
+    "SourceURL": "https://learn.microsoft.com/en-us/rest/api/power-bi/admin/datasets-get-dataset-users-as-admin"
+  },
+  {
+    "Platform": "Microsoft Entra ID / Office 365",
+    "Entity": "DirectoryUsers",
+    "NativeField": "id",
+    "JoinPath": "GET /users?$select=id,mail,userPrincipalName,accountEnabled,displayName,userType -> value[]",
+    "TargetColumn": "DirectoryObjectID",
+    "SQLType": "nvarchar(150)",
+    "Notes": "Exact opaque ID retained after email match.",
+    "SourceURL": "https://learn.microsoft.com/en-us/graph/api/resources/user?view=graph-rest-1.0"
+  },
+  {
+    "Platform": "Microsoft Entra ID / Office 365",
+    "Entity": "DirectoryUsers",
+    "NativeField": "mail",
+    "JoinPath": "GET /users?$select=id,mail,userPrincipalName,accountEnabled,displayName,userType -> value[]",
+    "TargetColumn": "DirectoryEmail",
+    "SQLType": "nvarchar(254) NULL",
+    "Notes": "Nullable SMTP email; V1 match key after trim/lower.",
+    "SourceURL": "https://learn.microsoft.com/en-us/graph/api/resources/user?view=graph-rest-1.0"
+  },
+  {
+    "Platform": "Microsoft Entra ID / Office 365",
+    "Entity": "DirectoryUsers",
+    "NativeField": "userPrincipalName",
+    "JoinPath": "GET /users?$select=id,mail,userPrincipalName,accountEnabled,displayName,userType -> value[]",
+    "TargetColumn": "DirectoryUPN",
+    "SQLType": "nvarchar(254) NULL",
+    "Notes": "Separate sign-in identifier; never use as implicit email fallback.",
+    "SourceURL": "https://learn.microsoft.com/en-us/graph/api/resources/user?view=graph-rest-1.0"
+  },
+  {
+    "Platform": "Microsoft Entra ID / Office 365",
+    "Entity": "DirectoryUsers",
+    "NativeField": "accountEnabled",
+    "JoinPath": "GET /users?$select=id,mail,userPrincipalName,accountEnabled,displayName,userType -> value[]",
+    "TargetColumn": "AccountEnabled",
+    "SQLType": "bit NULL",
+    "Notes": "True=enabled; false=disabled; missing=unknown.",
+    "SourceURL": "https://learn.microsoft.com/en-us/graph/api/resources/user?view=graph-rest-1.0"
+  },
+  {
+    "Platform": "Microsoft Entra ID / Office 365",
+    "Entity": "DirectoryUsers",
+    "NativeField": "displayName",
+    "JoinPath": "GET /users?$select=id,mail,userPrincipalName,accountEnabled,displayName,userType -> value[]",
+    "TargetColumn": "DirectoryDisplayName",
+    "SQLType": "nvarchar(200) NULL",
+    "Notes": "Display only.",
+    "SourceURL": "https://learn.microsoft.com/en-us/graph/api/resources/user?view=graph-rest-1.0"
+  },
+  {
+    "Platform": "Microsoft Entra ID / Office 365",
+    "Entity": "DirectoryUsers",
+    "NativeField": "userType",
+    "JoinPath": "GET /users?$select=id,mail,userPrincipalName,accountEnabled,displayName,userType -> value[]",
+    "TargetColumn": "DirectoryUserType",
+    "SQLType": "nvarchar(30) NULL",
+    "Notes": "Retain Member/Guest; does not establish eligibility.",
+    "SourceURL": "https://learn.microsoft.com/en-us/graph/api/resources/user?view=graph-rest-1.0"
+  },
+  {
+    "Platform": "Microsoft Entra ID / Office 365",
+    "Entity": "DirectoryUsers",
+    "NativeField": "configured tenant context",
+    "JoinPath": "directory export execution context",
+    "TargetColumn": "DirectoryTenantKey",
+    "SQLType": "nvarchar(100)",
+    "Notes": "Tenant is supplied by the approved collector context, not assumed from mail domain.",
+    "SourceURL": "https://learn.microsoft.com/en-us/graph/api/user-list?view=graph-rest-1.0"
+  },
+  {
+    "Platform": "Cross-platform V1 rule",
+    "Entity": "IdentityResolution",
+    "NativeField": "lower(trim(SourceEmail)) exact lower(trim(mail))",
+    "JoinPath": "PlatformInstance + configured DirectoryTenantKey -> complete directory export",
+    "TargetColumn": "MatchedDirectoryObjectID",
+    "SQLType": "nvarchar(150) NULL",
+    "Notes": "V1 design: exactly one User match; zero/multiple/error -> Platform Manager. Retain source IDs.",
+    "SourceURL": "https://learn.microsoft.com/en-us/graph/api/resources/user?view=graph-rest-1.0"
+  },
+  {
+    "Platform": "Cross-platform V1 rule",
+    "Entity": "IdentityResolution",
+    "NativeField": "manual decision",
+    "JoinPath": "Platform Manager exception review",
+    "TargetColumn": "ResolutionDecisionReference",
+    "SQLType": "nvarchar(500) NULL",
+    "Notes": "V1 design: all unresolved cases use the Platform Manager queue. No automated SQL importer.",
+    "SourceURL": "https://learn.microsoft.com/en-us/graph/api/resources/user?view=graph-rest-1.0"
+  }
+]

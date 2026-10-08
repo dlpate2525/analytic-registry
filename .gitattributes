@@ -2,3 +2,4 @@
 *.png -text
 *.zip -text
 *.xlsx -text
+*.jpg -text

@@ -1,5 +1,11 @@
 # Analytic Registry data model for Power Apps
 
+V1 prototype baseline: 1.0.0-prototype.1, 8 October 2026. See the [baseline](v1-prototype-baseline.md) for implemented scope and known limits.
+
+The [Excel extract workbook](../../platform-data-collection/v1-extract/analytic-registry-v1-extract.xlsx) is the V1 delivery contract for manual SQL staging. It contains 15 sheets: three guides, nine import tables, and three platform output layouts. The nine staging tables and 117 delivery columns are distinct from this 53-table target application model. Use the [collection handoff](../../platform-data-collection/v1-extract/README.md) for queries, exact headers, and import validation.
+
+V1 matches source email to directory mail within the configured tenant. Preserve native IDs and route every unresolved identity or relationship to Platform Manager. Alteryx collection uses backend MongoDB queries. Existing RunKey and ObservedAt are unchanged. None of this connects the mock UI to live data.
+
 Use multiple related tables with explicit grains. Do not use one large editable table. A workspace can have many assets, Champions, access assignments, and findings. Combining these creates repeated rows, inflated counts, and ambiguous updates.
 
 This is a proposed logical SQL Server design for the configured SQL Server host. It is not deployed DDL. The React prototype implements a smaller local mock model. The table dictionary below is the design target, not a claim that all of it is already implemented.
@@ -102,7 +108,7 @@ App submission is not proof of provisioning. An administrator action is not proo
 ## Confirmed business decisions
 
 - Business Owner and Workspace Owner are one field: OwnerPersonID.
-- Workspace requests require a PII Yes/No declaration, an EUCT Yes/No declaration, and exactly one highest applicable DMP tier: Tier 1, Tier 2, or Tier 3. These describe intended content. Do not infer numeric tier ordering or overwrite them from asset observations.
+- Workspace requests require a PII Yes/No declaration, an EUCT Yes/No declaration, and exactly one highest applicable DMP tier: Tier 1, Tier 2, or Tier 3. These describe intended content. Tier 1 is highest, followed by Tier 2 and Tier 3. Do not overwrite declarations from asset observations.
 - Each asset has at most one accountable workspace. Keep observed physical memberships separate.
 - Business users own group creation and ongoing membership maintenance. Group names remain pending until directory evidence resolves a real ID.
 - Custom workspaces and all annual attestations require Application Owner or Platform Owner approval. These role names identify alternative eligible approvers; actual role assignments remain configurable.
@@ -301,7 +307,7 @@ Default to Business view. Show four key numbers on the home dashboard. Keep five
 | OwnerManagerAtDeclarationID | uniqueidentifier FK → Person NULL | Owner manager frozen with this declaration; later directory updates do not rewrite it. |
 | WillContainPIICode | nvarchar(10) NOT NULL | Required Yes/No declaration of intended workspace PII content. Not inferred from observed metadata. |
 | WillContainEUCTCode | nvarchar(10) NOT NULL | Required Yes/No declaration of intended end-user computing tool content. |
-| HighestDMPTierCode | nvarchar(10) NOT NULL | One highest applicable Data Management Policy tier: Tier 1, Tier 2, or Tier 3. Policy ordering needs confirmation. |
+| HighestDMPTierCode | nvarchar(10) NOT NULL | One highest applicable Data Management Policy tier: Tier 1, Tier 2, or Tier 3. Tier 1 is highest, followed by Tier 2 and Tier 3. |
 | DataClassificationCode | nvarchar(30) NOT NULL | Business-declared sensitivity category; kept separate from native platform labels. |
 | BusinessCriticalityCode | nvarchar(30) NOT NULL | Business impact category used for prioritization, not inferred solely from technical usage. |
 | RequesterPersonID | uniqueidentifier FK → Person | Links this WorkspaceBusinessVersion row to Person. Role: Requester Person identifier. Uses the internal key, never the record name. |
@@ -312,7 +318,7 @@ Default to Business view. Show four key numbers on the home dashboard. Keep five
 | SupersedesBusinessVersionID | uniqueidentifier FK → WorkspaceBusinessVersion NULL | Links this WorkspaceBusinessVersion row to WorkspaceBusinessVersion. Role: Supersedes Business Version identifier. Uses the internal key, never the record name. |
 | CreatedAt | datetime2 NOT NULL | UTC time this registry row was inserted. Never substitute a source creation timestamp. |
 
-**Integrity and behavior:** UNIQUE (WorkspaceID, VersionNumber). OwnerPersonID is the single Business Owner / Workspace Owner field. PII and EUCT are Yes/No declarations. HighestDMPTierCode is exactly one of Tier 1, Tier 2, Tier 3; numeric order is not presumed. Insert a new version when owner, LOB, purpose, or classifications change. Derive current approved version from status/effective date; never silently update prior rows from HR.
+**Integrity and behavior:** UNIQUE (WorkspaceID, VersionNumber). OwnerPersonID is the single Business Owner / Workspace Owner field. PII and EUCT are Yes/No declarations. HighestDMPTierCode is exactly one of Tier 1, Tier 2, Tier 3; Tier 1 is highest, followed by Tier 2 and Tier 3. Insert a new version when owner, LOB, purpose, or classifications change. Derive current approved version from status/effective date; never silently update prior rows from HR.
 
 ### WorkspaceRequest
 
@@ -510,10 +516,10 @@ Default to Business view. Show four key numbers on the home dashboard. Keep five
 | DataSourceCount | int NULL | Count of distinct relevant sources; NULL means unknown, not zero. |
 | DurationSeconds | decimal(18,2) NULL | Assessed refresh or execution duration in seconds; interpret by asset type. |
 | AudienceSize | int NULL | Intended audience count; do not substitute observed consumers. |
-| PRLScore | decimal(10,2) NULL | Readiness score. No final scoring formula is approved in this prototype. |
-| PRLTag | nvarchar(30) NULL | Readiness label assigned by the assessment. |
-| PRLMethodVersion | nvarchar(30) NULL | Approved scoring method version, when available. |
-| IsIllustrativeScore | bit NOT NULL | True when the PRL value is a demonstration rather than an approved calculation. |
+| PRLScore | decimal(10,2) NULL | Legacy illustrative score field. V1 captures an approved PRL manually and calculates no score; assessment repairs are deferred. |
+| PRLTag | nvarchar(30) NULL | Manually approved PRL label in the target design. Existing demo values require validation before use. |
+| PRLMethodVersion | nvarchar(30) NULL | Reserved for a future approved scoring method. V1 has no calculated scoring method. |
+| IsIllustrativeScore | bit NOT NULL | True for legacy demonstration values. They are not an approved PRL. |
 | ObservedPRLTag | nvarchar(30) NULL | Readiness tag extracted from the platform. It does not overwrite the declared review decision. |
 | ObservedExtractRunID | uniqueidentifier FK → ExtractRun NULL | Links this AssetAssessment row to ExtractRun. Role: Observed Extract Run identifier. Uses the internal key, never the record name. |
 | EUCTCode | nvarchar(40) NOT NULL | Asset-level end-user computing tool classification; distinct from workspace intent. |
@@ -1275,16 +1281,18 @@ Use surrogate keys on bridge tables for direct app editing, plus composite uniqu
 3. Evidence and reconciliation: extract completeness, observed snapshots, configured/effective access, rules, coverage, evaluations, evidence, deduplicated findings.
 4. Operating cycle: administrative cases/actions, immutable implementation records, annual attestation packets/answers, audit views.
 
-## Decisions still needing agreement
+## Confirmed V1 decisions and future verification
 
-- SQL Server in the deployment environment versus Dataverse, and the actual database, gateway, identity, licensing, and support model.
-- Native uniqueness scopes for each platform and how to bind newly provisioned objects to pending requests.
-- Confirmed: an asset has at most one accountable workspace. Unassociated assets remain possible during investigation. Observed technical memberships can differ.
-- Approved native role mappings, group naming, Custom exception approval, maximum lengths, and who can override generated names.
-- Formal PRL meaning, approved weights, EUCT/DMP classifications, and production promotion gates.
-- Extract cadence, evidence freshness, partial-run policies, and platform-specific resource/usage fact tables.
-- Rule thresholds, escalation rules, recurrence policy, retention, and privacy treatment of identity and usage evidence.
-- Annual packet retention and reopening policy. Confirmed: owner approval can complete an attestation with a linked follow-up review; completion is not a compliance certification.
+- SQL Server is the selected target database. The prototype uses local mock data; manual Excel/CSV staging is the first delivery process.
+- Native IDs retain platform, instance, scope, and object type. Email matching resolves people, not asset identity.
+- Every unresolved identity or relationship goes to Platform Manager. A failed lookup does not establish a disabled account.
+- An asset has at most one accountable workspace. Physical memberships remain separate.
+- Tier 1 is highest. PII/EUCT are Yes/No declarations. Approved PRL is recorded manually with no calculated score. Classification, PRL, and risk repairs remain deferred.
+- The _DS group authorizes creating and maintaining workspace data connections, subject to supported native capabilities.
+- Eligible role holders may self-approve. Keep six calendar months of historical business metadata, plus current records and the identities needed for refreshes.
+- Database access, gateway, authentication, licensing, installed-platform schema validation, native permission mappings, and operating thresholds remain future verification. Prototype approval does not approve production settings.
+
+See the [decision register](decision-register.md) and [review backlog](github-review-and-repair-plan.md) for detailed status. The [V1 baseline](v1-prototype-baseline.md) takes precedence over earlier alternatives.
 
 ## Prototype simplifications
 

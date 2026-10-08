@@ -1,0 +1,2 @@
+"RunKey","PlatformCode","PlatformInstanceKey","NativeScopeKey","ObservedAt","NativeAssetID","NativeAssetType","UpstreamNativeAssetID","UpstreamNativeAssetType","UpstreamNativeWorkspaceID","RelationshipCode","EvidenceStatusCode"
+"99999999-9999-4999-8999-999999999999","PowerBI","aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa","aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa","2026-10-07T10:01:00.000Z","33333333-3333-4333-8333-333333333333","Report","44444444-4444-4444-8444-444444444444","Dataset","22222222-2222-4222-8222-222222222222","UsesSemanticModel","Observed"

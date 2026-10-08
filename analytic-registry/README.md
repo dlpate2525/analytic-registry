@@ -1,170 +1,84 @@
-# Analytic Registry prototype
+# Analytic Registry — V1 prototype
 
-A React and TypeScript prototype for reviewing a future Power Apps application. It uses realistic mock data and local browser storage. It does not connect to SQL Server, Active Directory, or analytics platforms.
+**Version:** `1.0.0-prototype.1` · **Release date:** 8 October 2026 · **Intended Git tag:** `v1.0.0-prototype.1`
 
-## Run locally
+Analytic Registry is a React and TypeScript prototype for a future Power Apps application backed by SQL Server. The app uses fictional records and local browser storage. The V1 handoff provides an empty Excel template, source mappings, and SQL staging scripts. It does not connect the app to live platforms or directory services.
+
+The [V1 prototype baseline](docs/v1-prototype-baseline.md) defines this release. Approval of this baseline freezes the prototype and its handoff artifacts. It does not approve production rollout or the proposed operating defaults.
+
+## Start with the current artifacts
+
+| Artifact | Use |
+|---|---|
+| [V1 Excel template](../platform-data-collection/v1-extract/analytic-registry-v1-extract.xlsx) | Collect platform and directory metadata. It has 15 sheets, nine empty import tables, and 117 import columns. |
+| [Four-step platform handoff](../platform-data-collection/v1-extract/README.md) | Select the queries, populate the template, stage manually, and review the results. |
+| [Tableau PostgreSQL supplement](../platform-data-collection/v1-extract/tableau-identity-extract.md) | Read the installed-schema checks and identity joins before running the SQL. |
+| [Power BI/Fabric supplement](../platform-data-collection/v1-extract/powerbi-identity-extract.md) | Project technical ownership and access records from documented API fields. This is extraction pseudocode. |
+| [Alteryx MongoDB supplement](../platform-data-collection/v1-extract/alteryx-backend-extract.md) | Use backend queries only. Verify the installed schema and preserve unknown current ownership. |
+| [SQL staging](../platform-data-collection/v1-extract/sqlserver-staging.sql), [validation](../platform-data-collection/v1-extract/sqlserver-validate.sql), [email matching](../platform-data-collection/v1-extract/sqlserver-email-match.sql) | Prepare and inspect a manual SQL Server load. These scripts do not apply data to the registry. |
+
+The workbook contains Guide, Source_Map, Column_Dictionary, three platform output reference tabs, and nine import tables. The platform tabs show output layouts; they are not additional import tables. There are no formulas or populated source records.
+
+V1 matches `lower(trim(SourceEmail))` to `lower(trim(Mail))` within the configured directory tenant. Accept only one distinct directory user and review duplicate or conflicting rows. Preserve platform-native IDs separately. UPN is not a mail fallback. Every unresolved identity or relationship goes to Platform Manager. A matched disabled account remains resolved-disabled.
+
+Keep the existing `RunKey`, `ObservedAt`, and manifest contract. V1 adds no `RunDate` field and does not redesign runs. Classification, PRL, and risk repairs remain deferred.
+
+## Run the prototype
+
+Use Node.js 22 or later.
 
 1. Open a terminal in this folder.
-2. Run `npm install`.
+2. Run `npm ci`.
 3. Run `npm run dev`.
 4. Open the localhost address printed by Vite.
 
-Use `npm run build` to compile the production bundle. Use `npm run preview` to serve that bundle. Use `npm run check` for domain and data checks. Use `npx tsx scripts/generate-model.mjs` to regenerate the relationship documentation.
+Use `npm run prepare:release` to regenerate documentation and align release links. Run `npm run build`, then `npm run check:release` to verify the release artifacts. Use `npm run preview` to serve the bundle and `npm run check` for domain checks. See the [verification record](docs/verification.md) for release evidence and its limits.
 
-## Product review walkthrough
+## Review the product
 
-1. Start in Business view with four summary numbers. Switch to Administrator view for estate-wide reporting and platform / LOB filters.
-2. Create a workspace request. Try Standard and Custom, one Champion, and a requested new group.
-3. Register an existing Tableau project. Branch performance is the discovered example.
-4. Open Credit portfolio and select Comparison. The new RW group is pending implementation; the direct user is a separate discrepancy.
-5. Open Client insights for the Tableau direct-user scenario.
-6. Open Loan automation for the no-active-Champion review and a personal-credential investigation.
-7. Open an asset and create an assessment. PRL values are illustrative.
-8. Update a review status and record the external administrative action.
-9. Complete an annual attestation as an eligible Champion.
-10. Open Relationships & data model for the association diagrams and explicit columns.
+1. Start in Business view. Review the four dashboard numbers and My work.
+2. Create a workspace request. Try Standard, Custom, and a single Champion.
+3. Open a workspace and compare requested, implemented, and observed information.
+4. Review an asset assessment, an evidence review, and an annual response.
+5. Open the relationship model and the current V1 handoff from the app's reference links.
 
-## Implemented screens
+Five main sections remain: Dashboard, Workspaces, Assets, Requests, and My work. Administration stays in a menu. Requests and assessments use five topics. Reviews and annual attestations use three. External administration follows five stages.
 
-- Executive dashboard and attention queue.
-- Workspace list and detail: Overview, Access, Comparison, Assets, Connections, Findings, Attestation, History.
-- Requests: Create New, Register Existing, Update Existing, topic validation, compact group editing, approvals, external implementation records, and verification.
-- Asset list, detail, assessment form, and assessment history.
-- Unified My work inbox with thematic filters, saved views, risk findings, and controlled review actions.
-- Annual attestation list and pre-populated response form.
-- Detection coverage, configuration standards, mock reference data, and activity history.
-- Relationship explorer with three diagrams and a 52-table proposed column dictionary.
+The mock estate has 12 workspaces, 34 assets, 18 connections, 28 findings, 12 administrative reviews, 10 annual attestations, and 16 people. Eleven workspaces are registered. Examples include unresolved identities, missing accountability, orphan assets, pending changes, and incomplete evidence. Mock observations use October 2026; saved activity uses the browser clock.
 
-## Project structure
+## Requirements retained
 
-```text
-src/
-  components/       Shared tables, fields, badges, and visual primitives
-  layouts/          Navigation and application shell
-  pages/            Dashboard, administration, relationship explorer
-  features/
-    workspaces/     Registry, configuration comparison, access and lineage
-    assets/         Inventory, asset detail, point-in-time assessment
-    requests/       Progressive onboarding and changes
-    reviews/        Queues, findings, external action records
-    attestations/   Annual responses
-  data/             Normalized mock records, local state, proposed schema
-  types/            Domain interfaces
-  utils/            Validation and comparison logic
-scripts/            Domain checks and documentation generator
-docs/               Data model narrative, standalone HTML, Mermaid sources
-public/             Downloadable model documentation
-```
+- Business Owner and Workspace Owner are one field. Workspace, owner, and Champions share the people topic.
+- Standard groups have Champion, RW, R, and Data Sources purposes. Groups inherit workspace accountability; DS names use `_DS`.
+- DS creates and maintains workspace data connections, subject to verified native capabilities.
+- Workspace declarations include PII, EUCT, and the highest applicable DMP tier. Tier 1 is highest, followed by Tier 2 and Tier 3.
+- Approved PRL is manual; retained inputs must not create a calculated approval. Legacy illustrative fields still require alignment.
+- Custom setup and annual responses require Application Owner or Platform Owner approval. Evidence closure requires an eligible platform role.
+- Self-approval is allowed when the person holds the required role and scope. Business ownership alone does not grant that role.
+- Keep six calendar months of metadata history. Preserve current records, active evidence dependencies, and native identity mappings.
+- Keep workspace and asset mapping columns where relationships exist. Show missing relationships explicitly.
 
-## Mock data
+These are product requirements. The [requirements table](docs/requirements.md) distinguishes prototype behavior, partial implementation, and future design.
 
-12 workspace identities: four each for Power BI / Fabric, Tableau, and Alteryx. Eleven are registered; one awaits registration. The estate includes 34 assets, 18 connections, 28 findings, 12 administrative reviews, 10 annual attestations, and 16 people.
+## Model and documents
 
-Specific examples cover clean Standard access, Custom access with six approved groups, inactive ownership, missing Champion coverage, an orphaned workbook, unassociated connection, direct users, pending RW change, unknown identity, personal credentials, and a provisioned workspace without content.
+Use related tables with focused Power Apps views. The **53-table / 602-column target model** describes the future registry. The **nine V1 staging tables** receive extracts. They have different purposes and are not interchangeable.
 
-## Product assumptions
+- [Business and product definition](docs/business-product.md), including workspace-to-asset-to-connection diagrams.
+- [Target table dictionary](docs/data-model.md), [searchable model](docs/data-model.html), and [column CSV](docs/column-dictionary.csv).
+- [Decision register](docs/decision-register.md) and [domain glossary](GLOSSARY.md).
+- [Identity matching and future integration design](docs/identity-resolution-design.md).
+- [Historical audit](docs/audit-report.md), [known defects and repair backlog](docs/github-review-and-repair-plan.md), and [verification record](docs/verification.md).
+- [Earlier inventory collectors and contracts](../platform-data-collection/README.md). Use the V1 handoff for current identity and Alteryx instructions.
 
-- “Workspace” is a generic label; the UI also shows Project or Collection where relevant.
-- Champion is an accountability role, usually represented in RW. It is not a higher permission tier.
-- One Champion is allowed with a warning. Zero, duplicates, and more than ten are blocked at submission.
-- Inactive identities cannot be assigned. Unverified identities display an unresolved warning.
-- Requests do not overwrite implemented or observed state. New group names remain pending prerequisites.
-- Annual attestation completion records a response; it does not certify that every control passed.
-- PRL scores, coverage capabilities, classifications, naming rules, and text limits are illustrative or proposed.
-- Mock snapshots use October 6, 2026. Saved activity uses the browser clock.
-- Fictional Northstar branding provides enterprise context. All people, systems, and records are demo content.
+## Known boundaries
 
-## Relationship design
+The app has no authenticated backend, live directory lookup, platform execution, importer, or notification service. Browser role selection simulates decisions. Local storage is editable and is not an audit repository. Cross-tab conflict checks do not provide production multiuser transactions.
 
-Use multiple related tables, with focused read views for Power Apps screens. The proposed model is more detailed than the React mock layer.
+Known defects remain in actor binding, historical approval validity, assessment projection, some group-change checks, Champion drift, and overdue annual status. The repair backlog records reproducible cases. The V1 freeze updates references and scope; it does not claim those workflows were repaired.
 
-- [Complete model and explicit columns](docs/data-model.md)
-- [Standalone visual relationship guide](docs/data-model.html)
-- [Registry diagram source](docs/registry-relationships.mmd)
-- [Intent and evidence diagram source](docs/reconciliation-relationships.mmd)
-- [Review diagram source](docs/review-relationships.mmd)
+The app still uses legacy illustrative PRL and asset-classification concepts. Manual approved PRL and consistent DMP ranking remain required, but their repairs are deferred. No risk conclusion from mock data should be treated as a control assessment of a real platform.
 
-The design preserves native identity, platform scope, historical intent, immutable implemented versions, observed extract completeness, asset membership, connection lineage, repeated detections, and annual evidence context.
+The collection package has not run against the user's live platforms, directory, or SQL Server. Platform teams must verify schema, privileges, scope, and sample output. The Power BI identity pseudocode does not extend the existing inventory adapter automatically. Alteryx current ownership remains unknown when the backend join cannot be verified.
 
-## Known gaps and decisions
-
-- No production authentication, authorization, backend, notifications, script execution, or multiuser conflict handling. Approval roles are explicitly simulated with mock role assignments.
-- The mock layer currently has one workspace pointer per asset. Each asset has one accountable workspace. The proposed database separately preserves multiple observed technical memberships.
-- Observed evidence is static. Reference data now configures prototype freshness limits and extract completeness. Missing metadata prevents alignment; live ingestion and production rule enforcement remain unimplemented.
-- Submitted requests enter the shared inbox. Approval, recorded external implementation, and verification determine their delivery stage. The prototype does not provision resources or refresh platform inventory.
-- Assessment status and latest classifications are projected into the mock asset record for convenience. The proposed schema derives them from assessment history.
-- Attestation forms freeze a local review packet. Champion responses require Application Owner or Platform Owner approval. Corrections create linked reviews, and approved attestations can finish with follow-up.
-- Selected mock reviews link to tracked findings. Closing linked findings requires evidence and a matching Platform Manager, Platform Team, or Platform Owner approval receipt. Production authorization is not implemented.
-- No asset-creation form, server-side search, pagination, or attachment upload is implemented.
-- Final PRL weights and meaning, classifications, role mappings, evidence freshness, native uniqueness scopes, and retention rules need agreement.
-- Desktop rendering was inspected. The CSS supports narrower layouts, but a full device and accessibility audit remains outstanding.
-
-## Recommended Power Apps iteration
-
-1. Agree on native keys, object relationships, the Standard access contract, and the first platform to implement.
-2. Build the registry and request tables first, with SQL constraints and a transactional submission command.
-3. Add canvas app galleries over read views with stable IDs and server-delegated filters.
-4. Integrate one read-only platform extract with explicit scope and completeness.
-5. Implement the comparison pipeline and deduplicated finding lifecycle.
-6. Add administrator action records and verification, then frozen annual attestation packets.
-
-SQL Server in the deployment environment is the proposed system of record. Confirm its database, gateway, permissions, identity design, and licensing. A final Dataverse-versus-SQL decision remains open.
-
-Microsoft documents [SQL view and stored procedure access](https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/connections/sql-connection-access-data), [delegation](https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/delegation-overview), and [SQL security considerations](https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/connections/sql-server-security).
-
-## Validation
-
-The TypeScript production build passes. The domain suite checks mock record counts, relationship keys, platform consistency, scenario invariants, required fields, identity eligibility, Champion limits, group specifications, and stable-ID comparison. Browser checks cover the rendered dashboard, request validation, progressive Custom fields, and Champion selection behavior.
-
-Reset local state from Reference data → Reset demo data. This clears prototype edits in the current browser only.
-
-## Confirmed refinements
-
-- Business Owner / Workspace Owner is one identity field.
-- Workspace onboarding requires PII, EUCT, and one highest applicable DMP tier (Tier 1, Tier 2, or Tier 3).
-- Business users own group creation and membership maintenance.
-- Custom setup and annual attestations require Application Owner or Platform Owner approval.
-- Item 6 was marked N/A; no extra identity approval gate was introduced.
-- Initial production release and material changes trigger a new asset assessment.
-- Complete and sufficiently fresh evidence is required for conclusive reconciliation. Exact freshness thresholds still need agreement.
-- Platform Manager, Platform Team, or Platform Owner approval is required to close evidence. Approval binds to the exact evidence revision.
-- Annual review can finish with open, linked follow-up after approval.
-- Business view is the default. It has four dashboard metrics, five main navigation entries, an administration menu, simple workspace rows, and guided request/review/attestation steps.
-
-Saved browser edits are retained. Older records without the new workspace declarations show them as missing until updated. Older completed attestations without approval receipts remain historical records; they do not fabricate a new approval.
-
-Guided processes stay below six steps: workspace requests use five (Workspace & people, Classification, Configuration, Groups, Review & submit); asset assessments use five; evidence reviews and annual attestations each use three. Workspace, owner, and Champions share the first request step.
-
-Group ownership is derived from the workspace owner. Requests do not collect a separate group owner; saving a draft or submitting removes any legacy group-owner overrides from that request.
-
-Workspace requests include Champion, RW, R, and Data Sources group specifications. Data Sources supports New or Existing, uses the _DS naming suffix, and follows workspace ownership. Drafts receive a missing Data Sources specification when opened; submitted requests and observed platform evidence are retained.
-
-Review queues, findings, and the administrator dashboard show separate linked Workspace and Asset columns. Requests and attestations link their workspace records; new workspace requests display their proposed name. Missing asset links show a dash, and missing workspace associations are explicit. Connection references remain visible in review and finding context.
-
-## Streamlined workflow implementation
-
-- Five main sections: Dashboard, Workspaces, Assets, Requests, My work. Annual reviews remain accessible from My work and direct links.
-- Four work themes: Workspace setup; Access & accountability; Evidence & risk; Annual assurance.
-- Dashboard and destination lists share owner, completion, and due-window selectors. Due means overdue plus the next 30 days in America/New_York. The admin dashboard preserves platform and business-line filters in drill-through links.
-- The Standard template in `src/data/standard.ts` drives group defaults, suffixes, guidance, and schema documentation. Generated names follow technical-name edits; deliberate manual names are retained.
-- Reusable person and evidence fields serve the request, asset, and review workflows. Annual questions have four thematic disclosures. Requests still use five guided steps; reviews and annual attestations use three.
-- `src/utils/workflow.ts` contains testable request delivery commands and review transition guards. Approvals bind to business intent; implementation evidence cannot satisfy verification by itself.
-- `src/utils/evidence.ts` keeps extract confidence separate from risk. Unknown completeness or an unset freshness limit produces an unresolved assessment. Administrators can simulate metadata in Reference data → Evidence rules; these settings do not assert a corporate policy.
-- Existing saved records are preserved. Missing creator identities are not invented; owner responsibility can include a legacy request in My open requests. Historical approvals and observations are retained.
-
-### Production boundary
-
-The implementation above is a local prototype. It does not introduce a server, database, real identity, concurrent writes, or ingestion. Move the domain commands behind authenticated APIs before an operational pilot. Power Apps should read focused workspace, asset, and work-item views and invoke submit/approve/record/verify commands. Persist request intent, approval receipts, implementation records, verification evidence, and audit events in related tables. Enforce role eligibility and concurrency on the server. Start with one platform and the full request-to-verification lifecycle before adding more integrations.
-
-## October 7 audit and collection handoff
-
-- [Current decision register](docs/decision-register.md): confirmed choices, selected design, operating defaults, and delivery checks.
-- [Domain glossary](GLOSSARY.md): consistent workspace, asset, connection, ownership, and evidence terms.
-
-- [Business / product document](docs/business-product.md) and [relationship diagram](docs/workspace-asset-connection.svg).
-- [53-table dictionary](docs/data-model.md), [searchable HTML](docs/data-model.html), and [CSV](docs/column-dictionary.csv).
-- [Functional and nonfunctional requirements](docs/requirements.md).
-- [Audit report](docs/audit-report.md) and [verification record](docs/verification.md).
-- [Platform collection pack](../platform-data-collection/README.md).
-
-The audit adds validation, immutable completion behavior, correction requests, safer browser persistence, and explicit native-ID design. The mock has no live import or database. Internal UUIDs must remain separate from platform-native IDs during future ingestion.
+Saved browser edits remain local. Use Reference data to export or reset demo state when needed. Testing must not reset the user's saved records.

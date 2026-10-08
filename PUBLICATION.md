@@ -1,25 +1,20 @@
-# Publication notes
+# Publication notes - V1 baseline
 
-Prepared 7 October 2026 for the public analytic-registry repository.
+Published baseline: **1.0.0-prototype.1**, dated 8 October 2026, tag **v1.0.0-prototype.1**.
 
-- Generalized the deployment host references in source, generated documentation, and the compiled preview.
-- Inspected all 11 existing PNG screenshots. They contain the prototype's fictional sample data and generic product branding.
-- Preserved the original screenshots as a design history; older screens are not the current specification.
-- Included the application source, tests, docs, HTML guides, CSV dictionary, diagrams, collection scripts, fixtures, and both downloadable bundles.
-- Excluded installed dependencies, local build caches, raw conversation attachments, browser-storage exports, credentials, and scratch investigation files.
-- Regenerated the 53-table documentation and rebuilt the prototype before packaging.
-- Local checks: 119 domain/data checks, 31 workflow checks, 36 audit checks, and 26 collector checks passed.
-- The build passed with a roughly 501 kB JavaScript bundle warning. Code splitting remains an improvement.
-- Scanned text and nested ZIP contents for excluded organization identifiers, local home paths, and common credential patterns. No matching publication content remained.
+- Updated app help, model page, reference wording, footer, and release metadata.
+- Reconciled business/product, functional/nonfunctional requirements, decisions, identity design, target model, glossary, audit, and repair backlog.
+- Included the current 15-sheet Excel workbook, nine import tables, 117 columns, and three platform output tabs.
+- Corrected 40 column-purpose descriptions while preserving workbook layouts, values outside those cells, styles, tables, and validation rules.
+- Rebuilt the collection and preview ZIPs from current files.
+- Added source-to-archive, workbook, document-link, build-resource, version, and digest checks.
+- Local checks passed: 186 application checks, 28 collection checks, and 220 release integrity checks, including 170 local links.
+- Production build passed. The JavaScript bundle remains approximately 505 kB; route splitting is deferred.
+- Reviewed changed app surfaces and documentation in a separate local browser origin. Narrow layouts at 390 x 844 remained within the viewport.
+- Confirmed binary download bytes against release hashes. Vite omits the workbook MIME header, but serves the correct XLSX bytes.
+- Excluded dependencies, caches, raw conversation attachments, local browser data, credentials, and scratch files.
+- Preserved historical screenshots. The new V1 resources screenshot identifies the current handoff entry point.
 
-The artifact manifest lists a SHA-256 digest for each published file except the manifest itself and Git metadata. GitHub Actions repeats the application and collector checks after publication. Its results are separate from the completed local checks.
+The SHA-256 manifest covers every published file except itself and Git metadata. GitHub Actions repeats checks after publication. Local evidence and hosted CI results are separate.
 
-No live platform SQL or API collection was executed. The proposed operating package remains proposed until accepted. This publication changes neither that status nor the scope of the prototype.
-
-## V1 extract supplement — 8 October 2026
-
-Added the empty Excel extract, nine-table import contract, official source mappings, Tableau user joins, backend-only Alteryx MongoDB queries, Power BI identity pseudocode, and manual SQL staging/matching queries. The workbook was rendered and each sheet visually checked. Exact headers and blank data tables were verified. No live platform, directory, or SQL Server execution was performed.
-
-Corrected Power BI report `createdById` mapping to technical owner instead of original creator and added a collector regression check. Existing app behavior and deferred workflow repairs remain unchanged. Refreshed the collection ZIP and artifact digests.
-
-Added three platform output tabs to the Excel workbook: Tableau_Output, PowerBI_Output, and Alteryx_Output. Their 28 layout sections use exact output headers and label unavailable or separately collected data. Verified that the existing data, formatting, validation rules, and table ranges were preserved. The workbook now contains 15 sheets.
+No live Tableau, Alteryx, Power BI/Fabric, directory, or SQL Server collection was executed. Backend queries require installed-platform validation. The baseline preserves documented defects and proposed operating settings; it does not approve or deploy production workflows.

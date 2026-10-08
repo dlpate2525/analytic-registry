@@ -1,0 +1,30 @@
+{
+  "ContractVersion": "1.0",
+  "RunKey": "<new-collection-run-uuid>",
+  "PlatformCode": "Tableau",
+  "PlatformInstanceKey": "<registry-agreed-server-key>|site=<site-luid>",
+  "NativeScopeKey": "<site-luid>",
+  "EnvironmentCode": "<registry-agreed-environment-code>",
+  "ProductVersion": "<exact-installed-Tableau-build>",
+  "CollectorVersion": "registry-tableau-repository-1.0",
+  "StartedAt": null,
+  "CompletedAt": null,
+  "ObservedAt": null,
+  "RunStatusCode": "NotStarted",
+  "ScopeDescription": "One specified Tableau site. Workbooks and published data sources; all returned lifecycle states. Views optional. Direct connection-owner links only.",
+  "EvidenceURI": null,
+  "Datasets": [
+    {"DatasetCode": "WorkspaceInventory", "ScopeKey": "<site-luid>", "CoverageStatusCode": "NotCollected", "RowCount": null},
+    {"DatasetCode": "WorkbookInventory", "ScopeKey": "<site-luid>", "CoverageStatusCode": "NotCollected", "RowCount": null},
+    {"DatasetCode": "PublishedDatasourceInventory", "ScopeKey": "<site-luid>", "CoverageStatusCode": "NotCollected", "RowCount": null},
+    {"DatasetCode": "WorkspaceAssetMembership", "ScopeKey": "<site-luid>", "CoverageStatusCode": "NotCollected", "RowCount": null},
+    {"DatasetCode": "Connections", "ScopeKey": "<site-luid>", "CoverageStatusCode": "NotCollected", "RowCount": null},
+    {"DatasetCode": "AssetConnectionLineage", "ScopeKey": "<site-luid>", "CoverageStatusCode": "NotCollected", "RowCount": null},
+    {"DatasetCode": "AssetDependencies", "ScopeKey": "<site-luid>", "CoverageStatusCode": "NotCollected", "RowCount": null},
+    {"DatasetCode": "ViewsInventory", "ScopeKey": "<site-luid>", "CoverageStatusCode": "NotCollected", "RowCount": null},
+    {"DatasetCode": "Activity", "ScopeKey": "<site-luid>", "CoverageStatusCode": "NotCollected", "RowCount": null},
+    {"DatasetCode": "EffectiveAccess", "ScopeKey": "<site-luid>", "CoverageStatusCode": "NotCollected", "RowCount": null},
+    {"DatasetCode": "CredentialIdentity", "ScopeKey": "<site-luid>", "CoverageStatusCode": "NotCollected", "RowCount": null}
+  ],
+  "Warnings": []
+}

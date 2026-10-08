@@ -1,6 +1,8 @@
-# Analytic Registry
+# Analytic Registry — glossary
 
 Analytic Registry connects business accountability, analytics content, and evidence from source platforms.
+
+Version `1.0.0-prototype.1`, 8 October 2026; intended tag `v1.0.0-prototype.1`. Definitions describe product meaning. They do not imply every target feature is implemented. See the [V1 baseline](docs/v1-prototype-baseline.md).
 
 ## Language
 
@@ -81,3 +83,47 @@ A result used when required evidence or an applicable rule is insufficient. It i
 
 **Pending Implementation**:
 A difference explained by an approved request that has not yet been delivered and verified. It does not explain unrelated drift.
+
+## V1 extraction and identity terms
+
+**V1 prototype baseline**:
+The frozen React prototype and manual extraction handoff dated 8 October 2026. It is not a production release.
+
+**V1 workbook**:
+The empty Excel template with 15 sheets: three guides, three platform output references, and nine import tables with 117 columns.
+
+**Platform output reference tab**:
+A layout guide showing native query or adapter output and its destination table. It is not an import table.
+
+**Staging table**:
+A SQL Server table that receives raw delivery rows for validation and review. V1 has nine staging tables, separate from the 53-table / 602-column target registry.
+
+**Platform principal**:
+A source identity, such as a user, group, or application. Preserve its native ID, namespace, platform instance, and native scope.
+
+**Directory user**:
+A user record in a configured Microsoft Entra tenant. Its object ID, mail address, UPN, and enabled state are separate evidence fields.
+
+**Email match**:
+V1's exact comparison of normalized platform SourceEmail and directory Mail within one configured tenant. Normalize with lower(trim); require one distinct directory user.
+
+**User principal name (UPN)**:
+A directory sign-in identifier. It need not equal the mail address and is not a V1 email fallback.
+
+**Resolved-disabled**:
+A source identity matched to a directory user whose AccountEnabled value is false. The identity is resolved; current accountability needs review.
+
+**Unresolved identity**:
+A preserved source principal without an accepted match. Missing, ambiguous, invalid, conflicting, or failed evidence does not prove inactivity.
+
+**Platform Manager review**:
+The V1 destination for every unresolved identity or relationship and for current-accountability review of disabled users.
+
+**RunKey**:
+The existing delivery correlation key. Platform and directory deliveries retain their own keys. V1 does not redesign it.
+
+**ObservedAt**:
+The existing timestamp attached to source evidence. Preserve its original source context; a later manual load must not refresh its age.
+
+**Technical ownership**:
+A platform-reported owner relationship. It does not establish the declared Business Owner / Workspace Owner. In Power BI, report createdBy is technical-owner evidence.

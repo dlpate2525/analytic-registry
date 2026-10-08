@@ -1,13 +1,18 @@
 {
   "name": "analytic-registry-prototype",
   "private": true,
-  "version": "0.1.0",
+  "version": "1.0.0-prototype.1",
   "type": "module",
+  "engines": { "node": ">=22" },
   "scripts": {
     "dev": "vite --host 127.0.0.1",
     "build": "tsc -b && vite build",
     "preview": "vite preview --host 127.0.0.1",
-    "check": "tsx scripts/check.ts && tsx scripts/workflows.check.ts && tsx scripts/audit.check.ts"
+    "check": "tsx scripts/check.ts && tsx scripts/workflows.check.ts && tsx scripts/audit.check.ts",
+    "prepare:release": "tsx scripts/generate-model.mjs && tsx scripts/prepare-release.mjs",
+    "predev": "npm run prepare:release",
+    "prebuild": "npm run prepare:release",
+    "check:release": "tsx scripts/release.check.mjs"
   },
   "dependencies": {
     "react": "^19.1.0",

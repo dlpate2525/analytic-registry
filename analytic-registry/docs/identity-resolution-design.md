@@ -1,89 +1,93 @@
-# Platform identity to Power Apps directory resolution
+# Platform identity and directory matching
 
-## V1 extract decision — 8 October 2026
+**V1 prototype:** `1.0.0-prototype.1` · 8 October 2026 · intended tag `v1.0.0-prototype.1`.
 
-The current delivery uses the [Excel extract and platform handoff](../../platform-data-collection/v1-extract/README.md). It uses exact normalized email matching after manual SQL staging. Retain native IDs separately. All unresolved identities and relationships go to Platform Manager. Alteryx collection uses MongoDB backend tables and read-only queries only.
+The [baseline](v1-prototype-baseline.md) and [V1 handoff](../../platform-data-collection/v1-extract/README.md) govern this release. V1 uses an empty Excel template and manual SQL Server staging. It does not add an Office 365 connector, live Graph resolver, importer, or app eligibility service.
 
-Existing RunKey, ObservedAt, and manifest behavior remain unchanged. Classification, PRL, and risk repairs are deferred for V1. Existing product requirements remain. The plans below describe future implementation where they exceed this extract workflow. No live directory integration or application workflow repair has been implemented by this delivery.
+The current workbook has 15 sheets: three guides, three platform output reference tabs, and nine import tables with 117 columns. Its [contract](../../platform-data-collection/v1-extract/workbook-contract.json) defines the exact headers and types. The 53-table / 602-column target registry and the future identity-history proposal below have separate purposes.
 
-**Proposed design accompanying the [application repair plan](github-review-and-repair-plan.md).** The implementation is not present in the current prototype.
+## V1 identity rules
 
-## Identity model
-
-A platform's user ID and a Microsoft Entra object ID are different identifiers unless the source contract explicitly proves otherwise. Keep both. Preserve the registry Person ID as a separate internal key.
+A platform user ID and an Entra object ID are different identifiers unless the source proves the namespace. Retain both and preserve any registry Person ID separately. Email helps match evidence; it does not replace a durable ID.
 
 ```mermaid
 flowchart LR
-    O[Observed workspace or asset owner] --> P[Scoped platform principal]
-    P --> B[Verified directory binding]
-    B --> I[Entra tenant and object ID]
-    I --> S[Directory account snapshots]
-    P --> A[Resolution attempts and reasons]
-    I --> H[Registry Person for a recognized directory user identity]
-    H --> W[Declared workspace owner or Champion]
-    S --> E[Current eligibility evaluation]
-    R[Application role and workspace scope] --> E
-    E --> D[New decision or response]
-    D --> C[Immutable receipt and evidence references]
+    source["Platform users and object-role references"] --> excel["V1 Excel / CSV tables"]
+    directory["Directory users: ID, mail, UPN, accountEnabled"] --> excel
+    excel --> stage["Manual SQL Server staging"]
+    stage --> validate["Validate scope, keys, evidence, and relationships"]
+    validate --> match["Exact normalized email in configured tenant"]
+    match --> resolved["Resolved identity + separate account state"]
+    match --> unresolved["Unresolved identity / relationship"]
+    unresolved --> manager["Platform Manager"]
+    resolved -->|"Disabled or unknown account state"| manager
+    resolved --> review["Review approved mappings before manual load"]
+    manager --> review
 ```
 
-The graph does not imply that technical ownership creates business accountability. A person can have several platform accounts. Each account retains its own scoped key and mapping history.
+1. Preserve the platform instance, native scope, ID namespace, native ID, principal type, and original source email.
+2. Validate the platform and directory delivery scope, completeness, IDs, observation times, duplicates, and object references.
+3. Match exact `lower(trim(SourceEmail))` to `lower(trim(Mail))` in the configured directory tenant.
+4. Accept one distinct directory user only; keep identity resolution separate from AccountEnabled and role eligibility.
+5. Send every unresolved case to Platform Manager before accepting a mapping or relationship.
 
-## What Microsoft interfaces establish
+Do not match by display name, inferred email, login, or the first search result. Do not strip plus suffixes or rewrite domains. UPN is not a mail fallback. A source-provided Graph ID is retained and checked for conflict; it does not bypass the V1 email rule.
 
-Office 365 Users **Get user profile (V2)** accepts a user principal name (UPN) or directory object ID. Request a small explicit field set. Tenant policy, guest restrictions, and Conditional Access can prevent a lookup. Search results are candidates, not authoritative identity bindings. [Office 365 Users connector](https://learn.microsoft.com/en-us/connectors/office365users/)
+The SQL query flags duplicate directory evidence. Remove only verified identical duplicate rows before rerunning. Never collapse conflicting mail or account-state evidence. Two distinct directory IDs sharing a normalized email are ambiguous.
 
-In Power Apps, `User().EntraObjectId` identifies the current user. `User().Email` returns the UPN, which need not equal the mailbox address. Treat the client value as UI context; validate the actual caller in the trusted command service. [Power Fx User function](https://learn.microsoft.com/en-us/power-platform/power-fx/reference/function-user)
+Preserve prior bindings when reviewing a new delivery. A reused email that points to another directory user requires Platform Manager review before any replacement. The V1 query does not implement binding-history migration or automatically merge people.
 
-Store `id`, `userPrincipalName`, `mail`, `accountEnabled`, and `userType` separately. The account flag and Member/Guest classification have different meanings. An enabled account is not evidence of application authority or current employment. [Graph user resource](https://learn.microsoft.com/en-us/graph/api/resources/user?view=graph-rest-1.0), [B2B user properties](https://learn.microsoft.com/en-us/entra/external-id/user-properties)
+## Current import tables and source evidence
 
-Service principals are distinct directory objects. They can represent applications or managed identities. Do not route them through a human owner/Champion picker. A user account used for automation also needs an approved identity classification; its object type alone does not establish that it represents a person. [Service principal resource](https://learn.microsoft.com/en-us/graph/api/resources/serviceprincipal?view=graph-rest-1.0)
+The six existing inventory tables remain Workspaces, Assets, Workspace_Assets, Connections, Asset_Connections, and Asset_Dependencies. The three identity tables are:
 
-## Resolution rules
-
-1. Read the source instance, native scope, principal kind, identifier namespace, and native ID.
-2. Reuse a verified binding when its source identity and directory tenant still agree.
-3. Otherwise, try a documented Entra object ID or verified UPN in the correct tenant.
-4. If only a login, email, or display name exists, collect candidates and validate an explicit crosswalk. Do not bind by display name or the first search result.
-5. Record the attempt outcome and the separate account evidence. Preserve unmatched source principals.
-
-Graph supports direct lookup by object ID or UPN. A missing object returns 404. This describes the lookup result in that tenant; it does not establish why the object is absent. [Get user](https://learn.microsoft.com/en-us/graph/api/user-get?view=graph-rest-1.0)
-
-An existing verified binding survives a temporary lookup failure. Keep its previous successful observation and original timestamp. Do not present that historical observation as newly verified. A newly created account that reuses an old email address must not acquire the former account's approvals or ownership automatically.
-
-## Separate state dimensions
-
-These are proposed registry codes, not a replacement for vendor source values.
-
-| Dimension | Values | Purpose |
+| Table | Grain and key evidence | V1 purpose |
 |---|---|---|
-| `ResolutionStatusCode` | NotAttempted, Resolved, NotFound, Ambiguous, LookupFailed, NotApplicable | Outcome of a lookup or mapping attempt. |
-| `DirectoryAccountStateCode` | Enabled, Disabled, Deleted, Unknown, NotApplicable | Last positively observed directory state, with its evidence time. |
-| `PrincipalTypeCode` | User, Group, ServicePrincipal, Unknown | Source/directory object category. |
-| `DirectoryUserTypeCode` | Member, Guest, null | Preserve the directory's user classification. |
-| `EvidenceStatusCode` | Current, Stale, Unavailable | Whether the required evidence is usable under the configured rule. |
-| `EligibilityResultCode` | Eligible, Ineligible, UnableToVerify | Context-specific conclusion for an owner, Champion, responder, or approver. |
+| Platform_Users | One scoped platform principal per delivery. Includes NativePrincipalID, IdentifierNamespace, PrincipalTypeCode, SourceEmail, SourceDirectoryObjectID, and DirectoryTenantKey. | Preserve source identities even when matching fails. Types are User, Group, App, or Unknown. |
+| Directory_Users | One directory tenant and user ID per directory delivery. Includes DirectoryObjectID, Mail, UserPrincipalName, AccountEnabled, and ObservedAt. | Provide exported directory evidence. This table keeps its own RunKey and observation time. |
+| Object_Users | One observed object-to-principal role reference. Includes object key, PrincipalRoleCode, raw source reference and namespace, resolved native principal key when known, and source reference status. | Keep technical ownership, modification, and access evidence separate from declared business accountability. |
 
-Use one shared evaluator. A resolved, enabled account can still be ineligible for a specific role. A known person with unresolved evidence can remain recorded in a request without receiving authority to approve it.
+Use the workbook and contract for every header and SQL type. The corresponding CSV files are `platform_users.csv`, `directory_users.csv`, and `object_users.csv`. Earlier proposals named `principals.csv` and `object_principals.csv`; those are not V1 delivery files.
 
-| Evidence or outcome | Record | Application treatment |
-|---|---|---|
-| Successful exact match; accountEnabled true | Resolved + Enabled | Check evidence age, human classification where required, assigned role, and record scope. |
-| Successful exact match; accountEnabled false | Resolved + Disabled | Route current accountability for replacement; preserve historical actions. |
-| Successful match; accountEnabled omitted | Resolved + Unknown | Identity is known; account eligibility is not established. |
-| 404 for a valid lookup | NotFound | Keep native identity. Do not classify as Disabled or Deleted. |
-| Multiple plausible matches | Ambiguous | Request identity mapping review; never choose the first match. |
-| 401 or 403 | LookupFailed with authentication/access reason | Address integration access; do not make an inactivity finding. |
-| 429, timeout, or transient server failure | LookupFailed with retry reason | Retry safely and preserve prior verified evidence without refreshing its age. |
-| Positive deleted-item record or directory deletion event | Deleted account evidence | Preserve mapping/history; create present-accountability work as applicable. |
-| Directory result is a group or service principal | Route by object type | Human accountability remains unassigned until a suitable person is selected. |
+| Platform | Current collection treatment |
+|---|---|
+| Tableau | Repository SQL joins site-scoped owner references through users and system users. Retain repository integers and LUIDs in their documented namespaces. Follow the [preflight and identity SQL](../../platform-data-collection/v1-extract/tableau-identity-extract.md). |
+| Power BI/Fabric | Retain emailAddress, identifier, graphId, and principalType as separate evidence. Report createdBy and model configuredBy describe technical ownership, not declared business ownership. Artifact and workspace user lists describe access. Follow the [identity pseudocode](../../platform-data-collection/v1-extract/powerbi-identity-extract.md); the existing inventory adapter does not generate these identity tables automatically. |
+| Alteryx | Use [MongoDB backend queries only](../../platform-data-collection/v1-extract/alteryx-backend-extract.md). Verify the installed 2025.2 schema. Original authorship is not proof of current ownership. Keep unverified owner joins unresolved and route Platform Manager. |
 
-HTTP failures describe the request result, not employment or account status. Honor `Retry-After` for throttling. [Graph error semantics](https://learn.microsoft.com/en-us/graph/errors), [throttling guidance](https://learn.microsoft.com/en-us/graph/throttling)
+Keep existing RunKey, ObservedAt, and manifest behavior. V1 adds no RunDate and does not redesign extraction runs. Unknown or uncollected datasets do not establish an empty estate or absence of access.
 
-Deletion requires positive evidence, such as a deleted-directory-item response or a deletion marker from a verified directory change feed. An absent deleted-item result is not proof of an enabled account. Preserve restoration and permanent-deletion events distinctly in source evidence. [Deleted item lookup](https://learn.microsoft.com/en-us/graph/api/directory-deleteditems-get?view=graph-rest-1.0), [user delta walkthrough](https://learn.microsoft.com/en-us/graph/delta-query-users)
+## SQL results and review routing
 
-## Minimum proposed data changes
+The [staging script](../../platform-data-collection/v1-extract/sqlserver-staging.sql) creates nine tables. The [validation query](../../platform-data-collection/v1-extract/sqlserver-validate.sql) checks delivery quality. The [email query](../../platform-data-collection/v1-extract/sqlserver-email-match.sql) returns identity and relationship review rows; it does not update registry records.
 
+| Evidence | ResolutionStatus | DirectoryAccountState | Required action |
+|---|---|---|---|
+| Unique exact match; AccountEnabled true | Resolved | Enabled | Retain the matched directory ID. Role and scope checks remain separate. |
+| Unique exact match; AccountEnabled false | Resolved | Disabled | Keep identity and history. Platform Manager reviews current accountability. |
+| Unique exact match; AccountEnabled missing | Resolved | Unknown | Platform Manager reviews account eligibility. Do not label the account disabled. |
+| Missing or invalid email, no match, ambiguous match, duplicate/conflicting evidence, or missing required scope | Unresolved | Unknown | Preserve raw evidence and route Platform Manager. |
+| Incomplete or failed directory collection | Unresolved | Unknown | Confirm coverage or collect again. Do not infer inactivity or deletion. |
+| Group, App, or Unknown principal type | Unresolved for human matching | Unknown | Preserve the native principal. Route attempted human-accountability mapping to Platform Manager. |
+| Missing principal or object reference, incompatible namespace, or missing inventory object | Unresolved relationship | Unknown | Preserve Object_Users evidence and route Platform Manager. |
+
+“Resolved-disabled” is shorthand for Resolved plus Disabled, not a replacement SQL status code. “Unable to Verify” describes uncertain eligibility or control evidence. It must not turn a known disabled match into “not found,” or an unresolved match into “inactive.”
+
+V1 does not determine employment, deletion, guest policy, automation use, or approval authority from email alone. An enabled user object may still be unsuitable for a human owner or Champion role. Every uncertain case remains reviewable.
+
+## Microsoft identity semantics retained
+
+Microsoft Graph exposes `id`, `mail`, `userPrincipalName`, and `accountEnabled` as separate user properties. AccountEnabled is account evidence, not employment or application authority. [Graph user resource](https://learn.microsoft.com/en-us/graph/api/resources/user?view=graph-rest-1.0)
+
+Power Apps `User().Email` returns UPN, which can differ from the mailbox address. It must not be substituted for Graph Mail in V1 matching. `User().EntraObjectId` is separate identity context. [Power Fx User function](https://learn.microsoft.com/en-us/power-platform/power-fx/reference/function-user)
+
+Office 365 Users Get user profile (V2) accepts a UPN or directory object ID. A platform ID is not a valid directory ID merely because both fields are called “ID.” Access policy can prevent lookup. [Office 365 Users connector](https://learn.microsoft.com/en-us/connectors/office365users/)
+
+Graph can return 404, access errors, or throttling. Those responses do not prove inactivity or deletion. A future integration must retain failed-attempt evidence separately from a successful account observation. [Get user](https://learn.microsoft.com/en-us/graph/api/user-get?view=graph-rest-1.0), [Graph errors](https://learn.microsoft.com/en-us/graph/errors), [throttling](https://learn.microsoft.com/en-us/graph/throttling)
+
+## Future identity-history proposal — not part of V1 staging
+
+The following proposal is retained from the application review. It is not an executed migration and does not modify the frozen 53-table target model. Its additional history structures require a future schema revision. The V1 email-only rule remains authoritative for the current handoff; direct-ID or UPN resolution is not added as a fallback.
 Reuse `Person`, `Principal`, `DirectoryGroup`, and approval structures. Add the missing evidence/history structures. This is a migration plan, not executed SQL. All technical timestamps use UTC `datetime2(3)`; internal SQL IDs use `uniqueidentifier`.
 
 | Table / grain | Fields to add or formalize | Purpose and constraints |
@@ -101,69 +105,37 @@ Make existing `Principal.PersonID` and `Principal.DirectoryGroupID` derived curr
 
 Expose LastAttemptAt and LastVerifiedAt through views over attempts and snapshots. A failed attempt must not update LastVerifiedAt. Keep the existing six-month history policy and active-evidence exceptions. Retain the identity index needed for future refreshes.
 
-### Platform delivery additions
+## Future Power Apps responsibilities
 
-Add `principals.csv` at one scoped platform-principal per run. Include the existing common run/platform columns plus:
+The operational application will need a trusted service that validates the caller, role, workspace scope, evidence age, allowed transition, and record revision. Editable client actor IDs cannot authorize decisions. Current-account eligibility is checked for new actions; historical receipts retain decision-time evidence.
 
-| Column | Staging type | Meaning |
-|---|---|---|
-| `NativePrincipalID` | text(200) | Exact platform identifier. |
-| `IdentifierNamespace` | text(80) | Explicit source ID family, such as TableauRepositoryUserID. |
-| `PrincipalTypeCode` | text(30) | User, Group, ServicePrincipal, or Unknown. |
-| `DisplayName` | text(200), nullable | Source label; never a matching key. |
-| `SourceLogin` | text(320), nullable | Original source login. Its syntax does not prove it is a UPN. |
-| `SourceUPN` | text(320), nullable | Source-provided UPN when its meaning is verified. |
-| `SourceMail` | text(320), nullable | Source email evidence, separate from UPN. |
-| `DirectoryTenantKey` | text(100), nullable | Directory tenant only when supplied or verified. |
-| `DirectoryObjectID` | text(150), nullable | Entra ID only when the source establishes that namespace. |
-| `IdentityEvidenceCode` | text(40) | NativeOnly, SourceAsserted, or VerifiedCrosswalk. Define provenance for each adapter. |
-
-Add principal-reference namespaces to owner/creator/modifier fields, or use a separate `object_principals.csv` relationship file with object key, role, and complete principal key. The proposed implementation should use the relationship file to keep role references uniform across platforms. Include its dataset coverage in the manifest. Technical roles never populate business-owner declarations automatically.
-
-For Tableau, collect the installed repository/API user mapping before resolving integer owner references. For Power BI, add a dedicated, scoped principal collector and adapter; simply changing `getArtifactUsers` is not a complete implementation. For Alteryx, verify its installed user/API schema and identifier namespaces before writing a field-specific query.
-
-## Power Apps and integration responsibilities
-
-| Component | Responsibility |
+| Component | Future responsibility |
 |---|---|
-| Power Apps people picker | Search users, present identity candidates, and store the selected tenant/object ID. Display resolution, account state, and checked-as-of details. |
-| Office 365 Users connector | Perform permitted interactive profile lookup. Request only needed fields. Show specific failures rather than changing Person to Inactive. |
-| Trusted directory integration | Collect account/lifecycle evidence, follow paging, handle retry, and persist snapshots/checkpoints in SQL Server. |
-| Registry command service or trusted flow | Validate authenticated caller, application role, workspace scope, evidence freshness, transition, and record revision before committing a decision. Do not trust an actor ID supplied as an editable client parameter. |
-| Registry views | Resolve technical users to current known people, preserve historical labels, compute coverage consistently, and expose unresolved work. |
+| People picker | Present candidates and save verified tenant/object identity. Show resolution, account state, and observation time separately. |
+| Office 365 Users connector | Perform permitted interactive profile lookup and show lookup failures without changing a user to Inactive. |
+| Directory integration | Collect scoped account evidence with paging, retry, and observation history. No live connector is included in V1. |
+| Registry command service | Enforce actor, role, scope, workflow, exact evidence revision, and concurrency. Preserve eligible self-approval. |
+| Registry views | Show current evidence and unresolved work without overwriting historical actions or business declarations. |
 
-Graph user delta collection supports initial and incremental synchronization. Follow every next link before accepting the final delta checkpoint. Treat omitted properties in incremental updates according to the API response semantics; do not erase stored values merely because a property was omitted. [User delta API](https://learn.microsoft.com/en-us/graph/api/user-delta?view=graph-rest-1.0)
+For future bulk views, read cached directory evidence from SQL Server instead of calling a connector for every row. Freshness schedules remain proposed. A later Graph delta integration must preserve paging and checkpoint semantics; that design is not a deployed V1 feature. [User delta API](https://learn.microsoft.com/en-us/graph/api/user-delta?view=graph-rest-1.0)
 
-Use an approved Graph-capable integration for delta and deleted-item routes. The Office 365 Users connector's HTTP action has limited supported routes; do not assume it provides an arbitrary directory API. Validate read permissions and selected-property visibility in the actual tenant. This plan does not request account modification privileges. [Office 365 Users connector](https://learn.microsoft.com/en-us/connectors/office365users/)
+Service principals and groups are not directory users. A user account used for automation also needs separate evidence before it can serve human accountability. The source workbook preserves User, Group, App, and Unknown without inventing a person. [Service principal resource](https://learn.microsoft.com/en-us/graph/api/resources/serviceprincipal?view=graph-rest-1.0)
 
-For bulk views, read cached, traceable directory evidence from SQL Server. Avoid a connector call for every gallery row. Define the freshness interval as configuration; the earlier operating proposals are not automatically approved by this review.
+## Acceptance boundaries
 
-## Cohesive application behavior
-
-- Keep five main sections. Put identity-resolution work under My work and detailed source diagnostics under Administration.
-- Show a compact identity badge beside owners and Champions. Expand to platform ID, directory identity, status, reason, and observation time.
-- Preserve existing unresolved owner/Champion request behavior without inventing an extra approval gate. Unknown identities remain explicitly unresolved.
-- Require a verified eligible actor for an actual approval or response command. Preserve drafts during an integration outage.
-- Show Missing assignment separately from Account disabled, Account deleted, and Unable to verify.
-- Freeze reviewed business context and decision evidence. A later disabled account creates current accountability work rather than changing who performed historical actions.
-
-## Acceptance scenarios
-
-| Scenario | Required result |
+| V1 scenario | Required handoff result |
 |---|---|
-| Same display name, different native IDs | Remain separate principals. |
-| Same native integer, different Tableau sites | Remain separate source identities. |
-| Numeric platform ID passed as a directory ID | Reject the namespace mismatch; keep unresolved source evidence. |
-| Renamed UPN, unchanged Entra object ID | Preserve the Person and binding. |
-| Recreated account with reused email | Require a new directory identity and explicit reassignment. |
-| 403 or timeout after a prior enabled result | Record failed attempt; retain prior result with original age; no inactive finding. |
-| NotFound from the wrong tenant or stale UPN | Remain unresolved until the binding is verified. |
-| Disabled user still returns a profile | Record Resolved + Disabled. |
-| Deleted account has positive deletion evidence | Preserve the historical Person and references; route current accountability. |
-| Mixed disabled and unresolved Champions | Unable to verify full active coverage; do not conclude every Champion is inactive. |
-| Directory run fails midway | Keep prior complete checkpoint; no absence-based deletions. |
-| Approver becomes disabled after a completed decision | Decision remains historical fact; new approvals require current eligibility. |
-| Enabled guest or automation identity | Apply explicit role/human eligibility policy; do not infer employee status. |
-| Another user opens an annual-response URL | Command rejects save/submit unless that actor is authorized for the packet. |
+| Same name, different native keys | Preserve separate principals. |
+| Same integer, different platform/site scope | Preserve separate source identities. |
+| UPN equals source email but Mail differs or is missing | No fallback match. Send to Platform Manager. |
+| One mail match with AccountEnabled false | Resolved + Disabled; retain the binding and route current-accountability review. |
+| Two directory user IDs share an email | Unresolved; never choose the first result. |
+| Repeated identical directory rows | Flag for review; rerun only after verifying and removing identical duplicates. |
+| Source Graph ID conflicts with the email match | Unresolved; retain both IDs and route Platform Manager. |
+| Current Alteryx owner is not established by verified backend evidence | Preserve unknown current ownership; original author does not fill the gap. |
+| Platform and directory extracts run at different times | Keep each RunKey and ObservedAt unchanged. |
+| Raw object reference has no accepted principal or inventory object | Retain the relationship as unresolved. |
 
-The next implementation should add these cases to the shared domain tests and to the connector/service integration tests. Live tenant validation remains necessary before operational use.
+The [verification record](verification.md) identifies offline checks actually performed. No live platform, directory, SQL Server, or Power Apps execution is claimed.
+
+Historical approval preservation, actor-bound responses, shared coverage evaluation, and safe assessment projection remain app repairs in the [backlog](github-review-and-repair-plan.md). Classification, PRL, and risk repairs are deferred for this prototype. Their requirements remain valid.

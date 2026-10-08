@@ -25,3 +25,8 @@ jobs:
         working-directory: analytic-registry
       - name: Check platform collection adapter
         run: node --test platform-data-collection/tests/normalize.test.mjs platform-data-collection/v1-extract/tests/alteryx-backend.test.mjs
+      - name: Check release resources
+        run: npm run check:release
+        working-directory: analytic-registry
+      - name: Verify workbook and collection archive
+        run: python3 platform-data-collection/verify-delivery.py

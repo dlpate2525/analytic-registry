@@ -1,0 +1,15 @@
+erDiagram
+    DetectionRuleIdentity ||--o{ DetectionRule : versions
+    DetectionRule ||--o{ DetectionCoverage : capability
+    Platform ||--o{ DetectionCoverage : supports
+    DetectionRule ||--o{ RuleEvaluation : evaluates
+    RegistryObject ||--o{ RuleEvaluation : checked
+    RegistryObject ||--o{ Finding : affects
+    Finding ||--o{ FindingEvaluation : recurs
+    RuleEvaluation ||--o{ FindingEvaluation : supplies
+    Finding ||--o{ ReviewFinding : investigated
+    AdministrativeReview ||--o{ ReviewFinding : coordinates
+    Workspace ||--o{ Attestation : annually
+    Attestation ||--o{ AttestationRecipient : champions
+    Attestation ||--o{ AttestationAnswer : records
+    AttestationQuestion ||--o{ AttestationAnswer : answers

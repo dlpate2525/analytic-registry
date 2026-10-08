@@ -1,6 +1,18 @@
 # Analytic Registry — decision register
 
-Prepared 7 October 2026. This register consolidates the audit gaps, product questions, and collection decisions.
+**Version:** `1.0.0-prototype.1` · 8 October 2026 · intended tag `v1.0.0-prototype.1`.
+
+## V1 precedence and scope
+
+The [prototype baseline](v1-prototype-baseline.md) freezes the app and the [current platform handoff](resources/platform-data-collection/v1-extract/README.md). The workbook has 15 sheets: three guides, three platform output reference tabs, and nine import tables with 117 columns. The 53-table / 602-column target model is separate from staging.
+
+V1 uses manual SQL Server staging. Match exact lower(trim(SourceEmail)) to lower(trim(Graph Mail)) within the configured tenant. Require one distinct directory user and review duplicate/conflicting rows. Preserve native IDs. Do not use UPN as a mail fallback. All unresolved identities and relationships go to Platform Manager; a matched disabled user remains resolved-disabled.
+
+Alteryx V1 uses MongoDB backend queries only. Preserve unknown current ownership when its installed join cannot be verified. Keep existing RunKey, ObservedAt, and manifest behavior. No RunDate or run redesign is included.
+
+Classification, PRL, and risk repairs remain deferred. Existing requirements remain valid. The freeze updates references and documents; it does not repair known workflows or add a live directory connector. Prototype approval does not authorize production rollout or accept the proposed operating package.
+
+Prepared 7 October 2026; reconciled for the V1 baseline on 8 October 2026.
 
 The objective is to close design choices without treating unknown corporate policy or untested infrastructure as verified. A chosen design can still require implementation and acceptance testing.
 
@@ -27,7 +39,9 @@ This document does not change live permissions, schedule jobs, send notification
 | C-13 | Preserve the 11 risk buckets and distinguish missing evidence, pending change, drift, and confirmed failure. | Original brief. |
 | C-14 | Show workspace and asset mappings wherever real relationships exist. Keep connection technology visible. | Explicit mapping and connection-column requests. |
 
-## 2. Selected design — no additional business choice required
+## 2. Target design — implementation backlog
+
+These engineering choices describe the future operational application. They are not a list of implemented V1 features. The V1 precedence section governs the current manual handoff. Where a setting is marked Proposed, prototype approval does not accept it.
 
 | ID | Selected design | Consequence / implementation |
 |---|---|---|
@@ -35,36 +49,36 @@ This document does not change live permissions, schedule jobs, send notification
 | D-02 | Authenticate users through corporate Microsoft Entra ID. Resolve permissions at the service for every read and command. | Validate the caller's signed identity. Never trust an actor ID, role, or business-line filter supplied by the client. Business users see their assigned or accountable records; platform staff see their authorized platform instances. |
 | D-03 | Keep service identities separate for collection, ingestion, application operations, and notifications. | Grant each identity its required scope. Collection is read-only. No role switch in the production UI creates authorization. |
 | D-04 | Use separate development, test, and production environments with versioned deployments. | Keep endpoints and secrets in managed configuration. Require tested database migrations and a recovery plan. React browser storage remains a prototype feature. |
-| D-05 | Collect source metadata into staging before resolving registry records. | Validate keys, types, duplicates, scope, row counts, and payload hashes. Quarantine invalid rows. An invalid dependency remains unresolved rather than becoming a false relationship. |
-| D-06 | Make ingestion repeatable without duplicate effects. | A delivery key plus content hash identifies a run. Repeating the same delivery returns its receipt. Reusing the delivery key with different content is rejected. Commit each validated dataset and its coverage atomically. |
-| D-07 | Use a managed native-identifier ledger, not an informal crosswalk spreadsheet. | Promote `ObjectNativeIdentifier` from the collection proposal into the next schema revision. Retain identifier namespace, object reference, verification evidence, validity interval, and steward approval. |
-| D-08 | Assign identity stewardship to the registry administration team. | The source platform owner verifies an ID-to-ID crosswalk. A registry administrator records the binding. A rename never requires a new object; a recreated source ID never auto-merges by name. |
+| D-05 | Stage source metadata before resolving registry records. | V1 supplies nine manual staging tables and validation queries. Automated quarantine, transactional ingestion, and payload-hash enforcement remain future work. Invalid dependencies remain unresolved. |
+| D-06 | Make future automated ingestion repeatable without duplicate effects. | The target importer will validate delivery key and content, retain receipts, and commit validated datasets atomically. V1 retains the existing RunKey/ObservedAt/manifest contract and adds no importer or run redesign. |
+| D-07 | Keep a managed native-identifier ledger in the future registry. | V1 Excel is the approved extraction template, not an authoritative editable identity ledger. The proposed ObjectNativeIdentifier addition remains a future schema change with namespace, evidence, validity, and review history. |
+| D-08 | Assign all unresolved V1 identities and relationships to Platform Manager. | Platform Manager reviews source evidence before a manual mapping is accepted. A future service may separate review and database-recording roles. Neither a rename nor a reused email authorizes an identity merge. |
 | D-09 | Retain report/model/source distinctions. | Power BI report and semantic model are separate assets. Tableau workbook and published data source are separate assets. Optional Tableau views remain child detail. Alteryx workflows retain their own native IDs. |
 | D-10 | Separate connection technology from processing mode. | Oracle and SQL Server are technologies. Extract is a processing mode. Show an understandable connection summary while retaining both fields. Missing values remain Unknown. |
-| D-11 | Use one classification vocabulary at asset and workspace levels. | Align DMP tier codes and EUCT Yes/No concepts. Preserve imported unknown values. Keep legacy labels as historical source values, not silently converted classifications. Corporate confidentiality labels remain a separate concept. |
+| D-11 | Use one classification vocabulary at asset and workspace levels. | Required but deferred for V1. Align DMP tier codes and EUCT concepts; retain unknown and legacy source values. Corporate confidentiality remains separate. Do not claim the legacy app fields already implement this design. |
 | D-12 | Require complete, fresh evidence for every contributing dataset and relationship in an evaluation. | A fresh asset list cannot establish fresh permissions or complete lineage. Pin the exact input runs and versions. Evidence with missing fields cannot prove the corresponding control passed. |
 | D-13 | Require explicit per-platform access mappings. | Record native capability, scope, inheritance, grant path, approved group purpose, and template version. Do not equate identically named roles across products. Confirm effective capability, not only direct assignments. |
 | D-14 | Give Custom configuration an explicit, versioned baseline. | Record allowed principals, permissions, scope, business reason, compensating controls, approver, and review date. An absent baseline yields Unable to Verify; it is never an assumed zero-access policy. |
 | D-15 | Keep every completed review immutable. | A correction or recurrence creates a linked follow-up case. The same stable finding may become active again; the prior closed case and its evidence remain unchanged. |
-| D-16 | Keep submitted requests and approval receipts immutable. | Corrections create a linked replacement draft. Changed intent, evidence, or response requires a fresh approval. Recheck current role eligibility at the action boundary. |
+| D-16 | Keep submitted requests and approval receipts immutable. | Corrections create linked drafts and fresh context. Check current eligibility for new decisions; retain eligibility evidence for historical decisions. The prototype historical-approver regression remains R04. |
 | D-17 | Preserve annual amendments separately. | Keep one annual period identity. A post-completion correction creates an amendment linked to that period and needs fresh approval. Add amendment/revision support to the next schema revision. |
-| D-18 | Drafts save automatically; submissions remain explicit. | Save after a short idle interval and when leaving a topic. Show Saving, Saved, and Save failed. Warn before leaving with unsaved changes. Never auto-submit or auto-approve. |
+| D-18 | Add draft autosave while keeping submission explicit. | Future usability work. V1 still has explicit save actions. Proposed autosave shows Saving, Saved, and Save failed, warns before losing edits, and never submits or approves automatically. |
 | D-19 | Resolve concurrent edits through explicit conflict handling. | Compare revisions on save. Retain the user's draft and display the newer record. Do not use last-write-wins for ownership, access, approvals, or evidence. |
 | D-20 | Bind production assessment evidence to an asset version and material-change reference. | An initial release and material source, credential, access, processing, or audience change require assessment. Presentation-only changes remain exempt. A completed review with Changes required is not release approval. |
 | D-21 | Keep deployment enforcement in the platform release process. | The registry records the decision and returns its verification reference. Administrators check that reference before release. Missing release telemetry yields Unable to Verify, not an invented Bypassed Gate finding. |
-| D-22 | Use deterministic rules for approvals, matching, and risk evaluation in the first release. | No AI model decides authorization, identity merges, tier order, or evidence closure. An AI assistant is outside the first-release scope. |
+| D-22 | Use deterministic rules for matching and the future operational workflow. | V1 supplies deterministic SQL email matching. Production authorization and risk evaluation remain future work. No AI model decides identity merges, approval eligibility, tier order, or evidence closure. |
 | D-23 | Keep business declarations authoritative until changed through a governed workflow. | New evidence can trigger a proposed correction or review. It cannot overwrite business purpose, owner, expected access, PII/EUCT, or DMP declarations. |
-| D-24 | Split first delivery into evidence availability, not reduced product scope. | Begin with workspace, asset, connection, identity, and lineage inventories. Enable permission, activity, and resource rules only after their datasets and baselines pass acceptance. All three platforms remain supported. |
+| D-24 | Freeze V1 as the prototype plus a manual collection handoff for all three platforms. | Supply workbook layouts, source mappings, and SQL staging. Defer classification/PRL/risk repairs and automated integration. Future rules need accepted datasets and baselines before operational use. |
 | D-25 | Adopt the current first-release naming and text limits as registry defaults. | Business name: 100 characters. Workspace purpose: 500. Custom explanation: 1,000. Technical name: 3–100 uppercase letters, digits, or underscores, starting with a letter. Group name: the same pattern, 3–80 characters. A stricter verified platform limit wins. Keep suffixes CHAMPION, RW, R, and DS. Reject collisions; never bind by a matching name. |
 | D-26 | Keep DS membership separate from group purpose. | The same person may belong to DS and RW. The four Standard purposes still require distinct group identities. DS does not imply all-source access. If a platform cannot isolate the required capability, document and approve the broader capability through Custom setup. |
-| D-27 | Compare assessed asset tiers with the declared workspace tier without changing either automatically. | An asset assessed at a higher tier than the workspace declaration creates classification follow-up. Unknown asset tiers produce Unable to Verify. Tier 1 ranks above Tier 2 and Tier 3. |
-| D-28 | Record an existing PRL approval as assessment evidence. | Require the manually assigned PRL, its reference, reviewer, and date when claiming an approved PRL. Do not add an unrequested second PRL approval workflow or treat a copied platform tag as approval. |
+| D-27 | Compare assessed asset tiers with the declared workspace tier without changing either automatically. | Future repair, deferred for V1. Tier 1 ranks highest. A higher asset tier requires follow-up; an unknown tier remains Unable to Verify. The requirement is confirmed, but the comparison is not implemented consistently. |
+| D-28 | Record an existing PRL approval as assessment evidence. | Required alignment is deferred for V1. Capture the manual PRL, approval reference, reviewer, and date; retain inputs without calculating a score. Do not treat legacy illustrative fields or platform tags as approval. |
 
 The selected service pattern is an engineering decision, not a claim that it is deployed. The enterprise application team supplies the host and private network route to the configured SQL Server host. Power Apps connector authentication and licensing must pass verification before implementation. The SQL connector supports views and stored procedures; its specific behavior does not remove the need for trusted caller authorization. See [Microsoft's SQL access guidance](https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/connections/sql-connection-access-data) and [connector reference](https://learn.microsoft.com/en-us/connectors/sql/).
 
-## 3. Proposed operating baseline — review as one package
+## 3. Proposed operating settings — not accepted by the V1 freeze
 
-These are proposed product settings, not assertions about existing corporate policy. The product owner can accept the package or change individual IDs.
+These settings remain proposals for an operational release. The V1 prototype approval does not accept their schedules, thresholds, support commitments, or recovery targets. O-18 records the separately confirmed six-month duration; detailed cleanup operations remain design work.
 
 | ID | Recommended setting | Why / boundary |
 |---|---|---|
@@ -87,9 +101,9 @@ These are proposed product settings, not assertions about existing corporate pol
 | O-17 | Require new-owner acceptance and platform validation for ownership transfer. Notify the previous owner when available. | An inactive previous owner cannot block reassignment forever. Preserve both identities and the effective date. Existing role-based approval requirements remain in force. |
 | O-18 | Confirmed: keep six calendar months of historical business metadata. The registry is not the official source system. | Apply to superseded versions, completed historical work, activity events, and source extracts. Keep current records, their supporting active approvals, and the identity index needed for refreshes. Detailed cleanup semantics follow Q-05 below. |
 
-### Risk rules: the first-release interpretation
+### Future risk-rule catalog — implementation deferred
 
-Every enabled rule needs a version, applicable platforms, owner, evidence requirements, severity, and test cases. Missing evidence creates unresolved work; it is not counted as a confirmed risk failure.
+The table preserves the target meaning of all 11 buckets. It does not enable these controls in V1. Each future rule needs a version, owner, evidence requirements, severity, and tests. Proposed thresholds still need acceptance. Missing evidence is not a confirmed risk failure.
 
 | Bucket | Required basis for a conclusive finding | Initial routing |
 |---|---|---|
@@ -107,7 +121,7 @@ Every enabled rule needs a version, applicable platforms, owner, evidence requir
 
 Critical severity requires documented current business or security impact. A bucket name alone does not make a finding Critical.
 
-### Approval matrix
+### Product approval requirements and future enforcement
 
 | Event | Eligible decision maker | Decision evidence |
 |---|---|---|
@@ -117,7 +131,7 @@ Critical severity requires documented current business or security impact. A buc
 | Annual completion | Application Owner or Platform Owner | Frozen annual packet, response, and linked follow-up. |
 | Evidence closure | Platform Manager, Platform Team member, or Platform Owner | Exact evidence revision, verification method, resolution, and linked findings. |
 
-One eligible decision is sufficient for each required purpose. Separate purposes retain separate receipts. Independence follows Q-04 below. The role holder's identity and validity interval must be recorded.
+One eligible decision is sufficient for each required purpose. Separate purposes retain separate receipts. Q-04 permits self-approval for eligible role holders. The target service must record role validity and decision-time identity evidence; the prototype has known actor and historical-approval gaps.
 
 ## 4. Five product-owner decisions — confirmed
 
@@ -137,9 +151,9 @@ Start the six-calendar-month history period when a business version is supersede
 
 Keep a minimal identity index, including a retired object's native-to-registry mapping, while its platform instance remains registered. This is refresh state, not a retained full historical payload. Preserve stable identity when an old object is observed again. Removing a platform registration requires a separate controlled decommissioning action.
 
-Run history cleanup monthly after the six-month boundary. Delete eligible historical payloads and their dependent detail together. Never leave broken foreign keys, remove open-case evidence, or orphan an active approval. Record cleanup counts and failures. Backups follow the same six-month maximum history objective and must not silently reintroduce expired payloads after restore.
+A monthly cleanup schedule is an engineering proposal, not an approved V1 job. Future cleanup must remove eligible historical payloads with dependent detail and preserve current references. Record cleanup outcomes. The database team must define backup and restore treatment consistent with the confirmed six-month history decision.
 
-History cleanup is a target design; it is not enabled against the user's prototype data. The proposed operating settings in section 3 can be accepted as one package, with exceptions by ID.
+History cleanup is not enabled against prototype data. The six-month duration is confirmed; implementation timing, backup treatment, and the other section 3 proposals require separate operational acceptance.
 
 ## 5. Delivery proof, ownership, and closure criteria
 
@@ -147,7 +161,7 @@ These items remain work even after decisions are accepted. They are not a reason
 
 | Verification | Accountable delivery role | Evidence required |
 |---|---|---|
-| Source identity and installed versions | Each Platform Owner | Native scope, stable-ID samples from two runs, restore/recreate behavior, installed schema, row counts, and API capability. |
+| Source identity and installed versions | Each Platform Owner | Native scope, stable-ID samples, restore/recreate behavior, installed schema, and row counts. Verify Tableau repository joins, Power BI API fields, and Alteryx MongoDB backend joins. |
 | DS and access mappings | Platform Owner with directory team | Reviewed native capability mappings and positive/negative access tests. |
 | Hosting, network, connector, and license fit | Enterprise application/platform team | Approved service host, authenticated route to the configured SQL Server host, connector proof, and license entitlement. No new purchase is authorized by this document. |
 | Caller identity and least privilege | Identity/security team | Negative tests for cross-workspace reads, unauthorized decisions, forged actor IDs, expired roles, and service scope. |
@@ -161,11 +175,11 @@ These items remain work even after decisions are accepted. They are not a reason
 | Audit gap | Decision treatment | Work still required |
 |---|---|---|
 | G-01 Authentication and roles | D-02, D-03; Q-04 sets independence. | Implement and test server-side authorization and named role assignments. |
-| G-02 Ingestion service | D-05, D-06, D-24. | Build staging, importer, transactions, and monitoring. |
+| G-02 Ingestion service | D-05, D-06, D-24. | V1 provides manual staging artifacts. Deploying SQL, automated import, transactions, and monitoring remains future work. |
 | G-03 Risk policy | O-02–O-05, O-11–O-14 and the risk matrix. | Accept settings; load platform thresholds; prove dataset coverage. |
 | G-04 SQL/Dataverse | C-02, D-01. | Verify hosting, network, licensing, and trusted identity. |
 | G-05 Stable source identity | C-07, D-07, D-08. | Validate real ID samples and implement the managed identifier ledger. |
-| G-06 Classification and PRL | D-11; Q-01 and Q-02 are confirmed. | Apply Tier 1 > Tier 2 > Tier 3 and manual PRL; preserve legacy fields. |
+| G-06 Classification and PRL | D-11; Q-01 and Q-02 are confirmed. | Deferred for V1: apply Tier 1 > Tier 2 > Tier 3 and manual approved PRL; preserve legacy history. |
 | G-07 Promotion gates | D-20, D-21. | Implement release-reference checks and gather publication evidence. |
 | G-08 Dataset-level evidence | D-12, O-02–O-04. | Replace the prototype's workspace-level confidence simplification. |
 | G-09 Scheduling and operations | O-06–O-10, O-15. | Accept targets; build monitored jobs and notification delivery. |
@@ -174,16 +188,16 @@ These items remain work even after decisions are accepted. They are not a reason
 | G-12 Draft saving | D-18, D-19. | Implement autosave, leave warnings, and conflict recovery. |
 | G-13 Reopening and recurrence | D-15–D-17. | Implement linked follow-up cases and annual amendments. |
 | G-14 Multiple memberships and unknown values | C-06, D-09–D-12. | Implement the full association model and explicit unknown classification states. |
-| G-15 Live collection proof | D-24 and the source-verification row above. | Platform teams run the SQL/API collectors and validate samples. |
+| G-15 Live collection proof | D-24 and the source-verification row above. | Validate Tableau PostgreSQL, Power BI collection and identity supplement, and backend-only Alteryx MongoDB output. No live results are claimed. |
 
-### Definition of decisions closed
+### V1 closure and future readiness
 
-1. Keep the confirmed Q-01 through Q-05 decisions in the requirements and implementation backlog.
-2. Accept the operating package, recording any changed O-numbered settings.
-3. Record policy references and assign real people or service groups to accountable roles.
-4. Update the affected requirements, schema, collection contract, and implementation backlog.
-5. Keep delivery checks open until evidence proves the agreed design works.
+1. Freeze the prototype and current manual handoff at `1.0.0-prototype.1`.
+2. Retain the confirmed product decisions and exact V1 extraction rules.
+3. Record known defects and live-environment limits without marking them fixed.
+4. Keep proposed operating settings separate from prototype acceptance.
+5. Validate future implementation and operating choices before production reliance.
 
-The first release should not claim a comprehensive control evaluation merely because its decisions are documented. A complete solution needs both a closed decision register and successful delivery checks.
+The prototype baseline can close while production delivery checks remain open. A documented decision is not evidence that a live control works. No operating package or production rollout is approved by this version lock.
 
-Related documents: [business/product definition](business-product.md), [requirements](requirements.md), [audit](audit-report.md), [table model](data-model.md), [glossary](GLOSSARY.md), and the separate platform-data-collection/identity-and-refresh.md file.
+Related documents: [business/product definition](business-product.md), [requirements](requirements.md), [audit](audit-report.md), [table model](data-model.md), [glossary](GLOSSARY.md), and [collection identity rules](resources/platform-data-collection/identity-and-refresh.md).
