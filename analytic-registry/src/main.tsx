@@ -1,0 +1,15 @@
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { HashRouter, Routes, Route } from 'react-router-dom';
+import { Provider } from './data/store';
+import { Shell } from './layouts/Shell';
+import { Dashboard } from './pages/Dashboard';
+import { WorkspaceList, WorkspaceDetail } from './features/workspaces/Workspaces';
+import { AssetList, AssetDetail, AssessmentForm } from './features/assets/Assets';
+import { RequestList, RequestForm } from './features/requests/Requests';
+import { ReviewList, ReviewDetail } from './features/reviews/Reviews';
+import { AttestationList, AttestationForm } from './features/attestations/Attestations';
+import { Coverage, Standards, Reference, History } from './pages/Admin';
+import { DataModel } from './pages/DataModel';
+import './styles.css';
+ReactDOM.createRoot(document.getElementById('root')!).render(<React.StrictMode><Provider><HashRouter><Routes><Route element={<Shell/>}><Route index element={<Dashboard/>}/><Route path="workspaces" element={<WorkspaceList/>}/><Route path="workspaces/:id" element={<WorkspaceDetail/>}/><Route path="assets" element={<AssetList/>}/><Route path="assets/:id" element={<AssetDetail/>}/><Route path="assets/:id/assessment" element={<AssessmentForm/>}/><Route path="requests" element={<RequestList/>}/><Route path="requests/new" element={<RequestForm/>}/><Route path="requests/:id" element={<RequestForm/>}/><Route path="reviews" element={<ReviewList/>}/><Route path="reviews/:id" element={<ReviewDetail/>}/><Route path="attestations" element={<AttestationList/>}/><Route path="attestations/:id" element={<AttestationForm/>}/><Route path="coverage" element={<Coverage/>}/><Route path="standards" element={<Standards/>}/><Route path="data-model" element={<DataModel/>}/><Route path="reference" element={<Reference/>}/><Route path="history" element={<History/>}/><Route path="*" element={<Dashboard/>}/></Route></Routes></HashRouter></Provider></React.StrictMode>);

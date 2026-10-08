@@ -1,0 +1,27 @@
+name: Validate artifacts
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: analytic-registry/package-lock.json
+      - name: Install prototype dependencies
+        run: npm ci
+        working-directory: analytic-registry
+      - name: Check prototype
+        run: npm run check
+        working-directory: analytic-registry
+      - name: Build prototype
+        run: npm run build
+        working-directory: analytic-registry
+      - name: Check platform collection adapter
+        run: node --test platform-data-collection/tests/normalize.test.mjs

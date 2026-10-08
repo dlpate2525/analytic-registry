@@ -1,0 +1,15 @@
+erDiagram
+    Platform ||--o{ PlatformInstance : scopes
+    PlatformInstance ||--o{ RegistryObject : identifies
+    RegistryObject ||--o| Workspace : subtype
+    RegistryObject ||--o| Asset : subtype
+    RegistryObject ||--o| Connection : subtype
+    Workspace ||--o{ WorkspaceBusinessVersion : declares
+    Workspace ||--o{ WorkspaceAsset : associates
+    Asset ||--o{ WorkspaceAsset : participates
+    Asset ||--o{ AssetVersion : releases
+    AssetVersion ||--o{ AssetAssessment : reviewed
+    AssetVersion ||--o{ DeclaredAssetConnection : expects
+    Connection ||--o{ DeclaredAssetConnection : serves
+    Connection ||--o{ ObservedConnection : observed
+    DataSource |o--o{ ObservedConnection : resolves

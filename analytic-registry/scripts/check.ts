@@ -1,0 +1,52 @@
+import { withDataSourcesGroup } from '../src/utils/requestGroups';
+import { approvalSatisfied, closureKey, validateClosure, requestApprovalNeeds } from '../src/utils/approvals';
+import { attestationPacket, hasAttestationExceptions, makeAttestationFollowUp } from '../src/utils/attestation';
+import { migrateData } from '../src/data/migrate';
+import { initialData as initial } from '../src/data/mock';
+import { validateRequest, comparison } from '../src/utils/logic';
+import type { WorkspaceRequest } from '../src/types';
+const d=structuredClone(initial);d.evidencePolicies=Object.fromEntries(['Power BI / Fabric','Tableau','Alteryx'].map(p=>[p,365]));d.workspaces.forEach(w=>w.observationComplete=true);
+let count=0;function check(ok:boolean,label:string){if(!ok)throw new Error(label);count++;}
+check(d.workspaces.length===12,'12 workspace identities');check(d.assets.length>=30,'30+ assets');check(d.connections.length>=15,'15+ connections');check(d.findings.length>=25,'25+ findings');check(d.reviews.length>=10,'10+ reviews');check(d.attestations.length>=8,'8+ attestations');
+for(const platform of ['Power BI / Fabric','Tableau','Alteryx'])check(d.workspaces.filter(w=>w.platform===platform).length===4,'Four workspaces per platform');
+for(const a of d.assets){check(!a.workspaceId||d.workspaces.some(w=>w.id===a.workspaceId&&w.platform===a.platform),'Asset workspace platform FK');}
+for(const l of d.lineage){check(d.assets.some(a=>a.id===l.assetId)&&d.connections.some(c=>c.id===l.connectionId),'Lineage foreign keys');}
+for(const key of ['workspaces','assets','connections','findings','reviews','attestations'] as const)check(new Set(d[key].map(x=>x.id)).size===d[key].length,'Unique IDs '+key);
+check(!d.findings.some(f=>f.workspaceId==='WS-001'),'Clean Standard scenario');check(!d.findings.some(f=>f.workspaceId==='WS-006'),'Approved six-group Custom scenario');check(d.groups.filter(g=>g.configurationVersionId==='CFG-6-2').length===6,'Six Custom groups');check(!d.assets.some(a=>a.workspaceId==='WS-004'),'New workspace without assets');
+check(comparison(d.workspaces[2],d).find(c=>c.field==='RW group')?.status==='Pending Implementation','Requested RW change is not drift');
+check(comparison(d.workspaces[4],d).find(c=>c.field==='Direct user access')?.status==='Discrepancy','Direct user discrepancy');
+const renamed=structuredClone(d);renamed.principals.find(p=>p.workspaceId==='WS-001'&&p.purpose==='RW')!.name='RENAMED_SAME_GROUP';check(comparison(renamed.workspaces[0],renamed).find(c=>c.field==='RW group')?.status==='Aligned','Stable IDs, not display names, determine identity');
+const request:WorkspaceRequest={id:'TEST',type:'Create New',platform:'Power BI / Fabric',workspaceId:'',businessName:'Example',purpose:'A valid business purpose',ownerId:'P1',configuration:'Standard',technicalName:'CL_TEST_PROD',championIds:['P1'],groups:withDataSourcesGroup(structuredClone(d.groups.filter(g=>g.configurationVersionId==='CFG-1-2')),'CL_TEST_PROD'),customReason:'',customExplanation:'',alternateSecurity:'',alternateAuthentication:'',status:'Draft',createdDate:'2026-10-06',classification:'Internal',criticality:'Moderate',containsPii:'No',containsEuct:'No',highestDmpTier:'Tier 1'};
+check(validateRequest(request,d).length===0,'One Champion allowed');
+check(validateRequest({...request,groups:request.groups.filter(g=>g.purpose!=='Data Sources')},d).some(e=>e.includes('Data Sources')),'Data Sources specification required');
+check(request.groups.find(g=>g.purpose==='Data Sources')?.requestedName==='CL_TEST_PROD_DS','Data Sources name follows workspace prefix');
+check(withDataSourcesGroup(request.groups,'OTHER')===request.groups,'Existing Data Sources selection is retained');
+check(validateRequest({...request,championIds:[]},d).length>0,'No Champion blocked');
+check(validateRequest({...request,championIds:d.people.slice(0,11).map(p=>p.id)},d).some(e=>e.includes('10')),'11 Champions blocked');
+check(validateRequest({...request,championIds:['P1','P1']},d).some(e=>e.includes('unique')),'Duplicate Champions blocked');
+check(validateRequest({...request,championIds:['P11']},d).some(e=>e.includes('Inactive')),'Inactive Champion blocked');
+check(validateRequest({...request,ownerId:'P10'},d).some(e=>e.includes('inactive owner')),'Inactive owner blocked');
+check(validateRequest({...request,championIds:['P15']},d).length===0,'Unverified identity unresolved, not inactive');
+check(validateRequest({...request,configuration:'Custom'},d).some(e=>e.includes('Custom reason')),'Custom reason required');
+check(validateRequest({...request,groups:[]},d).length>0,'Required Standard groups');
+check(validateRequest({...request,type:'Register Existing'},d).length>0,'Discovered selection required');
+check(validateRequest({...request,purpose:''},d).length>0,'Purpose required');
+check(validateRequest({...request,groups:request.groups.map((g,i)=>i===0?{...g,groupId:''}:g)},d).length>0,'Existing group ID required');
+check(validateRequest({...request,groups:request.groups.map((g,i)=>i===0?{...g,mode:'New',requestedName:'bad name'}:g)},d).length>0,'New group name validation');
+
+check(validateRequest({...request,containsPii:''},d).length>0,'PII declaration required');
+check(validateRequest({...request,containsEuct:''},d).length>0,'EUCT declaration required');
+check(validateRequest({...request,highestDmpTier:'Tier 1,Tier 2'},d).length>0,'DMP tier must be one selection');
+check(requestApprovalNeeds({...request,configuration:'Custom'},d).some(n=>n.purpose==='Custom configuration'),'Custom requires owner approval');
+check(requestApprovalNeeds({...request,containsPii:'Yes'},d).some(n=>n.roles.includes('Business Owner / Workspace Owner')),'PII requires business owner approval');
+const changed=structuredClone(d);changed.principals.find(p=>p.workspaceId==='WS-003'&&p.purpose==='RW')!.principalId='UNEXPECTED-GROUP';check(comparison(changed.workspaces[2],changed).find(c=>c.field==='RW group')?.status==='Discrepancy','Pending requested change does not hide unrelated drift');
+const closureData=migrateData(structuredClone(d));const review={...closureData.reviews[0],status:'Closed',resolution:'External action completed',verificationDate:'2026-10-06',verificationMethod:'Subsequent platform observation',closureEvidence:'EVIDENCE-002'};
+check(validateClosure(review,closureData).includes('requires approval'),'Closure blocked without authorized approval');
+closureData.approvals=[{id:'APR-test',targetType:'Review',targetId:review.id,purpose:'Evidence closure',contextKey:closureKey(review),role:'Platform Manager',personId:'P8',decision:'Approved',reference:'Approved subsequent evidence',decidedAt:'2026-10-06T16:00:00Z'}];
+check(validateClosure(review,closureData)==='','Platform manager approval permits evidenced closure');
+check(validateClosure({...review,closureEvidence:'DIFFERENT-EVIDENCE'},closureData).includes('requires approval'),'Changed evidence invalidates previous approval');
+closureData.approvals.push({...closureData.approvals[0],id:'APR-reject',decision:'Changes required'});check(validateClosure(review,closureData).includes('requires approval'),'Latest correction decision supersedes approval');
+check(validateClosure({...review,verificationDate:'2026-01-01'},closureData).includes('predate'),'Verification cannot predate source evidence');
+const packet=attestationPacket(d,'WS-001');const purpose=packet.workspace.purpose;const after=structuredClone(d);after.workspaces[0].purpose='A new purpose';check(packet.workspace.purpose===purpose,'Attestation packet preserves reviewed business intent');
+const att={...d.attestations[1],changes:'Owner correction required',followUp:'Confirm new owner',answers:{'Is the business owner / workspace owner correct?':'No'}};check(hasAttestationExceptions(att),'Attestation detects corrected owner');check(makeAttestationFollowUp(att,d).workspaceId===att.workspaceId,'Follow-up linked to attested workspace');
+console.log(`${count} domain and data checks passed.`);

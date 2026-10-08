@@ -1,0 +1,325 @@
+{
+  "workspaces": [
+    {
+      "RunKey": "99999999-9999-4999-8999-999999999999",
+      "PlatformCode": "PowerBI",
+      "PlatformInstanceKey": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "NativeScopeKey": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "ObservedAt": "2026-10-07T10:01:00.000Z",
+      "NativeWorkspaceID": "11111111-1111-4111-8111-111111111111",
+      "NativeRepositoryID": null,
+      "NativeWorkspaceType": "Workspace",
+      "DisplayName": "Illustrative Finance Reports",
+      "NativeOwnerID": null,
+      "NativeLifecycleCode": "Active",
+      "CapacityKey": null
+    },
+    {
+      "RunKey": "99999999-9999-4999-8999-999999999999",
+      "PlatformCode": "PowerBI",
+      "PlatformInstanceKey": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "NativeScopeKey": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "ObservedAt": "2026-10-07T10:01:00.000Z",
+      "NativeWorkspaceID": "22222222-2222-4222-8222-222222222222",
+      "NativeRepositoryID": null,
+      "NativeWorkspaceType": "Workspace",
+      "DisplayName": "Illustrative Shared Models",
+      "NativeOwnerID": null,
+      "NativeLifecycleCode": "Active",
+      "CapacityKey": null
+    }
+  ],
+  "assets": [
+    {
+      "RunKey": "99999999-9999-4999-8999-999999999999",
+      "PlatformCode": "PowerBI",
+      "PlatformInstanceKey": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "NativeScopeKey": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "ObservedAt": "2026-10-07T10:01:00.000Z",
+      "NativeAssetID": "33333333-3333-4333-8333-333333333333",
+      "NativeRepositoryID": null,
+      "NativeAssetType": "Report",
+      "AssetTypeCode": "Report",
+      "DisplayName": "Illustrative Revenue",
+      "NativeVersionReference": null,
+      "CreatedByNativeID": null,
+      "ModifiedByNativeID": null,
+      "NativeOwnerID": null,
+      "CreatedAtNative": "2026-09-01T12:00:00.000Z",
+      "ModifiedAtNative": "2026-10-01T12:00:00.000Z",
+      "NativeLifecycleCode": null
+    },
+    {
+      "RunKey": "99999999-9999-4999-8999-999999999999",
+      "PlatformCode": "PowerBI",
+      "PlatformInstanceKey": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "NativeScopeKey": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "ObservedAt": "2026-10-07T10:01:00.000Z",
+      "NativeAssetID": "55555555-5555-4555-8555-555555555555",
+      "NativeRepositoryID": null,
+      "NativeAssetType": "Report",
+      "AssetTypeCode": "Paginated Report",
+      "DisplayName": "Illustrative Paginated Statement",
+      "NativeVersionReference": null,
+      "CreatedByNativeID": null,
+      "ModifiedByNativeID": null,
+      "NativeOwnerID": null,
+      "CreatedAtNative": null,
+      "ModifiedAtNative": null,
+      "NativeLifecycleCode": null
+    },
+    {
+      "RunKey": "99999999-9999-4999-8999-999999999999",
+      "PlatformCode": "PowerBI",
+      "PlatformInstanceKey": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "NativeScopeKey": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "ObservedAt": "2026-10-07T10:01:00.000Z",
+      "NativeAssetID": "44444444-4444-4444-8444-444444444444",
+      "NativeRepositoryID": null,
+      "NativeAssetType": "Dataset",
+      "AssetTypeCode": "Semantic Model",
+      "DisplayName": "Illustrative Finance Model",
+      "NativeVersionReference": null,
+      "CreatedByNativeID": null,
+      "ModifiedByNativeID": null,
+      "NativeOwnerID": null,
+      "CreatedAtNative": "2026-08-01T12:00:00.000Z",
+      "ModifiedAtNative": null,
+      "NativeLifecycleCode": null
+    }
+  ],
+  "workspace_assets": [
+    {
+      "RunKey": "99999999-9999-4999-8999-999999999999",
+      "PlatformCode": "PowerBI",
+      "PlatformInstanceKey": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "NativeScopeKey": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "ObservedAt": "2026-10-07T10:01:00.000Z",
+      "NativeWorkspaceID": "11111111-1111-4111-8111-111111111111",
+      "NativeAssetID": "33333333-3333-4333-8333-333333333333",
+      "NativeAssetType": "Report",
+      "NativeAssociationType": "ContainedIn"
+    },
+    {
+      "RunKey": "99999999-9999-4999-8999-999999999999",
+      "PlatformCode": "PowerBI",
+      "PlatformInstanceKey": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "NativeScopeKey": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "ObservedAt": "2026-10-07T10:01:00.000Z",
+      "NativeWorkspaceID": "11111111-1111-4111-8111-111111111111",
+      "NativeAssetID": "55555555-5555-4555-8555-555555555555",
+      "NativeAssetType": "Report",
+      "NativeAssociationType": "ContainedIn"
+    },
+    {
+      "RunKey": "99999999-9999-4999-8999-999999999999",
+      "PlatformCode": "PowerBI",
+      "PlatformInstanceKey": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "NativeScopeKey": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "ObservedAt": "2026-10-07T10:01:00.000Z",
+      "NativeWorkspaceID": "22222222-2222-4222-8222-222222222222",
+      "NativeAssetID": "44444444-4444-4444-8444-444444444444",
+      "NativeAssetType": "Dataset",
+      "NativeAssociationType": "ContainedIn"
+    }
+  ],
+  "connections": [
+    {
+      "RunKey": "99999999-9999-4999-8999-999999999999",
+      "PlatformCode": "PowerBI",
+      "PlatformInstanceKey": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "NativeScopeKey": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "ObservedAt": "2026-10-07T10:01:00.000Z",
+      "NativeConnectionID": "66666666-6666-4666-8666-666666666666",
+      "NativeRepositoryID": null,
+      "NativeConnectionType": "DatasourceInstance",
+      "DisplayName": "SQL Server (66666666-6666-4666-8666-666666666666)",
+      "TechnologyCode": "SQL Server",
+      "ServerHostname": "sql.example.invalid",
+      "Port": null,
+      "DatabaseName": "finance",
+      "HasExtract": null,
+      "AuthenticationTypeCode": null,
+      "IdentityClassificationCode": "Unknown",
+      "GatewayID": "88888888-8888-4888-8888-888888888888",
+      "NativeStatusCode": "Observed",
+      "EvidenceStatusCode": "Observed"
+    },
+    {
+      "RunKey": "99999999-9999-4999-8999-999999999999",
+      "PlatformCode": "PowerBI",
+      "PlatformInstanceKey": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "NativeScopeKey": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "ObservedAt": "2026-10-07T10:01:00.000Z",
+      "NativeConnectionID": "77777777-7777-4777-8777-777777777777",
+      "NativeRepositoryID": null,
+      "NativeConnectionType": "DatasourceInstance",
+      "DisplayName": "Oracle (77777777-7777-4777-8777-777777777777)",
+      "TechnologyCode": "Oracle",
+      "ServerHostname": "oracle.example.invalid",
+      "Port": null,
+      "DatabaseName": "LEDGER",
+      "HasExtract": null,
+      "AuthenticationTypeCode": null,
+      "IdentityClassificationCode": "Unknown",
+      "GatewayID": null,
+      "NativeStatusCode": "Observed",
+      "EvidenceStatusCode": "Observed"
+    }
+  ],
+  "asset_connections": [
+    {
+      "RunKey": "99999999-9999-4999-8999-999999999999",
+      "PlatformCode": "PowerBI",
+      "PlatformInstanceKey": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "NativeScopeKey": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "ObservedAt": "2026-10-07T10:01:00.000Z",
+      "NativeAssetID": "44444444-4444-4444-8444-444444444444",
+      "NativeAssetType": "Dataset",
+      "NativeConnectionID": "66666666-6666-4666-8666-666666666666",
+      "EvidenceStatusCode": "Observed"
+    },
+    {
+      "RunKey": "99999999-9999-4999-8999-999999999999",
+      "PlatformCode": "PowerBI",
+      "PlatformInstanceKey": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "NativeScopeKey": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "ObservedAt": "2026-10-07T10:01:00.000Z",
+      "NativeAssetID": "44444444-4444-4444-8444-444444444444",
+      "NativeAssetType": "Dataset",
+      "NativeConnectionID": "77777777-7777-4777-8777-777777777777",
+      "EvidenceStatusCode": "Observed"
+    }
+  ],
+  "asset_dependencies": [
+    {
+      "RunKey": "99999999-9999-4999-8999-999999999999",
+      "PlatformCode": "PowerBI",
+      "PlatformInstanceKey": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "NativeScopeKey": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "ObservedAt": "2026-10-07T10:01:00.000Z",
+      "NativeAssetID": "33333333-3333-4333-8333-333333333333",
+      "NativeAssetType": "Report",
+      "UpstreamNativeAssetID": "44444444-4444-4444-8444-444444444444",
+      "UpstreamNativeAssetType": "Dataset",
+      "UpstreamNativeWorkspaceID": "22222222-2222-4222-8222-222222222222",
+      "RelationshipCode": "UsesSemanticModel",
+      "EvidenceStatusCode": "Observed"
+    }
+  ],
+  "manifest": {
+    "ContractVersion": "1.0",
+    "CollectorVersion": "registry-powerbi-offline-1.0",
+    "RunKey": "99999999-9999-4999-8999-999999999999",
+    "PlatformCode": "PowerBI",
+    "PlatformInstanceKey": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+    "NativeScopeKey": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+    "ObservedAt": "2026-10-07T10:01:00.000Z",
+    "EnvironmentCode": "Illustrative",
+    "ProductVersion": null,
+    "APIVersion": "v1.0",
+    "StartedAt": "2026-10-07T10:00:00Z",
+    "CompletedAt": "2026-10-07T10:01:00.000Z",
+    "RunStatusCode": "Partial",
+    "ScopeDescription": "Power BI reports and semantic models in the explicit workspace list; not the full Fabric item estate.",
+    "Datasets": [
+      {
+        "DatasetCode": "WorkspaceInventory",
+        "ScopeKey": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+        "CoverageStatusCode": "Complete",
+        "RowCount": 2
+      },
+      {
+        "DatasetCode": "ReportInventory",
+        "ScopeKey": "11111111-1111-4111-8111-111111111111",
+        "CoverageStatusCode": "Complete",
+        "RowCount": 2
+      },
+      {
+        "DatasetCode": "SemanticModelInventory",
+        "ScopeKey": "11111111-1111-4111-8111-111111111111",
+        "CoverageStatusCode": "Complete",
+        "RowCount": 0
+      },
+      {
+        "DatasetCode": "ReportInventory",
+        "ScopeKey": "22222222-2222-4222-8222-222222222222",
+        "CoverageStatusCode": "Complete",
+        "RowCount": 0
+      },
+      {
+        "DatasetCode": "SemanticModelInventory",
+        "ScopeKey": "22222222-2222-4222-8222-222222222222",
+        "CoverageStatusCode": "Complete",
+        "RowCount": 1
+      },
+      {
+        "DatasetCode": "WorkspaceAssetMembership",
+        "ScopeKey": "11111111-1111-4111-8111-111111111111",
+        "CoverageStatusCode": "Complete",
+        "RowCount": 2
+      },
+      {
+        "DatasetCode": "WorkspaceAssetMembership",
+        "ScopeKey": "22222222-2222-4222-8222-222222222222",
+        "CoverageStatusCode": "Complete",
+        "RowCount": 1
+      },
+      {
+        "DatasetCode": "Connections",
+        "ScopeKey": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+        "CoverageStatusCode": "Partial",
+        "RowCount": 2
+      },
+      {
+        "DatasetCode": "AssetConnectionLineage",
+        "ScopeKey": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+        "CoverageStatusCode": "Partial",
+        "RowCount": 2
+      },
+      {
+        "DatasetCode": "AssetDependencies",
+        "ScopeKey": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+        "CoverageStatusCode": "Partial",
+        "RowCount": 1
+      },
+      {
+        "DatasetCode": "ConfiguredAccess",
+        "ScopeKey": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+        "CoverageStatusCode": "NotCollected",
+        "RowCount": null
+      },
+      {
+        "DatasetCode": "EffectiveAccess",
+        "ScopeKey": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+        "CoverageStatusCode": "NotCollected",
+        "RowCount": null
+      },
+      {
+        "DatasetCode": "Activity",
+        "ScopeKey": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+        "CoverageStatusCode": "NotCollected",
+        "RowCount": null
+      },
+      {
+        "DatasetCode": "CredentialIdentity",
+        "ScopeKey": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+        "CoverageStatusCode": "NotCollected",
+        "RowCount": null
+      },
+      {
+        "DatasetCode": "FabricNonPowerBIItems",
+        "ScopeKey": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+        "CoverageStatusCode": "NotCollected",
+        "RowCount": null
+      }
+    ],
+    "Warnings": [
+      {
+        "Code": "UnresolvedReportLineage",
+        "Subject": "Report:55555555-5555-4555-8555-555555555555",
+        "Detail": "Paginated source lineage requires a separate collector."
+      }
+    ]
+  }
+}

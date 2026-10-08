@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="670" viewBox="0 0 1280 670" role="img" aria-labelledby="title description">
+<title id="title">Workspace to asset to connection to data source</title><desc id="description">A workspace governs assets. Assets can depend on upstream assets and use multiple connections. Connections resolve source endpoints. Internal and platform identities remain distinct.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#427963"/></marker></defs>
+<rect width="1280" height="670" fill="#f4f7f5"/><g font-family="Segoe UI,Arial,sans-serif">
+<text x="44" y="50" fill="#557261" font-size="13" letter-spacing="2">ANALYTIC REGISTRY · PRODUCT RELATIONSHIPS</text>
+<text x="44" y="95" fill="#203e30" font-size="30" font-weight="600">Accountability, content, and technical lineage</text>
+<text x="44" y="124" fill="#536d5e" font-size="16">Declared ownership and observed platform relationships are separate records.</text>
+<g fill="#fff" stroke="#b8cec0" stroke-width="1.5"><rect x="44" y="191" width="238" height="134" rx="8"/><rect x="360" y="191" width="238" height="134" rx="8"/><rect x="678" y="191" width="238" height="134" rx="8"/><rect x="996" y="191" width="238" height="134" rx="8"/></g>
+<g fill="#294e3b" font-weight="600" font-size="23"><text x="64" y="231">Workspace</text><text x="380" y="231">Asset</text><text x="698" y="231">Connection</text><text x="1016" y="231">Data source</text></g>
+<g fill="#566e60" font-size="15"><text x="64" y="260">Workspace / project /</text><text x="64" y="282">collection</text><text x="380" y="260">Report / workbook /</text><text x="380" y="282">model / workflow</text><text x="698" y="260">Native connection identity</text><text x="698" y="282">No passwords or secrets</text><text x="1016" y="260">Endpoint / database /</text><text x="1016" y="282">schema / file</text></g>
+<g stroke="#427963" stroke-width="2" fill="none" marker-end="url(#arrow)"><path d="M282 253H350"/><path d="M598 253H668"/><path d="M916 253H986"/></g>
+<g fill="#557261" font-size="13" text-anchor="middle"><text x="321" y="175">governs</text><text x="637" y="175">uses</text><text x="955" y="175">resolves to</text></g>
+<g fill="#566e60" font-size="14"><text x="44" y="355">0–1 accountable workspace</text><text x="44" y="376">per asset; many assets per workspace</text><text x="678" y="355">Many assets ↔ many connections</text><text x="996" y="355">0–1 resolved endpoint</text><text x="996" y="376">per connection observation</text></g>
+<rect x="360" y="420" width="310" height="107" rx="8" fill="#e7eef3" stroke="#a6bccb"/>
+<text x="380" y="455" font-size="20" fill="#355267" font-weight="600">Upstream asset</text><text x="380" y="482" font-size="15" fill="#526b7b">Semantic model or published source</text><text x="380" y="504" font-size="14" fill="#526b7b">May belong to another workspace</text>
+<g stroke="#427963" stroke-width="2" fill="none" marker-end="url(#arrow)"><path d="M478 325V410"/><path d="M670 472H797V335"/></g>
+<text x="495" y="378" font-size="14" fill="#536d5e">depends on</text><text x="818" y="458" font-size="14" fill="#536d5e">uses connections</text>
+<rect x="44" y="568" width="1190" height="65" rx="6" fill="#e5eee8"/>
+<text x="64" y="594" font-size="16" fill="#274e39" font-weight="600">Two identities, one durable record</text><text x="64" y="618" font-size="14" fill="#536d5e">Registry UUID + platform instance + native scope + native object type + native ID. Names remain changeable labels.</text>
+</g></svg>

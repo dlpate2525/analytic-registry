@@ -1,0 +1,115 @@
+{
+  "ContractVersion": "1.0",
+  "CollectorVersion": "registry-powerbi-offline-1.0",
+  "RunKey": "99999999-9999-4999-8999-999999999999",
+  "PlatformCode": "PowerBI",
+  "PlatformInstanceKey": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+  "NativeScopeKey": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+  "ObservedAt": "2026-10-07T10:01:00.000Z",
+  "EnvironmentCode": "Illustrative",
+  "ProductVersion": null,
+  "APIVersion": "v1.0",
+  "StartedAt": "2026-10-07T10:00:00Z",
+  "CompletedAt": "2026-10-07T10:01:00.000Z",
+  "RunStatusCode": "Partial",
+  "ScopeDescription": "Power BI reports and semantic models in the explicit workspace list; not the full Fabric item estate.",
+  "Datasets": [
+    {
+      "DatasetCode": "WorkspaceInventory",
+      "ScopeKey": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "CoverageStatusCode": "Complete",
+      "RowCount": 2
+    },
+    {
+      "DatasetCode": "ReportInventory",
+      "ScopeKey": "11111111-1111-4111-8111-111111111111",
+      "CoverageStatusCode": "Complete",
+      "RowCount": 2
+    },
+    {
+      "DatasetCode": "SemanticModelInventory",
+      "ScopeKey": "11111111-1111-4111-8111-111111111111",
+      "CoverageStatusCode": "Complete",
+      "RowCount": 0
+    },
+    {
+      "DatasetCode": "ReportInventory",
+      "ScopeKey": "22222222-2222-4222-8222-222222222222",
+      "CoverageStatusCode": "Complete",
+      "RowCount": 0
+    },
+    {
+      "DatasetCode": "SemanticModelInventory",
+      "ScopeKey": "22222222-2222-4222-8222-222222222222",
+      "CoverageStatusCode": "Complete",
+      "RowCount": 1
+    },
+    {
+      "DatasetCode": "WorkspaceAssetMembership",
+      "ScopeKey": "11111111-1111-4111-8111-111111111111",
+      "CoverageStatusCode": "Complete",
+      "RowCount": 2
+    },
+    {
+      "DatasetCode": "WorkspaceAssetMembership",
+      "ScopeKey": "22222222-2222-4222-8222-222222222222",
+      "CoverageStatusCode": "Complete",
+      "RowCount": 1
+    },
+    {
+      "DatasetCode": "Connections",
+      "ScopeKey": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "CoverageStatusCode": "Partial",
+      "RowCount": 2
+    },
+    {
+      "DatasetCode": "AssetConnectionLineage",
+      "ScopeKey": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "CoverageStatusCode": "Partial",
+      "RowCount": 2
+    },
+    {
+      "DatasetCode": "AssetDependencies",
+      "ScopeKey": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "CoverageStatusCode": "Partial",
+      "RowCount": 1
+    },
+    {
+      "DatasetCode": "ConfiguredAccess",
+      "ScopeKey": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "CoverageStatusCode": "NotCollected",
+      "RowCount": null
+    },
+    {
+      "DatasetCode": "EffectiveAccess",
+      "ScopeKey": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "CoverageStatusCode": "NotCollected",
+      "RowCount": null
+    },
+    {
+      "DatasetCode": "Activity",
+      "ScopeKey": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "CoverageStatusCode": "NotCollected",
+      "RowCount": null
+    },
+    {
+      "DatasetCode": "CredentialIdentity",
+      "ScopeKey": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "CoverageStatusCode": "NotCollected",
+      "RowCount": null
+    },
+    {
+      "DatasetCode": "FabricNonPowerBIItems",
+      "ScopeKey": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "CoverageStatusCode": "NotCollected",
+      "RowCount": null
+    }
+  ],
+  "Warnings": [
+    {
+      "Code": "UnresolvedReportLineage",
+      "Subject": "Report:55555555-5555-4555-8555-555555555555",
+      "Detail": "Paginated source lineage requires a separate collector."
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+# Publication notes
+
+Prepared 7 October 2026 for the public analytic-registry repository.
+
+- Generalized the deployment host references in source, generated documentation, and the compiled preview.
+- Inspected all 11 existing PNG screenshots. They contain the prototype's fictional sample data and generic product branding.
+- Preserved the original screenshots as a design history; older screens are not the current specification.
+- Included the application source, tests, docs, HTML guides, CSV dictionary, diagrams, collection scripts, fixtures, and both downloadable bundles.
+- Excluded installed dependencies, local build caches, raw conversation attachments, browser-storage exports, credentials, and scratch investigation files.
+- Regenerated the 53-table documentation and rebuilt the prototype before packaging.
+- Local checks: 119 domain/data checks, 31 workflow checks, 36 audit checks, and 26 collector checks passed.
+- The build passed with a roughly 501 kB JavaScript bundle warning. Code splitting remains an improvement.
+- Scanned text and nested ZIP contents for excluded organization identifiers, local home paths, and common credential patterns. No matching publication content remained.
+
+The artifact manifest lists a SHA-256 digest for each published file except the manifest itself and Git metadata. GitHub Actions repeats the application and collector checks after publication. Its results are separate from the completed local checks.
+
+No live platform SQL or API collection was executed. The proposed operating package remains proposed until accepted. This publication changes neither that status nor the scope of the prototype.

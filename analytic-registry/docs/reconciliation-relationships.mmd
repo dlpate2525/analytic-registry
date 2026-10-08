@@ -1,0 +1,15 @@
+erDiagram
+    Workspace ||--o{ WorkspaceRequest : requests
+    Workspace ||--o{ ConfigurationVersion : versions
+    WorkspaceRequest |o--o{ ConfigurationVersion : proposes
+    ConfigurationVersion ||--o{ ChampionAssignment : selects
+    Person ||--o{ ChampionAssignment : accountable
+    ConfigurationVersion ||--o{ GroupSpecification : specifies
+    DirectoryGroup |o--o{ GroupSpecification : resolves
+    PlatformInstance ||--o{ ExtractRun : collects
+    ExtractRun ||--o{ ExtractDataset : completeness
+    ExtractRun ||--o{ ConfiguredAccessSnapshot : observes
+    ExtractRun ||--o{ ObservedWorkspaceAsset : memberships
+    ExtractRun ||--o{ ObservedAssetConnection : lineage
+    ExtractRun |o--o{ RuleEvaluation : evidence
+    ConfigurationVersion |o--o{ RuleEvaluation : compares
