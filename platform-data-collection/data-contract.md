@@ -48,12 +48,14 @@ The resolver creates a `Discovered` workspace stub only after an identity check.
 | `AssetTypeCode` | text(50) | Yes | Agreed display classification: `Report`, `Paginated Report`, `Semantic Model`, `Workbook`, or `Published Data Source`. Maps to `Asset.AssetTypeCode`. |
 | `DisplayName` | text(200) | Yes | Current source label. Maps to `ObservedAsset.DisplayName`; not an identity key. |
 | `NativeVersionReference` | text(100) | No | Tableau revision when returned. Maps to `ObservedAsset.NativeVersionReference`. It does not automatically create a business `AssetVersion`. |
-| `CreatedByNativeID` | text(200) | No | Native creator identifier when supplied. Resolve its namespace before assigning `ObservedAsset.CreatedByPrincipalID`. Do not substitute the current owner. |
+| `CreatedByNativeID` | text(200) | No | Verified original-creator reference only. Power BI Report.createdById is technical-owner evidence and must not populate this field. Preserve the creator's source namespace before assigning `ObservedAsset.CreatedByPrincipalID`. |
 | `ModifiedByNativeID` | text(200) | No | Native last-modifier identifier. Resolve to `ObservedAsset.ModifiedByPrincipalID`. Tableau uses a repository user ID; Power BI may expose a GUID. |
-| `NativeOwnerID` | text(200) | No | Current technical owner evidence. Resolve to proposed `ObservedAsset.NativeOwnerPrincipalID`. It is distinct from creator and accountable business owner. |
+| `NativeOwnerID` | text(200) | No | Technical owner reference: Power BI Report.createdById or Tableau repository owner_id. Preserve the native value, platform scope, and identifier namespace before resolving `ObservedAsset.NativeOwnerPrincipalID`. Do not infer an Entra ID from GUID shape or assign accountable business ownership. |
 | `CreatedAtNative` | UTC datetime | No | Source creation timestamp. Maps to `ObservedAsset.CreatedAtNative`. Unknown timezone remains unresolved. |
 | `ModifiedAtNative` | UTC datetime | No | Source last-change timestamp. Maps to `ObservedAsset.ModifiedAtNative`. It does not mean last viewed. |
 | `NativeLifecycleCode` | text(40) | No | Native lifecycle state. Maps to proposed `ObservedAsset.NativeLifecycleCode`. Missing Power BI report state remains null. |
+
+Microsoft documents WorkspaceInfoReport.createdById as the report owner's ID, despite its field name. It is not proof of the original creator. [WorkspaceInfoReport reference](https://learn.microsoft.com/en-us/rest/api/power-bi/admin/workspace-info-get-scan-result#workspaceinforeport).
 
 ## `workspace_assets.csv` — one observed physical membership
 

@@ -1,0 +1,312 @@
+[
+  {
+    "Platform": "Tableau 2026.2",
+    "Entity": "Common",
+    "NativeField": "sites.luid",
+    "JoinPath": "object.site_id = sites.id; users.site_id = sites.id",
+    "TargetColumn": "NativeScopeKey",
+    "SQLType": "nvarchar(200)",
+    "Notes": "Site LUID; retain the configured server/instance key separately.",
+    "SourceURL": "https://tableau.github.io/tableau-data-dictionary/2026.2/data_dictionary.htm"
+  },
+  {
+    "Platform": "Tableau 2026.2",
+    "Entity": "Principal",
+    "NativeField": "users.luid",
+    "JoinPath": "users.site_id = sites.id",
+    "TargetColumn": "NativePrincipalID",
+    "SQLType": "nvarchar(200)",
+    "Notes": "Principal namespace TableauUserLUID; do not use as Entra object ID.",
+    "SourceURL": "https://tableau.github.io/tableau-data-dictionary/2026.2/data_dictionary.htm"
+  },
+  {
+    "Platform": "Tableau 2026.2",
+    "Entity": "Principal",
+    "NativeField": "users.id",
+    "JoinPath": "object.owner_id or object.modified_by_user_id = users.id AND object.site_id = users.site_id",
+    "TargetColumn": "NativeRepositoryID",
+    "SQLType": "nvarchar(200)",
+    "Notes": "Repository key for existing owner/modifier crosswalk; preserve as text.",
+    "SourceURL": "https://tableau.github.io/tableau-data-dictionary/2026.2/data_dictionary.htm"
+  },
+  {
+    "Platform": "Tableau 2026.2",
+    "Entity": "Principal",
+    "NativeField": "system_users.email",
+    "JoinPath": "users.system_user_id = system_users.id",
+    "TargetColumn": "SourceEmail",
+    "SQLType": "nvarchar(320)",
+    "Notes": "Raw source email; email-based directory joining is accepted for V1. Empty/ambiguous/unmatched -> Platform Manager.",
+    "SourceURL": "https://tableau.github.io/tableau-data-dictionary/2026.2/data_dictionary.htm"
+  },
+  {
+    "Platform": "Tableau 2026.2",
+    "Entity": "Principal",
+    "NativeField": "system_users.name",
+    "JoinPath": "users.system_user_id = system_users.id",
+    "TargetColumn": "SourceLogin",
+    "SQLType": "nvarchar(320)",
+    "Notes": "Native login, not necessarily email or UPN.",
+    "SourceURL": "https://tableau.github.io/tableau-data-dictionary/2026.2/data_dictionary.htm"
+  },
+  {
+    "Platform": "Tableau 2026.2",
+    "Entity": "Principal",
+    "NativeField": "system_users.friendly_name",
+    "JoinPath": "users.system_user_id = system_users.id",
+    "TargetColumn": "DisplayName",
+    "SQLType": "nvarchar(200)",
+    "Notes": "Optional display label; never the join key.",
+    "SourceURL": "https://tableau.github.io/tableau-data-dictionary/2026.2/data_dictionary.htm"
+  },
+  {
+    "Platform": "Tableau 2026.2",
+    "Entity": "Principal",
+    "NativeField": "site_roles.name",
+    "JoinPath": "users.site_role_id = site_roles.id",
+    "TargetColumn": "SourceStatus",
+    "SQLType": "nvarchar(500)",
+    "Notes": "Labeled source role: TableauSiteRole=<native value>. This is not Microsoft directory account status.",
+    "SourceURL": "https://tableau.github.io/tableau-data-dictionary/2026.2/data_dictionary.htm"
+  },
+  {
+    "Platform": "Tableau 2026.2",
+    "Entity": "Principal",
+    "NativeField": "Not supplied by the selected repository columns",
+    "JoinPath": "None",
+    "TargetColumn": "SourceDirectoryObjectID",
+    "SQLType": "nvarchar(200) NULL",
+    "Notes": "Keep null in this PostgreSQL extract. A Tableau LUID is not an Entra ID. Match SourceEmail to Directory_Users.Mail later.",
+    "SourceURL": "https://tableau.github.io/tableau-data-dictionary/2026.2/data_dictionary.htm"
+  },
+  {
+    "Platform": "Tableau 2026.2",
+    "Entity": "Workspace / Project",
+    "NativeField": "projects.luid",
+    "JoinPath": "projects.site_id = sites.id",
+    "TargetColumn": "NativeObjectID",
+    "SQLType": "nvarchar(200)",
+    "Notes": "Retain existing Project native identity and site scope; registry UUID stays separate.",
+    "SourceURL": "https://tableau.github.io/tableau-data-dictionary/2026.2/data_dictionary.htm"
+  },
+  {
+    "Platform": "Tableau 2026.2",
+    "Entity": "Workspace / Project",
+    "NativeField": "projects.owner_id",
+    "JoinPath": "projects.owner_id = users.id AND projects.site_id = users.site_id",
+    "TargetColumn": "SourcePrincipalReference",
+    "SQLType": "nvarchar(200) NULL",
+    "Notes": "Native role Owner; this is technical ownership, not automatic business ownership.",
+    "SourceURL": "https://tableau.github.io/tableau-data-dictionary/2026.2/data_dictionary.htm"
+  },
+  {
+    "Platform": "Tableau 2026.2",
+    "Entity": "Workspace / Project",
+    "NativeField": "users.luid",
+    "JoinPath": "projects.owner_id = users.id AND projects.site_id = users.site_id",
+    "TargetColumn": "NativePrincipalID",
+    "SQLType": "nvarchar(200) NULL",
+    "Notes": "Translate repository owner ID through the same-site user row. Preserve unresolved raw reference.",
+    "SourceURL": "https://tableau.github.io/tableau-data-dictionary/2026.2/data_dictionary.htm"
+  },
+  {
+    "Platform": "Tableau 2026.2",
+    "Entity": "Workspace / Project",
+    "NativeField": "system_users.email",
+    "JoinPath": "projects.owner_id = users.id AND projects.site_id = users.site_id; users.system_user_id = system_users.id",
+    "TargetColumn": "SourceEmail",
+    "SQLType": "nvarchar(320) NULL",
+    "Notes": "Object_Users email where PrincipalRoleCode=TechnicalOwner. Does not assign the approved business owner.",
+    "SourceURL": "https://tableau.github.io/tableau-data-dictionary/2026.2/data_dictionary.htm"
+  },
+  {
+    "Platform": "Tableau 2026.2",
+    "Entity": "Workspace / Project",
+    "NativeField": "No independent creator column in the selected current-object table",
+    "JoinPath": "None",
+    "TargetColumn": "CreatedByNativeID",
+    "SQLType": "nvarchar(200) NULL",
+    "Notes": "Keep null in V1. Do not relabel current owner or oldest retained revision publisher as original creator.",
+    "SourceURL": "https://tableau.github.io/tableau-data-dictionary/2026.2/data_dictionary.htm"
+  },
+  {
+    "Platform": "Tableau 2026.2",
+    "Entity": "Asset / Workbook",
+    "NativeField": "workbooks.luid",
+    "JoinPath": "workbooks.site_id = sites.id",
+    "TargetColumn": "NativeObjectID",
+    "SQLType": "nvarchar(200)",
+    "Notes": "Retain existing Workbook native identity and site scope; registry UUID stays separate.",
+    "SourceURL": "https://tableau.github.io/tableau-data-dictionary/2026.2/data_dictionary.htm"
+  },
+  {
+    "Platform": "Tableau 2026.2",
+    "Entity": "Asset / Workbook",
+    "NativeField": "workbooks.owner_id",
+    "JoinPath": "workbooks.owner_id = users.id AND workbooks.site_id = users.site_id",
+    "TargetColumn": "SourcePrincipalReference",
+    "SQLType": "nvarchar(200) NULL",
+    "Notes": "Native role Owner; this is technical ownership, not automatic business ownership.",
+    "SourceURL": "https://tableau.github.io/tableau-data-dictionary/2026.2/data_dictionary.htm"
+  },
+  {
+    "Platform": "Tableau 2026.2",
+    "Entity": "Asset / Workbook",
+    "NativeField": "users.luid",
+    "JoinPath": "workbooks.owner_id = users.id AND workbooks.site_id = users.site_id",
+    "TargetColumn": "NativePrincipalID",
+    "SQLType": "nvarchar(200) NULL",
+    "Notes": "Translate repository owner ID through the same-site user row. Preserve unresolved raw reference.",
+    "SourceURL": "https://tableau.github.io/tableau-data-dictionary/2026.2/data_dictionary.htm"
+  },
+  {
+    "Platform": "Tableau 2026.2",
+    "Entity": "Asset / Workbook",
+    "NativeField": "system_users.email",
+    "JoinPath": "workbooks.owner_id = users.id AND workbooks.site_id = users.site_id; users.system_user_id = system_users.id",
+    "TargetColumn": "SourceEmail",
+    "SQLType": "nvarchar(320) NULL",
+    "Notes": "Object_Users email where PrincipalRoleCode=TechnicalOwner. Does not assign the approved business owner.",
+    "SourceURL": "https://tableau.github.io/tableau-data-dictionary/2026.2/data_dictionary.htm"
+  },
+  {
+    "Platform": "Tableau 2026.2",
+    "Entity": "Asset / Workbook",
+    "NativeField": "workbooks.modified_by_user_id",
+    "JoinPath": "workbooks.modified_by_user_id = users.id AND workbooks.site_id = users.site_id",
+    "TargetColumn": "ModifiedByNativeID",
+    "SQLType": "nvarchar(200) NULL",
+    "Notes": "Published modifier reference. Older records can contain owner_id here; retain source meaning, not assumed creator.",
+    "SourceURL": "https://tableau.github.io/tableau-data-dictionary/2026.2/data_dictionary.htm"
+  },
+  {
+    "Platform": "Tableau 2026.2",
+    "Entity": "Asset / Workbook",
+    "NativeField": "system_users.email",
+    "JoinPath": "workbooks.modified_by_user_id = users.id AND workbooks.site_id = users.site_id; users.system_user_id = system_users.id",
+    "TargetColumn": "SourceEmail",
+    "SQLType": "nvarchar(320) NULL",
+    "Notes": "Object_Users email where PrincipalRoleCode=ModifiedBy. Do not relabel as original creator.",
+    "SourceURL": "https://tableau.github.io/tableau-data-dictionary/2026.2/data_dictionary.htm"
+  },
+  {
+    "Platform": "Tableau 2026.2",
+    "Entity": "Asset / Workbook",
+    "NativeField": "No independent creator column in the selected current-object table",
+    "JoinPath": "None",
+    "TargetColumn": "CreatedByNativeID",
+    "SQLType": "nvarchar(200) NULL",
+    "Notes": "Keep null in V1. Do not relabel current owner or oldest retained revision publisher as original creator.",
+    "SourceURL": "https://tableau.github.io/tableau-data-dictionary/2026.2/data_dictionary.htm"
+  },
+  {
+    "Platform": "Tableau 2026.2",
+    "Entity": "Asset / Published data source",
+    "NativeField": "datasources.luid",
+    "JoinPath": "datasources.site_id = sites.id",
+    "TargetColumn": "NativeObjectID",
+    "SQLType": "nvarchar(200)",
+    "Notes": "Retain existing PublishedDatasource native identity and site scope; registry UUID stays separate.",
+    "SourceURL": "https://tableau.github.io/tableau-data-dictionary/2026.2/data_dictionary.htm"
+  },
+  {
+    "Platform": "Tableau 2026.2",
+    "Entity": "Asset / Published data source",
+    "NativeField": "datasources.owner_id",
+    "JoinPath": "datasources.owner_id = users.id AND datasources.site_id = users.site_id",
+    "TargetColumn": "SourcePrincipalReference",
+    "SQLType": "nvarchar(200) NULL",
+    "Notes": "Native role Owner; this is technical ownership, not automatic business ownership.",
+    "SourceURL": "https://tableau.github.io/tableau-data-dictionary/2026.2/data_dictionary.htm"
+  },
+  {
+    "Platform": "Tableau 2026.2",
+    "Entity": "Asset / Published data source",
+    "NativeField": "users.luid",
+    "JoinPath": "datasources.owner_id = users.id AND datasources.site_id = users.site_id",
+    "TargetColumn": "NativePrincipalID",
+    "SQLType": "nvarchar(200) NULL",
+    "Notes": "Translate repository owner ID through the same-site user row. Preserve unresolved raw reference.",
+    "SourceURL": "https://tableau.github.io/tableau-data-dictionary/2026.2/data_dictionary.htm"
+  },
+  {
+    "Platform": "Tableau 2026.2",
+    "Entity": "Asset / Published data source",
+    "NativeField": "system_users.email",
+    "JoinPath": "datasources.owner_id = users.id AND datasources.site_id = users.site_id; users.system_user_id = system_users.id",
+    "TargetColumn": "SourceEmail",
+    "SQLType": "nvarchar(320) NULL",
+    "Notes": "Object_Users email where PrincipalRoleCode=TechnicalOwner. Does not assign the approved business owner.",
+    "SourceURL": "https://tableau.github.io/tableau-data-dictionary/2026.2/data_dictionary.htm"
+  },
+  {
+    "Platform": "Tableau 2026.2",
+    "Entity": "Asset / Published data source",
+    "NativeField": "datasources.modified_by_user_id",
+    "JoinPath": "datasources.modified_by_user_id = users.id AND datasources.site_id = users.site_id",
+    "TargetColumn": "ModifiedByNativeID",
+    "SQLType": "nvarchar(200) NULL",
+    "Notes": "Published modifier reference. Older records can contain owner_id here; retain source meaning, not assumed creator.",
+    "SourceURL": "https://tableau.github.io/tableau-data-dictionary/2026.2/data_dictionary.htm"
+  },
+  {
+    "Platform": "Tableau 2026.2",
+    "Entity": "Asset / Published data source",
+    "NativeField": "system_users.email",
+    "JoinPath": "datasources.modified_by_user_id = users.id AND datasources.site_id = users.site_id; users.system_user_id = system_users.id",
+    "TargetColumn": "SourceEmail",
+    "SQLType": "nvarchar(320) NULL",
+    "Notes": "Object_Users email where PrincipalRoleCode=ModifiedBy. Do not relabel as original creator.",
+    "SourceURL": "https://tableau.github.io/tableau-data-dictionary/2026.2/data_dictionary.htm"
+  },
+  {
+    "Platform": "Tableau 2026.2",
+    "Entity": "Asset / Published data source",
+    "NativeField": "No independent creator column in the selected current-object table",
+    "JoinPath": "None",
+    "TargetColumn": "CreatedByNativeID",
+    "SQLType": "nvarchar(200) NULL",
+    "Notes": "Keep null in V1. Do not relabel current owner or oldest retained revision publisher as original creator.",
+    "SourceURL": "https://tableau.github.io/tableau-data-dictionary/2026.2/data_dictionary.htm"
+  },
+  {
+    "Platform": "Tableau 2026.2",
+    "Entity": "REST user alternative",
+    "NativeField": "users.user[].id",
+    "JoinPath": "GET /sites/{site-id}/users, page all results",
+    "TargetColumn": "NativePrincipalID",
+    "SQLType": "nvarchar(200)",
+    "Notes": "REST user identifier; keep site scope. Use users.luid crosswalk before mixing with repository owner integers.",
+    "SourceURL": "https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_ref_users_and_groups.htm"
+  },
+  {
+    "Platform": "Tableau 2026.2",
+    "Entity": "REST user alternative",
+    "NativeField": "users.user[].email",
+    "JoinPath": "GET /sites/{site-id}/users, page all results",
+    "TargetColumn": "SourceEmail",
+    "SQLType": "nvarchar(320) NULL",
+    "Notes": "Supported email field; preserve returned null/empty values. Query User On Site also exposes email.",
+    "SourceURL": "https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_ref_users_and_groups.htm"
+  },
+  {
+    "Platform": "Tableau 2026.2",
+    "Entity": "REST user alternative",
+    "NativeField": "users.user[].siteRole",
+    "JoinPath": "GET /sites/{site-id}/users",
+    "TargetColumn": "SourceStatus",
+    "SQLType": "nvarchar(500)",
+    "Notes": "Labeled source role: TableauSiteRole=<native value>. This is not Microsoft directory account status.",
+    "SourceURL": "https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_ref_users_and_groups.htm"
+  },
+  {
+    "Platform": "Tableau 2026.2",
+    "Entity": "Principal",
+    "NativeField": "Configured directory_tenant_key psql parameter",
+    "JoinPath": "Corporate-directory configuration; not a Tableau column",
+    "TargetColumn": "DirectoryTenantKey",
+    "SQLType": "nvarchar(200)",
+    "Notes": "Required corporate tenant used for the V1 email match. Keep separate from Tableau site LUID.",
+    "SourceURL": "https://tableau.github.io/tableau-data-dictionary/2026.2/data_dictionary.htm"
+  }
+]

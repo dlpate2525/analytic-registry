@@ -1,5 +1,7 @@
 # Analytic Registry — first platform data collection
 
+**Current V1 delivery:** use the [Excel workbook and manual SQL handoff](v1-extract/README.md). It adds email matching, a single Platform Manager exception owner, and Alteryx backend queries. The inventory contract below remains in use.
+
 Prepared 7 October 2026. Contract version 1.0.
 
 Give each platform team this folder. Ask for an observed inventory using stable native IDs and the shared column names below. The team should not generate the application's internal UUIDs or fill business declarations.

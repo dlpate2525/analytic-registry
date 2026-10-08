@@ -80,7 +80,8 @@ export function normalize(input, context) {
       for(const a of w[field]??[]) {
         const aid=required(a.id,`${field}.id`);const key=`${type}:${aid}`;
         const kind=type==='Report'&&a.reportType==='PaginatedReport'?'Paginated Report':assetType;
-        add('assets',key,{NativeAssetID:aid,NativeAssetType:type,AssetTypeCode:kind,DisplayName:required(a.name,`${field}.name`),CreatedByNativeID:type==='Report'?a.createdById??null:null,ModifiedByNativeID:type==='Report'?a.modifiedById??null:null,CreatedAtNative:utc(type==='Report'?a.createdDateTime:a.createdDate,key+'.created',warnings),ModifiedAtNative:utc(a.modifiedDateTime,key+'.modified',warnings)});
+        // WorkspaceInfoReport.createdById is the report owner ID, not original-author evidence.
+        add('assets',key,{NativeAssetID:aid,NativeAssetType:type,AssetTypeCode:kind,DisplayName:required(a.name,`${field}.name`),NativeOwnerID:type==='Report'?a.createdById??null:null,ModifiedByNativeID:type==='Report'?a.modifiedById??null:null,CreatedAtNative:utc(type==='Report'?a.createdDateTime:a.createdDate,key+'.created',warnings),ModifiedAtNative:utc(a.modifiedDateTime,key+'.modified',warnings)});
         add('workspace_assets',`${wid}:${key}`,{NativeWorkspaceID:wid,NativeAssetID:aid,NativeAssetType:type,NativeAssociationType:'ContainedIn'});
         if(type==='Report') {
           if(a.datasetId) {

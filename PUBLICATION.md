@@ -15,3 +15,9 @@ Prepared 7 October 2026 for the public analytic-registry repository.
 The artifact manifest lists a SHA-256 digest for each published file except the manifest itself and Git metadata. GitHub Actions repeats the application and collector checks after publication. Its results are separate from the completed local checks.
 
 No live platform SQL or API collection was executed. The proposed operating package remains proposed until accepted. This publication changes neither that status nor the scope of the prototype.
+
+## V1 extract supplement — 8 October 2026
+
+Added the empty Excel extract, nine-table import contract, official source mappings, Tableau user joins, backend-only Alteryx MongoDB queries, Power BI identity pseudocode, and manual SQL staging/matching queries. The workbook was rendered and each sheet visually checked. Exact headers and blank data tables were verified. No live platform, directory, or SQL Server execution was performed.
+
+Corrected Power BI report `createdById` mapping to technical owner instead of original creator and added a collector regression check. Existing app behavior and deferred workflow repairs remain unchanged. Refreshed the collection ZIP and artifact digests.

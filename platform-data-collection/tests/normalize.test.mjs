@@ -10,6 +10,26 @@ test('keeps report and semantic model grains; two reports and one model',()=>ass
 test('report refers to a model in another workspace',()=>assert.equal(original.asset_dependencies[0].UpstreamNativeWorkspaceID,fixture.workspaces[1].id));
 test('models have two source connections; reports do not gain invented direct connections',()=>{assert.equal(original.asset_connections.length,2);assert.ok(original.asset_connections.every(r=>r.NativeAssetType==='Dataset'));});
 test('nullable evidence remains null; missing usage is not zero',()=>{assert.equal(original.assets[1].CreatedAtNative,null);assert.equal(original.connections[0].IdentityClassificationCode,'Unknown');});
+test('report createdById is technical owner evidence and never invents an original creator',()=>{
+  const f=clone(fixture);
+  const report=f.workspaces[0].reports[0];
+  report.createdById='owner-native-id';
+  report.modifiedById='modifier-native-id';
+  const n=normalize(f,context);
+  const asset=n.assets.find(row=>row.NativeAssetID===report.id&&row.NativeAssetType==='Report');
+  assert.equal(asset.NativeOwnerID,'owner-native-id');
+  assert.equal(asset.CreatedByNativeID,null);
+  assert.equal(asset.ModifiedByNativeID,'modifier-native-id');
+  report.createdById='replacement-owner-native-id';
+  const changed=normalize(f,context).assets.find(row=>row.NativeAssetID===report.id&&row.NativeAssetType==='Report');
+  assert.equal(changed.NativeOwnerID,'replacement-owner-native-id');
+  assert.equal(changed.NativeAssetID,asset.NativeAssetID);
+  assert.equal(changed.CreatedByNativeID,null);
+  delete report.createdById;
+  const missing=normalize(f,context).assets.find(row=>row.NativeAssetID===report.id&&row.NativeAssetType==='Report');
+  assert.equal(missing.NativeOwnerID,null);
+  assert.equal(missing.CreatedByNativeID,null);
+});
 test('paginated report is retained with explicit unresolved lineage',()=>assert.ok(original.manifest.Warnings.some(w=>w.Code==='UnresolvedReportLineage')));
 test('renaming changes label, not the native asset identity',()=>{const f=clone(fixture);f.workspaces[0].reports[0].name='Renamed';const n=normalize(f,context);assert.equal(n.assets[0].NativeAssetID,original.assets[0].NativeAssetID);assert.equal(n.assets[0].DisplayName,'Renamed');});
 test('workspace move retains asset key and changes membership',()=>{const f=clone(fixture);f.workspaces[1].reports.push(f.workspaces[0].reports.shift());const n=normalize(f,context);const report=n.assets.find(r=>r.NativeAssetID===original.assets[0].NativeAssetID);assert.equal(report.NativeScopeKey,context.PlatformInstanceKey);assert.equal(n.workspace_assets.find(r=>r.NativeAssetID===report.NativeAssetID).NativeWorkspaceID,fixture.workspaces[1].id);});

@@ -1,5 +1,11 @@
 # Application review and repair plan
 
+## V1 extract decision — 8 October 2026
+
+The current delivery uses the [Excel extract and platform handoff](../../platform-data-collection/v1-extract/README.md). It uses exact normalized email matching after manual SQL staging. Retain native IDs separately. All unresolved identities and relationships go to Platform Manager. Alteryx collection uses MongoDB backend tables and read-only queries only.
+
+Existing RunKey, ObservedAt, and manifest behavior remain unchanged. Classification, PRL, and risk repairs are deferred for V1. Existing product requirements remain. The plans below describe future implementation where they exceed this extract workflow. No live directory integration or application workflow repair has been implemented by this delivery.
+
 Reviewed published commit [`6625514`](https://github.com/dlpate2525/analytic-registry/tree/6625514a523f744324433e5b951c8f322eb3c9dc). This is a review and proposed implementation plan. Application behavior has not been changed. The separate RunDate proposal is deferred.
 
 ## Assessment

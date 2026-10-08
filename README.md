@@ -8,6 +8,7 @@ The repository includes the application, product and engineering documents, rela
 
 | Artifact | Location |
 |---|---|
+| V1 Excel extract and SQL staging | [Workbook and platform handoff](platform-data-collection/v1-extract/README.md) |
 | Application source and local setup | [analytic-registry](analytic-registry/README.md) |
 | Application review and repair priorities | [Review and five-phase plan](analytic-registry/docs/github-review-and-repair-plan.md), [identity resolution design](analytic-registry/docs/identity-resolution-design.md) |
 | Business and product definition | [Business / product document](analytic-registry/docs/business-product.md) |

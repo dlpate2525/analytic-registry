@@ -1,0 +1,767 @@
+[
+  {
+    "sheet": "Workspaces",
+    "file": "workspaces.csv",
+    "grain": "One observed workspace, Tableau project, or Alteryx collection.",
+    "columns": [
+      {
+        "name": "RunKey",
+        "type": "uniqueidentifier",
+        "required": "Yes",
+        "purpose": "Platform team's correlation key for this delivery. Registry ingestion maps it to ExtractRunID; it is not automatically the registry UUID."
+      },
+      {
+        "name": "PlatformCode",
+        "type": "nvarchar(30)",
+        "required": "Yes",
+        "purpose": "PowerBI, Tableau, or Alteryx. Resolve through the configured platform lookup."
+      },
+      {
+        "name": "PlatformInstanceKey",
+        "type": "nvarchar(200)",
+        "required": "Yes",
+        "purpose": "Stable tenant or server/site scope key. Resolves PlatformInstance.NativeInstanceKey. Never use a mutable display name."
+      },
+      {
+        "name": "NativeScopeKey",
+        "type": "nvarchar(200)",
+        "required": "Yes",
+        "purpose": "Namespace for source IDs. Power BI uses tenant ID; Tableau uses site LUID. Resolves RegistryObject.NativeScopeKey."
+      },
+      {
+        "name": "ObservedAt",
+        "type": "datetimeoffset(7)",
+        "required": "Yes",
+        "purpose": "Collection evidence time. Maps to ObservedWorkspace.ObservedAt and the extract dataset timestamp. Retain it for other snapshot rows through ExtractRun."
+      },
+      {
+        "name": "NativeWorkspaceID",
+        "type": "nvarchar(200)",
+        "required": "Yes",
+        "purpose": "Source workspace GUID or project LUID. Resolves RegistryObject.NativeObjectID and then WorkspaceID."
+      },
+      {
+        "name": "NativeRepositoryID",
+        "type": "nvarchar(200)",
+        "required": "No",
+        "purpose": "Tableau integer projects.id for diagnostic joins and a verified alternate-ID ledger. Staging-only; never replaces the LUID. Null for Power BI."
+      },
+      {
+        "name": "NativeWorkspaceType",
+        "type": "nvarchar(50)",
+        "required": "Yes",
+        "purpose": "Native object class: Workspace, PersonalGroup, or Project, as returned or agreed. Maps to RegistryObject.NativeObjectType."
+      },
+      {
+        "name": "DisplayName",
+        "type": "nvarchar(200)",
+        "required": "Yes",
+        "purpose": "Current technical label. Maps to ObservedWorkspace.DisplayName. Does not overwrite the declared business name."
+      },
+      {
+        "name": "NativeOwnerID",
+        "type": "nvarchar(200)",
+        "required": "No",
+        "purpose": "Raw technical owner reference. Resolve through Object_Users and Platform_Users. It does not assign a business owner."
+      },
+      {
+        "name": "NativeLifecycleCode",
+        "type": "nvarchar(40)",
+        "required": "No",
+        "purpose": "Native state, such as active or archived. Maps to ObservedWorkspace.NativeLifecycleCode. Keep the native vocabulary."
+      },
+      {
+        "name": "CapacityKey",
+        "type": "nvarchar(200)",
+        "required": "No",
+        "purpose": "Power BI capacity reference when returned. Maps to ObservedWorkspace.CapacityKey."
+      }
+    ]
+  },
+  {
+    "sheet": "Assets",
+    "file": "assets.csv",
+    "grain": "One native report, model, workbook, published source, or Alteryx workflow.",
+    "columns": [
+      {
+        "name": "RunKey",
+        "type": "uniqueidentifier",
+        "required": "Yes",
+        "purpose": "Platform team's correlation key for this delivery. Registry ingestion maps it to ExtractRunID; it is not automatically the registry UUID."
+      },
+      {
+        "name": "PlatformCode",
+        "type": "nvarchar(30)",
+        "required": "Yes",
+        "purpose": "PowerBI, Tableau, or Alteryx. Resolve through the configured platform lookup."
+      },
+      {
+        "name": "PlatformInstanceKey",
+        "type": "nvarchar(200)",
+        "required": "Yes",
+        "purpose": "Stable tenant or server/site scope key. Resolves PlatformInstance.NativeInstanceKey. Never use a mutable display name."
+      },
+      {
+        "name": "NativeScopeKey",
+        "type": "nvarchar(200)",
+        "required": "Yes",
+        "purpose": "Namespace for source IDs. Power BI uses tenant ID; Tableau uses site LUID. Resolves RegistryObject.NativeScopeKey."
+      },
+      {
+        "name": "ObservedAt",
+        "type": "datetimeoffset(7)",
+        "required": "Yes",
+        "purpose": "Collection evidence time. Maps to ObservedWorkspace.ObservedAt and the extract dataset timestamp. Retain it for other snapshot rows through ExtractRun."
+      },
+      {
+        "name": "NativeAssetID",
+        "type": "nvarchar(200)",
+        "required": "Yes",
+        "purpose": "Power BI report/model ID or Tableau workbook/published-source LUID. Resolves RegistryObject.NativeObjectID, then AssetID."
+      },
+      {
+        "name": "NativeRepositoryID",
+        "type": "nvarchar(200)",
+        "required": "No",
+        "purpose": "Tableau workbooks.id or datasources.id. Diagnostic alternate ID only. Null for Power BI."
+      },
+      {
+        "name": "NativeAssetType",
+        "type": "nvarchar(50)",
+        "required": "Yes",
+        "purpose": "Native type: Report, Dataset, Workbook, PublishedDatasource, or Workflow. Part of the object identity key."
+      },
+      {
+        "name": "AssetTypeCode",
+        "type": "nvarchar(50)",
+        "required": "Yes",
+        "purpose": "Agreed display classification: Report, Paginated Report, Semantic Model, Workbook, or Published Data Source. Maps to Asset.AssetTypeCode."
+      },
+      {
+        "name": "DisplayName",
+        "type": "nvarchar(200)",
+        "required": "Yes",
+        "purpose": "Current source label. Maps to ObservedAsset.DisplayName; not an identity key."
+      },
+      {
+        "name": "NativeVersionReference",
+        "type": "nvarchar(100)",
+        "required": "No",
+        "purpose": "Tableau revision when returned. Maps to ObservedAsset.NativeVersionReference. It does not automatically create a business AssetVersion."
+      },
+      {
+        "name": "CreatedByNativeID",
+        "type": "nvarchar(200)",
+        "required": "No",
+        "purpose": "Verified original-author reference only. Power BI report createdBy is technical-owner evidence and must not populate this field as creator."
+      },
+      {
+        "name": "ModifiedByNativeID",
+        "type": "nvarchar(200)",
+        "required": "No",
+        "purpose": "Native last-modifier identifier. Resolve to ObservedAsset.ModifiedByPrincipalID. Tableau uses a repository user ID; Power BI may expose a GUID."
+      },
+      {
+        "name": "NativeOwnerID",
+        "type": "nvarchar(200)",
+        "required": "No",
+        "purpose": "Current technical owner evidence. Resolve to proposed ObservedAsset.NativeOwnerPrincipalID. It is distinct from creator and accountable business owner."
+      },
+      {
+        "name": "CreatedAtNative",
+        "type": "datetimeoffset(7)",
+        "required": "No",
+        "purpose": "Source creation timestamp. Maps to ObservedAsset.CreatedAtNative. Unknown timezone remains unresolved."
+      },
+      {
+        "name": "ModifiedAtNative",
+        "type": "datetimeoffset(7)",
+        "required": "No",
+        "purpose": "Source last-change timestamp. Maps to ObservedAsset.ModifiedAtNative. It does not mean last viewed."
+      },
+      {
+        "name": "NativeLifecycleCode",
+        "type": "nvarchar(40)",
+        "required": "No",
+        "purpose": "Native lifecycle state. Maps to proposed ObservedAsset.NativeLifecycleCode. Missing Power BI report state remains null."
+      }
+    ]
+  },
+  {
+    "sheet": "Workspace_Assets",
+    "file": "workspace_assets.csv",
+    "grain": "One physical workspace-to-asset membership.",
+    "columns": [
+      {
+        "name": "RunKey",
+        "type": "uniqueidentifier",
+        "required": "Yes",
+        "purpose": "Platform team's correlation key for this delivery. Registry ingestion maps it to ExtractRunID; it is not automatically the registry UUID."
+      },
+      {
+        "name": "PlatformCode",
+        "type": "nvarchar(30)",
+        "required": "Yes",
+        "purpose": "PowerBI, Tableau, or Alteryx. Resolve through the configured platform lookup."
+      },
+      {
+        "name": "PlatformInstanceKey",
+        "type": "nvarchar(200)",
+        "required": "Yes",
+        "purpose": "Stable tenant or server/site scope key. Resolves PlatformInstance.NativeInstanceKey. Never use a mutable display name."
+      },
+      {
+        "name": "NativeScopeKey",
+        "type": "nvarchar(200)",
+        "required": "Yes",
+        "purpose": "Namespace for source IDs. Power BI uses tenant ID; Tableau uses site LUID. Resolves RegistryObject.NativeScopeKey."
+      },
+      {
+        "name": "ObservedAt",
+        "type": "datetimeoffset(7)",
+        "required": "Yes",
+        "purpose": "Collection evidence time. Maps to ObservedWorkspace.ObservedAt and the extract dataset timestamp. Retain it for other snapshot rows through ExtractRun."
+      },
+      {
+        "name": "NativeWorkspaceID",
+        "type": "nvarchar(200)",
+        "required": "Yes",
+        "purpose": "Resolve the source workspace within this instance and scope. Maps to ObservedWorkspaceAsset.WorkspaceID."
+      },
+      {
+        "name": "NativeAssetID",
+        "type": "nvarchar(200)",
+        "required": "Yes",
+        "purpose": "Resolve the member asset using its native type. Maps to ObservedWorkspaceAsset.AssetID."
+      },
+      {
+        "name": "NativeAssetType",
+        "type": "nvarchar(50)",
+        "required": "Yes",
+        "purpose": "Disambiguates equal ID text across object classes. Part of the asset resolution key."
+      },
+      {
+        "name": "NativeAssociationType",
+        "type": "nvarchar(40)",
+        "required": "Yes",
+        "purpose": "ContainedIn or ProjectContent in these adapters. Maps to ObservedWorkspaceAsset.NativeAssociationType."
+      }
+    ]
+  },
+  {
+    "sheet": "Connections",
+    "file": "connections.csv",
+    "grain": "One native connection.",
+    "columns": [
+      {
+        "name": "RunKey",
+        "type": "uniqueidentifier",
+        "required": "Yes",
+        "purpose": "Platform team's correlation key for this delivery. Registry ingestion maps it to ExtractRunID; it is not automatically the registry UUID."
+      },
+      {
+        "name": "PlatformCode",
+        "type": "nvarchar(30)",
+        "required": "Yes",
+        "purpose": "PowerBI, Tableau, or Alteryx. Resolve through the configured platform lookup."
+      },
+      {
+        "name": "PlatformInstanceKey",
+        "type": "nvarchar(200)",
+        "required": "Yes",
+        "purpose": "Stable tenant or server/site scope key. Resolves PlatformInstance.NativeInstanceKey. Never use a mutable display name."
+      },
+      {
+        "name": "NativeScopeKey",
+        "type": "nvarchar(200)",
+        "required": "Yes",
+        "purpose": "Namespace for source IDs. Power BI uses tenant ID; Tableau uses site LUID. Resolves RegistryObject.NativeScopeKey."
+      },
+      {
+        "name": "ObservedAt",
+        "type": "datetimeoffset(7)",
+        "required": "Yes",
+        "purpose": "Collection evidence time. Maps to ObservedWorkspace.ObservedAt and the extract dataset timestamp. Retain it for other snapshot rows through ExtractRun."
+      },
+      {
+        "name": "NativeConnectionID",
+        "type": "nvarchar(200)",
+        "required": "Yes",
+        "purpose": "Tableau data connection LUID or returned Power BI source-instance ID. Resolve to ConnectionID. Missing or unstable IDs require review."
+      },
+      {
+        "name": "NativeRepositoryID",
+        "type": "nvarchar(200)",
+        "required": "No",
+        "purpose": "Tableau integer connection ID. Keep in the alternate-ID staging ledger for traceability only."
+      },
+      {
+        "name": "NativeConnectionType",
+        "type": "nvarchar(50)",
+        "required": "Yes",
+        "purpose": "DataConnection or DatasourceInstance. Maps to RegistryObject.NativeObjectType."
+      },
+      {
+        "name": "DisplayName",
+        "type": "nvarchar(200)",
+        "required": "Yes",
+        "purpose": "Source caption when available. The Power BI adapter uses an explicit technology-and-ID label when no supported name is provided. Maps to ObservedConnection.DisplayName."
+      },
+      {
+        "name": "TechnologyCode",
+        "type": "nvarchar(40)",
+        "required": "Yes",
+        "purpose": "Source technology, such as Oracle or SQL Server. Null source types become Undefined. Preserve other vendor values for mapping review. Maps to resolved DataSource.TechnologyCode."
+      },
+      {
+        "name": "ServerHostname",
+        "type": "nvarchar(255)",
+        "required": "No",
+        "purpose": "Allowed endpoint host from the source. Maps to DataSource.ServerHostname after endpoint resolution. Do not merge by host alone."
+      },
+      {
+        "name": "Port",
+        "type": "int",
+        "required": "No",
+        "purpose": "Connection port when exposed. Maps to DataSource.Port. Do not invent a default."
+      },
+      {
+        "name": "DatabaseName",
+        "type": "nvarchar(200)",
+        "required": "No",
+        "purpose": "Source database or provider-specific database identifier. Maps to DataSource.DatabaseName after validation."
+      },
+      {
+        "name": "HasExtract",
+        "type": "bit",
+        "required": "No",
+        "purpose": "Tableau extract indicator. True can coexist with Oracle/SQL Server technology. Staging-only pending a dedicated observed mode field. Power BI remains null."
+      },
+      {
+        "name": "AuthenticationTypeCode",
+        "type": "nvarchar(40)",
+        "required": "No",
+        "purpose": "Tableau native authentication method when present. Maps to ObservedConnection.AuthenticationTypeCode after vocabulary validation. Missing does not imply anonymous access."
+      },
+      {
+        "name": "IdentityClassificationCode",
+        "type": "nvarchar(40)",
+        "required": "Yes",
+        "purpose": "Unknown for this pass. Maps to ObservedConnection.IdentityClassificationCode. Later identity evidence may support a service/personal classification."
+      },
+      {
+        "name": "GatewayID",
+        "type": "nvarchar(200)",
+        "required": "No",
+        "purpose": "Power BI gateway binding when supplied. Maps to ObservedConnection.GatewayID. A blank binding is valid unknown/unbound evidence."
+      },
+      {
+        "name": "NativeStatusCode",
+        "type": "nvarchar(40)",
+        "required": "No",
+        "purpose": "Source state or explicitly labeled adapter category Observed/Misconfigured. Maps to ObservedConnection.NativeStatusCode. It is not a risk conclusion."
+      },
+      {
+        "name": "EvidenceStatusCode",
+        "type": "nvarchar(30)",
+        "required": "Yes",
+        "purpose": "Observed for the row's captured facts. Maps to ObservedConnection.EvidenceStatusCode. Dataset coverage controls what absences can mean."
+      }
+    ]
+  },
+  {
+    "sheet": "Asset_Connections",
+    "file": "asset_connections.csv",
+    "grain": "One directly observed asset-to-connection link.",
+    "columns": [
+      {
+        "name": "RunKey",
+        "type": "uniqueidentifier",
+        "required": "Yes",
+        "purpose": "Platform team's correlation key for this delivery. Registry ingestion maps it to ExtractRunID; it is not automatically the registry UUID."
+      },
+      {
+        "name": "PlatformCode",
+        "type": "nvarchar(30)",
+        "required": "Yes",
+        "purpose": "PowerBI, Tableau, or Alteryx. Resolve through the configured platform lookup."
+      },
+      {
+        "name": "PlatformInstanceKey",
+        "type": "nvarchar(200)",
+        "required": "Yes",
+        "purpose": "Stable tenant or server/site scope key. Resolves PlatformInstance.NativeInstanceKey. Never use a mutable display name."
+      },
+      {
+        "name": "NativeScopeKey",
+        "type": "nvarchar(200)",
+        "required": "Yes",
+        "purpose": "Namespace for source IDs. Power BI uses tenant ID; Tableau uses site LUID. Resolves RegistryObject.NativeScopeKey."
+      },
+      {
+        "name": "ObservedAt",
+        "type": "datetimeoffset(7)",
+        "required": "Yes",
+        "purpose": "Collection evidence time. Maps to ObservedWorkspace.ObservedAt and the extract dataset timestamp. Retain it for other snapshot rows through ExtractRun."
+      },
+      {
+        "name": "NativeAssetID",
+        "type": "nvarchar(200)",
+        "required": "Yes",
+        "purpose": "Direct consumer asset. Resolve to ObservedAssetConnection.AssetID."
+      },
+      {
+        "name": "NativeAssetType",
+        "type": "nvarchar(50)",
+        "required": "Yes",
+        "purpose": "Asset identity namespace used for resolution."
+      },
+      {
+        "name": "NativeConnectionID",
+        "type": "nvarchar(200)",
+        "required": "Yes",
+        "purpose": "Referenced native connection. Resolve to ObservedAssetConnection.ConnectionID."
+      },
+      {
+        "name": "EvidenceStatusCode",
+        "type": "nvarchar(30)",
+        "required": "Yes",
+        "purpose": "Row-level observation status. Maps to the matching observed edge."
+      }
+    ]
+  },
+  {
+    "sheet": "Asset_Dependencies",
+    "file": "asset_dependencies.csv",
+    "grain": "One consumer-to-provider asset relationship.",
+    "columns": [
+      {
+        "name": "RunKey",
+        "type": "uniqueidentifier",
+        "required": "Yes",
+        "purpose": "Platform team's correlation key for this delivery. Registry ingestion maps it to ExtractRunID; it is not automatically the registry UUID."
+      },
+      {
+        "name": "PlatformCode",
+        "type": "nvarchar(30)",
+        "required": "Yes",
+        "purpose": "PowerBI, Tableau, or Alteryx. Resolve through the configured platform lookup."
+      },
+      {
+        "name": "PlatformInstanceKey",
+        "type": "nvarchar(200)",
+        "required": "Yes",
+        "purpose": "Stable tenant or server/site scope key. Resolves PlatformInstance.NativeInstanceKey. Never use a mutable display name."
+      },
+      {
+        "name": "NativeScopeKey",
+        "type": "nvarchar(200)",
+        "required": "Yes",
+        "purpose": "Namespace for source IDs. Power BI uses tenant ID; Tableau uses site LUID. Resolves RegistryObject.NativeScopeKey."
+      },
+      {
+        "name": "ObservedAt",
+        "type": "datetimeoffset(7)",
+        "required": "Yes",
+        "purpose": "Collection evidence time. Maps to ObservedWorkspace.ObservedAt and the extract dataset timestamp. Retain it for other snapshot rows through ExtractRun."
+      },
+      {
+        "name": "NativeAssetID",
+        "type": "nvarchar(200)",
+        "required": "Yes",
+        "purpose": "Consumer, such as a report. Resolve to proposed ObservedAssetDependency.ConsumerAssetID."
+      },
+      {
+        "name": "NativeAssetType",
+        "type": "nvarchar(50)",
+        "required": "Yes",
+        "purpose": "Consumer native type. Part of its identity key."
+      },
+      {
+        "name": "UpstreamNativeAssetID",
+        "type": "nvarchar(200)",
+        "required": "Yes",
+        "purpose": "Provider, such as a semantic model. Resolve to proposed ObservedAssetDependency.ProviderAssetID."
+      },
+      {
+        "name": "UpstreamNativeAssetType",
+        "type": "nvarchar(50)",
+        "required": "Yes",
+        "purpose": "Provider native type. May require a supplemental inventory for Dataflow or Datamart."
+      },
+      {
+        "name": "UpstreamNativeWorkspaceID",
+        "type": "nvarchar(200)",
+        "required": "No",
+        "purpose": "Source-reported provider location. Helps collect missing provider inventory. It is not part of the durable Power BI asset key."
+      },
+      {
+        "name": "RelationshipCode",
+        "type": "nvarchar(40)",
+        "required": "Yes",
+        "purpose": "UsesSemanticModel or DependsOn in the Power BI adapter. Maps to DependencyTypeCode."
+      },
+      {
+        "name": "EvidenceStatusCode",
+        "type": "nvarchar(30)",
+        "required": "Yes",
+        "purpose": "Captured edge evidence. Maps to proposed ObservedAssetDependency.EvidenceStatusCode."
+      }
+    ]
+  },
+  {
+    "sheet": "Platform_Users",
+    "file": "platform_users.csv",
+    "grain": "One source principal per platform instance, scope, identifier namespace, native ID, and extract.",
+    "columns": [
+      {
+        "name": "RunKey",
+        "type": "uniqueidentifier",
+        "required": "Yes",
+        "purpose": "Platform team's correlation key for this delivery. Registry ingestion maps it to ExtractRunID; it is not automatically the registry UUID."
+      },
+      {
+        "name": "PlatformCode",
+        "type": "nvarchar(30)",
+        "required": "Yes",
+        "purpose": "PowerBI, Tableau, or Alteryx. Resolve through the configured platform lookup."
+      },
+      {
+        "name": "PlatformInstanceKey",
+        "type": "nvarchar(200)",
+        "required": "Yes",
+        "purpose": "Stable tenant or server/site scope key. Resolves PlatformInstance.NativeInstanceKey. Never use a mutable display name."
+      },
+      {
+        "name": "NativeScopeKey",
+        "type": "nvarchar(200)",
+        "required": "Yes",
+        "purpose": "Namespace for source IDs. Power BI uses tenant ID; Tableau uses site LUID. Resolves RegistryObject.NativeScopeKey."
+      },
+      {
+        "name": "ObservedAt",
+        "type": "datetimeoffset(7)",
+        "required": "Yes",
+        "purpose": "Collection evidence time. Maps to ObservedWorkspace.ObservedAt and the extract dataset timestamp. Retain it for other snapshot rows through ExtractRun."
+      },
+      {
+        "name": "NativePrincipalID",
+        "type": "nvarchar(200)",
+        "required": "Yes",
+        "purpose": "Exact source user or principal key. Keep blanks as unresolved evidence; never invent an ID."
+      },
+      {
+        "name": "IdentifierNamespace",
+        "type": "nvarchar(60)",
+        "required": "Yes",
+        "purpose": "Names the ID system, such as TableauUserLUID, PowerBIGraphID, PowerBIEmail, or AlteryxMongoUserID."
+      },
+      {
+        "name": "PrincipalTypeCode",
+        "type": "nvarchar(30)",
+        "required": "Yes",
+        "purpose": "User, Group, App, or Unknown. Nonhuman principals do not automatically match a person."
+      },
+      {
+        "name": "DisplayName",
+        "type": "nvarchar(200)",
+        "required": "No",
+        "purpose": "Source person or principal label. Never use it as a match key."
+      },
+      {
+        "name": "SourceLogin",
+        "type": "nvarchar(320)",
+        "required": "No",
+        "purpose": "Original platform login. It may differ from email or user principal name."
+      },
+      {
+        "name": "SourceEmail",
+        "type": "nvarchar(320)",
+        "required": "No",
+        "purpose": "Explicit email returned by the platform. Keep the raw value."
+      },
+      {
+        "name": "SourceStatus",
+        "type": "nvarchar(500)",
+        "required": "No",
+        "purpose": "Native role or account flags as a labeled source value. This is not corporate directory status."
+      },
+      {
+        "name": "SourceDirectoryObjectID",
+        "type": "nvarchar(200)",
+        "required": "No",
+        "purpose": "Directory object ID explicitly supplied by the source, when documented. Do not infer from GUID shape."
+      },
+      {
+        "name": "DirectoryTenantKey",
+        "type": "nvarchar(200)",
+        "required": "Yes",
+        "purpose": "Configured corporate directory tenant used for the email match."
+      },
+      {
+        "name": "NativeRepositoryID",
+        "type": "nvarchar(200)",
+        "required": "No",
+        "purpose": "Alternate repository key, such as Tableau users.id. This does not replace the primary native key."
+      }
+    ]
+  },
+  {
+    "sheet": "Directory_Users",
+    "file": "directory_users.csv",
+    "grain": "One directory user per tenant, object ID, and directory extract. Include enabled and disabled users.",
+    "columns": [
+      {
+        "name": "RunKey",
+        "type": "uniqueidentifier",
+        "required": "Yes",
+        "purpose": "Existing delivery key for the directory extract. Retain its existing run manifest."
+      },
+      {
+        "name": "DirectoryTenantKey",
+        "type": "nvarchar(200)",
+        "required": "Yes",
+        "purpose": "Corporate directory tenant. Select this tenant when comparing platform email."
+      },
+      {
+        "name": "DirectoryObjectID",
+        "type": "nvarchar(200)",
+        "required": "Yes",
+        "purpose": "Microsoft Entra user object ID from Graph id. Preserve as text."
+      },
+      {
+        "name": "DisplayName",
+        "type": "nvarchar(200)",
+        "required": "No",
+        "purpose": "Directory label. Never match people using this field."
+      },
+      {
+        "name": "Mail",
+        "type": "nvarchar(320)",
+        "required": "No",
+        "purpose": "Graph mail property. This is the agreed email match field."
+      },
+      {
+        "name": "UserPrincipalName",
+        "type": "nvarchar(320)",
+        "required": "No",
+        "purpose": "Graph userPrincipalName. Keep separate from mail; do not silently use it as an email fallback."
+      },
+      {
+        "name": "AccountEnabled",
+        "type": "bit",
+        "required": "No",
+        "purpose": "Graph accountEnabled: 1 enabled, 0 disabled, blank unknown. This does not establish employment status."
+      },
+      {
+        "name": "ObservedAt",
+        "type": "datetimeoffset(7)",
+        "required": "Yes",
+        "purpose": "Existing UTC evidence timestamp for this directory snapshot."
+      }
+    ]
+  },
+  {
+    "sheet": "Object_Users",
+    "file": "object_users.csv",
+    "grain": "One observed workspace or asset relationship to a source principal and role. Keep unresolved links.",
+    "columns": [
+      {
+        "name": "RunKey",
+        "type": "uniqueidentifier",
+        "required": "Yes",
+        "purpose": "Platform team's correlation key for this delivery. Registry ingestion maps it to ExtractRunID; it is not automatically the registry UUID."
+      },
+      {
+        "name": "PlatformCode",
+        "type": "nvarchar(30)",
+        "required": "Yes",
+        "purpose": "PowerBI, Tableau, or Alteryx. Resolve through the configured platform lookup."
+      },
+      {
+        "name": "PlatformInstanceKey",
+        "type": "nvarchar(200)",
+        "required": "Yes",
+        "purpose": "Stable tenant or server/site scope key. Resolves PlatformInstance.NativeInstanceKey. Never use a mutable display name."
+      },
+      {
+        "name": "NativeScopeKey",
+        "type": "nvarchar(200)",
+        "required": "Yes",
+        "purpose": "Namespace for source IDs. Power BI uses tenant ID; Tableau uses site LUID. Resolves RegistryObject.NativeScopeKey."
+      },
+      {
+        "name": "ObservedAt",
+        "type": "datetimeoffset(7)",
+        "required": "Yes",
+        "purpose": "Collection evidence time. Maps to ObservedWorkspace.ObservedAt and the extract dataset timestamp. Retain it for other snapshot rows through ExtractRun."
+      },
+      {
+        "name": "NativeObjectType",
+        "type": "nvarchar(50)",
+        "required": "Yes",
+        "purpose": "Exact source object type, such as Project, Workbook, Report, Dataset, Collection, or Workflow."
+      },
+      {
+        "name": "NativeObjectID",
+        "type": "nvarchar(200)",
+        "required": "Yes",
+        "purpose": "Native workspace or asset key. Resolve with platform, instance, scope, and type."
+      },
+      {
+        "name": "ObjectDisplayName",
+        "type": "nvarchar(200)",
+        "required": "No",
+        "purpose": "Source object label for review."
+      },
+      {
+        "name": "PrincipalRoleCode",
+        "type": "nvarchar(40)",
+        "required": "Yes",
+        "purpose": "TechnicalOwner, CreatedBy, ModifiedBy, or Access. Technical ownership is separate from business ownership."
+      },
+      {
+        "name": "SourcePrincipalReference",
+        "type": "nvarchar(200)",
+        "required": "No",
+        "purpose": "Unchanged owner, author, modifier, or access reference returned by the source."
+      },
+      {
+        "name": "SourceReferenceNamespace",
+        "type": "nvarchar(60)",
+        "required": "No",
+        "purpose": "Namespace of the original reference, such as TableauRepositoryUserID."
+      },
+      {
+        "name": "NativePrincipalID",
+        "type": "nvarchar(200)",
+        "required": "No",
+        "purpose": "Matched key from Platform_Users after the platform-side join. Blank remains unresolved."
+      },
+      {
+        "name": "IdentifierNamespace",
+        "type": "nvarchar(60)",
+        "required": "No",
+        "purpose": "Namespace of NativePrincipalID; must equal the matched Platform_Users namespace."
+      },
+      {
+        "name": "NativeRole",
+        "type": "nvarchar(100)",
+        "required": "No",
+        "purpose": "Unchanged native permission or role, when this is an Access relationship."
+      },
+      {
+        "name": "SourceEmail",
+        "type": "nvarchar(320)",
+        "required": "No",
+        "purpose": "Raw platform email associated with this relationship when exposed."
+      },
+      {
+        "name": "SourceReferenceStatusCode",
+        "type": "nvarchar(40)",
+        "required": "Yes",
+        "purpose": "ReadyForEmailMatch, MissingSourceReference, UnresolvedUserReference, MissingEmail, or UnverifiedMapping."
+      }
+    ]
+  }
+]
