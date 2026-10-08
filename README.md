@@ -9,6 +9,7 @@ The repository includes the application, product and engineering documents, rela
 | Artifact | Location |
 |---|---|
 | Application source and local setup | [analytic-registry](analytic-registry/README.md) |
+| Application review and repair priorities | [Review and five-phase plan](analytic-registry/docs/github-review-and-repair-plan.md), [identity resolution design](analytic-registry/docs/identity-resolution-design.md) |
 | Business and product definition | [Business / product document](analytic-registry/docs/business-product.md) |
 | Current decisions and remaining operating proposals | [Decision register](analytic-registry/docs/decision-register.md) |
 | Functional and nonfunctional requirements | [Requirements](analytic-registry/docs/requirements.md) |
