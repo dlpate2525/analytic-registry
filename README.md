@@ -1,6 +1,6 @@
 # Analytic Registry — V1.1 prototype
 
-**1.1.0-prototype.1 · 9 October 2026**
+**1.1.0-prototype.2 · 9 October 2026**
 
 The registry combines platform evidence with approved business metadata and assigned follow-up work. This release strengthens that boundary, simplifies the monthly extract, and repairs misleading workflow behavior.
 
@@ -22,7 +22,7 @@ Start with the [principal engineer and product review](analytic-registry/docs/v1
 
 The workbook has 17 sheets, 11 blank input tables, and 72 columns. Nine data tables contain 60 columns; shared delivery context and coverage add 12. Each column has explicit Power BI, Tableau, and Alteryx source and NULL rules.
 
-Tableau uses read-only PostgreSQL queries. Alteryx uses Gallery/Service MongoDB queries. Power BI uses SQL over a supplied metadata export; the registry makes no API call. Actual Alteryx files and installed database execution remain unverified.
+Tableau uses read-only PostgreSQL queries. Alteryx uses T-SQL over SQL Server copies of Gallery and Service. Fabric uses SQL over landed inventory with DAX model discovery. The existing scan-export SQL transform remains available; no API collector is introduced. Actual Alteryx files and installed database execution remain unverified.
 
 ## Run
 

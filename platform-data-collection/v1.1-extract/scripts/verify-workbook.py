@@ -74,6 +74,8 @@ with ZipFile(file) as archive:
             return contract['sources']['Directory']
         if table['sheet'] in ('Run_Context', 'Coverage'):
             return 'https://github.com/dlpate2525/analytic-registry/tree/main/platform-data-collection/v1.1-extract'
+        if platform == 'PowerBI':
+            return 'https://github.com/dlpate2525/analytic-registry/blob/main/platform-data-collection/v1.1-extract/fabric-query-mapping.md'
         return contract['sources'][platform]
 
     compared_cells = 0

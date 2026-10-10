@@ -1,6 +1,6 @@
 {
-  "version": "1.1.0-prototype.1",
-  "tag": "v1.1.0-prototype.1",
+  "version": "1.1.0-prototype.2",
+  "tag": "v1.1.0-prototype.2",
   "label": "V1.1 prototype",
   "baselineDate": "2026-10-09",
   "displayDate": "9 October 2026",
@@ -14,15 +14,15 @@
   "artifacts": {
     "workbook": {
       "path": "platform-data-collection/v1.1-extract/analytic-registry-v1.1-extract.xlsx",
-      "sha256": "35eae3d90afe6bd4701915de4f4b50a1eeeeedf635820752c24976e6da1aff40"
+      "sha256": "75e28bcb2998a372619aa743b9fe933e94a1ba0fabba013f7e59a8f712ff6c56"
     },
     "collectionPack": {
       "path": "platform-data-collection/analytic-registry-platform-data-pack.zip",
-      "sha256": "05b4f91531e61b8c7c5f7cefdd5aa429f383eba7e5ea546486e6d2eed7290b3a"
+      "sha256": "0f77f2eed0e0df548807d5ceaa0bf152f66ae3725a672c02c31904f628447f06"
     },
     "preview": {
       "path": "downloads/analytic-registry-preview.zip",
-      "sha256": "82c36a6631d49bc61b760276b4871eee52f3470b3aa55388b36b99b1b2483c43"
+      "sha256": "342cc26d2c5edae01da87812dd8660f0d4033a9318004cad70082740812d2003"
     }
   },
   "github": "https://github.com/dlpate2525/analytic-registry/tree/main",

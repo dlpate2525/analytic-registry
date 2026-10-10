@@ -1,0 +1,43 @@
+// Native DAX metadata query, not a tenant inventory collector.
+// Run against the supplied inventory semantic model with suitable query access.
+// The result describes that model's columns. It does not return registry assets.
+// If the managed read-only model rejects discovery, inspect its field list in
+// a permitted custom report. Do not change the original managed model.
+// https://learn.microsoft.com/en-us/dax/info-view-columns-function-dax
+EVALUATE
+    SELECTCOLUMNS(
+        INFO.VIEW.COLUMNS(),
+        "TableName", [Table],
+        "ColumnName", [Name],
+        "DataType", [DataType],
+        "Description", [Description],
+        "IsHidden", [IsHidden]
+    )
+ORDER BY [TableName], [ColumnName]
+
+// EXTRACTION TEMPLATE — adapt only after inspecting the actual model.
+// Microsoft does not publish a fixed table/column schema for the managed
+// Govern or Feature Usage and Adoption inventory model. The names below are
+// explicit placeholders, not claimed Microsoft tables. Keep the query commented
+// until all names and relationships have been verified.
+// Run the extraction as a separate DAX query, without a TOPN row limit.
+// Export native IDs as text; do not export an aggregated name-only visual.
+/*
+EVALUATE
+SELECTCOLUMNS(
+    SUMMARIZECOLUMNS(
+        'REPLACE_WITH_INVENTORY_TABLE'[REPLACE_WORKSPACE_ID_COLUMN],
+        'REPLACE_WITH_INVENTORY_TABLE'[REPLACE_WORKSPACE_NAME_COLUMN],
+        'REPLACE_WITH_INVENTORY_TABLE'[REPLACE_WORKSPACE_TYPE_COLUMN],
+        'REPLACE_WITH_INVENTORY_TABLE'[REPLACE_ITEM_ID_COLUMN],
+        'REPLACE_WITH_INVENTORY_TABLE'[REPLACE_ITEM_NAME_COLUMN],
+        'REPLACE_WITH_INVENTORY_TABLE'[REPLACE_ITEM_TYPE_COLUMN]
+    ),
+    "WorkspaceId", 'REPLACE_WITH_INVENTORY_TABLE'[REPLACE_WORKSPACE_ID_COLUMN],
+    "WorkspaceName", 'REPLACE_WITH_INVENTORY_TABLE'[REPLACE_WORKSPACE_NAME_COLUMN],
+    "WorkspaceType", 'REPLACE_WITH_INVENTORY_TABLE'[REPLACE_WORKSPACE_TYPE_COLUMN],
+    "ItemId", 'REPLACE_WITH_INVENTORY_TABLE'[REPLACE_ITEM_ID_COLUMN],
+    "ItemName", 'REPLACE_WITH_INVENTORY_TABLE'[REPLACE_ITEM_NAME_COLUMN],
+    "ItemType", 'REPLACE_WITH_INVENTORY_TABLE'[REPLACE_ITEM_TYPE_COLUMN]
+)
+*/

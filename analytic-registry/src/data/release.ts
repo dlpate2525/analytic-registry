@@ -1,5 +1,5 @@
 export const prototypeRelease = {
- version:'1.1.0-prototype.1',tag:'v1.1.0-prototype.1',label:'V1.1 prototype',baselineDate:'2026-10-09',displayDate:'9 October 2026',
+ version:'1.1.0-prototype.2',tag:'v1.1.0-prototype.2',label:'V1.1 prototype',baselineDate:'2026-10-09',displayDate:'9 October 2026',
  collectionContract:'1.1',workbookSheets:17,importTables:11,importColumns:72,
 } as const;
 export const prototypeArtifacts = {

@@ -1,6 +1,6 @@
 # Analytic Registry V1.1 data handoff
 
-Version 1.1, 9 October 2026. This is a query-first prototype contract. No live source or SQL Server query execution is claimed.
+Contract 1.1; query revision 2, 9 October 2026. This is a query-first prototype contract. No live source or SQL Server query execution is claimed.
 
 Download the [Excel template](analytic-registry-v1.1-extract.xlsx). It contains 11 input tables and 72 column positions. Nine data tables use 60 columns; shared run context and coverage use 12. The V1 layout used 117 repeated data-column positions. This is a 38% reduction including the new context tables, not a claim of 38% less source information.
 
@@ -21,8 +21,8 @@ The registry does not execute platform provisioning. Approved setup is implement
 | Platform | Query input | Current boundary |
 |---|---|---|
 | Tableau | PostgreSQL repository tables, scoped to site | Read-only queries; installed 2026.2 repository and permissions must be verified. |
-| Alteryx | AlteryxGallery and, when required, AlteryxService MongoDB collections or an equivalent local restored export | No Alteryx API. Actual exported document shapes have not been supplied for inspection. |
-| Power BI / Fabric | An existing metadata scan JSON export loaded as a SQL Server value | OPENJSON queries make no API calls. Power BI has no documented customer-queryable PostgreSQL metadata repository. The export provider remains responsible for acquisition and completeness. |
+| Alteryx | [SQL Server copies of Gallery and Service](alteryx-sqlserver-mapping.md) through named mapping views | No Alteryx API or MongoDB execution. Validate exported columns and array storage against the supplied 2025.1 references and target 2025.2. |
+| Power BI / Fabric | [Landed Fabric inventory](fabric-query-mapping.md), queried with Fabric SQL; DAX discovers the inventory model | First-pass inventory is Partial. An existing scan JSON export remains a richer SQL Server alternative. No API collector is introduced. |
 | Directory | Authorized directory export | Separate evidence run. Join exact normalized SourceEmail to Mail within the configured tenant. |
 
 Use [source-query-design.md](source-query-design.md) for official references, supported fields, query limitations, and platform handoff details. Do not publish raw Gallery/Service exports: they can contain credentials or other operational data. The delivered queries select metadata fields only.

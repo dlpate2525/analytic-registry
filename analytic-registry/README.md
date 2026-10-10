@@ -1,6 +1,6 @@
 # Analytic Registry — V1.1 prototype
 
-**1.1.0-prototype.1 · 9 October 2026**
+**1.1.0-prototype.2 · 9 October 2026**
 
 Analytic Registry coordinates platform evidence, business accountability, and follow-up work. The React app uses fictional records and local browser storage. It does not provision resources or import live platform data.
 
@@ -12,7 +12,7 @@ Start with the [product and operating review](docs/v1.1-product-operating-review
 |---|---|
 | [Excel template](../platform-data-collection/v1.1-extract/analytic-registry-v1.1-extract.xlsx) | 17 sheets; 11 blank input tables; 72 columns, including shared context and coverage. |
 | [Platform handoff](../platform-data-collection/v1.1-extract/README.md) | Query, validate, and manually stage the delivery. |
-| [Source queries](../platform-data-collection/v1.1-extract/source-query-design.md) | Tableau PostgreSQL, Alteryx MongoDB, Power BI SQL over supplied JSON. |
+| [Source queries](../platform-data-collection/v1.1-extract/source-query-design.md) | Tableau PostgreSQL, Alteryx SQL Server exports, and Fabric SQL inventory with DAX discovery. |
 | [Column dictionary](../platform-data-collection/v1.1-extract/column-dictionary.csv) | Explicit source, value, applicability, and NULL behavior for each platform. |
 | [Monthly reconciliation](../platform-data-collection/v1.1-extract/monthly-reconciliation.md) | Stable native identity, incomplete extracts, source authority, and protected history. |
 | [Model simplification](docs/v1.1-model-simplification.md) | One Person, many source accounts; 12 proposed foundation entities. |

@@ -41,7 +41,7 @@
               "valueRule": "Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
               "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Delivery manifest"
@@ -74,7 +74,7 @@
               "valueRule": "Use Alteryx. Directory-only runs use reserved source code Directory; Directory is not a registry platform.",
               "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Delivery manifest"
@@ -107,7 +107,7 @@
               "valueRule": "Stable tenant/server identity. Names and product versions never form this key.",
               "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Delivery manifest"
@@ -140,7 +140,7 @@
               "valueRule": "Use Power BI tenant, Tableau site LUID, or configured Alteryx server scope. Do not use a movable workspace ID.",
               "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Delivery manifest"
@@ -173,7 +173,7 @@
               "valueRule": "Actual evidence capture time in ISO 8601 with UTC offset. Do not substitute SQL load time or month label.",
               "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Delivery manifest"
@@ -206,7 +206,7 @@
               "valueRule": "Required for Directory runs. For platform runs, supply the authorized directory tenant for email matching. Missing tenant routes identities to Platform Manager.",
               "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Delivery manifest"
@@ -239,7 +239,7 @@
               "valueRule": "Use 1.1. Store query revision with the retained source file.",
               "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Delivery manifest"
@@ -272,7 +272,7 @@
               "valueRule": "State exact inventory boundary, exclusions, and collection conditions. Completeness applies only to this boundary.",
               "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Delivery manifest"
@@ -317,7 +317,7 @@
               "valueRule": "Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
               "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Delivery manifest"
@@ -350,7 +350,7 @@
               "valueRule": "One of the nine data sheet names. Require a coverage record even when no data was supplied.",
               "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Delivery manifest"
@@ -383,7 +383,7 @@
               "valueRule": "Complete, Partial, NotCollected, or Failed. Complete requires an independently verified scope and count.",
               "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Delivery manifest"
@@ -416,7 +416,7 @@
               "valueRule": "Nonnegative delivered row count. Complete requires an exact count, including a legitimate zero. Failed/NotCollected use NULL.",
               "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Delivery manifest"
@@ -441,7 +441,7 @@
           "platforms": {
             "PowerBI": {
               "status": "Required",
-              "source": "Existing delivery manifest",
+              "source": "Both profiles: existing immutable delivery manifest",
               "valueRule": "Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
               "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
@@ -461,7 +461,7 @@
               "valueRule": "Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
               "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Delivery manifest"
@@ -474,8 +474,8 @@
           "platforms": {
             "PowerBI": {
               "status": "Required",
-              "source": "workspaces[].id",
-              "valueRule": "Preserve exact source text. Scope comes from Run_Context.",
+              "source": "Fabric inventory: registry_source.FabricInventory.WorkspaceId. Existing scan export: workspaces[].id",
+              "valueRule": "Fabric inventory: Preserve the native workspace ID as text. Existing scan export: Preserve exact source text. Scope comes from Run_Context.",
               "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
@@ -490,11 +490,11 @@
             },
             "Alteryx": {
               "status": "Required",
-              "source": "AlteryxGallery.collections.CollectionId",
+              "source": "ar_source.Alteryx_Collections.CollectionId (SQL adapter for AlteryxGallery.collections.CollectionId)",
               "valueRule": "Preserve exact source text. Scope comes from Run_Context.",
               "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Platform observation"
@@ -507,8 +507,8 @@
           "platforms": {
             "PowerBI": {
               "status": "Required",
-              "source": "Source entity kind",
-              "valueRule": "Use workspaces[].type, commonly Workspace or PersonalGroup.",
+              "source": "Fabric inventory: registry_source.FabricInventory.WorkspaceType. Existing scan export: Source entity kind",
+              "valueRule": "Fabric inventory: Use the validated native type. Missing type stops extraction. Existing scan export: Use workspaces[].type, commonly Workspace or PersonalGroup.",
               "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
@@ -527,7 +527,7 @@
               "valueRule": "Literal Collection.",
               "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Platform observation"
@@ -540,8 +540,8 @@
           "platforms": {
             "PowerBI": {
               "status": "Required",
-              "source": "workspaces[].name",
-              "valueRule": "Current technical name only. A rename updates this attribute without changing registry identity.",
+              "source": "Fabric inventory: registry_source.FabricInventory.WorkspaceName. Existing scan export: workspaces[].name",
+              "valueRule": "Fabric inventory: Use the observed name; never use it as a key. Existing scan export: Current technical name only. A rename updates this attribute without changing registry identity.",
               "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
@@ -556,11 +556,11 @@
             },
             "Alteryx": {
               "status": "Required",
-              "source": "AlteryxGallery.collections.Name",
+              "source": "ar_source.Alteryx_Collections.Name (SQL adapter for AlteryxGallery.collections.Name)",
               "valueRule": "Current technical name only. A rename updates this attribute without changing registry identity.",
               "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Platform observation"
@@ -572,10 +572,10 @@
           "purpose": "Native state, such as active or archived. Maps to ObservedWorkspace.NativeLifecycleCode. Keep the native vocabulary.",
           "platforms": {
             "PowerBI": {
-              "status": "Conditional",
-              "source": "workspaces[].state",
-              "valueRule": "Preserve the native state; never infer account status.",
-              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "status": "Profile dependent",
+              "source": "Fabric inventory: unavailable. Existing scan export: workspaces[].state",
+              "valueRule": "Fabric inventory: leave NULL; this source does not establish the value. Existing scan export: Preserve the native state; never infer account status.",
+              "nullRule": "Fabric inventory: always NULL. Existing scan export: NULL when absent from this export. NULL means unknown, not false or not applicable.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
             },
@@ -593,7 +593,7 @@
               "valueRule": "No authoritative lifecycle field is projected.",
               "nullRule": "Always NULL in this profile; existence is not an explicit active status.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Platform observation"
@@ -619,7 +619,7 @@
           "platforms": {
             "PowerBI": {
               "status": "Required",
-              "source": "Existing delivery manifest",
+              "source": "Both profiles: existing immutable delivery manifest",
               "valueRule": "Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
               "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
@@ -639,7 +639,7 @@
               "valueRule": "Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
               "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Delivery manifest"
@@ -652,8 +652,8 @@
           "platforms": {
             "PowerBI": {
               "status": "Required",
-              "source": "workspaces[].reports[].id or datasets[].id",
-              "valueRule": "Preserve exact ID. Mongo Extended JSON $oid is decoded to its exact text; do not use filename or revision ID.",
+              "source": "Fabric inventory: registry_source.FabricInventory.ItemId. Existing scan export: workspaces[].reports[].id or datasets[].id",
+              "valueRule": "Fabric inventory: Preserve the native item ID as text. Existing scan export: Preserve exact ID. Mongo Extended JSON $oid is decoded to its exact text; do not use filename or revision ID.",
               "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
@@ -668,11 +668,11 @@
             },
             "Alteryx": {
               "status": "Required",
-              "source": "AlteryxGallery.appInfos._id",
+              "source": "ar_source.Alteryx_AppInfos.AppInfoId (SQL adapter for AlteryxGallery.appInfos._id)",
               "valueRule": "Preserve exact ID. Mongo Extended JSON $oid is decoded to its exact text; do not use filename or revision ID.",
               "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Platform observation"
@@ -685,8 +685,8 @@
           "platforms": {
             "PowerBI": {
               "status": "Required",
-              "source": "Source object namespace",
-              "valueRule": "Report or Dataset, matching the source array.",
+              "source": "Fabric inventory: registry_source.FabricInventory.ItemType. Existing scan export: Source object namespace",
+              "valueRule": "Fabric inventory: Report stays Report. SemanticModel, Semantic model, and Dataset map to Dataset. Existing scan export: Report or Dataset, matching the source array.",
               "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
@@ -705,7 +705,7 @@
               "valueRule": "Workflow namespace for appInfos identity, including analytic apps and macros. PackageType is an optional classification, not the durable key.",
               "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Platform observation"
@@ -718,8 +718,8 @@
           "platforms": {
             "PowerBI": {
               "status": "Required",
-              "source": "reports[].name or datasets[].name",
-              "valueRule": "If ambiguous or absent, retain raw evidence and route to Platform Manager. Never invent a name to pass validation.",
+              "source": "Fabric inventory: registry_source.FabricInventory.ItemName. Existing scan export: reports[].name or datasets[].name",
+              "valueRule": "Fabric inventory: Use the observed item name. Existing scan export: If ambiguous or absent, retain raw evidence and route to Platform Manager. Never invent a name to pass validation.",
               "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
@@ -734,11 +734,11 @@
             },
             "Alteryx": {
               "status": "Required",
-              "source": "One published Revisions entry, then one primary Applications entry: MetaInfo.Name",
+              "source": "ar_source.Alteryx_AppInfos.RevisionsJson -> one published revision -> one primary application -> MetaInfo.Name (SQL adapter for One published Revisions entry, then one primary Applications entry: MetaInfo.Name)",
               "valueRule": "If ambiguous or absent, retain raw evidence and route to Platform Manager. Never invent a name to pass validation.",
               "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Platform observation"
@@ -750,10 +750,10 @@
           "purpose": "Tableau revision or Alteryx published RevisionId when resolved. Power BI leaves it blank. This evidence does not create a business AssetVersion.",
           "platforms": {
             "PowerBI": {
-              "status": "Leave NULL",
-              "source": "No native revision in the baseline scan fields",
-              "valueRule": "Do not synthesize a version from modified time.",
-              "nullRule": "Always NULL for baseline scan projection.",
+              "status": "Profile dependent",
+              "source": "Fabric inventory: unavailable. Existing scan export: No native revision in the baseline scan fields",
+              "valueRule": "Fabric inventory: leave NULL; this source does not establish the value. Existing scan export: Do not synthesize a version from modified time.",
+              "nullRule": "Fabric inventory: always NULL. Existing scan export: Always NULL for baseline scan projection.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
             },
@@ -767,11 +767,11 @@
             },
             "Alteryx": {
               "status": "Conditional",
-              "source": "AlteryxGallery.appInfos.Revisions[].RevisionId where IsPublishedRevision=true",
+              "source": "ar_source.Alteryx_AppInfos.RevisionsJson -> one published revision RevisionId (SQL adapter for AlteryxGallery.appInfos.Revisions[].RevisionId where IsPublishedRevision=true)",
               "valueRule": "Exactly one published revision required. Multiple or no candidates route to Platform Manager; never choose max revision silently.",
               "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Platform observation"
@@ -783,10 +783,10 @@
           "purpose": "Native lifecycle state. Maps to proposed ObservedAsset.NativeLifecycleCode. Missing Power BI report state remains null.",
           "platforms": {
             "PowerBI": {
-              "status": "Leave NULL",
-              "source": "Not projected by baseline inventory",
-              "valueRule": "Inventory presence is recorded by the observation itself.",
-              "nullRule": "Always NULL unless an authoritative lifecycle field is separately approved.",
+              "status": "Profile dependent",
+              "source": "Fabric inventory: unavailable. Existing scan export: Not projected by baseline inventory",
+              "valueRule": "Fabric inventory: leave NULL; this source does not establish the value. Existing scan export: Inventory presence is recorded by the observation itself.",
+              "nullRule": "Fabric inventory: always NULL. Existing scan export: Always NULL unless an authoritative lifecycle field is separately approved.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
             },
@@ -800,11 +800,11 @@
             },
             "Alteryx": {
               "status": "Conditional",
-              "source": "AlteryxGallery.appInfos.IsDeleted",
+              "source": "ar_source.Alteryx_AppInfos.IsDeleted (SQL adapter for AlteryxGallery.appInfos.IsDeleted)",
               "valueRule": "Explicit true maps to Deleted, false maps to Present. Missing stays NULL. Neither value proves business retirement.",
               "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Platform observation"
@@ -832,7 +832,7 @@
           "platforms": {
             "PowerBI": {
               "status": "Required",
-              "source": "Existing delivery manifest",
+              "source": "Both profiles: existing immutable delivery manifest",
               "valueRule": "Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
               "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
@@ -852,7 +852,7 @@
               "valueRule": "Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
               "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Delivery manifest"
@@ -865,8 +865,8 @@
           "platforms": {
             "PowerBI": {
               "status": "Required",
-              "source": "Parent workspaces[].id",
-              "valueRule": "Resolve exact ID in this delivery scope.",
+              "source": "Fabric inventory: registry_source.FabricInventory.WorkspaceId. Existing scan export: Parent workspaces[].id",
+              "valueRule": "Fabric inventory: Preserve the native workspace ID. Existing scan export: Resolve exact ID in this delivery scope.",
               "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
@@ -881,11 +881,11 @@
             },
             "Alteryx": {
               "status": "Required",
-              "source": "AlteryxGallery.collections.CollectionId",
+              "source": "ar_source.Alteryx_Collections.CollectionId (SQL adapter for AlteryxGallery.collections.CollectionId)",
               "valueRule": "Resolve exact ID in this delivery scope.",
               "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Platform observation"
@@ -898,8 +898,8 @@
           "platforms": {
             "PowerBI": {
               "status": "Required",
-              "source": "Nested reports[].id / datasets[].id",
-              "valueRule": "Preserve unmatched IDs as unresolved relationships.",
+              "source": "Fabric inventory: registry_source.FabricInventory.ItemId. Existing scan export: Nested reports[].id / datasets[].id",
+              "valueRule": "Fabric inventory: Preserve the native item ID. Existing scan export: Preserve unmatched IDs as unresolved relationships.",
               "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
@@ -914,11 +914,11 @@
             },
             "Alteryx": {
               "status": "Required",
-              "source": "AlteryxGallery.collections.Apps[].ApplicationId",
+              "source": "ar_source.Alteryx_Collections.AppsJson -> Apps[].ApplicationId (SQL adapter for AlteryxGallery.collections.Apps[].ApplicationId)",
               "valueRule": "Preserve unmatched IDs as unresolved relationships.",
               "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Platform observation"
@@ -931,8 +931,8 @@
           "platforms": {
             "PowerBI": {
               "status": "Required",
-              "source": "Source branch",
-              "valueRule": "Report / Dataset",
+              "source": "Fabric inventory: registry_source.FabricInventory.ItemType. Existing scan export: Source branch",
+              "valueRule": "Fabric inventory: Use Report or Dataset with the same type mapping as Assets. Existing scan export: Report / Dataset",
               "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
@@ -951,7 +951,7 @@
               "valueRule": "Workflow",
               "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Platform observation"
@@ -964,8 +964,8 @@
           "platforms": {
             "PowerBI": {
               "status": "Required",
-              "source": "Query relationship label",
-              "valueRule": "ContainedIn; observed membership never assigns business ownership.",
+              "source": "Fabric inventory: Direct source containment (query constant). Existing scan export: Query relationship label",
+              "valueRule": "Fabric inventory: Use ContainedIn. This is membership, not lineage. Existing scan export: ContainedIn; observed membership never assigns business ownership.",
               "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
@@ -984,7 +984,7 @@
               "valueRule": "CollectionMembership; observed membership never assigns business ownership.",
               "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Platform observation"
@@ -1008,10 +1008,10 @@
           "purpose": "Existing UUID for one immutable delivery. It links rows to Run_Context and never identifies an enduring workspace, asset, connection, or user.",
           "platforms": {
             "PowerBI": {
-              "status": "Required",
-              "source": "Existing delivery manifest",
-              "valueRule": "Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
-              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "status": "Profile dependent",
+              "source": "Fabric inventory: not collected. Existing scan export: Existing delivery manifest",
+              "valueRule": "Fabric inventory: emit no rows; record NotCollected coverage. Existing scan export: Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
+              "nullRule": "Fabric inventory: use headers only, without placeholder rows. Existing scan export: Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
             },
@@ -1029,7 +1029,7 @@
               "valueRule": "Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
               "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Delivery manifest"
@@ -1041,10 +1041,10 @@
           "purpose": "Tableau data connection LUID or returned Power BI source-instance ID. Alteryx V1 does not collect connections. Missing or unstable keys require review.",
           "platforms": {
             "PowerBI": {
-              "status": "Required",
-              "source": "datasourceInstances[].datasourceId",
-              "valueRule": "Exact native datasource ID. Do not hash connection secrets or invent a name-based ID.",
-              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "status": "Profile dependent",
+              "source": "Fabric inventory: not collected. Existing scan export: datasourceInstances[].datasourceId",
+              "valueRule": "Fabric inventory: emit no rows; record NotCollected coverage. Existing scan export: Exact native datasource ID. Do not hash connection secrets or invent a name-based ID.",
+              "nullRule": "Fabric inventory: use headers only, without placeholder rows. Existing scan export: Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
             },
@@ -1062,7 +1062,7 @@
               "valueRule": "Gallery and Service catalog records do not establish workflow input/output data connections or workflow lineage. Do not treat an AS_Applications record as a data connection.",
               "nullRule": "Emit no rows for an uncollected dataset. Set CoverageStatus=NotCollected; do not create NULL placeholder records.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Platform observation"
@@ -1074,10 +1074,10 @@
           "purpose": "Source caption when available. The Power BI adapter uses an explicit technology-and-ID label when no supported name is provided. Maps to ObservedConnection.DisplayName.",
           "platforms": {
             "PowerBI": {
-              "status": "Conditional",
-              "source": "datasourceInstances[].datasourceType",
-              "valueRule": "Optional readable technical label. No business meaning is inferred.",
-              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "status": "Profile dependent",
+              "source": "Fabric inventory: not collected. Existing scan export: datasourceInstances[].datasourceType",
+              "valueRule": "Fabric inventory: emit no rows; record NotCollected coverage. Existing scan export: Optional readable technical label. No business meaning is inferred.",
+              "nullRule": "Fabric inventory: use headers only, without placeholder rows. Existing scan export: NULL when absent from this export. NULL means unknown, not false or not applicable.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
             },
@@ -1095,7 +1095,7 @@
               "valueRule": "Gallery and Service catalog records do not establish workflow input/output data connections or workflow lineage. Do not treat an AS_Applications record as a data connection.",
               "nullRule": "Emit no rows for an uncollected dataset. Set CoverageStatus=NotCollected; do not create NULL placeholder records.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Platform observation"
@@ -1107,10 +1107,10 @@
           "purpose": "Source technology, such as Oracle or SQL Server. Null source types become Undefined. Preserve other vendor values for mapping review. Maps to resolved DataSource.TechnologyCode.",
           "platforms": {
             "PowerBI": {
-              "status": "Required",
-              "source": "datasourceInstances[].datasourceType",
-              "valueRule": "Map Oracle to Oracle, Sql to SQL Server; preserve other known types. Undefined only when technology is unavailable.",
-              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "status": "Profile dependent",
+              "source": "Fabric inventory: not collected. Existing scan export: datasourceInstances[].datasourceType",
+              "valueRule": "Fabric inventory: emit no rows; record NotCollected coverage. Existing scan export: Map Oracle to Oracle, Sql to SQL Server; preserve other known types. Undefined only when technology is unavailable.",
+              "nullRule": "Fabric inventory: use headers only, without placeholder rows. Existing scan export: Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
             },
@@ -1128,7 +1128,7 @@
               "valueRule": "Gallery and Service catalog records do not establish workflow input/output data connections or workflow lineage. Do not treat an AS_Applications record as a data connection.",
               "nullRule": "Emit no rows for an uncollected dataset. Set CoverageStatus=NotCollected; do not create NULL placeholder records.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Platform observation"
@@ -1140,10 +1140,10 @@
           "purpose": "Tableau extract indicator, separate from source technology. Retained in staging. Power BI leaves it null; Alteryx V1 returns no connection rows.",
           "platforms": {
             "PowerBI": {
-              "status": "Conditional",
-              "source": "Not supplied by scan datasource instance",
-              "valueRule": "NULL. Report/model storage mode must not be inferred from datasource type.",
-              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "status": "Profile dependent",
+              "source": "Fabric inventory: not collected. Existing scan export: Not supplied by scan datasource instance",
+              "valueRule": "Fabric inventory: emit no rows; record NotCollected coverage. Existing scan export: NULL. Report/model storage mode must not be inferred from datasource type.",
+              "nullRule": "Fabric inventory: use headers only, without placeholder rows. Existing scan export: NULL when absent from this export. NULL means unknown, not false or not applicable.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
             },
@@ -1161,7 +1161,7 @@
               "valueRule": "Gallery and Service catalog records do not establish workflow input/output data connections or workflow lineage. Do not treat an AS_Applications record as a data connection.",
               "nullRule": "Emit no rows for an uncollected dataset. Set CoverageStatus=NotCollected; do not create NULL placeholder records.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Platform observation"
@@ -1173,10 +1173,10 @@
           "purpose": "Allowed endpoint host from the source. Maps to DataSource.ServerHostname after endpoint resolution. Do not merge by host alone.",
           "platforms": {
             "PowerBI": {
-              "status": "Conditional",
-              "source": "datasourceInstances[].connectionDetails.server",
-              "valueRule": "Sanitized host only. No URL tokens or credentials.",
-              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "status": "Profile dependent",
+              "source": "Fabric inventory: not collected. Existing scan export: datasourceInstances[].connectionDetails.server",
+              "valueRule": "Fabric inventory: emit no rows; record NotCollected coverage. Existing scan export: Sanitized host only. No URL tokens or credentials.",
+              "nullRule": "Fabric inventory: use headers only, without placeholder rows. Existing scan export: NULL when absent from this export. NULL means unknown, not false or not applicable.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
             },
@@ -1194,7 +1194,7 @@
               "valueRule": "Gallery and Service catalog records do not establish workflow input/output data connections or workflow lineage. Do not treat an AS_Applications record as a data connection.",
               "nullRule": "Emit no rows for an uncollected dataset. Set CoverageStatus=NotCollected; do not create NULL placeholder records.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Platform observation"
@@ -1206,10 +1206,10 @@
           "purpose": "Source database or provider-specific database identifier. Maps to DataSource.DatabaseName after validation.",
           "platforms": {
             "PowerBI": {
-              "status": "Conditional",
-              "source": "datasourceInstances[].connectionDetails.database",
-              "valueRule": "Database name when present.",
-              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "status": "Profile dependent",
+              "source": "Fabric inventory: not collected. Existing scan export: datasourceInstances[].connectionDetails.database",
+              "valueRule": "Fabric inventory: emit no rows; record NotCollected coverage. Existing scan export: Database name when present.",
+              "nullRule": "Fabric inventory: use headers only, without placeholder rows. Existing scan export: NULL when absent from this export. NULL means unknown, not false or not applicable.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
             },
@@ -1227,7 +1227,7 @@
               "valueRule": "Gallery and Service catalog records do not establish workflow input/output data connections or workflow lineage. Do not treat an AS_Applications record as a data connection.",
               "nullRule": "Emit no rows for an uncollected dataset. Set CoverageStatus=NotCollected; do not create NULL placeholder records.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Platform observation"
@@ -1239,10 +1239,10 @@
           "purpose": "Tableau native authentication method when present. Maps to ObservedConnection.AuthenticationTypeCode after vocabulary validation. Missing does not imply anonymous access.",
           "platforms": {
             "PowerBI": {
-              "status": "Conditional",
-              "source": "Not supplied by this scan projection",
-              "valueRule": "NULL; gateway presence does not prove authentication type.",
-              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "status": "Profile dependent",
+              "source": "Fabric inventory: not collected. Existing scan export: Not supplied by this scan projection",
+              "valueRule": "Fabric inventory: emit no rows; record NotCollected coverage. Existing scan export: NULL; gateway presence does not prove authentication type.",
+              "nullRule": "Fabric inventory: use headers only, without placeholder rows. Existing scan export: NULL when absent from this export. NULL means unknown, not false or not applicable.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
             },
@@ -1260,7 +1260,7 @@
               "valueRule": "Gallery and Service catalog records do not establish workflow input/output data connections or workflow lineage. Do not treat an AS_Applications record as a data connection.",
               "nullRule": "Emit no rows for an uncollected dataset. Set CoverageStatus=NotCollected; do not create NULL placeholder records.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Platform observation"
@@ -1272,10 +1272,10 @@
           "purpose": "Unknown for this pass. Maps to ObservedConnection.IdentityClassificationCode. Later identity evidence may support a service/personal classification.",
           "platforms": {
             "PowerBI": {
-              "status": "Conditional",
-              "source": "No verified credential identity in this input",
-              "valueRule": "Unknown. Never infer Personal or Service Account from a hostname.",
-              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "status": "Profile dependent",
+              "source": "Fabric inventory: not collected. Existing scan export: No verified credential identity in this input",
+              "valueRule": "Fabric inventory: emit no rows; record NotCollected coverage. Existing scan export: Unknown. Never infer Personal or Service Account from a hostname.",
+              "nullRule": "Fabric inventory: use headers only, without placeholder rows. Existing scan export: NULL when absent from this export. NULL means unknown, not false or not applicable.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
             },
@@ -1293,7 +1293,7 @@
               "valueRule": "Gallery and Service catalog records do not establish workflow input/output data connections or workflow lineage. Do not treat an AS_Applications record as a data connection.",
               "nullRule": "Emit no rows for an uncollected dataset. Set CoverageStatus=NotCollected; do not create NULL placeholder records.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Platform observation"
@@ -1305,10 +1305,10 @@
           "purpose": "Observed for the row's captured facts. Maps to ObservedConnection.EvidenceStatusCode. Dataset coverage controls what absences can mean.",
           "platforms": {
             "PowerBI": {
-              "status": "Required",
-              "source": "Query evidence classification",
-              "valueRule": "Partial when authentication or identity evidence is unavailable. Unknown is not a pass.",
-              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "status": "Profile dependent",
+              "source": "Fabric inventory: not collected. Existing scan export: Query evidence classification",
+              "valueRule": "Fabric inventory: emit no rows; record NotCollected coverage. Existing scan export: Partial when authentication or identity evidence is unavailable. Unknown is not a pass.",
+              "nullRule": "Fabric inventory: use headers only, without placeholder rows. Existing scan export: Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
             },
@@ -1326,7 +1326,7 @@
               "valueRule": "Gallery and Service catalog records do not establish workflow input/output data connections or workflow lineage. Do not treat an AS_Applications record as a data connection.",
               "nullRule": "Emit no rows for an uncollected dataset. Set CoverageStatus=NotCollected; do not create NULL placeholder records.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Platform observation"
@@ -1352,10 +1352,10 @@
           "purpose": "Existing UUID for one immutable delivery. It links rows to Run_Context and never identifies an enduring workspace, asset, connection, or user.",
           "platforms": {
             "PowerBI": {
-              "status": "Required",
-              "source": "Existing delivery manifest",
-              "valueRule": "Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
-              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "status": "Profile dependent",
+              "source": "Fabric inventory: not collected. Existing scan export: Existing delivery manifest",
+              "valueRule": "Fabric inventory: emit no rows; record NotCollected coverage. Existing scan export: Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
+              "nullRule": "Fabric inventory: use headers only, without placeholder rows. Existing scan export: Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
             },
@@ -1373,7 +1373,7 @@
               "valueRule": "Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
               "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Delivery manifest"
@@ -1385,10 +1385,10 @@
           "purpose": "Direct consumer asset. Resolve to ObservedAssetConnection.AssetID.",
           "platforms": {
             "PowerBI": {
-              "status": "Required",
-              "source": "datasets[].id",
-              "valueRule": "Only direct source-observed edges.",
-              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "status": "Profile dependent",
+              "source": "Fabric inventory: not collected. Existing scan export: datasets[].id",
+              "valueRule": "Fabric inventory: emit no rows; record NotCollected coverage. Existing scan export: Only direct source-observed edges.",
+              "nullRule": "Fabric inventory: use headers only, without placeholder rows. Existing scan export: Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
             },
@@ -1406,7 +1406,7 @@
               "valueRule": "Gallery and Service catalog records do not establish workflow input/output data connections or workflow lineage. Do not treat an AS_Applications record as a data connection.",
               "nullRule": "Emit no rows for an uncollected dataset. Set CoverageStatus=NotCollected; do not create NULL placeholder records.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Platform observation"
@@ -1418,10 +1418,10 @@
           "purpose": "Asset identity namespace used for resolution.",
           "platforms": {
             "PowerBI": {
-              "status": "Required",
-              "source": "Source branch",
-              "valueRule": "Dataset",
-              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "status": "Profile dependent",
+              "source": "Fabric inventory: not collected. Existing scan export: Source branch",
+              "valueRule": "Fabric inventory: emit no rows; record NotCollected coverage. Existing scan export: Dataset",
+              "nullRule": "Fabric inventory: use headers only, without placeholder rows. Existing scan export: Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
             },
@@ -1439,7 +1439,7 @@
               "valueRule": "Gallery and Service catalog records do not establish workflow input/output data connections or workflow lineage. Do not treat an AS_Applications record as a data connection.",
               "nullRule": "Emit no rows for an uncollected dataset. Set CoverageStatus=NotCollected; do not create NULL placeholder records.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Platform observation"
@@ -1451,10 +1451,10 @@
           "purpose": "Referenced native connection. Resolve to ObservedAssetConnection.ConnectionID.",
           "platforms": {
             "PowerBI": {
-              "status": "Required",
-              "source": "datasets[].datasourceUsages[].datasourceInstanceId joined to datasourceInstances[].datasourceId",
-              "valueRule": "Retain missing endpoints for review; never match by label.",
-              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "status": "Profile dependent",
+              "source": "Fabric inventory: not collected. Existing scan export: datasets[].datasourceUsages[].datasourceInstanceId joined to datasourceInstances[].datasourceId",
+              "valueRule": "Fabric inventory: emit no rows; record NotCollected coverage. Existing scan export: Retain missing endpoints for review; never match by label.",
+              "nullRule": "Fabric inventory: use headers only, without placeholder rows. Existing scan export: Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
             },
@@ -1472,7 +1472,7 @@
               "valueRule": "Gallery and Service catalog records do not establish workflow input/output data connections or workflow lineage. Do not treat an AS_Applications record as a data connection.",
               "nullRule": "Emit no rows for an uncollected dataset. Set CoverageStatus=NotCollected; do not create NULL placeholder records.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Platform observation"
@@ -1484,10 +1484,10 @@
           "purpose": "Row-level observation status. Maps to the matching observed edge.",
           "platforms": {
             "PowerBI": {
-              "status": "Required",
-              "source": "Join result",
-              "valueRule": "Observed if both endpoints resolve; Unresolved otherwise.",
-              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "status": "Profile dependent",
+              "source": "Fabric inventory: not collected. Existing scan export: Join result",
+              "valueRule": "Fabric inventory: emit no rows; record NotCollected coverage. Existing scan export: Observed if both endpoints resolve; Unresolved otherwise.",
+              "nullRule": "Fabric inventory: use headers only, without placeholder rows. Existing scan export: Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
             },
@@ -1505,7 +1505,7 @@
               "valueRule": "Gallery and Service catalog records do not establish workflow input/output data connections or workflow lineage. Do not treat an AS_Applications record as a data connection.",
               "nullRule": "Emit no rows for an uncollected dataset. Set CoverageStatus=NotCollected; do not create NULL placeholder records.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Platform observation"
@@ -1533,10 +1533,10 @@
           "purpose": "Existing UUID for one immutable delivery. It links rows to Run_Context and never identifies an enduring workspace, asset, connection, or user.",
           "platforms": {
             "PowerBI": {
-              "status": "Required",
-              "source": "Existing delivery manifest",
-              "valueRule": "Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
-              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "status": "Profile dependent",
+              "source": "Fabric inventory: not collected. Existing scan export: Existing delivery manifest",
+              "valueRule": "Fabric inventory: emit no rows; record NotCollected coverage. Existing scan export: Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
+              "nullRule": "Fabric inventory: use headers only, without placeholder rows. Existing scan export: Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
             },
@@ -1554,7 +1554,7 @@
               "valueRule": "Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
               "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Delivery manifest"
@@ -1566,10 +1566,10 @@
           "purpose": "Consumer, such as a report. Resolve to proposed ObservedAssetDependency.ConsumerAssetID.",
           "platforms": {
             "PowerBI": {
-              "status": "Required",
-              "source": "reports[].id",
-              "valueRule": "Report ID.",
-              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "status": "Profile dependent",
+              "source": "Fabric inventory: not collected. Existing scan export: reports[].id",
+              "valueRule": "Fabric inventory: emit no rows; record NotCollected coverage. Existing scan export: Report ID.",
+              "nullRule": "Fabric inventory: use headers only, without placeholder rows. Existing scan export: Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
             },
@@ -1587,7 +1587,7 @@
               "valueRule": "Gallery and Service catalog records do not establish workflow input/output data connections or workflow lineage. Do not treat an AS_Applications record as a data connection.",
               "nullRule": "Emit no rows for an uncollected dataset. Set CoverageStatus=NotCollected; do not create NULL placeholder records.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Platform observation"
@@ -1599,10 +1599,10 @@
           "purpose": "Consumer native type. Part of its identity key.",
           "platforms": {
             "PowerBI": {
-              "status": "Required",
-              "source": "Source branch",
-              "valueRule": "Report",
-              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "status": "Profile dependent",
+              "source": "Fabric inventory: not collected. Existing scan export: Source branch",
+              "valueRule": "Fabric inventory: emit no rows; record NotCollected coverage. Existing scan export: Report",
+              "nullRule": "Fabric inventory: use headers only, without placeholder rows. Existing scan export: Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
             },
@@ -1620,7 +1620,7 @@
               "valueRule": "Gallery and Service catalog records do not establish workflow input/output data connections or workflow lineage. Do not treat an AS_Applications record as a data connection.",
               "nullRule": "Emit no rows for an uncollected dataset. Set CoverageStatus=NotCollected; do not create NULL placeholder records.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Platform observation"
@@ -1632,10 +1632,10 @@
           "purpose": "Provider, such as a semantic model. Resolve to proposed ObservedAssetDependency.ProviderAssetID.",
           "platforms": {
             "PowerBI": {
-              "status": "Required",
-              "source": "reports[].datasetId",
-              "valueRule": "Exact model ID; keep cross-workspace dependencies.",
-              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "status": "Profile dependent",
+              "source": "Fabric inventory: not collected. Existing scan export: reports[].datasetId",
+              "valueRule": "Fabric inventory: emit no rows; record NotCollected coverage. Existing scan export: Exact model ID; keep cross-workspace dependencies.",
+              "nullRule": "Fabric inventory: use headers only, without placeholder rows. Existing scan export: Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
             },
@@ -1653,7 +1653,7 @@
               "valueRule": "Gallery and Service catalog records do not establish workflow input/output data connections or workflow lineage. Do not treat an AS_Applications record as a data connection.",
               "nullRule": "Emit no rows for an uncollected dataset. Set CoverageStatus=NotCollected; do not create NULL placeholder records.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Platform observation"
@@ -1665,10 +1665,10 @@
           "purpose": "Provider native type. May require a supplemental inventory for Dataflow or Datamart.",
           "platforms": {
             "PowerBI": {
-              "status": "Required",
-              "source": "Source branch",
-              "valueRule": "Dataset",
-              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "status": "Profile dependent",
+              "source": "Fabric inventory: not collected. Existing scan export: Source branch",
+              "valueRule": "Fabric inventory: emit no rows; record NotCollected coverage. Existing scan export: Dataset",
+              "nullRule": "Fabric inventory: use headers only, without placeholder rows. Existing scan export: Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
             },
@@ -1686,7 +1686,7 @@
               "valueRule": "Gallery and Service catalog records do not establish workflow input/output data connections or workflow lineage. Do not treat an AS_Applications record as a data connection.",
               "nullRule": "Emit no rows for an uncollected dataset. Set CoverageStatus=NotCollected; do not create NULL placeholder records.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Platform observation"
@@ -1698,10 +1698,10 @@
           "purpose": "UsesSemanticModel or DependsOn in the Power BI adapter. Maps to DependencyTypeCode.",
           "platforms": {
             "PowerBI": {
-              "status": "Required",
-              "source": "Source relationship",
-              "valueRule": "UsesSemanticModel",
-              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "status": "Profile dependent",
+              "source": "Fabric inventory: not collected. Existing scan export: Source relationship",
+              "valueRule": "Fabric inventory: emit no rows; record NotCollected coverage. Existing scan export: UsesSemanticModel",
+              "nullRule": "Fabric inventory: use headers only, without placeholder rows. Existing scan export: Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
             },
@@ -1719,7 +1719,7 @@
               "valueRule": "Gallery and Service catalog records do not establish workflow input/output data connections or workflow lineage. Do not treat an AS_Applications record as a data connection.",
               "nullRule": "Emit no rows for an uncollected dataset. Set CoverageStatus=NotCollected; do not create NULL placeholder records.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Platform observation"
@@ -1731,10 +1731,10 @@
           "purpose": "Captured edge evidence. Maps to proposed ObservedAssetDependency.EvidenceStatusCode.",
           "platforms": {
             "PowerBI": {
-              "status": "Required",
-              "source": "Endpoint resolution",
-              "valueRule": "Observed if model is in inventory; Unresolved otherwise.",
-              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "status": "Profile dependent",
+              "source": "Fabric inventory: not collected. Existing scan export: Endpoint resolution",
+              "valueRule": "Fabric inventory: emit no rows; record NotCollected coverage. Existing scan export: Observed if model is in inventory; Unresolved otherwise.",
+              "nullRule": "Fabric inventory: use headers only, without placeholder rows. Existing scan export: Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
             },
@@ -1752,7 +1752,7 @@
               "valueRule": "Gallery and Service catalog records do not establish workflow input/output data connections or workflow lineage. Do not treat an AS_Applications record as a data connection.",
               "nullRule": "Emit no rows for an uncollected dataset. Set CoverageStatus=NotCollected; do not create NULL placeholder records.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Platform observation"
@@ -1777,10 +1777,10 @@
           "purpose": "Existing UUID for one immutable delivery. It links rows to Run_Context and never identifies an enduring workspace, asset, connection, or user.",
           "platforms": {
             "PowerBI": {
-              "status": "Required",
-              "source": "Existing delivery manifest",
-              "valueRule": "Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
-              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "status": "Profile dependent",
+              "source": "Fabric inventory: not collected. Existing scan export: Existing delivery manifest",
+              "valueRule": "Fabric inventory: emit no rows; record NotCollected coverage. Existing scan export: Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
+              "nullRule": "Fabric inventory: use headers only, without placeholder rows. Existing scan export: Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
             },
@@ -1798,7 +1798,7 @@
               "valueRule": "Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
               "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Delivery manifest"
@@ -1810,10 +1810,10 @@
           "purpose": "Exact source user or principal key. Keep blanks as unresolved evidence; never invent an ID.",
           "platforms": {
             "PowerBI": {
-              "status": "Required",
-              "source": "artifact/workspace users[].graphId, otherwise explicit identifier",
-              "valueRule": "Keep the V1 namespace: graphId uses PowerBIGraphID; fallback identifier uses PowerBIPrincipalIdentifier. Never use a display name. A later graphId requires continuity review, not silent rekeying.",
-              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "status": "Profile dependent",
+              "source": "Fabric inventory: not collected. Existing scan export: artifact/workspace users[].graphId, otherwise explicit identifier",
+              "valueRule": "Fabric inventory: emit no rows; record NotCollected coverage. Existing scan export: Keep the V1 namespace: graphId uses PowerBIGraphID; fallback identifier uses PowerBIPrincipalIdentifier. Never use a display name. A later graphId requires continuity review, not silent rekeying.",
+              "nullRule": "Fabric inventory: use headers only, without placeholder rows. Existing scan export: Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
             },
@@ -1827,11 +1827,11 @@
             },
             "Alteryx": {
               "status": "Required",
-              "source": "AlteryxGallery.users._id",
+              "source": "ar_source.Alteryx_Users.UserId (SQL adapter for AlteryxGallery.users._id)",
               "valueRule": "Exact Mongo ID text; Windows SID is a different namespace.",
               "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Platform observation"
@@ -1843,10 +1843,10 @@
           "purpose": "Names the ID system, such as TableauUserLUID, PowerBIGraphID, PowerBIEmail, or AlteryxMongoUserID.",
           "platforms": {
             "PowerBI": {
-              "status": "Required",
-              "source": "Documented identifier source",
-              "valueRule": "PowerBIGraphID for graphId; PowerBIPrincipalIdentifier for identifier fallback. Keep the namespace with its native key.",
-              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "status": "Profile dependent",
+              "source": "Fabric inventory: not collected. Existing scan export: Documented identifier source",
+              "valueRule": "Fabric inventory: emit no rows; record NotCollected coverage. Existing scan export: PowerBIGraphID for graphId; PowerBIPrincipalIdentifier for identifier fallback. Keep the namespace with its native key.",
+              "nullRule": "Fabric inventory: use headers only, without placeholder rows. Existing scan export: Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
             },
@@ -1864,7 +1864,7 @@
               "valueRule": "AlteryxMongoUserID",
               "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Platform observation"
@@ -1876,10 +1876,10 @@
           "purpose": "User, Group, App, or Unknown. Nonhuman principals do not automatically match a person.",
           "platforms": {
             "PowerBI": {
-              "status": "Required",
-              "source": "users[].principalType",
-              "valueRule": "User, Group, App, or None as supplied; never turn every principal into a person.",
-              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "status": "Profile dependent",
+              "source": "Fabric inventory: not collected. Existing scan export: users[].principalType",
+              "valueRule": "Fabric inventory: emit no rows; record NotCollected coverage. Existing scan export: User, Group, App, or None as supplied; never turn every principal into a person.",
+              "nullRule": "Fabric inventory: use headers only, without placeholder rows. Existing scan export: Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
             },
@@ -1897,7 +1897,7 @@
               "valueRule": "User; service or directory group references are not silently converted.",
               "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Platform observation"
@@ -1909,10 +1909,10 @@
           "purpose": "Source person or principal label. Never use it as a match key.",
           "platforms": {
             "PowerBI": {
-              "status": "Conditional",
-              "source": "users[].displayName",
-              "valueRule": "Display only; optional.",
-              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "status": "Profile dependent",
+              "source": "Fabric inventory: not collected. Existing scan export: users[].displayName",
+              "valueRule": "Fabric inventory: emit no rows; record NotCollected coverage. Existing scan export: Display only; optional.",
+              "nullRule": "Fabric inventory: use headers only, without placeholder rows. Existing scan export: NULL when absent from this export. NULL means unknown, not false or not applicable.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
             },
@@ -1926,11 +1926,11 @@
             },
             "Alteryx": {
               "status": "Conditional",
-              "source": "AlteryxGallery.users.FirstName + LastName",
+              "source": "ar_source.Alteryx_Users.FirstName + LastName (SQL adapter for AlteryxGallery.users.FirstName + LastName)",
               "valueRule": "Join available name parts for display only.",
               "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Platform observation"
@@ -1942,10 +1942,10 @@
           "purpose": "Explicit email returned by the platform. Keep the raw value.",
           "platforms": {
             "PowerBI": {
-              "status": "Conditional",
-              "source": "users[].emailAddress",
-              "valueRule": "Preserve explicit email only; identifier or UPN is not an implicit fallback.",
-              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "status": "Profile dependent",
+              "source": "Fabric inventory: not collected. Existing scan export: users[].emailAddress",
+              "valueRule": "Fabric inventory: emit no rows; record NotCollected coverage. Existing scan export: Preserve explicit email only; identifier or UPN is not an implicit fallback.",
+              "nullRule": "Fabric inventory: use headers only, without placeholder rows. Existing scan export: NULL when absent from this export. NULL means unknown, not false or not applicable.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
             },
@@ -1959,11 +1959,11 @@
             },
             "Alteryx": {
               "status": "Conditional",
-              "source": "AlteryxGallery.users.Email",
+              "source": "ar_source.Alteryx_Users.Email (SQL adapter for AlteryxGallery.users.Email)",
               "valueRule": "Preserve explicit email; WindowsIdentity.Name is not a fallback.",
               "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Platform observation"
@@ -1975,10 +1975,10 @@
           "purpose": "Native role or account flags as a labeled source value. This is not corporate directory status.",
           "platforms": {
             "PowerBI": {
-              "status": "Conditional",
-              "source": "Not supplied by scan principal fields",
-              "valueRule": "NULL; access-right strings are roles, not enabled state.",
-              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "status": "Profile dependent",
+              "source": "Fabric inventory: not collected. Existing scan export: Not supplied by scan principal fields",
+              "valueRule": "Fabric inventory: emit no rows; record NotCollected coverage. Existing scan export: NULL; access-right strings are roles, not enabled state.",
+              "nullRule": "Fabric inventory: use headers only, without placeholder rows. Existing scan export: NULL when absent from this export. NULL means unknown, not false or not applicable.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
             },
@@ -1992,11 +1992,11 @@
             },
             "Alteryx": {
               "status": "Conditional",
-              "source": "AlteryxGallery.users.Active",
+              "source": "ar_source.Alteryx_Users.Active (SQL adapter for AlteryxGallery.users.Active)",
               "valueRule": "Explicit native boolean as text, NULL if missing. Native status is not Entra accountEnabled.",
               "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Platform observation"
@@ -2041,7 +2041,7 @@
               "valueRule": "Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
               "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Directory export"
@@ -2074,7 +2074,7 @@
               "valueRule": "Exact Entra object ID; it remains separate from every platform account ID.",
               "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
-              "verification": "Directory companion export; not populated by the platform database"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Directory export"
@@ -2107,7 +2107,7 @@
               "valueRule": "Current display label; never an identity key.",
               "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
               "example": "",
-              "verification": "Directory companion export; not populated by the platform database"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Directory export"
@@ -2140,7 +2140,7 @@
               "valueRule": "Original value. Match lower(trim(SourceEmail)) to lower(trim(Mail)) only within DirectoryTenantKey. No UPN fallback.",
               "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
               "example": "",
-              "verification": "Directory companion export; not populated by the platform database"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Directory export"
@@ -2173,7 +2173,7 @@
               "valueRule": "Use true or false only when explicitly present. A missing result stays NULL. False is resolved-disabled, not unresolved.",
               "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
               "example": "",
-              "verification": "Directory companion export; not populated by the platform database"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Directory export"
@@ -2202,10 +2202,10 @@
           "purpose": "Existing UUID for one immutable delivery. It links rows to Run_Context and never identifies an enduring workspace, asset, connection, or user.",
           "platforms": {
             "PowerBI": {
-              "status": "Required",
-              "source": "Existing delivery manifest",
-              "valueRule": "Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
-              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "status": "Profile dependent",
+              "source": "Fabric inventory: not collected. Existing scan export: Existing delivery manifest",
+              "valueRule": "Fabric inventory: emit no rows; record NotCollected coverage. Existing scan export: Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
+              "nullRule": "Fabric inventory: use headers only, without placeholder rows. Existing scan export: Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
             },
@@ -2223,7 +2223,7 @@
               "valueRule": "Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
               "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Delivery manifest"
@@ -2235,10 +2235,10 @@
           "purpose": "Exact source object type, such as Project, Workbook, Report, Dataset, Collection, or Workflow.",
           "platforms": {
             "PowerBI": {
-              "status": "Required",
-              "source": "Parent source entity",
-              "valueRule": "Workspace / PersonalGroup / Project / Collection / Report / Dataset / Workbook / PublishedDatasource / Workflow; use the exact inventory namespace.",
-              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "status": "Profile dependent",
+              "source": "Fabric inventory: not collected. Existing scan export: Parent source entity",
+              "valueRule": "Fabric inventory: emit no rows; record NotCollected coverage. Existing scan export: Workspace / PersonalGroup / Project / Collection / Report / Dataset / Workbook / PublishedDatasource / Workflow; use the exact inventory namespace.",
+              "nullRule": "Fabric inventory: use headers only, without placeholder rows. Existing scan export: Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
             },
@@ -2256,7 +2256,7 @@
               "valueRule": "Workspace / PersonalGroup / Project / Collection / Report / Dataset / Workbook / PublishedDatasource / Workflow; use the exact inventory namespace.",
               "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Platform observation"
@@ -2268,10 +2268,10 @@
           "purpose": "Native workspace or asset key. Resolve with platform, instance, scope, and type.",
           "platforms": {
             "PowerBI": {
-              "status": "Required",
-              "source": "Parent native object key",
-              "valueRule": "Use exact workspace or asset ID. Do not use the label.",
-              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "status": "Profile dependent",
+              "source": "Fabric inventory: not collected. Existing scan export: Parent native object key",
+              "valueRule": "Fabric inventory: emit no rows; record NotCollected coverage. Existing scan export: Use exact workspace or asset ID. Do not use the label.",
+              "nullRule": "Fabric inventory: use headers only, without placeholder rows. Existing scan export: Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
             },
@@ -2289,7 +2289,7 @@
               "valueRule": "Use exact workspace or asset ID. Do not use the label.",
               "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Platform observation"
@@ -2301,10 +2301,10 @@
           "purpose": "Observed relationship: TechnicalOwner, CreatedBy, ModifiedBy, Access, or CollectionMember. Roles are separate rows. Technical ownership does not assign the business owner.",
           "platforms": {
             "PowerBI": {
-              "status": "Required",
-              "source": "workspaces[].users[] and datasets[].users[] / reports[].users[]",
-              "valueRule": "Access with native access-right fields; TechnicalOwner from reports.createdById, which Microsoft explicitly defines as report owner; ModifiedBy from reports.modifiedById. Neither assigns business ownership.",
-              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "status": "Profile dependent",
+              "source": "Fabric inventory: not collected. Existing scan export: workspaces[].users[] and datasets[].users[] / reports[].users[]",
+              "valueRule": "Fabric inventory: emit no rows; record NotCollected coverage. Existing scan export: Access with native access-right fields; TechnicalOwner from reports.createdById, which Microsoft explicitly defines as report owner; ModifiedBy from reports.modifiedById. Neither assigns business ownership.",
+              "nullRule": "Fabric inventory: use headers only, without placeholder rows. Existing scan export: Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
             },
@@ -2318,11 +2318,11 @@
             },
             "Alteryx": {
               "status": "Required",
-              "source": "collections.OwnerId, collections.Users[].UserId, appInfos.CreatedBy; optional verified current owner mapping",
+              "source": "ar_source.Alteryx_Collections.OwnerId / UsersJson -> Users[].UserId; ar_source.Alteryx_AppInfos.CreatedBy (SQL adapter for collections.OwnerId, collections.Users[].UserId, appInfos.CreatedBy; optional verified current owner mapping)",
               "valueRule": "TechnicalOwner for collection OwnerId; CollectionMember for Users; CreatedBy for appInfos.CreatedBy. Current workflow TechnicalOwner is unverified",
               "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Platform observation"
@@ -2334,10 +2334,10 @@
           "purpose": "Raw source account reference, kept separate from the resolved account ID. NULL is allowed for an explicit missing or unverified reference; preserve the object-role issue.",
           "platforms": {
             "PowerBI": {
-              "status": "Conditional",
-              "source": "workspaces[].users[] and datasets[].users[] / reports[].users[]",
-              "valueRule": "Preserve the raw reference when supplied. NULL for missing reference or unverified workflow ownership; retain the object-role row for Platform Manager.",
-              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "status": "Profile dependent",
+              "source": "Fabric inventory: not collected. Existing scan export: workspaces[].users[] and datasets[].users[] / reports[].users[]",
+              "valueRule": "Fabric inventory: emit no rows; record NotCollected coverage. Existing scan export: Preserve the raw reference when supplied. NULL for missing reference or unverified workflow ownership; retain the object-role row for Platform Manager.",
+              "nullRule": "Fabric inventory: use headers only, without placeholder rows. Existing scan export: NULL when absent from this export. NULL means unknown, not false or not applicable.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
             },
@@ -2351,11 +2351,11 @@
             },
             "Alteryx": {
               "status": "Conditional",
-              "source": "collections.OwnerId, collections.Users[].UserId, appInfos.CreatedBy; optional verified current owner mapping",
+              "source": "ar_source.Alteryx_Collections.OwnerId / UsersJson -> Users[].UserId; ar_source.Alteryx_AppInfos.CreatedBy (SQL adapter for collections.OwnerId, collections.Users[].UserId, appInfos.CreatedBy; optional verified current owner mapping)",
               "valueRule": "Preserve the raw reference when supplied. NULL for missing reference or unverified workflow ownership; retain the object-role row for Platform Manager.",
               "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Platform observation"
@@ -2367,10 +2367,10 @@
           "purpose": "Namespace of the raw principal reference when established by source documentation. NULL when the reference is missing or its namespace cannot be verified; never guess a namespace to create a match.",
           "platforms": {
             "PowerBI": {
-              "status": "Conditional",
-              "source": "Documented reference kind",
-              "valueRule": "PowerBIPrincipalIdentifier for raw identifier when present; otherwise PowerBIGraphID for graphId. Resolved account identity can use PowerBIGraphID independently.",
-              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "status": "Profile dependent",
+              "source": "Fabric inventory: not collected. Existing scan export: Documented reference kind",
+              "valueRule": "Fabric inventory: emit no rows; record NotCollected coverage. Existing scan export: PowerBIPrincipalIdentifier for raw identifier when present; otherwise PowerBIGraphID for graphId. Resolved account identity can use PowerBIGraphID independently.",
+              "nullRule": "Fabric inventory: use headers only, without placeholder rows. Existing scan export: NULL when absent from this export. NULL means unknown, not false or not applicable.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
             },
@@ -2388,7 +2388,7 @@
               "valueRule": "AlteryxMongoUserID for documented OwnerId, UserId, and CreatedBy references even when unmatched. NULL for missing or unverified workflow owner.",
               "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Platform observation"
@@ -2400,10 +2400,10 @@
           "purpose": "Matched key from Platform_Users after the platform-side join. Blank remains unresolved.",
           "platforms": {
             "PowerBI": {
-              "status": "Conditional",
-              "source": "Verified reference-to-Platform_Users join",
-              "valueRule": "Populate only after exact unique namespace match. NULL when unresolved; preserve raw source reference.",
-              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "status": "Profile dependent",
+              "source": "Fabric inventory: not collected. Existing scan export: Verified reference-to-Platform_Users join",
+              "valueRule": "Fabric inventory: emit no rows; record NotCollected coverage. Existing scan export: Populate only after exact unique namespace match. NULL when unresolved; preserve raw source reference.",
+              "nullRule": "Fabric inventory: use headers only, without placeholder rows. Existing scan export: NULL when absent from this export. NULL means unknown, not false or not applicable.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
             },
@@ -2421,7 +2421,7 @@
               "valueRule": "Populate only after exact unique namespace match. NULL when unresolved; preserve raw source reference.",
               "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Platform observation"
@@ -2433,10 +2433,10 @@
           "purpose": "Namespace of NativePrincipalID; must equal the matched Platform_Users namespace.",
           "platforms": {
             "PowerBI": {
-              "status": "Conditional",
-              "source": "Resolved Platform_Users.IdentifierNamespace",
-              "valueRule": "NULL when unresolved. Must accompany NativePrincipalID.",
-              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "status": "Profile dependent",
+              "source": "Fabric inventory: not collected. Existing scan export: Resolved Platform_Users.IdentifierNamespace",
+              "valueRule": "Fabric inventory: emit no rows; record NotCollected coverage. Existing scan export: NULL when unresolved. Must accompany NativePrincipalID.",
+              "nullRule": "Fabric inventory: use headers only, without placeholder rows. Existing scan export: NULL when absent from this export. NULL means unknown, not false or not applicable.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
             },
@@ -2454,7 +2454,7 @@
               "valueRule": "NULL when unresolved. Must accompany NativePrincipalID.",
               "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Platform observation"
@@ -2466,10 +2466,10 @@
           "purpose": "Unchanged native permission or role, when this is an Access relationship.",
           "platforms": {
             "PowerBI": {
-              "status": "Conditional",
-              "source": "Native access-right property when explicitly supplied",
-              "valueRule": "NULL for pure ownership/author relationships. Do not invent workspace privileges from Champion assignment.",
-              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "status": "Profile dependent",
+              "source": "Fabric inventory: not collected. Existing scan export: Native access-right property when explicitly supplied",
+              "valueRule": "Fabric inventory: emit no rows; record NotCollected coverage. Existing scan export: NULL for pure ownership/author relationships. Do not invent workspace privileges from Champion assignment.",
+              "nullRule": "Fabric inventory: use headers only, without placeholder rows. Existing scan export: NULL when absent from this export. NULL means unknown, not false or not applicable.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
             },
@@ -2487,7 +2487,7 @@
               "valueRule": "NULL for pure ownership/author relationships. Do not invent workspace privileges from Champion assignment.",
               "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Platform observation"
@@ -2499,10 +2499,10 @@
           "purpose": "ReadyForEmailMatch, MissingEmail, MissingSourceReference, UnresolvedUserReference, or UnverifiedMapping. This is source-account resolution, not directory activity or approval authority.",
           "platforms": {
             "PowerBI": {
-              "status": "Required",
-              "source": "Reference resolution result",
-              "valueRule": "ReadyForEmailMatch when the account and email resolve; MissingEmail, MissingSourceReference, UnresolvedUserReference, or UnverifiedMapping otherwise. This does not prove a directory match. Route unresolved cases to Platform Manager.",
-              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "status": "Profile dependent",
+              "source": "Fabric inventory: not collected. Existing scan export: Reference resolution result",
+              "valueRule": "Fabric inventory: emit no rows; record NotCollected coverage. Existing scan export: ReadyForEmailMatch when the account and email resolve; MissingEmail, MissingSourceReference, UnresolvedUserReference, or UnverifiedMapping otherwise. This does not prove a directory match. Route unresolved cases to Platform Manager.",
+              "nullRule": "Fabric inventory: use headers only, without placeholder rows. Existing scan export: Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
             },
@@ -2520,7 +2520,7 @@
               "valueRule": "ReadyForEmailMatch when the account and email resolve; MissingEmail, MissingSourceReference, UnresolvedUserReference, or UnverifiedMapping otherwise. This does not prove a directory match. Route unresolved cases to Platform Manager.",
               "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
-              "verification": "Documented mapping; installed export validation pending"
+              "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
           },
           "sourceAuthority": "Platform observation"
@@ -2543,7 +2543,31 @@
   "sources": {
     "Tableau": "https://tableau.github.io/tableau-data-dictionary/2026.2/data_dictionary.htm",
     "PowerBI": "https://learn.microsoft.com/en-us/rest/api/power-bi/admin/workspace-info-get-scan-result",
-    "Alteryx": "https://help.alteryx.com/current/en/server/configure/database-management/mongodb-management/mongodb-schema-reference/alteryxgallery-mongodb-schema.html",
-    "Directory": "https://learn.microsoft.com/en-us/graph/api/resources/user?view=graph-rest-1.0"
+    "Alteryx": "https://help.alteryx.com/20251/en/server/configure/database-management/mongodb-management/mongodb-schema-reference/alteryxgallery-mongodb-schema.html",
+    "Directory": "https://learn.microsoft.com/en-us/graph/api/resources/user?view=graph-rest-1.0",
+    "AlteryxService": "https://help.alteryx.com/20251/en/server/configure/database-management/mongodb-management/mongodb-schema-reference/alteryxservice-mongodb-schema.html",
+    "Fabric": "https://learn.microsoft.com/en-us/fabric/governance/onelake-catalog-govern"
+  },
+  "queryRevision": 2,
+  "queryProfiles": {
+    "Alteryx": {
+      "label": "SQL Server: exported Gallery and Service",
+      "query": "queries/alteryx-sqlserver.sql",
+      "guide": "alteryx-sqlserver-mapping.md",
+      "preflight": "queries/alteryx-sqlserver-preflight.sql"
+    },
+    "Tableau": {
+      "label": "PostgreSQL: Tableau repository",
+      "query": "queries/tableau-postgresql-selects.sql",
+      "guide": "tableau-postgresql-mapping.md",
+      "preflight": "../tableau/preflight.sql"
+    },
+    "PowerBI": {
+      "label": "Fabric SQL: landed inventory",
+      "query": "queries/fabric-inventory.sql",
+      "guide": "fabric-query-mapping.md",
+      "discovery": "queries/fabric-model-discovery.dax",
+      "alternative": "queries/powerbi-export-sqlserver.sql"
+    }
   }
 }

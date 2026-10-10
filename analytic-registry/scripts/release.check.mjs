@@ -35,6 +35,14 @@ for (const artifact of Object.values(release.artifacts)) {
 }
 const contract=readJson(path.join(pack,'v1.1-extract/contract.json'));
 const tables=contract.tables;
+check(JSON.stringify(contract)===JSON.stringify(readJson(path.join(app,'src/data/foundationContract.json'))),'App and extract mappings differ');
+for(const profile of Object.values(contract.queryProfiles))for(const [kind,file] of Object.entries(profile)){
+ if(kind==='label')continue;
+ const original=path.resolve(pack,'v1.1-extract',file);
+ const published=path.resolve(pub,'resources/platform-data-collection/v1.1-extract',file);
+ check(fs.existsSync(original)&&fs.existsSync(published),`Missing query profile file: ${file}`);
+ if(!file.endsWith('.md'))check(digest(original)===digest(published),`Query profile copy differs: ${file}`);
+}
 check(tables.length===prototypeRelease.importTables,'V1.1 input table count differs');
 check(tables.reduce((n,t)=>n+t.columns.length,0)===prototypeRelease.importColumns,'V1.1 column count differs');
 for(const table of tables)for(const column of table.columns){

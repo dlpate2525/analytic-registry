@@ -34,3 +34,8 @@ jobs:
         run: node platform-data-collection/v1.1-extract/queries/verify-queries.mjs
       - name: Verify V1.1 workbook
         run: python3 platform-data-collection/v1.1-extract/scripts/verify-workbook.py
+      - name: Check current SQL profiles
+        run: |
+          node platform-data-collection/v1.1-extract/scripts/verify-tableau-selects.mjs
+          node platform-data-collection/v1.1-extract/scripts/verify-alteryx-sqlserver.mjs
+          node platform-data-collection/v1.1-extract/queries/verify-fabric.mjs
