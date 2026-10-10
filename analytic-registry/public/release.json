@@ -1,25 +1,25 @@
 {
-  "version": "1.0.0-prototype.1",
-  "tag": "v1.0.0-prototype.1",
-  "label": "V1 prototype",
-  "baselineDate": "2026-10-08",
-  "displayDate": "8 October 2026",
-  "collectionContract": "1.0",
-  "workbookSheets": 15,
-  "importTables": 9,
-  "importColumns": 117,
-  "status": "Prototype baseline",
+  "version": "1.1.0-prototype.1",
+  "tag": "v1.1.0-prototype.1",
+  "label": "V1.1 prototype",
+  "baselineDate": "2026-10-09",
+  "displayDate": "9 October 2026",
+  "collectionContract": "1.1",
+  "workbookSheets": 17,
+  "importTables": 11,
+  "importColumns": 72,
+  "status": "V1.1 prototype; source validation pending",
   "mockSnapshotDate": "2026-10-06",
   "standardTemplateVersion": "2026.1",
   "artifacts": {
     "workbook": {
-      "path": "resources/platform-data-collection/v1-extract/analytic-registry-v1-extract.xlsx",
-      "sha256": "08d11e4b6be4fb42574063e53e7c1945f49e23332428bab45bce31623f2f87c5"
+      "path": "resources/platform-data-collection/v1.1-extract/analytic-registry-v1.1-extract.xlsx",
+      "sha256": "35eae3d90afe6bd4701915de4f4b50a1eeeeedf635820752c24976e6da1aff40"
     },
     "collectionPack": {
       "path": "resources/platform-data-collection/analytic-registry-platform-data-pack.zip",
-      "sha256": "4c5cdefa73222bec761c7644cee6de4c184f981c4235f7b5864bd4c34c55c30e"
+      "sha256": "05b4f91531e61b8c7c5f7cefdd5aa429f383eba7e5ea546486e6d2eed7290b3a"
     }
   },
-  "github": "https://github.com/dlpate2525/analytic-registry/tree/v1.0.0-prototype.1"
+  "github": "https://github.com/dlpate2525/analytic-registry/tree/main"
 }

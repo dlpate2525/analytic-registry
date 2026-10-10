@@ -1,0 +1,50 @@
+import {useState} from 'react';
+import {Download, ArrowRight} from 'lucide-react';
+import contract from '../data/foundationContract.json';
+import {foundationTables} from '../data/foundationSchema';
+import {compareDelivery, type Observation, type RegistryEvidence} from '../domain/foundation';
+import {Title,Panel,Note,Select,SearchInput,Empty,Metric} from '../components/ui';
+import {prototypeArtifacts} from '../data/release';
+
+const root='resources/platform-data-collection/v1.1-extract/';
+type Platform='PowerBI'|'Tableau'|'Alteryx';
+export function DataFoundation({onLegacy}:{onLegacy:()=>void}){
+ const [section,setSection]=useState('Platform inputs');
+ const [platform,setPlatform]=useState<Platform>('Alteryx');
+ const [dataset,setDataset]=useState('Assets');
+ const [query,setQuery]=useState('');
+ const [entity,setEntity]=useState('Person');
+ const [scenario,setScenario]=useState('Rename');
+ const table=contract.tables.find(t=>t.sheet===dataset)!;
+ const fields=table.columns.filter(c=>(c.name+' '+c.purpose+' '+c.platforms[platform].source+' '+c.platforms[platform].valueRule).toLowerCase().includes(query.toLowerCase()));
+ const appTable=foundationTables.find(t=>t.name===entity)!;
+ const old:RegistryEvidence={platform:'Tableau',instance:'server-demo',scope:'site-demo',kind:'Asset',nativeType:'Workbook',nativeId:'native-100',name:'Sales workbook',attributes:{revision:'1'},registryId:'registry-900',lastSeenAt:'2026-09-01T12:00:00Z'};
+ const incoming:Observation[]=scenario.includes('Missing')?[]:[{...old,name:scenario==='Rename'?'Revenue workbook':old.name,nativeId:scenario==='New native ID'?'native-200':old.nativeId}];
+ const preview=compareDelivery([old],incoming,{platform:old.platform,instance:old.instance,scope:old.scope,kind:'Asset',runKey:'delivery-october',observedAt:'2026-10-01T12:00:00Z',coverage:scenario==='Missing / partial'?'Partial':'Complete',expectedRows:incoming.length,scopeVerified:true});
+ return <>
+  <Title eyebrow="VERSION 1.1" title="Data foundation" description="Clear source fields, stable identity, and a smaller monthly delivery." actions={<><a className="button primary" href={prototypeArtifacts.workbook} download><Download size={15}/>Excel template</a><a className="button" href={root+'README.md'}>Query handoff</a></>}/>
+  <div className="metrics"><Metric label="Monthly data columns" value="60" detail="Previously 117; shared context moves to two small tables."/><Metric label="All delivery columns" value="72" detail="Includes run context and dataset coverage."/><Metric label="Foundation entities" value="12" detail="Logical design; SQL deployment remains pending."/></div>
+  <div className="tabs" aria-label="Data foundation topics">{['Platform inputs','Application entities','Monthly refresh'].map(s=><button key={s} className={section===s?'active':''} onClick={()=>setSection(s)}>{s}</button>)}</div>
+  {section==='Platform inputs'&&<>
+   <Note>Read the selected platform’s rule for every field. “Leave NULL” is explicit. “Not collected” means no dataset rows and a coverage record. Alteryx export files have not yet been inspected.</Note>
+   <div className="foundation-toolbar"><Select label="Source platform" value={platform} onChange={v=>setPlatform(v as Platform)} options={['Alteryx','Tableau','PowerBI']}/><Select label="Input dataset" value={dataset} onChange={setDataset} options={contract.tables.map(t=>t.sheet)}/><SearchInput value={query} onChange={setQuery} placeholder="Find a field or source path…"/></div>
+   <Panel title={table.sheet} subtitle={table.grain}>
+    <div className="panel-body"><small>Named Excel table: <strong>{table.excelTable}</strong>. Rows link to Run_Context through RunKey. Raw source IDs remain text.</small></div>
+    <div className="table-wrap"><table className="foundation-dictionary"><thead><tr><th>Column / type</th><th>Purpose</th><th>{platform} source</th><th>Value and NULL rule</th></tr></thead><tbody>{fields.map(c=>{const rule=c.platforms[platform];return <tr key={c.name}><td><strong>{c.name}</strong><small>{c.type}</small><small>Required: {c.required}</small></td><td>{c.purpose}</td><td><span className="foundation-status">{rule.status}</span><p>{rule.source}</p></td><td><p>{rule.valueRule}</p><small>{rule.nullRule}</small></td></tr>})}</tbody></table>{!fields.length&&<Empty/>}</div>
+    <div className="panel-foot">Mapping validation: vendor documentation and local fixtures. Installed source schema, export shape, and live SQL execution require platform-team validation.</div>
+   </Panel>
+   <div className="two-col"><Panel title="Query-first collection"><div className="panel-body"><p><strong>Tableau:</strong> read-only PostgreSQL queries over repository tables.</p><p><strong>Alteryx:</strong> read-only MongoDB projections from AlteryxGallery and AlteryxService. Workflow connections stay uncollected until actual evidence supports them.</p><p><strong>Power BI:</strong> SQL Server OPENJSON queries over a supplied metadata export. The registry makes no API call.</p></div></Panel><Panel title="Smaller input, preserved evidence"><div className="panel-body"><p>Run context replaces repeated platform, instance, scope, and time columns. Object_Users holds owner and author roles once.</p><p>Repository diagnostics, capacity, and optional timestamps remain supplemental. Native keys, identity ambiguity, and connection-risk evidence remain explicit.</p><a href={root+'migration-map.json'}>Review every V1 field decision <ArrowRight size={13}/></a></div></Panel></div>
+  </>}
+  {section==='Application entities'&&<>
+   <Note>One Person represents a directory identity. SourceIdentity represents a platform account, group, or service principal. Many accounts can resolve to one person. Role relationships remain separate rows.</Note>
+   <Panel title="Workspace → asset → connection"><div className="panel-body foundation-flow"><div><strong>Workspace</strong><small>Accountability and declared purpose</small></div><ArrowRight/><div><strong>Asset</strong><small>Report, model, workbook, workflow</small></div><ArrowRight/><div><strong>Connection</strong><small>Observed technical endpoint</small></div></div><div className="panel-foot">Typed views share one durable RegistryObject identity. Relationship observations retain native memberships and dependency paths.</div></Panel>
+   <div className="dictionary-layout"><Panel><div className="table-picker">{foundationTables.map(t=><button key={t.name} className={entity===t.name?'active':''} onClick={()=>setEntity(t.name)}><span>{t.name}<small>{t.source}</small></span><ArrowRight size={13}/></button>)}</div></Panel><Panel title={appTable.name} subtitle={appTable.grain}><div className="panel-body"><p>{appTable.rules}</p></div><div className="table-wrap"><table><thead><tr><th>Column</th><th>Type</th><th>Purpose / applicability</th></tr></thead><tbody>{appTable.columns.map(c=><tr key={c.name}><td><strong>{c.name}</strong></td><td className="mono">{c.type}</td><td>{c.purpose}<small>{c.appliesWhen}</small><small>Writes: {c.writeAuthority}. {c.nullMeaning}</small></td></tr>)}</tbody></table></div></Panel></div>
+   <Panel title="Workflow requirements stay intact"><div className="panel-body"><p>The 12 entities cover inventory and identity. Requests, approved declarations, assessments, attestations, and evidence approvals remain required workflow records.</p><p>Kimball’s grain and conformed-dimension principles guide identity and reporting. The operational app keeps relationships and transactions explicit.</p><a className="button" href="v1.1-model-simplification.md">Consolidation decisions</a> <button className="button" onClick={onLegacy}>Historical V1 model</button></div></Panel>
+  </>}
+  {section==='Monthly refresh'&&<>
+   <Panel title="Three different keys"><div className="table-wrap"><table><thead><tr><th>Key</th><th>Meaning</th><th>Change rule</th></tr></thead><tbody><tr><td>Registry ID</td><td>Permanent application identity</td><td>Retained through rename, movement, and refresh.</td></tr><tr><td>Native identity</td><td>Platform + instance + native scope + entity kind + native type + native ID</td><td>Match exact source text. Display names and email never identify an asset.</td></tr><tr><td>RunKey</td><td>One immutable evidence delivery</td><td>New delivery, new key. Identical retries are idempotent; changed content requires a new delivery.</td></tr></tbody></table></div></Panel>
+   <Panel title="Refresh behavior" subtitle="Synthetic example. This comparison does not write to the registry."><div className="panel-body"><Select label="Refresh scenario" value={scenario} onChange={setScenario} options={['Rename','Unchanged','New native ID','Missing / complete','Missing / partial']}/></div><div className="table-wrap"><table><thead><tr><th>Observed name</th><th>Registry ID</th><th>Comparison</th><th>Changed fields</th></tr></thead><tbody>{preview.map(r=><tr key={r.key}><td>{r.name}</td><td>{r.registryId??'Allocate after validation'}</td><td>{r.state}</td><td>{r.changedFields.join(', ')||'—'}</td></tr>)}</tbody></table></div><div className="panel-foot">Missing from a complete snapshot opens review. It never automatically deletes the object or clears its findings.</div></Panel>
+   <div className="two-col"><Panel title="Email resolves the person"><div className="panel-body"><p>Compare trimmed, lowercase SourceEmail to Mail in the configured directory tenant. Require one distinct directory identity.</p><p>Keep disabled matches distinct from missing, ambiguous, or unavailable lookups. Every unresolved case goes to Platform Manager. UPN is not a fallback.</p></div></Panel><Panel title="Monthly evidence"><div className="panel-body"><p>Validate scope, row counts, duplicates, and relationship endpoints before accepting a delivery. Late observations cannot replace newer current evidence.</p><p>Retain six months of history. Keep current records, durable identity mappings, and active evidence beyond that window.</p><a href={root+'monthly-reconciliation.md'}>Read refresh and retention rules</a></div></Panel></div>
+  </>}
+ </>;
+}

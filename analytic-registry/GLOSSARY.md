@@ -1,4 +1,4 @@
-# Analytic Registry — glossary
+# Analytic Registry â€” glossary
 
 Analytic Registry connects business accountability, analytics content, and evidence from source platforms.
 
@@ -127,3 +127,20 @@ The existing timestamp attached to source evidence. Preserve its original source
 
 **Technical ownership**:
 A platform-reported owner relationship. It does not establish the declared Business Owner / Workspace Owner. In Power BI, report createdBy is technical-owner evidence.
+
+## V1.1 identity and delivery terms
+
+**Person**:
+One corporate directory identity used for business accountability. Its name and email can change without creating another person.
+
+**Source identity**:
+One account, group, application principal, or unresolved principal within a source namespace. Several source identities can belong to one person.
+
+**Identity binding**:
+An accepted, dated relationship between a source identity and a corporate person or directory identity. A candidate email match is not yet an accepted binding.
+
+**Complete snapshot**:
+Evidence that covers the stated dataset and scope with a verified row count. A blank file alone does not establish completeness.
+
+**Delivery**:
+One immutable package of source observations with a stated scope and evidence time. It can be replayed without creating new business identities.

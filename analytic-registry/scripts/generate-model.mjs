@@ -55,7 +55,7 @@ const reviews=`erDiagram
 `;
 const intro=`# Analytic Registry data model for Power Apps
 
-V1 prototype baseline: ${prototypeRelease.version}, ${prototypeRelease.displayDate}. See the [baseline](v1-prototype-baseline.md) for implemented scope and known limits.
+Historical V1 53-table design, retained for comparison. Use the [V1.1 foundation](v1.1-model-simplification.md) and [V1.1 delivery](../../platform-data-collection/v1.1-extract/README.md) for current development. The [V1 baseline](v1-prototype-baseline.md) records its original scope.
 
 The [Excel extract workbook](../../platform-data-collection/v1-extract/analytic-registry-v1-extract.xlsx) is the V1 delivery contract for manual SQL staging. It contains 15 sheets: three guides, nine import tables, and three platform output layouts. The nine staging tables and 117 delivery columns are distinct from this 53-table target application model. Use the [collection handoff](../../platform-data-collection/v1-extract/README.md) for queries, exact headers, and import validation.
 

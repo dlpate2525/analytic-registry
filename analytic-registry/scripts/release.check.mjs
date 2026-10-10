@@ -33,17 +33,14 @@ for (const artifact of Object.values(release.artifacts)) {
   check(digest(copied) === digest(source), `Artifact differs from source: ${artifact.path}`);
   check(digest(copied) === artifact.sha256, `Release digest differs: ${artifact.path}`);
 }
-const tables = readJson(path.join(pack, 'v1-extract/workbook-contract.json'));
-const layouts = readJson(path.join(pack, 'v1-extract/platform-output-layouts.json'));
-check(tables.length === prototypeRelease.importTables, 'Import table count differs');
-check(tables.reduce((n, t) => n + t.columns.length, 0) === prototypeRelease.importColumns, 'Import column count differs');
-check(layouts.map(l => l.tabName).join(',') === 'Tableau_Output,PowerBI_Output,Alteryx_Output', 'Output tabs differ');
-check(layouts.reduce((n, l) => n + l.sections.length, 0) === 28, 'Output section count differs');
-for (const layout of layouts) for (const section of layout.sections) {
-  const table = tables.find(t => t.sheet === section.sheet);
-  if (table) check(JSON.stringify(section.headers) === JSON.stringify(table.columns.map(c => c.name)), `Header mismatch: ${layout.tabName}/${section.sheet}`);
+const contract=readJson(path.join(pack,'v1.1-extract/contract.json'));
+const tables=contract.tables;
+check(tables.length===prototypeRelease.importTables,'V1.1 input table count differs');
+check(tables.reduce((n,t)=>n+t.columns.length,0)===prototypeRelease.importColumns,'V1.1 column count differs');
+for(const table of tables)for(const column of table.columns){
+ check(column.purpose.split(/\s+/).length<200,`Purpose too long: ${table.sheet}.${column.name}`);
+ for(const platform of contract.platforms){const rule=column.platforms[platform];check(!!rule?.source&&!!rule?.valueRule&&!!rule?.nullRule,`Missing platform rule: ${table.sheet}.${column.name}/${platform}`);}
 }
-
 let links = 0;
 function verifyLinks(folder) {
   for (const item of fs.readdirSync(folder, {withFileTypes: true})) {

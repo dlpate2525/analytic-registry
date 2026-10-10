@@ -1,0 +1,2549 @@
+{
+  "version": "1.1",
+  "status": "Prototype contract; installed-source validation pending",
+  "date": "2026-10-09",
+  "previousVersion": "1.0",
+  "tables": [
+    {
+      "sheet": "Run_Context",
+      "excelTable": "Tbl_Run_Context",
+      "file": "run_context.csv",
+      "grain": "One immutable delivery for one source instance, native scope, observation time, and mapping version.",
+      "rowKey": [
+        "RunKey"
+      ],
+      "columns": [
+        {
+          "name": "RunKey",
+          "type": "uniqueidentifier",
+          "required": "Yes",
+          "purpose": "Existing UUID for one immutable delivery. It links rows to Run_Context and never identifies an enduring workspace, asset, connection, or user.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Required",
+              "source": "Existing delivery manifest",
+              "valueRule": "Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Required",
+              "source": "Existing delivery manifest",
+              "valueRule": "Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Required",
+              "source": "Existing delivery manifest",
+              "valueRule": "Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Delivery manifest"
+        },
+        {
+          "name": "PlatformCode",
+          "type": "nvarchar(30)",
+          "required": "Yes",
+          "purpose": "Source provider for this delivery. PowerBI, Tableau, and Alteryx identify platforms. Directory is reserved for the companion directory extract.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Required",
+              "source": "Delivery manifest",
+              "valueRule": "Use PowerBI. Directory-only runs use reserved source code Directory; Directory is not a registry platform.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Required",
+              "source": "Delivery manifest",
+              "valueRule": "Use Tableau. Directory-only runs use reserved source code Directory; Directory is not a registry platform.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Required",
+              "source": "Delivery manifest",
+              "valueRule": "Use Alteryx. Directory-only runs use reserved source code Directory; Directory is not a registry platform.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Delivery manifest"
+        },
+        {
+          "name": "PlatformInstanceKey",
+          "type": "nvarchar(200)",
+          "required": "Yes",
+          "purpose": "Stable instance key: Power BI tenant, Tableau server/site, or Alteryx server. Resolve through the configured lookup; never use a mutable name.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Required",
+              "source": "Configured platform inventory",
+              "valueRule": "Stable tenant/server identity. Names and product versions never form this key.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Required",
+              "source": "Configured platform inventory",
+              "valueRule": "Stable tenant/server identity. Names and product versions never form this key.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Required",
+              "source": "Configured platform inventory",
+              "valueRule": "Stable tenant/server identity. Names and product versions never form this key.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Delivery manifest"
+        },
+        {
+          "name": "NativeScopeKey",
+          "type": "nvarchar(200)",
+          "required": "Yes",
+          "purpose": "Source ID namespace: Power BI tenant ID, Tableau site LUID, or configured Alteryx server scope. Keep the extractor's original value.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Required",
+              "source": "Configured source namespace",
+              "valueRule": "Use Power BI tenant, Tableau site LUID, or configured Alteryx server scope. Do not use a movable workspace ID.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Required",
+              "source": "Configured source namespace",
+              "valueRule": "Use Power BI tenant, Tableau site LUID, or configured Alteryx server scope. Do not use a movable workspace ID.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Required",
+              "source": "Configured source namespace",
+              "valueRule": "Use Power BI tenant, Tableau site LUID, or configured Alteryx server scope. Do not use a movable workspace ID.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Delivery manifest"
+        },
+        {
+          "name": "ObservedAt",
+          "type": "datetimeoffset(7)",
+          "required": "Yes",
+          "purpose": "UTC collection evidence time. Preserve it directly in each V1 staging row, including platform users and object-role links, and retain the run context.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Required",
+              "source": "Platform team extraction manifest",
+              "valueRule": "Actual evidence capture time in ISO 8601 with UTC offset. Do not substitute SQL load time or month label.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Required",
+              "source": "Platform team extraction manifest",
+              "valueRule": "Actual evidence capture time in ISO 8601 with UTC offset. Do not substitute SQL load time or month label.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Required",
+              "source": "Platform team extraction manifest",
+              "valueRule": "Actual evidence capture time in ISO 8601 with UTC offset. Do not substitute SQL load time or month label.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Delivery manifest"
+        },
+        {
+          "name": "DirectoryTenantKey",
+          "type": "nvarchar(200)",
+          "required": "Conditional",
+          "purpose": "Configured corporate directory tenant used for the email match.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Conditional",
+              "source": "Configured corporate directory tenant",
+              "valueRule": "Required for Directory runs. For platform runs, supply the authorized directory tenant for email matching. Missing tenant routes identities to Platform Manager.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Conditional",
+              "source": "Configured corporate directory tenant",
+              "valueRule": "Required for Directory runs. For platform runs, supply the authorized directory tenant for email matching. Missing tenant routes identities to Platform Manager.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Conditional",
+              "source": "Configured corporate directory tenant",
+              "valueRule": "Required for Directory runs. For platform runs, supply the authorized directory tenant for email matching. Missing tenant routes identities to Platform Manager.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Delivery manifest"
+        },
+        {
+          "name": "MappingVersion",
+          "type": "nvarchar(30)",
+          "required": "Yes",
+          "purpose": "Version of the input contract and mapping rules. V1.1 uses 1.1; record the query file revision with the source evidence.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Required",
+              "source": "This delivery contract",
+              "valueRule": "Use 1.1. Store query revision with the retained source file.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Required",
+              "source": "This delivery contract",
+              "valueRule": "Use 1.1. Store query revision with the retained source file.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Required",
+              "source": "This delivery contract",
+              "valueRule": "Use 1.1. Store query revision with the retained source file.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Delivery manifest"
+        },
+        {
+          "name": "ScopeDescription",
+          "type": "nvarchar(1000)",
+          "required": "Yes",
+          "purpose": "Explicit collection boundary and exclusions. Completeness cannot be inferred from a row count, filename, or calendar month.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Required",
+              "source": "Platform manager",
+              "valueRule": "State exact inventory boundary, exclusions, and collection conditions. Completeness applies only to this boundary.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Required",
+              "source": "Platform manager",
+              "valueRule": "State exact inventory boundary, exclusions, and collection conditions. Completeness applies only to this boundary.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Required",
+              "source": "Platform manager",
+              "valueRule": "State exact inventory boundary, exclusions, and collection conditions. Completeness applies only to this boundary.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Delivery manifest"
+        }
+      ]
+    },
+    {
+      "sheet": "Coverage",
+      "excelTable": "Tbl_Coverage",
+      "file": "coverage.csv",
+      "grain": "One delivery and dataset. Explicitly declare collected coverage, including empty or uncollected datasets.",
+      "rowKey": [
+        "RunKey",
+        "DatasetCode"
+      ],
+      "columns": [
+        {
+          "name": "RunKey",
+          "type": "uniqueidentifier",
+          "required": "Yes",
+          "purpose": "Existing UUID for one immutable delivery. It links rows to Run_Context and never identifies an enduring workspace, asset, connection, or user.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Required",
+              "source": "Existing delivery manifest",
+              "valueRule": "Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Required",
+              "source": "Existing delivery manifest",
+              "valueRule": "Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Required",
+              "source": "Existing delivery manifest",
+              "valueRule": "Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Delivery manifest"
+        },
+        {
+          "name": "DatasetCode",
+          "type": "nvarchar(40)",
+          "required": "Yes",
+          "purpose": "Exact dataset sheet name whose coverage is declared.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Required",
+              "source": "Dataset name",
+              "valueRule": "One of the nine data sheet names. Require a coverage record even when no data was supplied.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Required",
+              "source": "Dataset name",
+              "valueRule": "One of the nine data sheet names. Require a coverage record even when no data was supplied.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Required",
+              "source": "Dataset name",
+              "valueRule": "One of the nine data sheet names. Require a coverage record even when no data was supplied.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Delivery manifest"
+        },
+        {
+          "name": "CoverageStatus",
+          "type": "nvarchar(20)",
+          "required": "Yes",
+          "purpose": "Complete, Partial, NotCollected, or Failed for this dataset and run. Only Complete with verified count and scope supports absence comparisons.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Required",
+              "source": "Platform manager and export evidence",
+              "valueRule": "Complete, Partial, NotCollected, or Failed. Complete requires an independently verified scope and count.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Required",
+              "source": "Platform manager and export evidence",
+              "valueRule": "Complete, Partial, NotCollected, or Failed. Complete requires an independently verified scope and count.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Required",
+              "source": "Platform manager and export evidence",
+              "valueRule": "Complete, Partial, NotCollected, or Failed. Complete requires an independently verified scope and count.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Delivery manifest"
+        },
+        {
+          "name": "RowCount",
+          "type": "bigint",
+          "required": "Conditional",
+          "purpose": "Number of delivered data rows, excluding header and fully blank template rows. Complete requires a count; zero is valid only for a verified empty collection.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Conditional",
+              "source": "Count from the completed export",
+              "valueRule": "Nonnegative delivered row count. Complete requires an exact count, including a legitimate zero. Failed/NotCollected use NULL.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Conditional",
+              "source": "Count from the completed export",
+              "valueRule": "Nonnegative delivered row count. Complete requires an exact count, including a legitimate zero. Failed/NotCollected use NULL.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Conditional",
+              "source": "Count from the completed export",
+              "valueRule": "Nonnegative delivered row count. Complete requires an exact count, including a legitimate zero. Failed/NotCollected use NULL.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Delivery manifest"
+        }
+      ]
+    },
+    {
+      "sheet": "Workspaces",
+      "excelTable": "Tbl_Workspaces",
+      "file": "workspaces.csv",
+      "grain": "One observed workspace, Tableau project, or Alteryx collection.",
+      "rowKey": [
+        "RunKey",
+        "NativeWorkspaceID"
+      ],
+      "columns": [
+        {
+          "name": "RunKey",
+          "type": "uniqueidentifier",
+          "required": "Yes",
+          "purpose": "Existing UUID for one immutable delivery. It links rows to Run_Context and never identifies an enduring workspace, asset, connection, or user.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Required",
+              "source": "Existing delivery manifest",
+              "valueRule": "Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Required",
+              "source": "Existing delivery manifest",
+              "valueRule": "Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Required",
+              "source": "Existing delivery manifest",
+              "valueRule": "Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Delivery manifest"
+        },
+        {
+          "name": "NativeWorkspaceID",
+          "type": "nvarchar(200)",
+          "required": "Yes",
+          "purpose": "Power BI workspace GUID, Tableau project LUID, or Alteryx CollectionId. Resolve with platform, instance, scope, and type.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Required",
+              "source": "workspaces[].id",
+              "valueRule": "Preserve exact source text. Scope comes from Run_Context.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Required",
+              "source": "public.projects.luid",
+              "valueRule": "Preserve exact source text. Scope comes from Run_Context.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Required",
+              "source": "AlteryxGallery.collections.CollectionId",
+              "valueRule": "Preserve exact source text. Scope comes from Run_Context.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Platform observation"
+        },
+        {
+          "name": "NativeWorkspaceType",
+          "type": "nvarchar(50)",
+          "required": "Yes",
+          "purpose": "Workspace, PersonalGroup, Project, or Collection in these extracts. Keep the native type as part of the scoped object identity.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Required",
+              "source": "Source entity kind",
+              "valueRule": "Use workspaces[].type, commonly Workspace or PersonalGroup.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Required",
+              "source": "Source entity kind",
+              "valueRule": "Literal Project.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Required",
+              "source": "Source entity kind",
+              "valueRule": "Literal Collection.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Platform observation"
+        },
+        {
+          "name": "DisplayName",
+          "type": "nvarchar(200)",
+          "required": "Yes",
+          "purpose": "Current technical label. Maps to ObservedWorkspace.DisplayName. Does not overwrite the declared business name.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Required",
+              "source": "workspaces[].name",
+              "valueRule": "Current technical name only. A rename updates this attribute without changing registry identity.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Required",
+              "source": "public.projects.name",
+              "valueRule": "Current technical name only. A rename updates this attribute without changing registry identity.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Required",
+              "source": "AlteryxGallery.collections.Name",
+              "valueRule": "Current technical name only. A rename updates this attribute without changing registry identity.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Platform observation"
+        },
+        {
+          "name": "NativeLifecycleCode",
+          "type": "nvarchar(40)",
+          "required": "No",
+          "purpose": "Native state, such as active or archived. Maps to ObservedWorkspace.NativeLifecycleCode. Keep the native vocabulary.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Conditional",
+              "source": "workspaces[].state",
+              "valueRule": "Preserve the native state; never infer account status.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Conditional",
+              "source": "public.projects.state",
+              "valueRule": "Preserve native state as observed. It does not establish business retirement.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Leave NULL",
+              "source": "Not supplied by the baseline workspace query",
+              "valueRule": "No authoritative lifecycle field is projected.",
+              "nullRule": "Always NULL in this profile; existence is not an explicit active status.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Platform observation"
+        }
+      ]
+    },
+    {
+      "sheet": "Assets",
+      "excelTable": "Tbl_Assets",
+      "file": "assets.csv",
+      "grain": "One native report, model, workbook, published source, or Alteryx workflow.",
+      "rowKey": [
+        "RunKey",
+        "NativeAssetType",
+        "NativeAssetID"
+      ],
+      "columns": [
+        {
+          "name": "RunKey",
+          "type": "uniqueidentifier",
+          "required": "Yes",
+          "purpose": "Existing UUID for one immutable delivery. It links rows to Run_Context and never identifies an enduring workspace, asset, connection, or user.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Required",
+              "source": "Existing delivery manifest",
+              "valueRule": "Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Required",
+              "source": "Existing delivery manifest",
+              "valueRule": "Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Required",
+              "source": "Existing delivery manifest",
+              "valueRule": "Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Delivery manifest"
+        },
+        {
+          "name": "NativeAssetID",
+          "type": "nvarchar(200)",
+          "required": "Yes",
+          "purpose": "Power BI report/model ID, Tableau workbook/published-source LUID, or Alteryx appInfos._id. Resolve with platform, instance, scope, and type.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Required",
+              "source": "workspaces[].reports[].id or datasets[].id",
+              "valueRule": "Preserve exact ID. Mongo Extended JSON $oid is decoded to its exact text; do not use filename or revision ID.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Required",
+              "source": "public.workbooks.luid or public.datasources.luid",
+              "valueRule": "Preserve exact ID. Mongo Extended JSON $oid is decoded to its exact text; do not use filename or revision ID.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Required",
+              "source": "AlteryxGallery.appInfos._id",
+              "valueRule": "Preserve exact ID. Mongo Extended JSON $oid is decoded to its exact text; do not use filename or revision ID.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Platform observation"
+        },
+        {
+          "name": "NativeAssetType",
+          "type": "nvarchar(50)",
+          "required": "Yes",
+          "purpose": "Native type: Report, Dataset, Workbook, PublishedDatasource, or Workflow. Part of the object identity key.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Required",
+              "source": "Source object namespace",
+              "valueRule": "Report or Dataset, matching the source array.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Required",
+              "source": "Source object namespace",
+              "valueRule": "Workbook or PublishedDatasource. Include datasources only where parent_workbook_id IS NULL; embedded sources are not published assets.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Required",
+              "source": "Source object namespace",
+              "valueRule": "Workflow namespace for appInfos identity, including analytic apps and macros. PackageType is an optional classification, not the durable key.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Platform observation"
+        },
+        {
+          "name": "DisplayName",
+          "type": "nvarchar(200)",
+          "required": "Yes",
+          "purpose": "Current source label. Maps to ObservedAsset.DisplayName; not an identity key.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Required",
+              "source": "reports[].name or datasets[].name",
+              "valueRule": "If ambiguous or absent, retain raw evidence and route to Platform Manager. Never invent a name to pass validation.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Required",
+              "source": "workbooks.name or datasources.name",
+              "valueRule": "If ambiguous or absent, retain raw evidence and route to Platform Manager. Never invent a name to pass validation.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Required",
+              "source": "One published Revisions entry, then one primary Applications entry: MetaInfo.Name",
+              "valueRule": "If ambiguous or absent, retain raw evidence and route to Platform Manager. Never invent a name to pass validation.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Platform observation"
+        },
+        {
+          "name": "NativeVersionReference",
+          "type": "nvarchar(100)",
+          "required": "No",
+          "purpose": "Tableau revision or Alteryx published RevisionId when resolved. Power BI leaves it blank. This evidence does not create a business AssetVersion.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Leave NULL",
+              "source": "No native revision in the baseline scan fields",
+              "valueRule": "Do not synthesize a version from modified time.",
+              "nullRule": "Always NULL for baseline scan projection.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Conditional",
+              "source": "public.workbooks.revision or public.datasources.revision",
+              "valueRule": "Preserve native revision text. A business release reference is a separate declaration.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Conditional",
+              "source": "AlteryxGallery.appInfos.Revisions[].RevisionId where IsPublishedRevision=true",
+              "valueRule": "Exactly one published revision required. Multiple or no candidates route to Platform Manager; never choose max revision silently.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Platform observation"
+        },
+        {
+          "name": "NativeLifecycleCode",
+          "type": "nvarchar(40)",
+          "required": "No",
+          "purpose": "Native lifecycle state. Maps to proposed ObservedAsset.NativeLifecycleCode. Missing Power BI report state remains null.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Leave NULL",
+              "source": "Not projected by baseline inventory",
+              "valueRule": "Inventory presence is recorded by the observation itself.",
+              "nullRule": "Always NULL unless an authoritative lifecycle field is separately approved.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Conditional",
+              "source": "public.workbooks.state or public.datasources.state",
+              "valueRule": "Preserve native state. Inventory state is not an approved business lifecycle decision.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Conditional",
+              "source": "AlteryxGallery.appInfos.IsDeleted",
+              "valueRule": "Explicit true maps to Deleted, false maps to Present. Missing stays NULL. Neither value proves business retirement.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Platform observation"
+        }
+      ]
+    },
+    {
+      "sheet": "Workspace_Assets",
+      "excelTable": "Tbl_Workspace_Assets",
+      "file": "workspace_assets.csv",
+      "grain": "One physical workspace-to-asset membership.",
+      "rowKey": [
+        "RunKey",
+        "NativeWorkspaceID",
+        "NativeAssetType",
+        "NativeAssetID",
+        "NativeAssociationType"
+      ],
+      "columns": [
+        {
+          "name": "RunKey",
+          "type": "uniqueidentifier",
+          "required": "Yes",
+          "purpose": "Existing UUID for one immutable delivery. It links rows to Run_Context and never identifies an enduring workspace, asset, connection, or user.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Required",
+              "source": "Existing delivery manifest",
+              "valueRule": "Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Required",
+              "source": "Existing delivery manifest",
+              "valueRule": "Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Required",
+              "source": "Existing delivery manifest",
+              "valueRule": "Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Delivery manifest"
+        },
+        {
+          "name": "NativeWorkspaceID",
+          "type": "nvarchar(200)",
+          "required": "Yes",
+          "purpose": "Resolve the source workspace within this instance and scope. Maps to ObservedWorkspaceAsset.WorkspaceID.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Required",
+              "source": "Parent workspaces[].id",
+              "valueRule": "Resolve exact ID in this delivery scope.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Required",
+              "source": "projects.luid via projects_contents.site_id, content_id, content_type and project_id; verify content_type tokens",
+              "valueRule": "Resolve exact ID in this delivery scope.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Required",
+              "source": "AlteryxGallery.collections.CollectionId",
+              "valueRule": "Resolve exact ID in this delivery scope.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Platform observation"
+        },
+        {
+          "name": "NativeAssetID",
+          "type": "nvarchar(200)",
+          "required": "Yes",
+          "purpose": "Resolve the member asset using its native type. Maps to ObservedWorkspaceAsset.AssetID.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Required",
+              "source": "Nested reports[].id / datasets[].id",
+              "valueRule": "Preserve unmatched IDs as unresolved relationships.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Required",
+              "source": "workbooks.luid / published datasources.luid",
+              "valueRule": "Preserve unmatched IDs as unresolved relationships.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Required",
+              "source": "AlteryxGallery.collections.Apps[].ApplicationId",
+              "valueRule": "Preserve unmatched IDs as unresolved relationships.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Platform observation"
+        },
+        {
+          "name": "NativeAssetType",
+          "type": "nvarchar(50)",
+          "required": "Yes",
+          "purpose": "Disambiguates equal ID text across object classes. Part of the asset resolution key.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Required",
+              "source": "Source branch",
+              "valueRule": "Report / Dataset",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Required",
+              "source": "Source branch",
+              "valueRule": "Workbook / PublishedDatasource",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Required",
+              "source": "Source branch",
+              "valueRule": "Workflow",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Platform observation"
+        },
+        {
+          "name": "NativeAssociationType",
+          "type": "nvarchar(40)",
+          "required": "Yes",
+          "purpose": "ContainedIn, ProjectContent, or CollectionMembership in these extracts. This records observed membership, not the accountable business workspace.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Required",
+              "source": "Query relationship label",
+              "valueRule": "ContainedIn; observed membership never assigns business ownership.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Required",
+              "source": "Query relationship label",
+              "valueRule": "ProjectContent; observed membership never assigns business ownership.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Required",
+              "source": "Query relationship label",
+              "valueRule": "CollectionMembership; observed membership never assigns business ownership.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Platform observation"
+        }
+      ]
+    },
+    {
+      "sheet": "Connections",
+      "excelTable": "Tbl_Connections",
+      "file": "connections.csv",
+      "grain": "One native connection.",
+      "rowKey": [
+        "RunKey",
+        "NativeConnectionID"
+      ],
+      "columns": [
+        {
+          "name": "RunKey",
+          "type": "uniqueidentifier",
+          "required": "Yes",
+          "purpose": "Existing UUID for one immutable delivery. It links rows to Run_Context and never identifies an enduring workspace, asset, connection, or user.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Required",
+              "source": "Existing delivery manifest",
+              "valueRule": "Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Required",
+              "source": "Existing delivery manifest",
+              "valueRule": "Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Required",
+              "source": "Existing delivery manifest",
+              "valueRule": "Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Delivery manifest"
+        },
+        {
+          "name": "NativeConnectionID",
+          "type": "nvarchar(200)",
+          "required": "Yes",
+          "purpose": "Tableau data connection LUID or returned Power BI source-instance ID. Alteryx V1 does not collect connections. Missing or unstable keys require review.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Required",
+              "source": "datasourceInstances[].datasourceId",
+              "valueRule": "Exact native datasource ID. Do not hash connection secrets or invent a name-based ID.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Required",
+              "source": "public.data_connections.luid",
+              "valueRule": "Preserve the source LUID and the V1 key namespace. Never replace it with repository integer id; require a reviewed crosswalk after migration.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Not collected",
+              "source": "No verified source in this query profile",
+              "valueRule": "Gallery and Service catalog records do not establish workflow input/output data connections or workflow lineage. Do not treat an AS_Applications record as a data connection.",
+              "nullRule": "Emit no rows for an uncollected dataset. Set CoverageStatus=NotCollected; do not create NULL placeholder records.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Platform observation"
+        },
+        {
+          "name": "DisplayName",
+          "type": "nvarchar(200)",
+          "required": "No",
+          "purpose": "Source caption when available. The Power BI adapter uses an explicit technology-and-ID label when no supported name is provided. Maps to ObservedConnection.DisplayName.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Conditional",
+              "source": "datasourceInstances[].datasourceType",
+              "valueRule": "Optional readable technical label. No business meaning is inferred.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Conditional",
+              "source": "data_connections.caption, then name, then luid",
+              "valueRule": "Technical label fallback only; never a business name or identity match.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Not collected",
+              "source": "No verified source in this query profile",
+              "valueRule": "Gallery and Service catalog records do not establish workflow input/output data connections or workflow lineage. Do not treat an AS_Applications record as a data connection.",
+              "nullRule": "Emit no rows for an uncollected dataset. Set CoverageStatus=NotCollected; do not create NULL placeholder records.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Platform observation"
+        },
+        {
+          "name": "TechnologyCode",
+          "type": "nvarchar(40)",
+          "required": "Yes",
+          "purpose": "Source technology, such as Oracle or SQL Server. Null source types become Undefined. Preserve other vendor values for mapping review. Maps to resolved DataSource.TechnologyCode.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Required",
+              "source": "datasourceInstances[].datasourceType",
+              "valueRule": "Map Oracle to Oracle, Sql to SQL Server; preserve other known types. Undefined only when technology is unavailable.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Required",
+              "source": "public.data_connections.dbclass",
+              "valueRule": "Map oracle to Oracle, sqlserver to SQL Server, dataengine/hyper to Extract; retain other known values or Undefined.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Not collected",
+              "source": "No verified source in this query profile",
+              "valueRule": "Gallery and Service catalog records do not establish workflow input/output data connections or workflow lineage. Do not treat an AS_Applications record as a data connection.",
+              "nullRule": "Emit no rows for an uncollected dataset. Set CoverageStatus=NotCollected; do not create NULL placeholder records.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Platform observation"
+        },
+        {
+          "name": "HasExtract",
+          "type": "bit",
+          "required": "No",
+          "purpose": "Tableau extract indicator, separate from source technology. Retained in staging. Power BI leaves it null; Alteryx V1 returns no connection rows.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Conditional",
+              "source": "Not supplied by scan datasource instance",
+              "valueRule": "NULL. Report/model storage mode must not be inferred from datasource type.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Conditional",
+              "source": "public.data_connections.has_extract",
+              "valueRule": "Preserve explicit true or false. Missing stays NULL; do not infer storage mode from dbclass.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Not collected",
+              "source": "No verified source in this query profile",
+              "valueRule": "Gallery and Service catalog records do not establish workflow input/output data connections or workflow lineage. Do not treat an AS_Applications record as a data connection.",
+              "nullRule": "Emit no rows for an uncollected dataset. Set CoverageStatus=NotCollected; do not create NULL placeholder records.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Platform observation"
+        },
+        {
+          "name": "ServerHostname",
+          "type": "nvarchar(255)",
+          "required": "No",
+          "purpose": "Allowed endpoint host from the source. Maps to DataSource.ServerHostname after endpoint resolution. Do not merge by host alone.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Conditional",
+              "source": "datasourceInstances[].connectionDetails.server",
+              "valueRule": "Sanitized host only. No URL tokens or credentials.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Conditional",
+              "source": "public.data_connections.server",
+              "valueRule": "Sanitized host only; missing stays NULL.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Not collected",
+              "source": "No verified source in this query profile",
+              "valueRule": "Gallery and Service catalog records do not establish workflow input/output data connections or workflow lineage. Do not treat an AS_Applications record as a data connection.",
+              "nullRule": "Emit no rows for an uncollected dataset. Set CoverageStatus=NotCollected; do not create NULL placeholder records.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Platform observation"
+        },
+        {
+          "name": "DatabaseName",
+          "type": "nvarchar(200)",
+          "required": "No",
+          "purpose": "Source database or provider-specific database identifier. Maps to DataSource.DatabaseName after validation.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Conditional",
+              "source": "datasourceInstances[].connectionDetails.database",
+              "valueRule": "Database name when present.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Conditional",
+              "source": "public.data_connections.dbname",
+              "valueRule": "Preserve observed database name.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Not collected",
+              "source": "No verified source in this query profile",
+              "valueRule": "Gallery and Service catalog records do not establish workflow input/output data connections or workflow lineage. Do not treat an AS_Applications record as a data connection.",
+              "nullRule": "Emit no rows for an uncollected dataset. Set CoverageStatus=NotCollected; do not create NULL placeholder records.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Platform observation"
+        },
+        {
+          "name": "AuthenticationTypeCode",
+          "type": "nvarchar(40)",
+          "required": "No",
+          "purpose": "Tableau native authentication method when present. Maps to ObservedConnection.AuthenticationTypeCode after vocabulary validation. Missing does not imply anonymous access.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Conditional",
+              "source": "Not supplied by this scan projection",
+              "valueRule": "NULL; gateway presence does not prove authentication type.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Conditional",
+              "source": "public.data_connections.authentication",
+              "valueRule": "Preserve raw authentication code. Installed schema and token meaning require verification; missing stays NULL.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Not collected",
+              "source": "No verified source in this query profile",
+              "valueRule": "Gallery and Service catalog records do not establish workflow input/output data connections or workflow lineage. Do not treat an AS_Applications record as a data connection.",
+              "nullRule": "Emit no rows for an uncollected dataset. Set CoverageStatus=NotCollected; do not create NULL placeholder records.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Platform observation"
+        },
+        {
+          "name": "IdentityClassificationCode",
+          "type": "nvarchar(40)",
+          "required": "No",
+          "purpose": "Unknown for this pass. Maps to ObservedConnection.IdentityClassificationCode. Later identity evidence may support a service/personal classification.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Conditional",
+              "source": "No verified credential identity in this input",
+              "valueRule": "Unknown. Never infer Personal or Service Account from a hostname.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Conditional",
+              "source": "Credential identity class not established by repository username alone",
+              "valueRule": "Unknown; a username is not verified account classification.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Not collected",
+              "source": "No verified source in this query profile",
+              "valueRule": "Gallery and Service catalog records do not establish workflow input/output data connections or workflow lineage. Do not treat an AS_Applications record as a data connection.",
+              "nullRule": "Emit no rows for an uncollected dataset. Set CoverageStatus=NotCollected; do not create NULL placeholder records.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Platform observation"
+        },
+        {
+          "name": "EvidenceStatusCode",
+          "type": "nvarchar(30)",
+          "required": "Yes",
+          "purpose": "Observed for the row's captured facts. Maps to ObservedConnection.EvidenceStatusCode. Dataset coverage controls what absences can mean.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Required",
+              "source": "Query evidence classification",
+              "valueRule": "Partial when authentication or identity evidence is unavailable. Unknown is not a pass.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Required",
+              "source": "Query evidence classification",
+              "valueRule": "Partial; repository projection alone does not verify credential controls.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Not collected",
+              "source": "No verified source in this query profile",
+              "valueRule": "Gallery and Service catalog records do not establish workflow input/output data connections or workflow lineage. Do not treat an AS_Applications record as a data connection.",
+              "nullRule": "Emit no rows for an uncollected dataset. Set CoverageStatus=NotCollected; do not create NULL placeholder records.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Platform observation"
+        }
+      ]
+    },
+    {
+      "sheet": "Asset_Connections",
+      "excelTable": "Tbl_Asset_Connections",
+      "file": "asset_connections.csv",
+      "grain": "One directly observed asset-to-connection link.",
+      "rowKey": [
+        "RunKey",
+        "NativeAssetType",
+        "NativeAssetID",
+        "NativeConnectionID"
+      ],
+      "columns": [
+        {
+          "name": "RunKey",
+          "type": "uniqueidentifier",
+          "required": "Yes",
+          "purpose": "Existing UUID for one immutable delivery. It links rows to Run_Context and never identifies an enduring workspace, asset, connection, or user.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Required",
+              "source": "Existing delivery manifest",
+              "valueRule": "Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Required",
+              "source": "Existing delivery manifest",
+              "valueRule": "Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Required",
+              "source": "Existing delivery manifest",
+              "valueRule": "Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Delivery manifest"
+        },
+        {
+          "name": "NativeAssetID",
+          "type": "nvarchar(200)",
+          "required": "Yes",
+          "purpose": "Direct consumer asset. Resolve to ObservedAssetConnection.AssetID.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Required",
+              "source": "datasets[].id",
+              "valueRule": "Only direct source-observed edges.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Required",
+              "source": "workbooks.luid or published datasources.luid via data_connections.owner_type + owner_id within site; verify owner_type tokens",
+              "valueRule": "Only direct source-observed edges.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Not collected",
+              "source": "No verified source in this query profile",
+              "valueRule": "Gallery and Service catalog records do not establish workflow input/output data connections or workflow lineage. Do not treat an AS_Applications record as a data connection.",
+              "nullRule": "Emit no rows for an uncollected dataset. Set CoverageStatus=NotCollected; do not create NULL placeholder records.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Platform observation"
+        },
+        {
+          "name": "NativeAssetType",
+          "type": "nvarchar(50)",
+          "required": "Yes",
+          "purpose": "Asset identity namespace used for resolution.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Required",
+              "source": "Source branch",
+              "valueRule": "Dataset",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Required",
+              "source": "Source branch",
+              "valueRule": "Workbook / PublishedDatasource",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Not collected",
+              "source": "No verified source in this query profile",
+              "valueRule": "Gallery and Service catalog records do not establish workflow input/output data connections or workflow lineage. Do not treat an AS_Applications record as a data connection.",
+              "nullRule": "Emit no rows for an uncollected dataset. Set CoverageStatus=NotCollected; do not create NULL placeholder records.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Platform observation"
+        },
+        {
+          "name": "NativeConnectionID",
+          "type": "nvarchar(200)",
+          "required": "Yes",
+          "purpose": "Referenced native connection. Resolve to ObservedAssetConnection.ConnectionID.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Required",
+              "source": "datasets[].datasourceUsages[].datasourceInstanceId joined to datasourceInstances[].datasourceId",
+              "valueRule": "Retain missing endpoints for review; never match by label.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Required",
+              "source": "data_connections.luid",
+              "valueRule": "Retain missing endpoints for review; never match by label.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Not collected",
+              "source": "No verified source in this query profile",
+              "valueRule": "Gallery and Service catalog records do not establish workflow input/output data connections or workflow lineage. Do not treat an AS_Applications record as a data connection.",
+              "nullRule": "Emit no rows for an uncollected dataset. Set CoverageStatus=NotCollected; do not create NULL placeholder records.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Platform observation"
+        },
+        {
+          "name": "EvidenceStatusCode",
+          "type": "nvarchar(30)",
+          "required": "Yes",
+          "purpose": "Row-level observation status. Maps to the matching observed edge.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Required",
+              "source": "Join result",
+              "valueRule": "Observed if both endpoints resolve; Unresolved otherwise.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Required",
+              "source": "Join result",
+              "valueRule": "Observed if both endpoints resolve; Unresolved otherwise.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Not collected",
+              "source": "No verified source in this query profile",
+              "valueRule": "Gallery and Service catalog records do not establish workflow input/output data connections or workflow lineage. Do not treat an AS_Applications record as a data connection.",
+              "nullRule": "Emit no rows for an uncollected dataset. Set CoverageStatus=NotCollected; do not create NULL placeholder records.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Platform observation"
+        }
+      ]
+    },
+    {
+      "sheet": "Asset_Dependencies",
+      "excelTable": "Tbl_Asset_Dependencies",
+      "file": "asset_dependencies.csv",
+      "grain": "One consumer-to-provider asset relationship.",
+      "rowKey": [
+        "RunKey",
+        "NativeAssetType",
+        "NativeAssetID",
+        "UpstreamNativeAssetType",
+        "UpstreamNativeAssetID",
+        "RelationshipCode"
+      ],
+      "columns": [
+        {
+          "name": "RunKey",
+          "type": "uniqueidentifier",
+          "required": "Yes",
+          "purpose": "Existing UUID for one immutable delivery. It links rows to Run_Context and never identifies an enduring workspace, asset, connection, or user.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Required",
+              "source": "Existing delivery manifest",
+              "valueRule": "Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Required",
+              "source": "Existing delivery manifest",
+              "valueRule": "Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Required",
+              "source": "Existing delivery manifest",
+              "valueRule": "Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Delivery manifest"
+        },
+        {
+          "name": "NativeAssetID",
+          "type": "nvarchar(200)",
+          "required": "Yes",
+          "purpose": "Consumer, such as a report. Resolve to proposed ObservedAssetDependency.ConsumerAssetID.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Required",
+              "source": "reports[].id",
+              "valueRule": "Report ID.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Not collected",
+              "source": "No verified source in this query profile",
+              "valueRule": "Workbook-to-published-source lineage is outside the conservative repository query. Do not infer dependencies from equal names.",
+              "nullRule": "Emit no rows for an uncollected dataset. Set CoverageStatus=NotCollected; do not create NULL placeholder records.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Not collected",
+              "source": "No verified source in this query profile",
+              "valueRule": "Gallery and Service catalog records do not establish workflow input/output data connections or workflow lineage. Do not treat an AS_Applications record as a data connection.",
+              "nullRule": "Emit no rows for an uncollected dataset. Set CoverageStatus=NotCollected; do not create NULL placeholder records.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Platform observation"
+        },
+        {
+          "name": "NativeAssetType",
+          "type": "nvarchar(50)",
+          "required": "Yes",
+          "purpose": "Consumer native type. Part of its identity key.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Required",
+              "source": "Source branch",
+              "valueRule": "Report",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Not collected",
+              "source": "No verified source in this query profile",
+              "valueRule": "Workbook-to-published-source lineage is outside the conservative repository query. Do not infer dependencies from equal names.",
+              "nullRule": "Emit no rows for an uncollected dataset. Set CoverageStatus=NotCollected; do not create NULL placeholder records.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Not collected",
+              "source": "No verified source in this query profile",
+              "valueRule": "Gallery and Service catalog records do not establish workflow input/output data connections or workflow lineage. Do not treat an AS_Applications record as a data connection.",
+              "nullRule": "Emit no rows for an uncollected dataset. Set CoverageStatus=NotCollected; do not create NULL placeholder records.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Platform observation"
+        },
+        {
+          "name": "UpstreamNativeAssetID",
+          "type": "nvarchar(200)",
+          "required": "Yes",
+          "purpose": "Provider, such as a semantic model. Resolve to proposed ObservedAssetDependency.ProviderAssetID.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Required",
+              "source": "reports[].datasetId",
+              "valueRule": "Exact model ID; keep cross-workspace dependencies.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Not collected",
+              "source": "No verified source in this query profile",
+              "valueRule": "Workbook-to-published-source lineage is outside the conservative repository query. Do not infer dependencies from equal names.",
+              "nullRule": "Emit no rows for an uncollected dataset. Set CoverageStatus=NotCollected; do not create NULL placeholder records.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Not collected",
+              "source": "No verified source in this query profile",
+              "valueRule": "Gallery and Service catalog records do not establish workflow input/output data connections or workflow lineage. Do not treat an AS_Applications record as a data connection.",
+              "nullRule": "Emit no rows for an uncollected dataset. Set CoverageStatus=NotCollected; do not create NULL placeholder records.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Platform observation"
+        },
+        {
+          "name": "UpstreamNativeAssetType",
+          "type": "nvarchar(50)",
+          "required": "Yes",
+          "purpose": "Provider native type. May require a supplemental inventory for Dataflow or Datamart.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Required",
+              "source": "Source branch",
+              "valueRule": "Dataset",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Not collected",
+              "source": "No verified source in this query profile",
+              "valueRule": "Workbook-to-published-source lineage is outside the conservative repository query. Do not infer dependencies from equal names.",
+              "nullRule": "Emit no rows for an uncollected dataset. Set CoverageStatus=NotCollected; do not create NULL placeholder records.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Not collected",
+              "source": "No verified source in this query profile",
+              "valueRule": "Gallery and Service catalog records do not establish workflow input/output data connections or workflow lineage. Do not treat an AS_Applications record as a data connection.",
+              "nullRule": "Emit no rows for an uncollected dataset. Set CoverageStatus=NotCollected; do not create NULL placeholder records.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Platform observation"
+        },
+        {
+          "name": "RelationshipCode",
+          "type": "nvarchar(40)",
+          "required": "Yes",
+          "purpose": "UsesSemanticModel or DependsOn in the Power BI adapter. Maps to DependencyTypeCode.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Required",
+              "source": "Source relationship",
+              "valueRule": "UsesSemanticModel",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Not collected",
+              "source": "No verified source in this query profile",
+              "valueRule": "Workbook-to-published-source lineage is outside the conservative repository query. Do not infer dependencies from equal names.",
+              "nullRule": "Emit no rows for an uncollected dataset. Set CoverageStatus=NotCollected; do not create NULL placeholder records.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Not collected",
+              "source": "No verified source in this query profile",
+              "valueRule": "Gallery and Service catalog records do not establish workflow input/output data connections or workflow lineage. Do not treat an AS_Applications record as a data connection.",
+              "nullRule": "Emit no rows for an uncollected dataset. Set CoverageStatus=NotCollected; do not create NULL placeholder records.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Platform observation"
+        },
+        {
+          "name": "EvidenceStatusCode",
+          "type": "nvarchar(30)",
+          "required": "Yes",
+          "purpose": "Captured edge evidence. Maps to proposed ObservedAssetDependency.EvidenceStatusCode.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Required",
+              "source": "Endpoint resolution",
+              "valueRule": "Observed if model is in inventory; Unresolved otherwise.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Not collected",
+              "source": "No verified source in this query profile",
+              "valueRule": "Workbook-to-published-source lineage is outside the conservative repository query. Do not infer dependencies from equal names.",
+              "nullRule": "Emit no rows for an uncollected dataset. Set CoverageStatus=NotCollected; do not create NULL placeholder records.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Not collected",
+              "source": "No verified source in this query profile",
+              "valueRule": "Gallery and Service catalog records do not establish workflow input/output data connections or workflow lineage. Do not treat an AS_Applications record as a data connection.",
+              "nullRule": "Emit no rows for an uncollected dataset. Set CoverageStatus=NotCollected; do not create NULL placeholder records.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Platform observation"
+        }
+      ]
+    },
+    {
+      "sheet": "Platform_Users",
+      "excelTable": "Tbl_Platform_Users",
+      "file": "platform_users.csv",
+      "grain": "One source principal per platform instance, scope, identifier namespace, native ID, and extract.",
+      "rowKey": [
+        "RunKey",
+        "IdentifierNamespace",
+        "NativePrincipalID"
+      ],
+      "columns": [
+        {
+          "name": "RunKey",
+          "type": "uniqueidentifier",
+          "required": "Yes",
+          "purpose": "Existing UUID for one immutable delivery. It links rows to Run_Context and never identifies an enduring workspace, asset, connection, or user.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Required",
+              "source": "Existing delivery manifest",
+              "valueRule": "Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Required",
+              "source": "Existing delivery manifest",
+              "valueRule": "Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Required",
+              "source": "Existing delivery manifest",
+              "valueRule": "Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Delivery manifest"
+        },
+        {
+          "name": "NativePrincipalID",
+          "type": "nvarchar(200)",
+          "required": "Yes",
+          "purpose": "Exact source user or principal key. Keep blanks as unresolved evidence; never invent an ID.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Required",
+              "source": "artifact/workspace users[].graphId, otherwise explicit identifier",
+              "valueRule": "Keep the V1 namespace: graphId uses PowerBIGraphID; fallback identifier uses PowerBIPrincipalIdentifier. Never use a display name. A later graphId requires continuity review, not silent rekeying.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Required",
+              "source": "public.users.luid joined through users.system_user_id",
+              "valueRule": "Preserve V1 TableauUserLUID identity, scoped by site LUID. Repository owner_id is a separate raw reference joined through users.id.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Required",
+              "source": "AlteryxGallery.users._id",
+              "valueRule": "Exact Mongo ID text; Windows SID is a different namespace.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Platform observation"
+        },
+        {
+          "name": "IdentifierNamespace",
+          "type": "nvarchar(60)",
+          "required": "Yes",
+          "purpose": "Names the ID system, such as TableauUserLUID, PowerBIGraphID, PowerBIEmail, or AlteryxMongoUserID.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Required",
+              "source": "Documented identifier source",
+              "valueRule": "PowerBIGraphID for graphId; PowerBIPrincipalIdentifier for identifier fallback. Keep the namespace with its native key.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Required",
+              "source": "Repository key kind",
+              "valueRule": "TableauUserLUID",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Required",
+              "source": "Repository key kind",
+              "valueRule": "AlteryxMongoUserID",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Platform observation"
+        },
+        {
+          "name": "PrincipalTypeCode",
+          "type": "nvarchar(30)",
+          "required": "Yes",
+          "purpose": "User, Group, App, or Unknown. Nonhuman principals do not automatically match a person.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Required",
+              "source": "users[].principalType",
+              "valueRule": "User, Group, App, or None as supplied; never turn every principal into a person.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Required",
+              "source": "Source collection users",
+              "valueRule": "User",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Required",
+              "source": "Source collection users",
+              "valueRule": "User; service or directory group references are not silently converted.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Platform observation"
+        },
+        {
+          "name": "DisplayName",
+          "type": "nvarchar(200)",
+          "required": "No",
+          "purpose": "Source person or principal label. Never use it as a match key.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Conditional",
+              "source": "users[].displayName",
+              "valueRule": "Display only; optional.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Conditional",
+              "source": "public.system_users.friendly_name",
+              "valueRule": "Display only.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Conditional",
+              "source": "AlteryxGallery.users.FirstName + LastName",
+              "valueRule": "Join available name parts for display only.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Platform observation"
+        },
+        {
+          "name": "SourceEmail",
+          "type": "nvarchar(320)",
+          "required": "No",
+          "purpose": "Explicit email returned by the platform. Keep the raw value.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Conditional",
+              "source": "users[].emailAddress",
+              "valueRule": "Preserve explicit email only; identifier or UPN is not an implicit fallback.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Conditional",
+              "source": "public.system_users.email",
+              "valueRule": "Preserve email; do not replace with login name.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Conditional",
+              "source": "AlteryxGallery.users.Email",
+              "valueRule": "Preserve explicit email; WindowsIdentity.Name is not a fallback.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Platform observation"
+        },
+        {
+          "name": "SourceStatus",
+          "type": "nvarchar(500)",
+          "required": "No",
+          "purpose": "Native role or account flags as a labeled source value. This is not corporate directory status.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Conditional",
+              "source": "Not supplied by scan principal fields",
+              "valueRule": "NULL; access-right strings are roles, not enabled state.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Conditional",
+              "source": "site_roles.name via users.site_role_id, falling back to site_role_id or Unknown",
+              "valueRule": "Prefix TableauSiteRole=. Native role is not directory enabled status.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Conditional",
+              "source": "AlteryxGallery.users.Active",
+              "valueRule": "Explicit native boolean as text, NULL if missing. Native status is not Entra accountEnabled.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Platform observation"
+        }
+      ]
+    },
+    {
+      "sheet": "Directory_Users",
+      "excelTable": "Tbl_Directory_Users",
+      "file": "directory_users.csv",
+      "grain": "One directory user per tenant, object ID, and directory extract. Include enabled and disabled users.",
+      "rowKey": [
+        "RunKey",
+        "DirectoryObjectID"
+      ],
+      "columns": [
+        {
+          "name": "RunKey",
+          "type": "uniqueidentifier",
+          "required": "Yes",
+          "purpose": "Existing UUID for one immutable delivery. It links rows to Run_Context and never identifies an enduring workspace, asset, connection, or user.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Required",
+              "source": "Existing delivery manifest",
+              "valueRule": "Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Required",
+              "source": "Existing delivery manifest",
+              "valueRule": "Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Required",
+              "source": "Existing delivery manifest",
+              "valueRule": "Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Directory export"
+        },
+        {
+          "name": "DirectoryObjectID",
+          "type": "nvarchar(200)",
+          "required": "Yes",
+          "purpose": "Microsoft Entra user object ID from Graph id. Preserve as text.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Required",
+              "source": "Directory export id",
+              "valueRule": "Exact Entra object ID; it remains separate from every platform account ID.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Directory companion export; not populated by the platform database"
+            },
+            "Tableau": {
+              "status": "Required",
+              "source": "Directory export id",
+              "valueRule": "Exact Entra object ID; it remains separate from every platform account ID.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Directory companion export; not populated by the platform database"
+            },
+            "Alteryx": {
+              "status": "Required",
+              "source": "Directory export id",
+              "valueRule": "Exact Entra object ID; it remains separate from every platform account ID.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Directory companion export; not populated by the platform database"
+            }
+          },
+          "sourceAuthority": "Directory export"
+        },
+        {
+          "name": "DisplayName",
+          "type": "nvarchar(200)",
+          "required": "No",
+          "purpose": "Directory label. Never match people using this field.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Conditional",
+              "source": "Directory export displayName",
+              "valueRule": "Current display label; never an identity key.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Directory companion export; not populated by the platform database"
+            },
+            "Tableau": {
+              "status": "Conditional",
+              "source": "Directory export displayName",
+              "valueRule": "Current display label; never an identity key.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Directory companion export; not populated by the platform database"
+            },
+            "Alteryx": {
+              "status": "Conditional",
+              "source": "Directory export displayName",
+              "valueRule": "Current display label; never an identity key.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Directory companion export; not populated by the platform database"
+            }
+          },
+          "sourceAuthority": "Directory export"
+        },
+        {
+          "name": "Mail",
+          "type": "nvarchar(320)",
+          "required": "No",
+          "purpose": "Graph mail property. This is the agreed email match field.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Conditional",
+              "source": "Directory export mail",
+              "valueRule": "Original value. Match lower(trim(SourceEmail)) to lower(trim(Mail)) only within DirectoryTenantKey. No UPN fallback.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Directory companion export; not populated by the platform database"
+            },
+            "Tableau": {
+              "status": "Conditional",
+              "source": "Directory export mail",
+              "valueRule": "Original value. Match lower(trim(SourceEmail)) to lower(trim(Mail)) only within DirectoryTenantKey. No UPN fallback.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Directory companion export; not populated by the platform database"
+            },
+            "Alteryx": {
+              "status": "Conditional",
+              "source": "Directory export mail",
+              "valueRule": "Original value. Match lower(trim(SourceEmail)) to lower(trim(Mail)) only within DirectoryTenantKey. No UPN fallback.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Directory companion export; not populated by the platform database"
+            }
+          },
+          "sourceAuthority": "Directory export"
+        },
+        {
+          "name": "AccountEnabled",
+          "type": "bit",
+          "required": "No",
+          "purpose": "Graph accountEnabled: 1 enabled, 0 disabled, blank unknown. This does not establish employment status.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Conditional",
+              "source": "Directory export accountEnabled",
+              "valueRule": "Use true or false only when explicitly present. A missing result stays NULL. False is resolved-disabled, not unresolved.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Directory companion export; not populated by the platform database"
+            },
+            "Tableau": {
+              "status": "Conditional",
+              "source": "Directory export accountEnabled",
+              "valueRule": "Use true or false only when explicitly present. A missing result stays NULL. False is resolved-disabled, not unresolved.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Directory companion export; not populated by the platform database"
+            },
+            "Alteryx": {
+              "status": "Conditional",
+              "source": "Directory export accountEnabled",
+              "valueRule": "Use true or false only when explicitly present. A missing result stays NULL. False is resolved-disabled, not unresolved.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Directory companion export; not populated by the platform database"
+            }
+          },
+          "sourceAuthority": "Directory export"
+        }
+      ]
+    },
+    {
+      "sheet": "Object_Users",
+      "excelTable": "Tbl_Object_Users",
+      "file": "object_users.csv",
+      "grain": "One observed workspace or asset relationship to a source principal and role. Keep unresolved links.",
+      "rowKey": [
+        "RunKey",
+        "NativeObjectType",
+        "NativeObjectID",
+        "PrincipalRoleCode",
+        "SourceReferenceNamespace",
+        "SourcePrincipalReference",
+        "NativeRole"
+      ],
+      "columns": [
+        {
+          "name": "RunKey",
+          "type": "uniqueidentifier",
+          "required": "Yes",
+          "purpose": "Existing UUID for one immutable delivery. It links rows to Run_Context and never identifies an enduring workspace, asset, connection, or user.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Required",
+              "source": "Existing delivery manifest",
+              "valueRule": "Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Required",
+              "source": "Existing delivery manifest",
+              "valueRule": "Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Required",
+              "source": "Existing delivery manifest",
+              "valueRule": "Repeat the same delivery UUID on its dataset rows. A retry uses this UUID only for identical immutable input. A later delivery uses a new UUID.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Delivery manifest"
+        },
+        {
+          "name": "NativeObjectType",
+          "type": "nvarchar(50)",
+          "required": "Yes",
+          "purpose": "Exact source object type, such as Project, Workbook, Report, Dataset, Collection, or Workflow.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Required",
+              "source": "Parent source entity",
+              "valueRule": "Workspace / PersonalGroup / Project / Collection / Report / Dataset / Workbook / PublishedDatasource / Workflow; use the exact inventory namespace.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Required",
+              "source": "Parent source entity",
+              "valueRule": "Workspace / PersonalGroup / Project / Collection / Report / Dataset / Workbook / PublishedDatasource / Workflow; use the exact inventory namespace.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Required",
+              "source": "Parent source entity",
+              "valueRule": "Workspace / PersonalGroup / Project / Collection / Report / Dataset / Workbook / PublishedDatasource / Workflow; use the exact inventory namespace.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Platform observation"
+        },
+        {
+          "name": "NativeObjectID",
+          "type": "nvarchar(200)",
+          "required": "Yes",
+          "purpose": "Native workspace or asset key. Resolve with platform, instance, scope, and type.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Required",
+              "source": "Parent native object key",
+              "valueRule": "Use exact workspace or asset ID. Do not use the label.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Required",
+              "source": "Parent native object key",
+              "valueRule": "Use exact workspace or asset ID. Do not use the label.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Required",
+              "source": "Parent native object key",
+              "valueRule": "Use exact workspace or asset ID. Do not use the label.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Platform observation"
+        },
+        {
+          "name": "PrincipalRoleCode",
+          "type": "nvarchar(40)",
+          "required": "Yes",
+          "purpose": "Observed relationship: TechnicalOwner, CreatedBy, ModifiedBy, Access, or CollectionMember. Roles are separate rows. Technical ownership does not assign the business owner.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Required",
+              "source": "workspaces[].users[] and datasets[].users[] / reports[].users[]",
+              "valueRule": "Access with native access-right fields; TechnicalOwner from reports.createdById, which Microsoft explicitly defines as report owner; ModifiedBy from reports.modifiedById. Neither assigns business ownership.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Required",
+              "source": "projects.owner_id, workbooks.owner_id, datasources.owner_id joined to site users.id",
+              "valueRule": "TechnicalOwner for explicit owner_id; ModifiedBy for workbooks/datasources.modified_by_user_id. Full access grants are not collected",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Required",
+              "source": "collections.OwnerId, collections.Users[].UserId, appInfos.CreatedBy; optional verified current owner mapping",
+              "valueRule": "TechnicalOwner for collection OwnerId; CollectionMember for Users; CreatedBy for appInfos.CreatedBy. Current workflow TechnicalOwner is unverified",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Platform observation"
+        },
+        {
+          "name": "SourcePrincipalReference",
+          "type": "nvarchar(200)",
+          "required": "No",
+          "purpose": "Raw source account reference, kept separate from the resolved account ID. NULL is allowed for an explicit missing or unverified reference; preserve the object-role issue.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Conditional",
+              "source": "workspaces[].users[] and datasets[].users[] / reports[].users[]",
+              "valueRule": "Preserve the raw reference when supplied. NULL for missing reference or unverified workflow ownership; retain the object-role row for Platform Manager.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Conditional",
+              "source": "projects.owner_id, workbooks.owner_id, datasources.owner_id joined to site users.id",
+              "valueRule": "Preserve the raw reference when supplied. NULL for missing reference or unverified workflow ownership; retain the object-role row for Platform Manager.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Conditional",
+              "source": "collections.OwnerId, collections.Users[].UserId, appInfos.CreatedBy; optional verified current owner mapping",
+              "valueRule": "Preserve the raw reference when supplied. NULL for missing reference or unverified workflow ownership; retain the object-role row for Platform Manager.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Platform observation"
+        },
+        {
+          "name": "SourceReferenceNamespace",
+          "type": "nvarchar(60)",
+          "required": "No",
+          "purpose": "Namespace of the raw principal reference when established by source documentation. NULL when the reference is missing or its namespace cannot be verified; never guess a namespace to create a match.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Conditional",
+              "source": "Documented reference kind",
+              "valueRule": "PowerBIPrincipalIdentifier for raw identifier when present; otherwise PowerBIGraphID for graphId. Resolved account identity can use PowerBIGraphID independently.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Conditional",
+              "source": "Documented reference kind",
+              "valueRule": "TableauRepositoryUserID",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Conditional",
+              "source": "Documented reference kind",
+              "valueRule": "AlteryxMongoUserID for documented OwnerId, UserId, and CreatedBy references even when unmatched. NULL for missing or unverified workflow owner.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Platform observation"
+        },
+        {
+          "name": "NativePrincipalID",
+          "type": "nvarchar(200)",
+          "required": "No",
+          "purpose": "Matched key from Platform_Users after the platform-side join. Blank remains unresolved.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Conditional",
+              "source": "Verified reference-to-Platform_Users join",
+              "valueRule": "Populate only after exact unique namespace match. NULL when unresolved; preserve raw source reference.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Conditional",
+              "source": "Verified reference-to-Platform_Users join",
+              "valueRule": "Populate only after exact unique namespace match. NULL when unresolved; preserve raw source reference.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Conditional",
+              "source": "Verified reference-to-Platform_Users join",
+              "valueRule": "Populate only after exact unique namespace match. NULL when unresolved; preserve raw source reference.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Platform observation"
+        },
+        {
+          "name": "IdentifierNamespace",
+          "type": "nvarchar(60)",
+          "required": "No",
+          "purpose": "Namespace of NativePrincipalID; must equal the matched Platform_Users namespace.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Conditional",
+              "source": "Resolved Platform_Users.IdentifierNamespace",
+              "valueRule": "NULL when unresolved. Must accompany NativePrincipalID.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Conditional",
+              "source": "Resolved Platform_Users.IdentifierNamespace",
+              "valueRule": "NULL when unresolved. Must accompany NativePrincipalID.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Conditional",
+              "source": "Resolved Platform_Users.IdentifierNamespace",
+              "valueRule": "NULL when unresolved. Must accompany NativePrincipalID.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Platform observation"
+        },
+        {
+          "name": "NativeRole",
+          "type": "nvarchar(100)",
+          "required": "No",
+          "purpose": "Unchanged native permission or role, when this is an Access relationship.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Conditional",
+              "source": "Native access-right property when explicitly supplied",
+              "valueRule": "NULL for pure ownership/author relationships. Do not invent workspace privileges from Champion assignment.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Conditional",
+              "source": "Native access-right property when explicitly supplied",
+              "valueRule": "NULL for pure ownership/author relationships. Do not invent workspace privileges from Champion assignment.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Conditional",
+              "source": "Native access-right property when explicitly supplied",
+              "valueRule": "NULL for pure ownership/author relationships. Do not invent workspace privileges from Champion assignment.",
+              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Platform observation"
+        },
+        {
+          "name": "SourceReferenceStatusCode",
+          "type": "nvarchar(40)",
+          "required": "Yes",
+          "purpose": "ReadyForEmailMatch, MissingEmail, MissingSourceReference, UnresolvedUserReference, or UnverifiedMapping. This is source-account resolution, not directory activity or approval authority.",
+          "platforms": {
+            "PowerBI": {
+              "status": "Required",
+              "source": "Reference resolution result",
+              "valueRule": "ReadyForEmailMatch when the account and email resolve; MissingEmail, MissingSourceReference, UnresolvedUserReference, or UnverifiedMapping otherwise. This does not prove a directory match. Route unresolved cases to Platform Manager.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Tableau": {
+              "status": "Required",
+              "source": "Reference resolution result",
+              "valueRule": "ReadyForEmailMatch when the account and email resolve; MissingEmail, MissingSourceReference, UnresolvedUserReference, or UnverifiedMapping otherwise. This does not prove a directory match. Route unresolved cases to Platform Manager.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            },
+            "Alteryx": {
+              "status": "Required",
+              "source": "Reference resolution result",
+              "valueRule": "ReadyForEmailMatch when the account and email resolve; MissingEmail, MissingSourceReference, UnresolvedUserReference, or UnverifiedMapping otherwise. This does not prove a directory match. Route unresolved cases to Platform Manager.",
+              "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
+              "example": "",
+              "verification": "Documented mapping; installed export validation pending"
+            }
+          },
+          "sourceAuthority": "Platform observation"
+        }
+      ]
+    }
+  ],
+  "counts": {
+    "tables": 11,
+    "columns": 72,
+    "datasetTables": 9,
+    "datasetColumns": 60,
+    "previousDatasetColumns": 117
+  },
+  "platforms": [
+    "PowerBI",
+    "Tableau",
+    "Alteryx"
+  ],
+  "sources": {
+    "Tableau": "https://tableau.github.io/tableau-data-dictionary/2026.2/data_dictionary.htm",
+    "PowerBI": "https://learn.microsoft.com/en-us/rest/api/power-bi/admin/workspace-info-get-scan-result",
+    "Alteryx": "https://help.alteryx.com/current/en/server/configure/database-management/mongodb-management/mongodb-schema-reference/alteryxgallery-mongodb-schema.html",
+    "Directory": "https://learn.microsoft.com/en-us/graph/api/resources/user?view=graph-rest-1.0"
+  }
+}

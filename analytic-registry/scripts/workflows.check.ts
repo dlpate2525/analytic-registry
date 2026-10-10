@@ -26,7 +26,8 @@ rejects(()=>recordRequestExecution(implemented,d,'verify','VERIFY-1','2026-10-01
 const verified=recordRequestExecution(implemented,d,'verify','VERIFY-1','2026-10-03','P3');
 check(requestStage(verified,d)==='Complete','Verification completes lifecycle');
 check(requestStage({...verified,purpose:'Changed scope'},d)==='Awaiting approval','Changed intent requires fresh approval');
-d.requests=[verified];check(openRequestsFor(d,'P1').length===0,'Completed requests leave open-request card');
+d.requests=[verified];check(openRequestsFor(d,'P1').length===1,'Verified new workspace remains open until linked to the registry');
+check(workItems(d,'P1',false).some(i=>i.id===verified.id&&i.status==='Awaiting registry link'),'Unlinked delivery has an explicit reconciliation task');
 const ds=newRequestGroup('Data Sources','OLD_PROD');const custom={...newRequestGroup('RW','OLD_PROD'),requestedName:'MANUAL_RW'};
 const renamed=renameGeneratedGroups([ds,custom],'NEW_PROD');
 check(renamed[0].requestedName==='NEW_PROD_DS','Generated DS follows technical name');check(renamed[1].requestedName==='MANUAL_RW','Manual group names retained');

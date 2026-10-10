@@ -1,3 +1,5 @@
+> **V1.1 update, 9 October 2026:** [Current baseline](v1.1-prototype-baseline.md), [operating review and repair status](v1.1-product-operating-review.md), [simplified foundation](v1.1-model-simplification.md), and [verification](v1.1-verification.md) take precedence where this earlier document differs. The frozen V1 release remains unchanged in its Git tag.
+
 # Analytic Registry — decision register
 
 **Version:** `1.0.0-prototype.1` · 8 October 2026 · intended tag `v1.0.0-prototype.1`.

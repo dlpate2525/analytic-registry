@@ -30,3 +30,7 @@ jobs:
         working-directory: analytic-registry
       - name: Verify workbook and collection archive
         run: python3 platform-data-collection/verify-delivery.py
+      - name: Check V1.1 query contracts
+        run: node platform-data-collection/v1.1-extract/queries/verify-queries.mjs
+      - name: Verify V1.1 workbook
+        run: python3 platform-data-collection/v1.1-extract/scripts/verify-workbook.py

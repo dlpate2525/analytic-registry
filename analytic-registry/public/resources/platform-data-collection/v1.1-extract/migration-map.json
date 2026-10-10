@@ -1,0 +1,821 @@
+[
+  {
+    "Table": "Workspaces",
+    "Column": "RunKey",
+    "Action": "Retain",
+    "Target": "Workspaces.RunKey",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Workspaces",
+    "Column": "PlatformCode",
+    "Action": "Move",
+    "Target": "Run_Context.PlatformCode",
+    "Reason": "One value per delivery; reject conflicting row values before grouping."
+  },
+  {
+    "Table": "Workspaces",
+    "Column": "PlatformInstanceKey",
+    "Action": "Move",
+    "Target": "Run_Context.PlatformInstanceKey",
+    "Reason": "One value per delivery; reject conflicting row values before grouping."
+  },
+  {
+    "Table": "Workspaces",
+    "Column": "NativeScopeKey",
+    "Action": "Move",
+    "Target": "Run_Context.NativeScopeKey",
+    "Reason": "One value per delivery; reject conflicting row values before grouping."
+  },
+  {
+    "Table": "Workspaces",
+    "Column": "ObservedAt",
+    "Action": "Move",
+    "Target": "Run_Context.ObservedAt",
+    "Reason": "One value per delivery; reject conflicting row values before grouping."
+  },
+  {
+    "Table": "Workspaces",
+    "Column": "NativeWorkspaceID",
+    "Action": "Retain",
+    "Target": "Workspaces.NativeWorkspaceID",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Workspaces",
+    "Column": "NativeRepositoryID",
+    "Action": "Optional supplement",
+    "Target": "Retained raw export / optional V1 diagnostic columns",
+    "Reason": "Excluded from monthly minimum; retain if needed for version, endpoint, runtime, or identity investigation. Never populate a missing core field from an unapproved substitute."
+  },
+  {
+    "Table": "Workspaces",
+    "Column": "NativeWorkspaceType",
+    "Action": "Retain",
+    "Target": "Workspaces.NativeWorkspaceType",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Workspaces",
+    "Column": "DisplayName",
+    "Action": "Retain",
+    "Target": "Workspaces.DisplayName",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Workspaces",
+    "Column": "NativeOwnerID",
+    "Action": "Consolidate",
+    "Target": "Object_Users",
+    "Reason": "Preserve role edges with raw reference, namespace, and resolution status. Never discard current ownership or original authorship evidence."
+  },
+  {
+    "Table": "Workspaces",
+    "Column": "NativeLifecycleCode",
+    "Action": "Retain",
+    "Target": "Workspaces.NativeLifecycleCode",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Workspaces",
+    "Column": "CapacityKey",
+    "Action": "Optional supplement",
+    "Target": "Retained raw export / optional V1 diagnostic columns",
+    "Reason": "Excluded from monthly minimum; retain if needed for version, endpoint, runtime, or identity investigation. Never populate a missing core field from an unapproved substitute."
+  },
+  {
+    "Table": "Assets",
+    "Column": "RunKey",
+    "Action": "Retain",
+    "Target": "Assets.RunKey",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Assets",
+    "Column": "PlatformCode",
+    "Action": "Move",
+    "Target": "Run_Context.PlatformCode",
+    "Reason": "One value per delivery; reject conflicting row values before grouping."
+  },
+  {
+    "Table": "Assets",
+    "Column": "PlatformInstanceKey",
+    "Action": "Move",
+    "Target": "Run_Context.PlatformInstanceKey",
+    "Reason": "One value per delivery; reject conflicting row values before grouping."
+  },
+  {
+    "Table": "Assets",
+    "Column": "NativeScopeKey",
+    "Action": "Move",
+    "Target": "Run_Context.NativeScopeKey",
+    "Reason": "One value per delivery; reject conflicting row values before grouping."
+  },
+  {
+    "Table": "Assets",
+    "Column": "ObservedAt",
+    "Action": "Move",
+    "Target": "Run_Context.ObservedAt",
+    "Reason": "One value per delivery; reject conflicting row values before grouping."
+  },
+  {
+    "Table": "Assets",
+    "Column": "NativeAssetID",
+    "Action": "Retain",
+    "Target": "Assets.NativeAssetID",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Assets",
+    "Column": "NativeRepositoryID",
+    "Action": "Optional supplement",
+    "Target": "Retained raw export / optional V1 diagnostic columns",
+    "Reason": "Excluded from monthly minimum; retain if needed for version, endpoint, runtime, or identity investigation. Never populate a missing core field from an unapproved substitute."
+  },
+  {
+    "Table": "Assets",
+    "Column": "NativeAssetType",
+    "Action": "Retain",
+    "Target": "Assets.NativeAssetType",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Assets",
+    "Column": "AssetTypeCode",
+    "Action": "Derive",
+    "Target": "Asset classification view",
+    "Reason": "Derive from approved native type/package mapping. Keep Alteryx PackageType as optional source evidence; unknown remains Undefined."
+  },
+  {
+    "Table": "Assets",
+    "Column": "DisplayName",
+    "Action": "Retain",
+    "Target": "Assets.DisplayName",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Assets",
+    "Column": "NativeVersionReference",
+    "Action": "Retain",
+    "Target": "Assets.NativeVersionReference",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Assets",
+    "Column": "CreatedByNativeID",
+    "Action": "Consolidate",
+    "Target": "Object_Users",
+    "Reason": "Preserve role edges with raw reference, namespace, and resolution status. Never discard current ownership or original authorship evidence."
+  },
+  {
+    "Table": "Assets",
+    "Column": "ModifiedByNativeID",
+    "Action": "Consolidate",
+    "Target": "Object_Users",
+    "Reason": "Preserve role edges with raw reference, namespace, and resolution status. Never discard current ownership or original authorship evidence."
+  },
+  {
+    "Table": "Assets",
+    "Column": "NativeOwnerID",
+    "Action": "Consolidate",
+    "Target": "Object_Users",
+    "Reason": "Preserve role edges with raw reference, namespace, and resolution status. Never discard current ownership or original authorship evidence."
+  },
+  {
+    "Table": "Assets",
+    "Column": "CreatedAtNative",
+    "Action": "Optional supplement",
+    "Target": "Retained raw export / optional V1 diagnostic columns",
+    "Reason": "Excluded from monthly minimum; retain if needed for version, endpoint, runtime, or identity investigation. Never populate a missing core field from an unapproved substitute."
+  },
+  {
+    "Table": "Assets",
+    "Column": "ModifiedAtNative",
+    "Action": "Optional supplement",
+    "Target": "Retained raw export / optional V1 diagnostic columns",
+    "Reason": "Excluded from monthly minimum; retain if needed for version, endpoint, runtime, or identity investigation. Never populate a missing core field from an unapproved substitute."
+  },
+  {
+    "Table": "Assets",
+    "Column": "NativeLifecycleCode",
+    "Action": "Retain",
+    "Target": "Assets.NativeLifecycleCode",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Workspace_Assets",
+    "Column": "RunKey",
+    "Action": "Retain",
+    "Target": "Workspace_Assets.RunKey",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Workspace_Assets",
+    "Column": "PlatformCode",
+    "Action": "Move",
+    "Target": "Run_Context.PlatformCode",
+    "Reason": "One value per delivery; reject conflicting row values before grouping."
+  },
+  {
+    "Table": "Workspace_Assets",
+    "Column": "PlatformInstanceKey",
+    "Action": "Move",
+    "Target": "Run_Context.PlatformInstanceKey",
+    "Reason": "One value per delivery; reject conflicting row values before grouping."
+  },
+  {
+    "Table": "Workspace_Assets",
+    "Column": "NativeScopeKey",
+    "Action": "Move",
+    "Target": "Run_Context.NativeScopeKey",
+    "Reason": "One value per delivery; reject conflicting row values before grouping."
+  },
+  {
+    "Table": "Workspace_Assets",
+    "Column": "ObservedAt",
+    "Action": "Move",
+    "Target": "Run_Context.ObservedAt",
+    "Reason": "One value per delivery; reject conflicting row values before grouping."
+  },
+  {
+    "Table": "Workspace_Assets",
+    "Column": "NativeWorkspaceID",
+    "Action": "Retain",
+    "Target": "Workspace_Assets.NativeWorkspaceID",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Workspace_Assets",
+    "Column": "NativeAssetID",
+    "Action": "Retain",
+    "Target": "Workspace_Assets.NativeAssetID",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Workspace_Assets",
+    "Column": "NativeAssetType",
+    "Action": "Retain",
+    "Target": "Workspace_Assets.NativeAssetType",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Workspace_Assets",
+    "Column": "NativeAssociationType",
+    "Action": "Retain",
+    "Target": "Workspace_Assets.NativeAssociationType",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Connections",
+    "Column": "RunKey",
+    "Action": "Retain",
+    "Target": "Connections.RunKey",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Connections",
+    "Column": "PlatformCode",
+    "Action": "Move",
+    "Target": "Run_Context.PlatformCode",
+    "Reason": "One value per delivery; reject conflicting row values before grouping."
+  },
+  {
+    "Table": "Connections",
+    "Column": "PlatformInstanceKey",
+    "Action": "Move",
+    "Target": "Run_Context.PlatformInstanceKey",
+    "Reason": "One value per delivery; reject conflicting row values before grouping."
+  },
+  {
+    "Table": "Connections",
+    "Column": "NativeScopeKey",
+    "Action": "Move",
+    "Target": "Run_Context.NativeScopeKey",
+    "Reason": "One value per delivery; reject conflicting row values before grouping."
+  },
+  {
+    "Table": "Connections",
+    "Column": "ObservedAt",
+    "Action": "Move",
+    "Target": "Run_Context.ObservedAt",
+    "Reason": "One value per delivery; reject conflicting row values before grouping."
+  },
+  {
+    "Table": "Connections",
+    "Column": "NativeConnectionID",
+    "Action": "Retain",
+    "Target": "Connections.NativeConnectionID",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Connections",
+    "Column": "NativeRepositoryID",
+    "Action": "Optional supplement",
+    "Target": "Retained raw export / optional V1 diagnostic columns",
+    "Reason": "Excluded from monthly minimum; retain if needed for version, endpoint, runtime, or identity investigation. Never populate a missing core field from an unapproved substitute."
+  },
+  {
+    "Table": "Connections",
+    "Column": "NativeConnectionType",
+    "Action": "Optional supplement",
+    "Target": "Retained raw export / optional V1 diagnostic columns",
+    "Reason": "Excluded from monthly minimum; retain if needed for version, endpoint, runtime, or identity investigation. Never populate a missing core field from an unapproved substitute."
+  },
+  {
+    "Table": "Connections",
+    "Column": "DisplayName",
+    "Action": "Retain",
+    "Target": "Connections.DisplayName",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Connections",
+    "Column": "TechnologyCode",
+    "Action": "Retain",
+    "Target": "Connections.TechnologyCode",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Connections",
+    "Column": "ServerHostname",
+    "Action": "Retain",
+    "Target": "Connections.ServerHostname",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Connections",
+    "Column": "Port",
+    "Action": "Optional supplement",
+    "Target": "Retained raw export / optional V1 diagnostic columns",
+    "Reason": "Excluded from monthly minimum; retain if needed for version, endpoint, runtime, or identity investigation. Never populate a missing core field from an unapproved substitute."
+  },
+  {
+    "Table": "Connections",
+    "Column": "DatabaseName",
+    "Action": "Retain",
+    "Target": "Connections.DatabaseName",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Connections",
+    "Column": "HasExtract",
+    "Action": "Retain",
+    "Target": "Connections.HasExtract",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Connections",
+    "Column": "AuthenticationTypeCode",
+    "Action": "Retain",
+    "Target": "Connections.AuthenticationTypeCode",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Connections",
+    "Column": "IdentityClassificationCode",
+    "Action": "Retain",
+    "Target": "Connections.IdentityClassificationCode",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Connections",
+    "Column": "GatewayID",
+    "Action": "Optional supplement",
+    "Target": "Retained raw export / optional V1 diagnostic columns",
+    "Reason": "Excluded from monthly minimum; retain if needed for version, endpoint, runtime, or identity investigation. Never populate a missing core field from an unapproved substitute."
+  },
+  {
+    "Table": "Connections",
+    "Column": "NativeStatusCode",
+    "Action": "Optional supplement",
+    "Target": "Retained raw export / optional V1 diagnostic columns",
+    "Reason": "Excluded from monthly minimum; retain if needed for version, endpoint, runtime, or identity investigation. Never populate a missing core field from an unapproved substitute."
+  },
+  {
+    "Table": "Connections",
+    "Column": "EvidenceStatusCode",
+    "Action": "Retain",
+    "Target": "Connections.EvidenceStatusCode",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Asset_Connections",
+    "Column": "RunKey",
+    "Action": "Retain",
+    "Target": "Asset_Connections.RunKey",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Asset_Connections",
+    "Column": "PlatformCode",
+    "Action": "Move",
+    "Target": "Run_Context.PlatformCode",
+    "Reason": "One value per delivery; reject conflicting row values before grouping."
+  },
+  {
+    "Table": "Asset_Connections",
+    "Column": "PlatformInstanceKey",
+    "Action": "Move",
+    "Target": "Run_Context.PlatformInstanceKey",
+    "Reason": "One value per delivery; reject conflicting row values before grouping."
+  },
+  {
+    "Table": "Asset_Connections",
+    "Column": "NativeScopeKey",
+    "Action": "Move",
+    "Target": "Run_Context.NativeScopeKey",
+    "Reason": "One value per delivery; reject conflicting row values before grouping."
+  },
+  {
+    "Table": "Asset_Connections",
+    "Column": "ObservedAt",
+    "Action": "Move",
+    "Target": "Run_Context.ObservedAt",
+    "Reason": "One value per delivery; reject conflicting row values before grouping."
+  },
+  {
+    "Table": "Asset_Connections",
+    "Column": "NativeAssetID",
+    "Action": "Retain",
+    "Target": "Asset_Connections.NativeAssetID",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Asset_Connections",
+    "Column": "NativeAssetType",
+    "Action": "Retain",
+    "Target": "Asset_Connections.NativeAssetType",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Asset_Connections",
+    "Column": "NativeConnectionID",
+    "Action": "Retain",
+    "Target": "Asset_Connections.NativeConnectionID",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Asset_Connections",
+    "Column": "EvidenceStatusCode",
+    "Action": "Retain",
+    "Target": "Asset_Connections.EvidenceStatusCode",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Asset_Dependencies",
+    "Column": "RunKey",
+    "Action": "Retain",
+    "Target": "Asset_Dependencies.RunKey",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Asset_Dependencies",
+    "Column": "PlatformCode",
+    "Action": "Move",
+    "Target": "Run_Context.PlatformCode",
+    "Reason": "One value per delivery; reject conflicting row values before grouping."
+  },
+  {
+    "Table": "Asset_Dependencies",
+    "Column": "PlatformInstanceKey",
+    "Action": "Move",
+    "Target": "Run_Context.PlatformInstanceKey",
+    "Reason": "One value per delivery; reject conflicting row values before grouping."
+  },
+  {
+    "Table": "Asset_Dependencies",
+    "Column": "NativeScopeKey",
+    "Action": "Move",
+    "Target": "Run_Context.NativeScopeKey",
+    "Reason": "One value per delivery; reject conflicting row values before grouping."
+  },
+  {
+    "Table": "Asset_Dependencies",
+    "Column": "ObservedAt",
+    "Action": "Move",
+    "Target": "Run_Context.ObservedAt",
+    "Reason": "One value per delivery; reject conflicting row values before grouping."
+  },
+  {
+    "Table": "Asset_Dependencies",
+    "Column": "NativeAssetID",
+    "Action": "Retain",
+    "Target": "Asset_Dependencies.NativeAssetID",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Asset_Dependencies",
+    "Column": "NativeAssetType",
+    "Action": "Retain",
+    "Target": "Asset_Dependencies.NativeAssetType",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Asset_Dependencies",
+    "Column": "UpstreamNativeAssetID",
+    "Action": "Retain",
+    "Target": "Asset_Dependencies.UpstreamNativeAssetID",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Asset_Dependencies",
+    "Column": "UpstreamNativeAssetType",
+    "Action": "Retain",
+    "Target": "Asset_Dependencies.UpstreamNativeAssetType",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Asset_Dependencies",
+    "Column": "UpstreamNativeWorkspaceID",
+    "Action": "Optional supplement",
+    "Target": "Retained raw export / optional V1 diagnostic columns",
+    "Reason": "Excluded from monthly minimum; retain if needed for version, endpoint, runtime, or identity investigation. Never populate a missing core field from an unapproved substitute."
+  },
+  {
+    "Table": "Asset_Dependencies",
+    "Column": "RelationshipCode",
+    "Action": "Retain",
+    "Target": "Asset_Dependencies.RelationshipCode",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Asset_Dependencies",
+    "Column": "EvidenceStatusCode",
+    "Action": "Retain",
+    "Target": "Asset_Dependencies.EvidenceStatusCode",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Platform_Users",
+    "Column": "RunKey",
+    "Action": "Retain",
+    "Target": "Platform_Users.RunKey",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Platform_Users",
+    "Column": "PlatformCode",
+    "Action": "Move",
+    "Target": "Run_Context.PlatformCode",
+    "Reason": "One value per delivery; reject conflicting row values before grouping."
+  },
+  {
+    "Table": "Platform_Users",
+    "Column": "PlatformInstanceKey",
+    "Action": "Move",
+    "Target": "Run_Context.PlatformInstanceKey",
+    "Reason": "One value per delivery; reject conflicting row values before grouping."
+  },
+  {
+    "Table": "Platform_Users",
+    "Column": "NativeScopeKey",
+    "Action": "Move",
+    "Target": "Run_Context.NativeScopeKey",
+    "Reason": "One value per delivery; reject conflicting row values before grouping."
+  },
+  {
+    "Table": "Platform_Users",
+    "Column": "ObservedAt",
+    "Action": "Move",
+    "Target": "Run_Context.ObservedAt",
+    "Reason": "One value per delivery; reject conflicting row values before grouping."
+  },
+  {
+    "Table": "Platform_Users",
+    "Column": "NativePrincipalID",
+    "Action": "Retain",
+    "Target": "Platform_Users.NativePrincipalID",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Platform_Users",
+    "Column": "IdentifierNamespace",
+    "Action": "Retain",
+    "Target": "Platform_Users.IdentifierNamespace",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Platform_Users",
+    "Column": "PrincipalTypeCode",
+    "Action": "Retain",
+    "Target": "Platform_Users.PrincipalTypeCode",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Platform_Users",
+    "Column": "DisplayName",
+    "Action": "Retain",
+    "Target": "Platform_Users.DisplayName",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Platform_Users",
+    "Column": "SourceLogin",
+    "Action": "Optional supplement",
+    "Target": "Retained raw export / optional V1 diagnostic columns",
+    "Reason": "Excluded from monthly minimum; retain if needed for version, endpoint, runtime, or identity investigation. Never populate a missing core field from an unapproved substitute."
+  },
+  {
+    "Table": "Platform_Users",
+    "Column": "SourceEmail",
+    "Action": "Retain",
+    "Target": "Platform_Users.SourceEmail",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Platform_Users",
+    "Column": "SourceStatus",
+    "Action": "Retain",
+    "Target": "Platform_Users.SourceStatus",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Platform_Users",
+    "Column": "SourceDirectoryObjectID",
+    "Action": "Optional supplement",
+    "Target": "Retained raw export / optional V1 diagnostic columns",
+    "Reason": "Excluded from monthly minimum; retain if needed for version, endpoint, runtime, or identity investigation. Never populate a missing core field from an unapproved substitute."
+  },
+  {
+    "Table": "Platform_Users",
+    "Column": "DirectoryTenantKey",
+    "Action": "Move",
+    "Target": "Run_Context.DirectoryTenantKey",
+    "Reason": "One value per delivery; reject conflicting row values before grouping."
+  },
+  {
+    "Table": "Platform_Users",
+    "Column": "NativeRepositoryID",
+    "Action": "Optional supplement",
+    "Target": "Retained raw export / optional V1 diagnostic columns",
+    "Reason": "Excluded from monthly minimum; retain if needed for version, endpoint, runtime, or identity investigation. Never populate a missing core field from an unapproved substitute."
+  },
+  {
+    "Table": "Directory_Users",
+    "Column": "RunKey",
+    "Action": "Retain",
+    "Target": "Directory_Users.RunKey",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Directory_Users",
+    "Column": "DirectoryTenantKey",
+    "Action": "Move",
+    "Target": "Run_Context.DirectoryTenantKey",
+    "Reason": "One value per delivery; reject conflicting row values before grouping."
+  },
+  {
+    "Table": "Directory_Users",
+    "Column": "DirectoryObjectID",
+    "Action": "Retain",
+    "Target": "Directory_Users.DirectoryObjectID",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Directory_Users",
+    "Column": "DisplayName",
+    "Action": "Retain",
+    "Target": "Directory_Users.DisplayName",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Directory_Users",
+    "Column": "Mail",
+    "Action": "Retain",
+    "Target": "Directory_Users.Mail",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Directory_Users",
+    "Column": "UserPrincipalName",
+    "Action": "Optional supplement",
+    "Target": "Retained raw export / optional V1 diagnostic columns",
+    "Reason": "Excluded from monthly minimum; retain if needed for version, endpoint, runtime, or identity investigation. Never populate a missing core field from an unapproved substitute."
+  },
+  {
+    "Table": "Directory_Users",
+    "Column": "AccountEnabled",
+    "Action": "Retain",
+    "Target": "Directory_Users.AccountEnabled",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Directory_Users",
+    "Column": "ObservedAt",
+    "Action": "Move",
+    "Target": "Run_Context.ObservedAt",
+    "Reason": "One value per delivery; reject conflicting row values before grouping."
+  },
+  {
+    "Table": "Object_Users",
+    "Column": "RunKey",
+    "Action": "Retain",
+    "Target": "Object_Users.RunKey",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Object_Users",
+    "Column": "PlatformCode",
+    "Action": "Move",
+    "Target": "Run_Context.PlatformCode",
+    "Reason": "One value per delivery; reject conflicting row values before grouping."
+  },
+  {
+    "Table": "Object_Users",
+    "Column": "PlatformInstanceKey",
+    "Action": "Move",
+    "Target": "Run_Context.PlatformInstanceKey",
+    "Reason": "One value per delivery; reject conflicting row values before grouping."
+  },
+  {
+    "Table": "Object_Users",
+    "Column": "NativeScopeKey",
+    "Action": "Move",
+    "Target": "Run_Context.NativeScopeKey",
+    "Reason": "One value per delivery; reject conflicting row values before grouping."
+  },
+  {
+    "Table": "Object_Users",
+    "Column": "ObservedAt",
+    "Action": "Move",
+    "Target": "Run_Context.ObservedAt",
+    "Reason": "One value per delivery; reject conflicting row values before grouping."
+  },
+  {
+    "Table": "Object_Users",
+    "Column": "NativeObjectType",
+    "Action": "Retain",
+    "Target": "Object_Users.NativeObjectType",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Object_Users",
+    "Column": "NativeObjectID",
+    "Action": "Retain",
+    "Target": "Object_Users.NativeObjectID",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Object_Users",
+    "Column": "ObjectDisplayName",
+    "Action": "Optional supplement",
+    "Target": "Retained raw export / optional V1 diagnostic columns",
+    "Reason": "Excluded from monthly minimum; retain if needed for version, endpoint, runtime, or identity investigation. Never populate a missing core field from an unapproved substitute."
+  },
+  {
+    "Table": "Object_Users",
+    "Column": "PrincipalRoleCode",
+    "Action": "Retain",
+    "Target": "Object_Users.PrincipalRoleCode",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Object_Users",
+    "Column": "SourcePrincipalReference",
+    "Action": "Retain",
+    "Target": "Object_Users.SourcePrincipalReference",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Object_Users",
+    "Column": "SourceReferenceNamespace",
+    "Action": "Retain",
+    "Target": "Object_Users.SourceReferenceNamespace",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Object_Users",
+    "Column": "NativePrincipalID",
+    "Action": "Retain",
+    "Target": "Object_Users.NativePrincipalID",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Object_Users",
+    "Column": "IdentifierNamespace",
+    "Action": "Retain",
+    "Target": "Object_Users.IdentifierNamespace",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Object_Users",
+    "Column": "NativeRole",
+    "Action": "Retain",
+    "Target": "Object_Users.NativeRole",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  },
+  {
+    "Table": "Object_Users",
+    "Column": "SourceEmail",
+    "Action": "Optional supplement",
+    "Target": "Retained raw export / optional V1 diagnostic columns",
+    "Reason": "Excluded from monthly minimum; retain if needed for version, endpoint, runtime, or identity investigation. Never populate a missing core field from an unapproved substitute."
+  },
+  {
+    "Table": "Object_Users",
+    "Column": "SourceReferenceStatusCode",
+    "Action": "Retain",
+    "Target": "Object_Users.SourceReferenceStatusCode",
+    "Reason": "Same field meaning; use the explicit platform rule."
+  }
+]

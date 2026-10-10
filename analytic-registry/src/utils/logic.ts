@@ -38,6 +38,8 @@ export function requestIssues(r:WorkspaceRequest,d:RegistryData):RequestIssue[] 
   if(r.configuration==='Standard'&&(r.groups.length!==4||requestGroupPurposes.some(p=>!r.groups.some(g=>g.purpose===p))))add(3,'Standard requires exactly Champion, RW, R, and Data Sources specifications. Remove additional groups or use Custom.');
   const keys=r.groups.map(g=>g.mode==='Existing'?g.groupId:g.requestedName.trim().toUpperCase()).filter(Boolean);
   if(new Set(keys).size!==keys.length)add(3,'Use distinct groups for different access purposes.');
+  const resolvedNames=r.groups.map(g=>(g.mode==='Existing'?d.groups.find(x=>x.groupId===g.groupId)?.requestedName:g.requestedName)?.trim().toUpperCase()).filter(Boolean);
+  if(new Set(resolvedNames).size!==resolvedNames.length)add(3,'Requested group names collide across access purposes. Resolve the intended directory groups before submission.');
   for(const g of r.groups){
     if(g.mode==='Existing'&&(!g.groupId||!d.groups.some(x=>x.groupId===g.groupId)))add(3,`${g.purpose}: select a validated existing group.`);
     if(g.mode==='New'&&!new RegExp(rulesConfig.groupNamePattern).test(g.requestedName))add(3,`${g.purpose}: use 3–80 uppercase letters, numbers, or underscores; start with a letter.`);
@@ -56,7 +58,8 @@ export function comparison(w:Workspace,d:RegistryData){
   const ic=d.champions.filter(c=>c.configurationVersionId===w.implementedVersionId);
   const oc=obs.find(p=>p.purpose==='Champion');const direct=obs.filter(p=>p.kind==='User');
   const evidence=workspaceEvidence(w,d);
-  return [{field:'Champion roster',requested:`${rc.length} selected people`,implemented:`${ic.length} people`,observed:oc?`${oc.memberIds.length} group members`:'Missing evidence',status:rc.map(c=>c.personId).sort().join()!==ic.map(c=>c.personId).sort().join()?'Pending Implementation':!oc?'Unable to Verify':ic.map(c=>c.personId).sort().join()===oc.memberIds.slice().sort().join()?'Aligned':'Flagged for Review',note:'Accountability role. Membership does not grant native privileges.'},...req.map(g=>{
+  const rosterPending=rc.map(c=>c.personId).sort().join()!==ic.map(c=>c.personId).sort().join();
+  return [{field:'Champion roster',requested:`${rc.length} selected people`,implemented:`${ic.length} people`,observed:oc?`${oc.memberIds.length} group members`:'Missing evidence',status:!oc?'Unable to Verify':ic.map(c=>c.personId).sort().join()!==oc.memberIds.slice().sort().join()?'Flagged for Review':rosterPending?'Pending Implementation':'Aligned',note:(rosterPending?'A requested roster change is pending. Observed membership is independently compared with the implemented roster. ':'')+'Accountability role. Membership does not grant native privileges.'},...req.map(g=>{
     const i=imp.find(x=>x.purpose===g.purpose);const o=obs.find(x=>x.purpose===g.purpose);
     const pending=!i||g.mode==='New'||i.groupId!==g.groupId;
     return {field:g.purpose+' group',requested:g.requestedName,implemented:i?.requestedName||'Not implemented',observed:o?.name||'Missing evidence',status:i&&o&&o.principalId!==i.groupId?'Discrepancy':pending?'Pending Implementation':!o?'Unable to Verify':'Aligned',note:pending?'Requested change remains a pending prerequisite.':'Compared using stable principal IDs.'};

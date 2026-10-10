@@ -1,0 +1,21 @@
+import assert from 'node:assert/strict';
+import {initialData} from '../src/data/mock';
+import {recordAssessment,validateAssessment} from '../src/utils/assessment';
+import type {AssetAssessment} from '../src/types';
+const d=structuredClone(initialData);const a=d.assets[0];
+const s:AssetAssessment={...d.assessments[0],id:'V11-REVIEW',assetId:a.id,version:a.version,date:'2026-10-01',reviewNumber:2,status:'Complete',outcome:'Approved',prlTag:'Approved level',prlScore:0,prlApprovedBy:'Evidence approver',prlApprovalReference:'REF-123',dmp:'Tier 1'};
+let n=0;function check(fn:()=>void){fn();n++;}
+check(()=>assert.equal(validateAssessment(s,d),''));
+check(()=>assert.equal(recordAssessment(d,s).assets[0].prl,'Approved level'));
+check(()=>assert.equal(recordAssessment(d,{...s,date:'2026-09-01'}).assets[0].prl,a.prl));
+check(()=>assert.equal(recordAssessment(d,{...s,outcome:'Changes required',comments:'Evidence incomplete'}).assets[0].prl,a.prl));
+check(()=>assert.equal(recordAssessment(d,{...s,outcome:'Changes required',comments:'Evidence incomplete'}).assets[0].assessmentStatus,'Changes required'));
+check(()=>assert.equal(recordAssessment(d,{...s,status:'In review',outcome:'Pending'}).assets[0].dmp,a.dmp));
+check(()=>assert.equal(recordAssessment(d,{...s,version:'old-release'}).assets[0].prl,a.prl));
+check(()=>assert.ok(validateAssessment({...s,prlApprovalReference:''},d)));
+check(()=>assert.ok(validateAssessment({...s,prlApprovedBy:''},d)));
+check(()=>assert.ok(validateAssessment({...s,dmp:'Managed data product'},d)));
+check(()=>assert.ok(validateAssessment({...s,dmp:'Unclassified'},d)));
+check(()=>assert.equal(recordAssessment(d,s).assessments.length,d.assessments.length+1));
+check(()=>assert.equal(d.assets[0].prl,a.prl));
+console.log(`V1.1 assessment: ${n} checks passed.`);

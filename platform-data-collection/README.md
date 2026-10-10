@@ -1,3 +1,5 @@
+> **Current V1.1 handoff:** use [the V1.1 Excel and query contract](v1.1-extract/README.md). It supersedes the V1 input layout for new deliveries. Earlier collector scripts and V1 artifacts remain historical references; they are not the V1.1 acquisition route.
+
 # Analytic Registry — V1 platform data collection
 
 **Prototype release 1.0.0-prototype.1 — 8 October 2026. Intended Git tag: `v1.0.0-prototype.1`.**

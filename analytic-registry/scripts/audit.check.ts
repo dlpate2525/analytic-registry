@@ -40,7 +40,7 @@ check(saveReview(responding,{...responding,notes:'Owner response'},d,'Investigat
 rejects(()=>saveReview(responding,{...responding,resolution:'Unauthorized'},d,'',false),'Business cannot change admin evidence');
 rejects(()=>saveReview({...original,status:'Closed'},{...original,status:'Closed',notes:'Changed'},d,'',true),'Closed reviews immutable');
 const asset=d.assets[0];
-const assessment={...d.assessments[0],assetId:asset.id,id:'AUDIT-ASSESS',version:asset.version,purpose:'Review',developerId:'P1',championId:'P2',reviewerId:'P3',date:'2026-10-01',status:'Complete',outcome:'Approved',sourceCount:1,audienceSize:2,prlScore:1,solutionLink:'',developmentLink:'',requirementsLink:'',evidenceLink:'',pii:!asset.pii};
+const assessment={...d.assessments[0],assetId:asset.id,id:'AUDIT-ASSESS',version:asset.version,purpose:'Review',developerId:'P1',championId:'P2',reviewerId:'P3',date:'2026-10-01',status:'Complete',outcome:'Approved',sourceCount:1,audienceSize:2,prlScore:0,dmp:'Tier 2',prlApprovedBy:'Example approver',prlApprovalReference:'TEST-APPROVAL',solutionLink:'',developmentLink:'',requirementsLink:'',evidenceLink:'',pii:!asset.pii};
 check(!validateAssessment(assessment,d),'Valid assessment accepted');
 check(!!validateAssessment({...assessment,sourceCount:-1},d),'Negative source count rejected');
 check(!!validateAssessment({...assessment,date:'2099-01-01'},d),'Future assessment rejected');

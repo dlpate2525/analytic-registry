@@ -1,0 +1,30 @@
+{
+  "version": "1.1.0-prototype.1",
+  "tag": "v1.1.0-prototype.1",
+  "label": "V1.1 prototype",
+  "baselineDate": "2026-10-09",
+  "displayDate": "9 October 2026",
+  "collectionContract": "1.1",
+  "workbookSheets": 17,
+  "importTables": 11,
+  "importColumns": 72,
+  "status": "V1.1 prototype; source validation pending",
+  "mockSnapshotDate": "2026-10-06",
+  "standardTemplateVersion": "2026.1",
+  "artifacts": {
+    "workbook": {
+      "path": "platform-data-collection/v1.1-extract/analytic-registry-v1.1-extract.xlsx",
+      "sha256": "35eae3d90afe6bd4701915de4f4b50a1eeeeedf635820752c24976e6da1aff40"
+    },
+    "collectionPack": {
+      "path": "platform-data-collection/analytic-registry-platform-data-pack.zip",
+      "sha256": "05b4f91531e61b8c7c5f7cefdd5aa429f383eba7e5ea546486e6d2eed7290b3a"
+    },
+    "preview": {
+      "path": "downloads/analytic-registry-preview.zip",
+      "sha256": "82c36a6631d49bc61b760276b4871eee52f3470b3aa55388b36b99b1b2483c43"
+    }
+  },
+  "github": "https://github.com/dlpate2525/analytic-registry/tree/main",
+  "baselineDocument": "analytic-registry/docs/v1.1-prototype-baseline.md"
+}

@@ -1,3 +1,5 @@
+> **V1.1 update, 9 October 2026:** [Current baseline](v1.1-prototype-baseline.md), [operating review and repair status](v1.1-product-operating-review.md), [simplified foundation](v1.1-model-simplification.md), and [verification](v1.1-verification.md) take precedence where this earlier document differs. The frozen V1 release remains unchanged in its Git tag.
+
 # Analytic Registry — requirements and acceptance criteria
 
 **Version:** `1.0.0-prototype.1` · 8 October 2026 · intended tag `v1.0.0-prototype.1`.
@@ -106,3 +108,21 @@ This acceptance freezes a prototype. It does not mark deferred requirements as i
 5. Complete accessibility, security, performance, backup, and user acceptance testing with agreed operating targets.
 
 The prototype remains suitable for product review within its documented limits. Production gates must pass before live operational reliance. The [decision register](decision-register.md) separates confirmed choices, future design, proposed operating settings, and delivery checks.
+
+## V1.1 requirement changes and evidence
+
+| Requirement | V1.1 status |
+|---|---|
+| Define each input field for all three platforms, including unknown and uncollected behavior. | Implemented in contract, workbook, and app dictionary; installed mappings require validation. |
+| Preserve native keys across monthly rename, movement, and incomplete collections. | Reference logic and regression checks implemented. Production acceptance and key ledger remain unimplemented. |
+| Do not overwrite business declarations with platform ownership. | Authority contract defined; no live importer exists. |
+| Record one Person with source-scoped accounts and binding history. | Proposed typed foundation; database migration is not deployed. |
+| Retain prior approved classifications after an older or rejected assessment. | Implemented and regression checked. |
+| Bind request and annual actions to the current prototype actor. | Implemented in UI and command guards; production authentication remains required. |
+| Preserve approval validity after later directory changes. | New decisions capture eligibility evidence. Legacy receipts retain historical facts without invented eligibility proof. |
+| Show evidence-closure approval and unlinked completed delivery in My work. | Implemented; registry import/linking remains an explicit next action. |
+| Separate disabled, unresolved, duplicate, and non-person identity evidence. | Reference matcher and SQL preview aligned; SQL engine execution is pending. |
+| Keep fewer than six main sections and process steps. | Five main sections retained; existing guided processes retained. |
+| Use white backgrounds with purple and coral accents. | Implemented; status text remains explicit. |
+
+Nonfunctional boundaries remain unchanged: production requires authenticated commands, transaction safety, SQL constraints, authorization, monitoring, and recovery. Local tests do not establish those controls.

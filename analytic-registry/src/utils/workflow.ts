@@ -3,6 +3,7 @@ import type { RegistryData, WorkspaceRequest, AdministrativeReview } from '../ty
 import { approvalSatisfied, requestApprovalNeeds, requestKey, validateClosure, latestApproval } from './approvals';
 
 export type RequestStage='Draft'|'Changes required'|'Superseded'|'Awaiting approval'|'Ready for implementation'|'Awaiting verification'|'Complete';
+export const needsRegistryLink=(r:WorkspaceRequest,d:RegistryData)=>requestStage(r,d)==='Complete'&&r.type==='Create New'&&!d.workspaces.some(w=>w.id===r.workspaceId);
 export function requestStage(r:WorkspaceRequest,d:RegistryData):RequestStage {
   if(d.requests.some(x=>x.supersedesRequestId===r.id))return 'Superseded';
   if(r.status==='Draft')return 'Draft';
@@ -18,7 +19,7 @@ export function correctedRequest(r:WorkspaceRequest,d:RegistryData,actorId:strin
   return {...structuredClone(intent),id:'REQ-'+crypto.randomUUID().slice(0,8).toUpperCase(),supersedesRequestId:r.id,status:'Draft',createdDate:todayLocal(),createdById:actorId};
 }
 export function recordRequestExecution(r:WorkspaceRequest,d:RegistryData,action:'implement'|'verify',reference:string,date:string,actorId:string):WorkspaceRequest {
-  if(actorId!=='P3')throw new Error('A platform administrator must record implementation and verification.');
+  if(actorId!=='P3'||!d.people.some(p=>p.id===actorId&&p.status==='Active'))throw new Error('An active platform administrator must record implementation and verification.');
   if(!reference.trim()||!date||!isDateOnly(date))throw new Error('Enter an evidence reference and valid date.');
   if(date>todayLocal())throw new Error('Evidence cannot be dated in the future.');
   const stage=requestStage(r,d);
