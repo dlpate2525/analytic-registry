@@ -81,7 +81,7 @@ write(path.join(publicRoot, 'review-pack.html'), 'Preserved historical HTML');
 const collection = path.join(fixture, 'platform-data-collection');
 for (const name of ['analytic-registry-v1.2-extract.xlsx', 'column-dictionary.csv', 'README.md']) write(path.join(collection, 'v1.2-workbook', name), 'Synthetic current bytes: ' + name);
 write(path.join(collection, 'v1.2-workbook/contract.json'), JSON.stringify({ queryProfiles: { Tableau: { label: 'Fixture', query: 'queries/current.sql', guide: 'current.md' } } }));
-for (const name of ['queries/current.sql', 'current.md', 'README.md', 'source-query-design.md', 'monthly-reconciliation.md', 'sqlserver-staging.sql', 'sqlserver-validation.sql', 'sqlserver-email-match.sql']) write(path.join(collection, 'v1.1-extract', name), 'Current source bytes: ' + name);
+for (const name of ['queries/current.sql', 'current.md', 'README.md', 'source-query-design.md', 'monthly-reconciliation.md', 'sqlserver-staging.sql', 'sqlserver-validation.sql', 'sqlserver-email-match.sql', 'scripts/verify-producer-fixtures.py']) write(path.join(collection, 'v1.1-extract', name), 'Current source bytes: ' + name);
 result = run();
 check('Preparation coordinates real collection and document owners', result.status === 0);
 check('Preparation preserves historical HTML', fs.readFileSync(path.join(publicRoot, 'review-pack.html'), 'utf8') === 'Preserved historical HTML');
