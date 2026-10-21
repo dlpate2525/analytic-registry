@@ -38,7 +38,7 @@
     },
     "verification": {
       "path": "v1.2-publication-verification.md",
-      "sha256": "4e17c2778d676de769dd0541961527e56b8805ed5e3ded69c17946f7584052d9"
+      "sha256": "9bed17f213e9a07092ac37242e3686b65c5d0c071f00dff87a7c03801078e053"
     },
     "currentBaseline": {
       "path": "v1.2-release.md",

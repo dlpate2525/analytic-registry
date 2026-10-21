@@ -38,7 +38,7 @@
     },
     "verification": {
       "path": "analytic-registry/public/v1.2-publication-verification.md",
-      "sha256": "4e17c2778d676de769dd0541961527e56b8805ed5e3ded69c17946f7584052d9"
+      "sha256": "9bed17f213e9a07092ac37242e3686b65c5d0c071f00dff87a7c03801078e053"
     },
     "currentBaseline": {
       "path": "analytic-registry/public/v1.2-release.md",
@@ -46,7 +46,7 @@
     },
     "preview": {
       "path": "downloads/analytic-registry-v1.2-preview.zip",
-      "sha256": "c8ab902fb5a940b0e1a239411dfc0932c7e569c70dde071569f30a77f140526c"
+      "sha256": "a07998a2ef482426d0f2589cae8de2d1d6818656bea461ee351559c524b37b7d"
     }
   },
   "github": "https://github.com/dlpate2525/analytic-registry/tree/v1.2.0-prototype.1",
