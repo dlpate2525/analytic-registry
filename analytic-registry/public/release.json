@@ -1,25 +1,49 @@
 {
-  "version": "1.1.0-prototype.2",
-  "tag": "v1.1.0-prototype.2",
-  "label": "V1.1 prototype",
-  "baselineDate": "2026-10-09",
-  "displayDate": "9 October 2026",
+  "version": "1.2.0-prototype.1",
+  "series": "V1.2",
+  "tag": "v1.2.0-prototype.1",
+  "publishedBaseline": "v1.1.0-prototype.2",
+  "publication": "Prototype release",
+  "label": "V1.2 prototype",
+  "baselineDate": "2026-10-21",
+  "displayDate": "21 October 2026",
   "collectionContract": "1.1",
-  "workbookSheets": 17,
+  "workbookRevision": "1.2",
+  "workbookSheets": 16,
   "importTables": 11,
   "importColumns": 72,
-  "status": "V1.1 prototype; source validation pending",
+  "status": "Prototype release; installed-platform validation pending",
   "mockSnapshotDate": "2026-10-06",
   "standardTemplateVersion": "2026.1",
   "artifacts": {
     "workbook": {
-      "path": "resources/platform-data-collection/v1.1-extract/analytic-registry-v1.1-extract.xlsx",
-      "sha256": "75e28bcb2998a372619aa743b9fe933e94a1ba0fabba013f7e59a8f712ff6c56"
+      "path": "resources/platform-data-collection/v1.2-workbook/analytic-registry-v1.2-extract.xlsx",
+      "sha256": "28a1357d4a90dcc970710f6ce938ceb090198d6dd923bff75b4e576413e28635"
     },
     "collectionPack": {
-      "path": "resources/platform-data-collection/analytic-registry-platform-data-pack.zip",
-      "sha256": "0f77f2eed0e0df548807d5ceaa0bf152f66ae3725a672c02c31904f628447f06"
+      "path": "resources/platform-data-collection/analytic-registry-v1.2-extract.zip",
+      "sha256": "2948511de069129a649fd12d81ce8fc4aafd103757e31370596e00f6494245ed"
+    },
+    "documentation": {
+      "path": "guide.html",
+      "sha256": "eb5e1cda5e8a8a36e1d990bb13b1d797bd4af4323c69e3463ea284d075c79351"
+    },
+    "workflows": {
+      "path": "v1.2-guide.md",
+      "sha256": "13c4e90c9d675d5ef5cff039ebbc083c46169159039aadfd45c193a2d9b21906"
+    },
+    "requirements": {
+      "path": "v1.2-requirements.md",
+      "sha256": "fc9402a4e3d5c700546006d407deb000f2e52eff2497dc691cec768378acb934"
+    },
+    "verification": {
+      "path": "v1.2-publication-verification.md",
+      "sha256": "0a4d764c481949f3084f8012ef51d359e8a4df39da4a0278f84c4b5dd3f63644"
+    },
+    "currentBaseline": {
+      "path": "v1.2-release.md",
+      "sha256": "12df0c3c950eb4ecbf60c66bba1fd182ee0b4501f5971126dfb73f6b9fa858ac"
     }
   },
-  "github": "https://github.com/dlpate2525/analytic-registry/tree/main"
+  "github": "https://github.com/dlpate2525/analytic-registry/tree/v1.2.0-prototype.1"
 }

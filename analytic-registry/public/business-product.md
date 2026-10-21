@@ -1,3 +1,5 @@
+> **Historical product document.** Use the [V1.2 guide](v1.2-guide.md) and [current requirements](v1.2-requirements.md) for local behavior. Earlier statements below remain unchanged as historical context.
+
 > **V1.1 update, 9 October 2026:** [Current baseline](v1.1-prototype-baseline.md), [operating review and repair status](v1.1-product-operating-review.md), [simplified foundation](v1.1-model-simplification.md), and [verification](v1.1-verification.md) take precedence where this earlier document differs. The frozen V1 release remains unchanged in its Git tag.
 
 # Analytic Registry — business and product definition

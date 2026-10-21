@@ -9,12 +9,21 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const outputDir = path.resolve(here, '..');
 const workspace = path.resolve(here, '../../../..');
 const requireRuntime = createRequire(path.join(process.env.ARTIFACT_MODULE_ROOT || path.join(workspace, 'work'), 'runtime-resolver.cjs'));
-const { Workbook, SpreadsheetFile } = await import(pathToFileURL(requireRuntime.resolve('@oai/artifact-tool')).href);
+const { Workbook, SpreadsheetFile, FileBlob } = await import(pathToFileURL(requireRuntime.resolve('@oai/artifact-tool')).href);
 const contract = JSON.parse(await fs.readFile(path.join(outputDir, 'contract.json'), 'utf8'));
 const migration = JSON.parse(await fs.readFile(path.join(outputDir, 'migration-map.json'), 'utf8'));
 const previewDir = path.join(workspace, 'work/v11-workbook-previews');
 await fs.mkdir(previewDir, { recursive: true });
 
+if (process.argv.includes('--preview-existing')) {
+  const existing = await SpreadsheetFile.importXlsx(await FileBlob.load(path.join(outputDir, 'analytic-registry-v1.1-extract.xlsx')));
+  for (const [name, range] of [['Column_Dictionary', 'A96:E107'], ['Tableau_Output', 'D36:G43'], ['PowerBI_Output', 'D17:G17'], ['Alteryx_Output', 'A16:H18']]) {
+    const image = await existing.render({sheetName:name,range,scale:1,format:'png'});
+    await fs.writeFile(path.join(previewDir, `Before_${name}.png`), new Uint8Array(await image.arrayBuffer()));
+  }
+  console.log('Read-only existing workbook previews saved.');
+  process.exit(0);
+}
 const wb = Workbook.create();
 const color = { ink: '#292536', muted: '#686273', purple: '#6744C3', pale: '#F5F1FC', coral: '#E98173', line: '#E7E4ED', white: '#FFFFFF' };
 const font = 'Arial'; // Verified in Windows Fonts. Excel falls back to Aptos if Arial is unavailable.
@@ -70,11 +79,11 @@ const guideRows = [
   ['Purpose', 'Provide one monthly platform extract for Registry review and manual SQL Server loading.', 'V1.1 minimum contract', ''],
   ['Workbook structure', 'Use the 11 purple input tabs. Their named tables contain five blank template rows. Coral tabs document platform output mappings.', '11 inputs; 3 guides; 3 platform references', ''],
   ['1. Prepare context', 'Create one Run_Context row for each delivery. Keep its source instance, scope, observation time, directory tenant, mapping version, and scope description.', 'Run_Context', ''],
-  ['2. Declare coverage', 'Provide one Coverage row for each dataset in the agreed scope. Distinguish Complete, Partial, NotCollected, and Failed. Empty input does not prove absence.', 'Coverage', ''],
+  ['2. Declare coverage', 'Provide one Coverage row per dataset. Complete and Partial require exact delivered row counts. Failed and NotCollected require NULL counts and no data rows. Empty input does not prove absence.', 'Coverage', ''],
   ['3. Fill input tables', 'Use exact headers and named tables. Keep native identifiers as text. Replace blank template rows or add rows inside the named Excel table.', 'All input tables', ''],
-  ['4. Validate and load', 'Ignore only fully blank template rows. Quarantine invalid nonblank rows. Validate keys, references, and coverage before manual SQL Server staging.', 'Platform Manager', ''],
+  ['4. Validate and accept', 'Stage all nonblank records for validation. Structural errors block the whole delivery. The registry operator accepts valid deliveries, including Partial coverage and unresolved references. Assign unresolved cases to Platform Manager; preserve original evidence dates.', 'Registry operator', ''],
   ['Run identity', 'RunKey identifies an immutable delivery. Preserve the same UUID only for retries of identical input. It does not replace enduring native object IDs.', 'Run_Context and every dataset', ''],
-  ['Refresh identity', 'Resolve native objects within PlatformCode, PlatformInstanceKey, NativeScopeKey, native object type, and native ID. Names remain display fields.', 'Registry reconciliation', ''],
+  ['Refresh identity', 'Resolve objects by platform, instance, native scope, entity kind, and native ID. Asset identity also includes native asset type. Workspace subtype, names, and email do not identify an object.', 'Registry reconciliation', ''],
   ['Blank values', 'Leave unknown values blank. Never type the text NULL. Follow each platform null rule. Never create placeholder records for an uncollected dataset.', 'Column_Dictionary and platform tabs', ''],
   ['Directory resolution', 'Match exact normalized platform email to directory Mail within the configured tenant. Do not fall back to UPN. Missing or ambiguous matches go to Platform Manager.', 'Platform_Users and Directory_Users', contract.sources.Directory],
   ['Account state', 'AccountEnabled reports directory account state. False means resolved-disabled. Blank means unknown. It does not establish employment status.', 'Directory_Users', contract.sources.Directory],
@@ -110,17 +119,31 @@ wb.recalculate();
 const inspection = await wb.inspect({ kind: 'table', range: 'Object_Users!A1:J6', include: 'values,formulas', tableMaxRows: 6, tableMaxCols: 10, maxChars: 3000 });
 const errors = await wb.inspect({ kind: 'match', searchTerm: '#REF!|#DIV/0!|#VALUE!|#NAME\\?|#N/A|#NUM!|#NULL!|#SPILL!|#CALC!', options: { useRegex: true, maxResults: 30 }, summary: 'Formula error scan' });
 await fs.writeFile(path.join(previewDir, 'inspection.ndjson'), inspection.ndjson + '\n' + errors.ndjson, 'utf8');
-for (const plan of plans.filter(plan => ['Guide','Column_Dictionary','Alteryx_Output','PowerBI_Output'].includes(plan.name))) {
+if (process.argv.includes('--connection-review')) {
+  const affected = [['Guide','A9:D9','Coverage_Guide'],['Column_Dictionary','A99:E104','Connection_Types'],['Column_Dictionary','A105:E119','Connection_Facts'],['Column_Dictionary','A39:J41','Coverage_Dictionary'],['Tableau_Output','D37:G38','Tableau_Technology'],['PowerBI_Output','D17:G17','PowerBI_Coverage'],['Alteryx_Output','D17:G17','Alteryx_Coverage']];
+  for (const [name, range, output] of affected) {
+    const preview = await wb.render({sheetName:name,range,scale:1,format:'png'});
+    await fs.writeFile(path.join(previewDir, `${output}.png`), new Uint8Array(await preview.arrayBuffer()));
+    console.log(`Rendered ${output}`);
+  }
+} else {
+const guideOnly = process.argv.includes('--guide-only');
+for (const plan of plans.filter(plan => (guideOnly ? ['Guide'] : ['Guide','Column_Dictionary','Alteryx_Output','PowerBI_Output']).includes(plan.name))) {
   const preview = await wb.render({ sheetName: plan.name, range: plan.previewRange, scale: 1, format: 'png' });
   await fs.writeFile(path.join(previewDir, `${plan.name}.png`), new Uint8Array(await preview.arrayBuffer()));
   console.log(`Rendered ${plan.name}`);
 }
+const acceptancePreview = await wb.render({ sheetName: 'Guide', range: 'A10:D14', scale: 1, format: 'png' });
+await fs.writeFile(path.join(previewDir, 'Guide_Acceptance.png'), new Uint8Array(await acceptancePreview.arrayBuffer()));
+if (!guideOnly) {
 const rolePreview = await wb.render({ sheetName: 'Alteryx_Output', range: 'A68:H77', scale: 1, format: 'png' });
 await fs.writeFile(path.join(previewDir, 'Alteryx_Object_Users.png'), new Uint8Array(await rolePreview.arrayBuffer()));
 const migrationPreview = await wb.render({ sheetName: 'Guide', range: 'A20:D23', scale: 1, format: 'png' });
 await fs.writeFile(path.join(previewDir, 'Guide_Migration.png'), new Uint8Array(await migrationPreview.arrayBuffer()));
 const fabricPreview = await wb.render({ sheetName: 'PowerBI_Output', range: 'A18:H33', scale: 1, format: 'png' });
 await fs.writeFile(path.join(previewDir, 'Fabric_Profile.png'), new Uint8Array(await fabricPreview.arrayBuffer()));
+}
+}
 const file = await SpreadsheetFile.exportXlsx(wb);
 await file.save(path.join(outputDir, 'analytic-registry-v1.1-extract.xlsx'));
 await fs.writeFile(path.join(previewDir, 'build-summary.json'), JSON.stringify({ workbook: 'analytic-registry-v1.1-extract.xlsx', inputTables: contract.tables.length, inputColumns: contract.tables.reduce((total, table) => total + table.columns.length, 0), sheets: plans, dictionaryRows: dictionaryRows.length, migrationRows: migration.length, platformReferenceRows: 72, font }, null, 2));

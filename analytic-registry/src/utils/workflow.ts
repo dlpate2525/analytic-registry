@@ -1,37 +1,8 @@
 import { todayLocal, isDateOnly } from './dates';
-import type { RegistryData, WorkspaceRequest, AdministrativeReview } from '../types';
-import { approvalSatisfied, requestApprovalNeeds, requestKey, validateClosure, latestApproval } from './approvals';
-
-export type RequestStage='Draft'|'Changes required'|'Superseded'|'Awaiting approval'|'Ready for implementation'|'Awaiting verification'|'Complete';
-export const needsRegistryLink=(r:WorkspaceRequest,d:RegistryData)=>requestStage(r,d)==='Complete'&&r.type==='Create New'&&!d.workspaces.some(w=>w.id===r.workspaceId);
-export function requestStage(r:WorkspaceRequest,d:RegistryData):RequestStage {
-  if(d.requests.some(x=>x.supersedesRequestId===r.id))return 'Superseded';
-  if(r.status==='Draft')return 'Draft';
-  if(requestApprovalNeeds(r,d).some(n=>latestApproval(d,'Request',r.id,n.purpose,requestKey(r))?.decision==='Changes required'))return 'Changes required';
-  if(!requestApprovalNeeds(r,d).every(n=>approvalSatisfied(d,'Request',r.id,n.purpose,requestKey(r),n.roles)))return 'Awaiting approval';
-  if(r.execution?.requestKey!==requestKey(r)||!r.execution?.implementationReference)return 'Ready for implementation';
-  return r.execution.verificationReference?'Complete':'Awaiting verification';
-}
-export function correctedRequest(r:WorkspaceRequest,d:RegistryData,actorId:string):WorkspaceRequest {
-  if(requestStage(r,d)!=='Changes required')throw Error('A correction decision is required before creating a replacement.');
-  if(![r.ownerId,r.createdById,'P3'].includes(actorId))throw Error('Only the requester, workspace owner, or administrator can correct this request.');
-  const {execution:_delivery,...intent}=r;
-  return {...structuredClone(intent),id:'REQ-'+crypto.randomUUID().slice(0,8).toUpperCase(),supersedesRequestId:r.id,status:'Draft',createdDate:todayLocal(),createdById:actorId};
-}
-export function recordRequestExecution(r:WorkspaceRequest,d:RegistryData,action:'implement'|'verify',reference:string,date:string,actorId:string):WorkspaceRequest {
-  if(actorId!=='P3'||!d.people.some(p=>p.id===actorId&&p.status==='Active'))throw new Error('An active platform administrator must record implementation and verification.');
-  if(!reference.trim()||!date||!isDateOnly(date))throw new Error('Enter an evidence reference and valid date.');
-  if(date>todayLocal())throw new Error('Evidence cannot be dated in the future.');
-  const stage=requestStage(r,d);
-  if(action==='implement') {
-    if(stage!=='Ready for implementation')throw new Error('Required approvals must be recorded first.');
-    if(date<r.createdDate.slice(0,10))throw new Error('Implementation cannot predate the request.');
-    return {...r,execution:{requestKey:requestKey(r),implementationReference:reference.trim(),implementedAt:date,implementedBy:actorId}};
-  }
-  if(stage!=='Awaiting verification'||!r.execution)throw new Error('Record the external implementation first.');
-  if(date<r.execution.implementedAt)throw new Error('Verification cannot predate implementation.');
-  return {...r,execution:{...r.execution,verificationReference:reference.trim(),verifiedAt:date,verifiedBy:actorId}};
-}
+import type { RegistryData, AdministrativeReview } from '../types';
+import { validateClosure } from './approvals';
+export { requestStage, requestTechnicalStage, needsRegistryLink, hasOpenTechnicalWork, correctedRequest, recordRequestExecution } from '../domain/requestPolicy';
+export type { RequestStage, TechnicalStage } from '../domain/requestPolicy';
 
 export const reviewActions=[
   {label:'Start investigation',status:'Investigating'},

@@ -1,11 +1,9 @@
-import { standardTemplate } from './standard';
+import { platforms } from './config';
+export { platforms, customReasons, rulesConfig } from './config';
 import { attestationPacket, attestationKey, questions as annualQuestions } from '../utils/attestation';
-import type { RegistryData, Platform, Workspace, Asset, Finding, AdministrativeReview, GroupSpecification, ObservedPrincipal } from '../types';
-export const platforms:Platform[] = ['Power BI / Fabric','Tableau','Alteryx'];
+import type { RegistryData, Workspace, Asset, Finding, AdministrativeReview, GroupSpecification, ObservedPrincipal } from '../types';
 export const buckets=['Orphan','Stale','Access Risk','Compliance Gap','Bypassed Gate','Credential Exposure','Performance Risk','Concentration Risk','Coverage / Bus-Factor','Privilege Sprawl','Low Adoption'];
-export const customReasons=['Multiple user populations','Specialized entitlements','Cross-LOB access','Segregation of duties','Platform limitation','Alternate authentication','Complex security model','Other'];
 export const reviewStatuses=['New','Investigating','Action Required','Pending Business Response','Pending Admin Action','Resolved','Unable to Verify','Closed'];
-export const rulesConfig={businessNameMax:100,purposeMax:500,customExplanationMax:1000,championMin:1,championMax:10,groupNamePattern:'^[A-Z][A-Z0-9_]{2,79}$',standardVersion:standardTemplate.version,asOf:'2026-10-06'};
 export const nativeTerm=(p:string)=>p==='Tableau'?'Project':p==='Alteryx'?'Collection':'Workspace';
 const names=['Maya Johnson','Alex Rivera','Priya Shah','Carlos Bennett','Sarah Chen','James Wilson','Emma Thompson','David Kim','Olivia Martin','Noah Davis','Sophia Patel','Liam Brooks','Ava Robinson','Ethan Clark','Isabella Lewis','John Smith'];
 const lobs=['Consumer Lending','Home Lending','Risk','Operations'];

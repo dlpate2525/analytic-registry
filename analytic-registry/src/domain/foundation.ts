@@ -12,8 +12,13 @@ export type Delivery = {
 };
 export type ReconciliationItem = {key:string; registryId:string|null; name:string; state:'New'|'Changed'|'Unchanged'|'Missing from complete snapshot'|'Not verified'|'Older observation'|'Conflicting observation time'; changedFields:string[]};
 function nonempty(value:string){return typeof value==='string' && value.trim().length>0;}
+const assetTypes:Record<string,readonly string[]> = {
+  PowerBI:['Report','Dataset'], Tableau:['Workbook','PublishedDatasource'], Alteryx:['Workflow'],
+};
 export function nativeKey(row:NativeIdentity):string {
   if (![row.platform,row.instance,row.scope,row.kind,row.nativeType,row.nativeId].every(nonempty)) throw new Error('A native key component is missing. Route the row to Platform Manager.');
+  if(!Object.hasOwn(assetTypes,row.platform)||!['Workspace','Asset','Connection'].includes(row.kind))throw new Error('Unsupported platform or object kind.');
+  if(row.kind==='Asset'&&!assetTypes[row.platform].includes(row.nativeType))throw new Error('Unsupported native asset type for this platform. Validate the mapping before acceptance.');
   // JSON encoding avoids delimiter collisions. Never normalize source IDs or use names/run IDs.
   // Workspace subtype (for example PersonalGroup) and connection technology can change.
   // Only asset type partitions the native asset namespace.
@@ -29,12 +34,16 @@ const timestamp=(value:string)=>{
 };
 export function compareDelivery(current:RegistryEvidence[],incoming:Observation[],delivery:Delivery):ReconciliationItem[] {
   if(!nonempty(delivery.runKey))throw new Error('RunKey is required.');
+  if(!Object.hasOwn(assetTypes,delivery.platform)||![delivery.instance,delivery.scope].every(nonempty)||!['Workspace','Asset','Connection'].includes(delivery.kind))throw new Error('A supported platform, instance, scope and object kind are required.');
+  if(!['Complete','Partial','NotCollected','Failed'].includes(delivery.coverage))throw new Error('Unsupported dataset coverage.');
   const time=timestamp(delivery.observedAt);
   const inScope=(row:NativeIdentity)=>row.platform===delivery.platform&&row.instance===delivery.instance&&row.scope===delivery.scope&&row.kind===delivery.kind;
   if(incoming.some(row=>!inScope(row)))throw new Error('Incoming rows cross the declared delivery scope.');
   if((delivery.coverage==='Failed'||delivery.coverage==='NotCollected')&&incoming.length)throw new Error('Uncollected or failed datasets cannot contain accepted observations.');
+  if((delivery.coverage==='Failed'||delivery.coverage==='NotCollected')&&delivery.expectedRows!==null)throw new Error('Uncollected or failed datasets require a null row count.');
   if(delivery.expectedRows!==null&&(!Number.isInteger(delivery.expectedRows)||delivery.expectedRows<0||delivery.expectedRows!==incoming.length))throw new Error('Delivered count does not match Coverage.RowCount.');
   if(delivery.coverage==='Complete'&&(!delivery.scopeVerified||delivery.expectedRows===null))throw new Error('Complete coverage requires verified scope and row count.');
+  if(delivery.coverage==='Partial'&&delivery.expectedRows===null)throw new Error('Partial coverage requires a delivered row count.');
   const previous=new Map<string,RegistryEvidence>();
   for(const row of current){const key=nativeKey(row);if(previous.has(key))throw new Error('Duplicate registry native key.');previous.set(key,row);timestamp(row.lastSeenAt);}
   const seen=new Set<string>();

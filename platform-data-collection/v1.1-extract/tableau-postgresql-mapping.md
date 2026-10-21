@@ -1,6 +1,6 @@
 # Tableau Server: PostgreSQL query handoff
 
-Use [tableau-postgresql-selects.sql](queries/tableau-postgresql-selects.sql) in a PostgreSQL query editor. It supplies eleven V1.1 result sets for the [Excel workbook](analytic-registry-v1.1-extract.xlsx). It makes no API calls. The earlier [psql export](queries/tableau-postgresql.sql) remains available for automated CSV output.
+Use [tableau-postgresql-selects.sql](queries/tableau-postgresql-selects.sql) in a PostgreSQL query editor. It supplies eleven schema 1.1 result sets for the [V1.2 workbook](../v1.2-workbook/analytic-registry-v1.2-extract.xlsx). It makes no API calls. The earlier [psql export](queries/tableau-postgresql.sql) remains available for automated CSV output.
 
 **Target:** Tableau Server 2026.2 repository, one site per delivery. The query uses the documented source columns. It has not run against your installed server. Tableau Cloud does not expose this repository route. Repository schemas can change; verify the installed shape before each version change. [Tableau repository access](https://help.tableau.com/current/server/en-us/perf_collect_server_repo.htm), [2026.2 dictionary](https://tableau.github.io/tableau-data-dictionary/2026.2/data_dictionary.htm)
 
@@ -10,7 +10,7 @@ Use [tableau-postgresql-selects.sql](queries/tableau-postgresql-selects.sql) in 
 2. Run the preflight below. Record the site LUID and verified content and owner tokens.
 3. Replace the ten `REPLACE_*` values in the SQL file. Run all statements in one connection with stop-on-error enabled.
 4. Export each named result with its exact headers. Keep the four diagnostic results with the delivery.
-5. Load the eleven contract results into Excel or SQL staging. Have Platform Manager review counts, exceptions, and coverage before acceptance.
+5. Load the eleven contract results into Excel or SQL staging. The registry operator accepts structurally valid deliveries. Assign unresolved cases to Platform Manager.
 
 Do not execute each result in a separate connection. The file uses one read-only, repeatable-read transaction and transaction-local parameters. PostgreSQL discards `SET LOCAL` values when the transaction ends. Save the query outputs from that execution; do not run a second export query after committing. [PostgreSQL SET](https://www.postgresql.org/docs/current/sql-set.html), [transaction isolation](https://www.postgresql.org/docs/current/transaction-iso.html)
 
@@ -69,6 +69,8 @@ Compare source columns with the query before execution. Check representative ass
 | `workbook_owner_type` | Installed `data_connections.owner_type` token verified for workbooks. |
 | `datasource_owner_type` | Installed `data_connections.owner_type` token verified for datasources. |
 
+The current Tableau query requires `directory_tenant_key` before producing inventory, even when a delivery contract could otherwise leave it unknown. Supply the configured tenant; it does not establish directory resolution.
+
 The final four parameters remain explicit to avoid silently losing relationships after schema changes. Do not use an arbitrary token merely because it appears in a source row.
 
 ## Output and identity
@@ -89,7 +91,7 @@ The final four parameters remain explicit to avoid silently losing relationships
 
 These mappings use the documented repository relationships and LUID fields. Technical owner observations remain separate from approved business ownership. [Tableau 2026.2 dictionary](https://tableau.github.io/tableau-data-dictionary/2026.2/data_dictionary.htm)
 
-Maintain identity with platform + instance + site + native type + native ID. Names and revisions do not identify enduring assets. Preserve `TableauUserLUID` for resolved platform identities and `TableauRepositoryUserID` for raw ownership references. Do not substitute one namespace for the other.
+Workspace identity is platform + instance + site + native workspace ID. Asset identity also includes native asset type. Connection identity is platform + instance + site + native connection ID. Workspace subtype is an attribute. Names and revisions do not identify enduring assets. Preserve `TableauUserLUID` for resolved platform identities and `TableauRepositoryUserID` for raw ownership references. Do not substitute one namespace for the other.
 
 Join source email to corporate `Mail` using only `lower(trim(email))` in the configured tenant. Missing email or a failed match routes to Platform Manager. A Tableau role does not prove that an Office 365 account is enabled. Directory status comes from a separate accepted directory delivery.
 
@@ -97,7 +99,7 @@ Join source email to corporate `Mail` using only `lower(trim(email))` in the con
 
 All native lifecycle states are included. Compare counts with equivalent filters in Tableau; an active-only interface count may differ. Missing records cannot trigger absence reconciliation while coverage remains `Partial`.
 
-Connection credential classification stays `Unknown`, and connection evidence stays `Partial`. `HasExtract` preserves the source boolean; it does not replace technology. A missing optional value stays SQL `NULL`. Potential URL or credential delimiters cause hostname omission and a diagnostic entry.
+Connection credential classification stays `Unknown`, and connection evidence stays `Partial`. `TechnologyCode` preserves native `dataengine` and `hyper` values. `HasExtract` preserves the source boolean independently; it does not replace technology. Server, database, and authentication remain facts on each connection observation; endpoint text never merges connections. A missing optional value stays SQL `NULL`. Potential URL or credential delimiters cause hostname omission and a diagnostic entry.
 
 Missing user references remain in `Object_Users` with an explicit resolution state. Missing or repeated LUIDs appear in identity diagnostics; they must not be repaired with invented IDs. Inner-join relationship losses appear in relationship and membership diagnostics. Retain these exceptions even when the valid output count looks plausible.
 

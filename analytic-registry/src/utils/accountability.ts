@@ -1,3 +1,4 @@
+import { currentChampionIds } from './authority';
 import type {RegistryData,Workspace} from '../types';
 export function accountability(ids:string[],d:RegistryData){
  if(!ids.length)return 'Missing assignment';
@@ -8,5 +9,5 @@ export function accountability(ids:string[],d:RegistryData){
 }
 export const workspaceAccountability=(w:Workspace,d:RegistryData)=>({
  owner:accountability(w.ownerId?[w.ownerId]:[],d),
- champions:accountability(d.champions.filter(c=>c.configurationVersionId===w.requestedVersionId).map(c=>c.personId),d),
+ champions:accountability(currentChampionIds(d,w),d),
 });

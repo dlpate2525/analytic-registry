@@ -216,6 +216,28 @@ IF EXISTS (
             AND (p.type NOT IN (0,1) OR DATALENGTH(p.value)>400
              OR DATALENGTH(p.value)<>DATALENGTH(LTRIM(RTRIM(p.value)))))
 ) THROW 51018, 'Invalid collection user reference. Missing/null references remain unresolved; malformed references must be fixed.', 1;
+-- Supported directory shapes: one object, an empty array, or one object in an
+-- array. Retain unsupported/ambiguous source evidence; never select its first SID.
+IF EXISTS (
+ SELECT 1 FROM ar_source.Alteryx_Collections c CROSS APPLY OPENJSON(c.UsersJson) j
+ WHERE (SELECT COUNT_BIG(*) FROM OPENJSON(j.value) p WHERE p.[key]=N'ActiveDirectoryObject')>1
+ OR EXISTS (SELECT 1 FROM OPENJSON(j.value) p WHERE p.[key]=N'ActiveDirectoryObject' AND p.type NOT IN (0,4,5))
+ OR EXISTS (SELECT 1 FROM OPENJSON(j.value) p WHERE p.[key]=N'ActiveDirectoryObject' AND p.type=4
+   AND ((SELECT COUNT_BIG(*) FROM OPENJSON(p.value))>1
+     OR EXISTS (SELECT 1 FROM OPENJSON(p.value) item WHERE item.type<>5)))
+) THROW 51027, 'Unsupported or ambiguous ActiveDirectoryObject shape. Retain the source exception; verify the adapter.', 1;
+IF EXISTS (
+ SELECT 1 FROM ar_source.Alteryx_Collections c CROSS APPLY OPENJSON(c.UsersJson) j
+ CROSS APPLY OPENJSON(CASE WHEN LEFT(LTRIM(JSON_QUERY(j.value,'$.ActiveDirectoryObject')),1)=N'['
+   THEN JSON_QUERY(j.value,'$.ActiveDirectoryObject[0]') ELSE JSON_QUERY(j.value,'$.ActiveDirectoryObject') END) sid
+ WHERE sid.[key]=N'Sid' AND (sid.type NOT IN (0,1) OR DATALENGTH(sid.value)>400
+   OR DATALENGTH(sid.value)<>DATALENGTH(LTRIM(RTRIM(sid.value))))
+) OR EXISTS (
+ SELECT 1 FROM ar_source.Alteryx_Collections c CROSS APPLY OPENJSON(c.UsersJson) j
+ WHERE (SELECT COUNT_BIG(*) FROM OPENJSON(CASE WHEN LEFT(LTRIM(JSON_QUERY(j.value,'$.ActiveDirectoryObject')),1)=N'['
+   THEN JSON_QUERY(j.value,'$.ActiveDirectoryObject[0]') ELSE JSON_QUERY(j.value,'$.ActiveDirectoryObject') END) sid
+   WHERE sid.[key]=N'Sid')>1
+) THROW 51028, 'Malformed or duplicate Sid property. Retain raw evidence; do not truncate or normalize it.', 1;
 IF EXISTS (
  SELECT c.CollectionId COLLATE Latin1_General_100_BIN2, p.value COLLATE Latin1_General_100_BIN2
  FROM ar_source.Alteryx_Collections c CROSS APPLY OPENJSON(c.UsersJson) j CROSS APPLY OPENJSON(j.value) p
@@ -303,27 +325,36 @@ SELECT @RunKey AS RunKey, CAST(NULL AS nvarchar(200)) AS DirectoryObjectID,
  CAST(NULL AS bit) AS AccountEnabled WHERE 1=0;
 
 -- Dataset: Object_Users (11). CreatedBy means original author, NOT current owner.
-;WITH Roles AS (
+;WITH CollectionMembers AS (
+ SELECT c.CollectionId, JSON_VALUE(j.value,'$.UserId') AS UserId,
+   CASE WHEN LEFT(LTRIM(JSON_QUERY(j.value,'$.ActiveDirectoryObject')),1)=N'['
+     THEN JSON_VALUE(j.value,'$.ActiveDirectoryObject[0].Sid')
+     ELSE JSON_VALUE(j.value,'$.ActiveDirectoryObject.Sid') END AS Sid
+ FROM ar_source.Alteryx_Collections c CROSS APPLY OPENJSON(c.UsersJson) j
+), Roles AS (
  SELECT N'Collection' AS NativeObjectType, CollectionId AS NativeObjectID,
         N'TechnicalOwner' AS PrincipalRoleCode, NULLIF(OwnerId,N'') AS SourcePrincipalReference,
+        CASE WHEN NULLIF(OwnerId,N'') IS NOT NULL THEN N'AlteryxMongoUserID' END AS SourceReferenceNamespace,
         CAST(0 AS bit) AS MappingUnverified
  FROM ar_source.Alteryx_Collections
  UNION ALL
- SELECT N'Collection',c.CollectionId,N'CollectionMember',p.value,CAST(0 AS bit)
- FROM ar_source.Alteryx_Collections c CROSS APPLY OPENJSON(c.UsersJson) j
- OUTER APPLY (SELECT q.value FROM OPENJSON(j.value) q WHERE q.[key]=N'UserId' AND q.type=1) p
+ SELECT N'Collection',CollectionId,N'CollectionMember',COALESCE(NULLIF(UserId,N''),NULLIF(Sid,N'')),
+   CASE WHEN NULLIF(UserId,N'') IS NOT NULL THEN N'AlteryxMongoUserID'
+        WHEN NULLIF(Sid,N'') IS NOT NULL THEN N'ActiveDirectorySID' END,CAST(0 AS bit)
+ FROM CollectionMembers
  UNION ALL
- SELECT N'Workflow',AppInfoId,N'CreatedBy',NULLIF(CreatedBy,N''),CAST(0 AS bit)
+ SELECT N'Workflow',AppInfoId,N'CreatedBy',NULLIF(CreatedBy,N''),
+   CASE WHEN NULLIF(CreatedBy,N'') IS NOT NULL THEN N'AlteryxMongoUserID' END,CAST(0 AS bit)
  FROM ar_source.Alteryx_AppInfos
  UNION ALL
- SELECT N'Workflow',AppInfoId,N'TechnicalOwner',CAST(NULL AS nvarchar(max)),CAST(1 AS bit)
+ SELECT N'Workflow',AppInfoId,N'TechnicalOwner',CAST(NULL AS nvarchar(max)),NULL,CAST(1 AS bit)
  FROM ar_source.Alteryx_AppInfos
 )
 SELECT @RunKey AS RunKey, CAST(r.NativeObjectType AS nvarchar(50)) AS NativeObjectType,
  CAST(r.NativeObjectID AS nvarchar(200)) AS NativeObjectID,
  CAST(r.PrincipalRoleCode AS nvarchar(40)) AS PrincipalRoleCode,
  CAST(NULLIF(r.SourcePrincipalReference,N'') AS nvarchar(200)) AS SourcePrincipalReference,
- CAST(CASE WHEN NULLIF(r.SourcePrincipalReference,N'') IS NOT NULL THEN N'AlteryxMongoUserID' END AS nvarchar(60)) AS SourceReferenceNamespace,
+ CAST(r.SourceReferenceNamespace AS nvarchar(60)) AS SourceReferenceNamespace,
  CAST(u.UserId AS nvarchar(200)) AS NativePrincipalID,
  CAST(CASE WHEN u.UserId IS NOT NULL THEN N'AlteryxMongoUserID' END AS nvarchar(60)) AS IdentifierNamespace,
  CAST(NULL AS nvarchar(100)) AS NativeRole,
@@ -333,7 +364,8 @@ SELECT @RunKey AS RunKey, CAST(r.NativeObjectType AS nvarchar(50)) AS NativeObje
            WHEN NULLIF(LTRIM(RTRIM(u.Email)),N'') IS NULL THEN N'MissingEmail'
            ELSE N'ReadyForEmailMatch' END AS nvarchar(40)) AS SourceReferenceStatusCode
 FROM Roles r LEFT JOIN ar_source.Alteryx_Users u
- ON u.UserId COLLATE Latin1_General_100_BIN2=r.SourcePrincipalReference COLLATE Latin1_General_100_BIN2;
+ ON r.SourceReferenceNamespace=N'AlteryxMongoUserID'
+ AND u.UserId COLLATE Latin1_General_100_BIN2=r.SourcePrincipalReference COLLATE Latin1_General_100_BIN2;
 
 -- Supplemental diagnostic (12): keep separately; this is not a Registry sheet.
 -- A Service username is not promoted to a Gallery user ID or workflow owner.

@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1140 570" width="1140" height="570" role="img" aria-labelledby="title description">
+  <title id="title">V1.2 workspace, asset, and connection relationships</title>
+  <desc id="description">A confirmed business association gives an asset at most one current accountable workspace. Platform memberships remain separate observations. Assets connect to observed connection records; several assets may share a connection. Server and database details stay on each connection.</desc>
+  <defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="none" stroke="#74677e" stroke-width="1.4"/></marker></defs>
+  <style>text{font-family:'Segoe UI',Arial,sans-serif;fill:#302b38}.title{font-size:27px;font-weight:700}.heading{font-size:21px;font-weight:650}.body{font-size:17px}.small{font-size:15px;fill:#635b6d}.label{font-size:15px;font-weight:600;fill:#65419c}.line{fill:none;stroke:#74677e;stroke-width:2;marker-end:url(#arrow)}</style>
+  <rect width="1140" height="570" fill="#fff"/>
+  <text x="30" y="42" class="title">One asset, two different kinds of context</text>
+  <text x="30" y="73" class="body">Confirmed business responsibility sits beside observed platform facts.</text>
+  <rect x="30" y="116" width="274" height="187" rx="12" fill="#faf7fd" stroke="#a98bc8" stroke-width="1.5"/>
+  <text x="51" y="151" class="heading">Workspace</text>
+  <text x="51" y="184" class="body">One Workspace Owner</text>
+  <text x="51" y="213" class="body">Equal Champions</text>
+  <text x="51" y="242" class="body">Approved business context</text>
+  <text x="51" y="278" class="label">Business responsibility</text>
+  <path d="M310 212 H434" class="line"/>
+  <text x="369" y="173" text-anchor="middle" class="small">Confirmed</text>
+  <text x="369" y="193" text-anchor="middle" class="small">accountability</text>
+  <rect x="442" y="116" width="250" height="187" rx="12" fill="#faf7fd" stroke="#a98bc8" stroke-width="1.5"/>
+  <text x="463" y="151" class="heading">Asset</text>
+  <text x="463" y="184" class="body">Stable Registry ID</text>
+  <text x="463" y="213" class="body">Native identity retained</text>
+  <text x="463" y="242" class="body">Business version</text>
+  <text x="463" y="278" class="label">Completed evaluations</text>
+  <path d="M699 212 H833" class="line"/>
+  <text x="765" y="173" text-anchor="middle" class="small">Observed</text>
+  <text x="765" y="193" text-anchor="middle" class="small">connection link</text>
+  <rect x="841" y="116" width="270" height="187" rx="12" fill="#f8f8fa" stroke="#b9b3c2" stroke-width="1.5"/>
+  <text x="862" y="151" class="heading">Connection</text>
+  <text x="862" y="184" class="body">Source-scoped identity</text>
+  <text x="862" y="213" class="body">Server and database</text>
+  <text x="862" y="242" class="body">Authentication details</text>
+  <text x="862" y="278" class="small">Observed technical evidence</text>
+  <text x="30" y="339" class="small">Each asset has zero or one confirmed current accountable workspace.</text>
+  <text x="30" y="363" class="small">Zero means accountability remains unconfirmed; it is not silently inferred.</text>
+  <rect x="442" y="407" width="669" height="92" rx="10" fill="#f8f8fa" stroke="#b9b3c2"/>
+  <text x="464" y="439" class="heading">Native platform memberships</text>
+  <text x="464" y="470" class="body">Retain zero or more observed memberships independently.</text>
+  <path d="M565 402 V311" class="line"/>
+  <text x="585" y="384" class="small">Source context, not approval</text>
+  <rect x="30" y="405" width="371" height="95" rx="10" fill="#fff" stroke="#d5b2a7"/>
+  <text x="49" y="436" class="body">Several assets may share a connection.</text>
+  <text x="49" y="463" class="small">An asset can also have several connections.</text>
+  <text x="30" y="542" class="small">No shared cross-platform DataSource record is required in V1.2. Connection details stay on each record.</text>
+</svg>

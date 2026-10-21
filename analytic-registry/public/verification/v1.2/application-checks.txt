@@ -1,0 +1,18 @@
+
+119 domain and data checks passed.
+32 workflow checks passed.
+41 audit checks passed; 0 failed.
+V1.1 foundation: 42 reconciliation and identity checks passed.
+V1.1 assessment: 13 checks passed.
+V1.1 workflow: 19 checks passed.
+72 V1.1 approval, actor, and group-change checks passed.
+79 effective responsibility and registration checks passed.
+132 workspace request module checks passed.
+V1.1 evidence: 47 inventory, control-readiness, and retained-date checks passed.
+Platform samples: 291 fixture, reconciliation and identity checks passed.
+Not tested: installed SQL execution, persistent RunKey replay protection, transactional business-metadata merge, or recurring-case upsert. These need an implemented importer and case persistence.
+90 Champion request policy checks passed.
+Asset governance: 78 scenario checks passed.
+Workspace page checks passed: 75
+Asset views: 25 checks passed.
+TypeScript compilation passed.

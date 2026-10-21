@@ -1,0 +1,125 @@
+{
+  "notice": "Synthetic PostgreSQL rows. SAMPLE_* tokens are fixture-only parameters, never claimed installed Tableau tokens.",
+  "public.sites": [
+    {
+      "id": 1,
+      "luid": "22000000-0000-4000-8000-000000000001"
+    }
+  ],
+  "public.projects": [
+    {
+      "id": 11,
+      "site_id": 1,
+      "luid": "22100000-0000-4000-8000-000000000001",
+      "name": "Sample projects renamed",
+      "state": "active",
+      "owner_id": 101
+    },
+    {
+      "id": 12,
+      "site_id": 1,
+      "luid": "22100000-0000-4000-8000-000000000002",
+      "name": "Sample archive",
+      "state": "active",
+      "owner_id": 999
+    }
+  ],
+  "public.workbooks": [
+    {
+      "id": 21,
+      "site_id": 1,
+      "luid": "22200000-0000-4000-8000-000000000001",
+      "name": "Sample revenue renamed",
+      "revision": "2.0",
+      "state": "active",
+      "owner_id": 101,
+      "modified_by_user_id": 102
+    },
+    {
+      "id": 23,
+      "site_id": 1,
+      "luid": "22200000-0000-4000-8000-000000000003",
+      "name": "Sample new workbook",
+      "revision": "1.0",
+      "state": "active",
+      "owner_id": 103,
+      "modified_by_user_id": 101
+    }
+  ],
+  "public.datasources": [],
+  "public.projects_contents": [
+    {
+      "site_id": 1,
+      "project_id": 12,
+      "content_id": 21,
+      "content_type": "SAMPLE_WORKBOOK_TOKEN"
+    },
+    {
+      "site_id": 1,
+      "project_id": 11,
+      "content_id": 23,
+      "content_type": "SAMPLE_WORKBOOK_TOKEN"
+    }
+  ],
+  "public.data_connections": [
+    {
+      "site_id": 1,
+      "luid": "22400000-0000-4000-8000-000000000001",
+      "caption": "Sample SQL source",
+      "name": "sample-sql",
+      "dbclass": "sqlserver",
+      "has_extract": true,
+      "server": "sql.example.test",
+      "dbname": "SampleOperations",
+      "authentication": null,
+      "owner_id": 21,
+      "owner_type": "SAMPLE_WORKBOOK_OWNER_TOKEN"
+    }
+  ],
+  "public.users": [
+    {
+      "id": 101,
+      "site_id": 1,
+      "luid": "22300000-0000-4000-8000-000000000001",
+      "system_user_id": 1101,
+      "site_role_id": 1
+    },
+    {
+      "id": 102,
+      "site_id": 1,
+      "luid": "22300000-0000-4000-8000-000000000002",
+      "system_user_id": 1102,
+      "site_role_id": 1
+    },
+    {
+      "id": 103,
+      "site_id": 1,
+      "luid": "22300000-0000-4000-8000-000000000003",
+      "system_user_id": 1103,
+      "site_role_id": 1
+    }
+  ],
+  "public.system_users": [
+    {
+      "id": 1101,
+      "friendly_name": "Alex Sample",
+      "email": "alex@example.test"
+    },
+    {
+      "id": 1102,
+      "friendly_name": "Casey Sample",
+      "email": "casey@example.test"
+    },
+    {
+      "id": 1103,
+      "friendly_name": "Morgan Sample",
+      "email": "unmatched@example.test"
+    }
+  ],
+  "public.site_roles": [
+    {
+      "id": 1,
+      "name": "Creator"
+    }
+  ]
+}

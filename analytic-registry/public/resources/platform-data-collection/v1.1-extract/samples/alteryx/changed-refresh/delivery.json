@@ -1,0 +1,249 @@
+{
+  "Run_Context": [
+    {
+      "RunKey": "11000000-0000-4000-8000-000000000002",
+      "PlatformCode": "Alteryx",
+      "PlatformInstanceKey": "synthetic-alteryx-instance",
+      "NativeScopeKey": "synthetic-gallery-scope",
+      "ObservedAt": "2026-10-01T12:00:00Z",
+      "DirectoryTenantKey": "90000000-0000-4000-8000-000000000001",
+      "MappingVersion": "1.1",
+      "ScopeDescription": "SYNTHETIC TEST ONLY. Named small scope; intentionally partial inventory. Not an extract from an installed platform."
+    }
+  ],
+  "Coverage": [
+    {
+      "RunKey": "11000000-0000-4000-8000-000000000002",
+      "DatasetCode": "Workspaces",
+      "CoverageStatus": "Partial",
+      "RowCount": 2
+    },
+    {
+      "RunKey": "11000000-0000-4000-8000-000000000002",
+      "DatasetCode": "Assets",
+      "CoverageStatus": "Partial",
+      "RowCount": 2
+    },
+    {
+      "RunKey": "11000000-0000-4000-8000-000000000002",
+      "DatasetCode": "Workspace_Assets",
+      "CoverageStatus": "Partial",
+      "RowCount": 3
+    },
+    {
+      "RunKey": "11000000-0000-4000-8000-000000000002",
+      "DatasetCode": "Connections",
+      "CoverageStatus": "NotCollected",
+      "RowCount": null
+    },
+    {
+      "RunKey": "11000000-0000-4000-8000-000000000002",
+      "DatasetCode": "Asset_Connections",
+      "CoverageStatus": "NotCollected",
+      "RowCount": null
+    },
+    {
+      "RunKey": "11000000-0000-4000-8000-000000000002",
+      "DatasetCode": "Asset_Dependencies",
+      "CoverageStatus": "NotCollected",
+      "RowCount": null
+    },
+    {
+      "RunKey": "11000000-0000-4000-8000-000000000002",
+      "DatasetCode": "Platform_Users",
+      "CoverageStatus": "Partial",
+      "RowCount": 2
+    },
+    {
+      "RunKey": "11000000-0000-4000-8000-000000000002",
+      "DatasetCode": "Directory_Users",
+      "CoverageStatus": "NotCollected",
+      "RowCount": null
+    },
+    {
+      "RunKey": "11000000-0000-4000-8000-000000000002",
+      "DatasetCode": "Object_Users",
+      "CoverageStatus": "Partial",
+      "RowCount": 8
+    }
+  ],
+  "Workspaces": [
+    {
+      "RunKey": "11000000-0000-4000-8000-000000000002",
+      "NativeWorkspaceID": "sample-collection-01",
+      "NativeWorkspaceType": "Collection",
+      "DisplayName": "Sample operations renamed",
+      "NativeLifecycleCode": null
+    },
+    {
+      "RunKey": "11000000-0000-4000-8000-000000000002",
+      "NativeWorkspaceID": "sample-collection-02",
+      "NativeWorkspaceType": "Collection",
+      "DisplayName": "Sample shared workflows",
+      "NativeLifecycleCode": null
+    }
+  ],
+  "Assets": [
+    {
+      "RunKey": "11000000-0000-4000-8000-000000000002",
+      "NativeAssetID": "0000000000000000000000c9",
+      "NativeAssetType": "Workflow",
+      "DisplayName": "Sample monthly balance",
+      "NativeVersionReference": "0000000000000000000001f6",
+      "NativeLifecycleCode": "Present"
+    },
+    {
+      "RunKey": "11000000-0000-4000-8000-000000000002",
+      "NativeAssetID": "0000000000000000000000cb",
+      "NativeAssetType": "Workflow",
+      "DisplayName": "Sample new workflow",
+      "NativeVersionReference": "0000000000000000000001ff",
+      "NativeLifecycleCode": "Present"
+    }
+  ],
+  "Workspace_Assets": [
+    {
+      "RunKey": "11000000-0000-4000-8000-000000000002",
+      "NativeWorkspaceID": "sample-collection-01",
+      "NativeAssetID": "0000000000000000000000c9",
+      "NativeAssetType": "Workflow",
+      "NativeAssociationType": "CollectionMembership"
+    },
+    {
+      "RunKey": "11000000-0000-4000-8000-000000000002",
+      "NativeWorkspaceID": "sample-collection-01",
+      "NativeAssetID": "0000000000000000000000cb",
+      "NativeAssetType": "Workflow",
+      "NativeAssociationType": "CollectionMembership"
+    },
+    {
+      "RunKey": "11000000-0000-4000-8000-000000000002",
+      "NativeWorkspaceID": "sample-collection-02",
+      "NativeAssetID": "0000000000000000000000c9",
+      "NativeAssetType": "Workflow",
+      "NativeAssociationType": "CollectionMembership"
+    }
+  ],
+  "Connections": [],
+  "Asset_Connections": [],
+  "Asset_Dependencies": [],
+  "Platform_Users": [
+    {
+      "RunKey": "11000000-0000-4000-8000-000000000002",
+      "NativePrincipalID": "000000000000000000000065",
+      "IdentifierNamespace": "AlteryxMongoUserID",
+      "PrincipalTypeCode": "User",
+      "DisplayName": "Alex Sample",
+      "SourceEmail": "alex@example.test",
+      "SourceStatus": "true"
+    },
+    {
+      "RunKey": "11000000-0000-4000-8000-000000000002",
+      "NativePrincipalID": "000000000000000000000066",
+      "IdentifierNamespace": "AlteryxMongoUserID",
+      "PrincipalTypeCode": "User",
+      "DisplayName": "Casey Sample",
+      "SourceEmail": "casey@example.test",
+      "SourceStatus": "true"
+    }
+  ],
+  "Directory_Users": [],
+  "Object_Users": [
+    {
+      "RunKey": "11000000-0000-4000-8000-000000000002",
+      "NativeObjectType": "Workflow",
+      "NativeObjectID": "0000000000000000000000c9",
+      "PrincipalRoleCode": "CreatedBy",
+      "SourcePrincipalReference": "000000000000000000000065",
+      "SourceReferenceNamespace": "AlteryxMongoUserID",
+      "NativePrincipalID": "000000000000000000000065",
+      "IdentifierNamespace": "AlteryxMongoUserID",
+      "NativeRole": null,
+      "SourceReferenceStatusCode": "ReadyForEmailMatch"
+    },
+    {
+      "RunKey": "11000000-0000-4000-8000-000000000002",
+      "NativeObjectType": "Workflow",
+      "NativeObjectID": "0000000000000000000000c9",
+      "PrincipalRoleCode": "TechnicalOwner",
+      "SourcePrincipalReference": null,
+      "SourceReferenceNamespace": null,
+      "NativePrincipalID": null,
+      "IdentifierNamespace": null,
+      "NativeRole": null,
+      "SourceReferenceStatusCode": "UnverifiedMapping"
+    },
+    {
+      "RunKey": "11000000-0000-4000-8000-000000000002",
+      "NativeObjectType": "Workflow",
+      "NativeObjectID": "0000000000000000000000cb",
+      "PrincipalRoleCode": "CreatedBy",
+      "SourcePrincipalReference": "000000000000000000000065",
+      "SourceReferenceNamespace": "AlteryxMongoUserID",
+      "NativePrincipalID": "000000000000000000000065",
+      "IdentifierNamespace": "AlteryxMongoUserID",
+      "NativeRole": null,
+      "SourceReferenceStatusCode": "ReadyForEmailMatch"
+    },
+    {
+      "RunKey": "11000000-0000-4000-8000-000000000002",
+      "NativeObjectType": "Workflow",
+      "NativeObjectID": "0000000000000000000000cb",
+      "PrincipalRoleCode": "TechnicalOwner",
+      "SourcePrincipalReference": null,
+      "SourceReferenceNamespace": null,
+      "NativePrincipalID": null,
+      "IdentifierNamespace": null,
+      "NativeRole": null,
+      "SourceReferenceStatusCode": "UnverifiedMapping"
+    },
+    {
+      "RunKey": "11000000-0000-4000-8000-000000000002",
+      "NativeObjectType": "Collection",
+      "NativeObjectID": "sample-collection-01",
+      "PrincipalRoleCode": "TechnicalOwner",
+      "SourcePrincipalReference": "000000000000000000000065",
+      "SourceReferenceNamespace": "AlteryxMongoUserID",
+      "NativePrincipalID": "000000000000000000000065",
+      "IdentifierNamespace": "AlteryxMongoUserID",
+      "NativeRole": null,
+      "SourceReferenceStatusCode": "ReadyForEmailMatch"
+    },
+    {
+      "RunKey": "11000000-0000-4000-8000-000000000002",
+      "NativeObjectType": "Collection",
+      "NativeObjectID": "sample-collection-01",
+      "PrincipalRoleCode": "CollectionMember",
+      "SourcePrincipalReference": "000000000000000000000066",
+      "SourceReferenceNamespace": "AlteryxMongoUserID",
+      "NativePrincipalID": "000000000000000000000066",
+      "IdentifierNamespace": "AlteryxMongoUserID",
+      "NativeRole": null,
+      "SourceReferenceStatusCode": "ReadyForEmailMatch"
+    },
+    {
+      "RunKey": "11000000-0000-4000-8000-000000000002",
+      "NativeObjectType": "Collection",
+      "NativeObjectID": "sample-collection-01",
+      "PrincipalRoleCode": "CollectionMember",
+      "SourcePrincipalReference": "0000000000000000000003e7",
+      "SourceReferenceNamespace": "AlteryxMongoUserID",
+      "NativePrincipalID": null,
+      "IdentifierNamespace": null,
+      "NativeRole": null,
+      "SourceReferenceStatusCode": "UnresolvedUserReference"
+    },
+    {
+      "RunKey": "11000000-0000-4000-8000-000000000002",
+      "NativeObjectType": "Collection",
+      "NativeObjectID": "sample-collection-02",
+      "PrincipalRoleCode": "TechnicalOwner",
+      "SourcePrincipalReference": "000000000000000000000065",
+      "SourceReferenceNamespace": "AlteryxMongoUserID",
+      "NativePrincipalID": "000000000000000000000065",
+      "IdentifierNamespace": "AlteryxMongoUserID",
+      "NativeRole": null,
+      "SourceReferenceStatusCode": "ReadyForEmailMatch"
+    }
+  ]
+}

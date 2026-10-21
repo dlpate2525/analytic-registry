@@ -1,0 +1,75 @@
+{
+  "checks": [
+    {
+      "name": "Domain rules, seed, persistence, context, and types remain byte-identical",
+      "pass": true
+    },
+    {
+      "name": "Historical body retained: business-product.md",
+      "pass": true
+    },
+    {
+      "name": "Historical body retained: requirements.md",
+      "pass": true
+    },
+    {
+      "name": "Historical body retained: decision-register.md",
+      "pass": true
+    },
+    {
+      "name": "Historical body retained: v1.1-approved-workflows.md",
+      "pass": true
+    },
+    {
+      "name": "Historical body retained: v1.1-model-simplification.md",
+      "pass": true
+    },
+    {
+      "name": "Historical body retained: v1.1-request-module.md",
+      "pass": true
+    },
+    {
+      "name": "Only three agreed purpose clarifications change the contract",
+      "pass": true
+    },
+    {
+      "name": "Package, lock, and app versions agree",
+      "pass": true
+    },
+    {
+      "name": "Published baseline and absent tag remain explicit",
+      "pass": true
+    },
+    {
+      "name": "Normal hooks prepare bounded local documentation",
+      "pass": true
+    },
+    {
+      "name": "workbook checksum describes exact current bytes",
+      "pass": true
+    },
+    {
+      "name": "collectionPack checksum describes exact current bytes",
+      "pass": true
+    },
+    {
+      "name": "Published release preparation rejects this local draft",
+      "pass": true
+    }
+  ],
+  "protectedSourceFiles": 8,
+  "contractPurposeClarifications": [
+    [
+      "Workspaces",
+      "NativeWorkspaceID"
+    ],
+    [
+      "Workspaces",
+      "NativeWorkspaceType"
+    ],
+    [
+      "Connections",
+      "IdentityClassificationCode"
+    ]
+  ]
+}

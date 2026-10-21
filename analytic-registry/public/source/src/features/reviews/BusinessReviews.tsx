@@ -1,0 +1,6 @@
+import { workspaceIdsFor } from '../../utils/workItems';
+import { RecordMappingCells } from '../../components/RecordMapping';
+import { Link } from 'react-router-dom';
+import { useRegistry } from '../../data/store';
+import { Title, Panel, Badge, Empty } from '../../components/ui';
+export function BusinessReviews(){const {data:d}=useRegistry();const mine=workspaceIdsFor(d,'P1');const rows=d.reviews.filter(r=>(r.ownerId==='P1'||(r.workspaceId&&mine.has(r.workspaceId)))&&['Pending Business Response','Action Required'].includes(r.status));return <><Title title="Reviews" description="Respond to questions and resolve actions for your workspaces."/><Panel title="Your actions"><div className="table-wrap"><table><thead><tr><th>Workspace</th><th>Asset</th><th>Action</th><th>Due</th><th>Status</th><th/></tr></thead><tbody>{rows.map(r=><tr key={r.id}><RecordMappingCells workspaceId={r.workspaceId} assetId={r.assetId}/><td>{r.type}</td><td>{r.dueDate}</td><td><Badge>{r.status}</Badge></td><td><Link to={'/reviews/'+r.id}>Open review →</Link></td></tr>)}</tbody></table>{!rows.length&&<Empty text="You have no review actions waiting for a business response."/>}</div></Panel><p className="quiet-help">Administrative investigations and platform queues are available in Administrator view.</p></>}

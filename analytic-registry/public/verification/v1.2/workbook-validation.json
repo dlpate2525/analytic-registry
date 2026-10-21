@@ -1,0 +1,116 @@
+{
+  "status": "PASS",
+  "workbookRevision": "1.2",
+  "schemaVersion": "1.1",
+  "sheets": [
+    "Guide",
+    "Column_Dictionary",
+    "Run_Context",
+    "Coverage",
+    "Workspaces",
+    "Assets",
+    "Workspace_Assets",
+    "Connections",
+    "Asset_Connections",
+    "Asset_Dependencies",
+    "Platform_Users",
+    "Directory_Users",
+    "Object_Users",
+    "Tableau_Output",
+    "PowerBI_Output",
+    "Alteryx_Output"
+  ],
+  "sheetCount": 16,
+  "inputTables": [
+    {
+      "sheet": "Run_Context",
+      "columns": 8,
+      "range": "A1:H6",
+      "blankRows": 5
+    },
+    {
+      "sheet": "Coverage",
+      "columns": 4,
+      "range": "A1:D6",
+      "blankRows": 5
+    },
+    {
+      "sheet": "Workspaces",
+      "columns": 5,
+      "range": "A1:E6",
+      "blankRows": 5
+    },
+    {
+      "sheet": "Assets",
+      "columns": 6,
+      "range": "A1:F6",
+      "blankRows": 5
+    },
+    {
+      "sheet": "Workspace_Assets",
+      "columns": 5,
+      "range": "A1:E6",
+      "blankRows": 5
+    },
+    {
+      "sheet": "Connections",
+      "columns": 10,
+      "range": "A1:J6",
+      "blankRows": 5
+    },
+    {
+      "sheet": "Asset_Connections",
+      "columns": 5,
+      "range": "A1:E6",
+      "blankRows": 5
+    },
+    {
+      "sheet": "Asset_Dependencies",
+      "columns": 7,
+      "range": "A1:G6",
+      "blankRows": 5
+    },
+    {
+      "sheet": "Platform_Users",
+      "columns": 7,
+      "range": "A1:G6",
+      "blankRows": 5
+    },
+    {
+      "sheet": "Directory_Users",
+      "columns": 5,
+      "range": "A1:E6",
+      "blankRows": 5
+    },
+    {
+      "sheet": "Object_Users",
+      "columns": 10,
+      "range": "A1:J6",
+      "blankRows": 5
+    }
+  ],
+  "inputColumnCount": 72,
+  "blankInputRowsPerTable": 5,
+  "textFormattedTemplateCells": 345,
+  "dictionaryRows": 72,
+  "platformMappingRows": 72,
+  "unchangedPlatformReferenceCells": 1728,
+  "correctedPurposes": [
+    [
+      "Workspaces",
+      "NativeWorkspaceID"
+    ],
+    [
+      "Workspaces",
+      "NativeWorkspaceType"
+    ],
+    [
+      "Connections",
+      "IdentityClassificationCode"
+    ]
+  ],
+  "formulas": 0,
+  "errorCells": 0,
+  "oldWorkbookUnchanged": true,
+  "sha256": "e7acf60dcdba348dc6c4da1b7d9508365cfa6d7476e10ae928b2eca48b916f2f"
+}

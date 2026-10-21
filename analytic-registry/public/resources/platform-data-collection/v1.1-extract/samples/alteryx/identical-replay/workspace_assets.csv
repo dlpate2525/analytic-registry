@@ -1,0 +1,4 @@
+RunKey,NativeWorkspaceID,NativeAssetID,NativeAssetType,NativeAssociationType
+11000000-0000-4000-8000-000000000001,sample-collection-01,0000000000000000000000c9,Workflow,CollectionMembership
+11000000-0000-4000-8000-000000000001,sample-collection-01,0000000000000000000000ca,Workflow,CollectionMembership
+11000000-0000-4000-8000-000000000001,sample-collection-02,0000000000000000000000c9,Workflow,CollectionMembership

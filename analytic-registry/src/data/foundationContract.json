@@ -1,7 +1,7 @@
 {
   "version": "1.1",
   "status": "Prototype contract; installed-source validation pending",
-  "date": "2026-10-09",
+  "date": "2026-10-20",
   "previousVersion": "1.0",
   "tables": [
     {
@@ -392,29 +392,29 @@
           "name": "RowCount",
           "type": "bigint",
           "required": "Conditional",
-          "purpose": "Number of delivered data rows, excluding header and fully blank template rows. Complete requires a count; zero is valid only for a verified empty collection.",
+          "purpose": "Exact number of delivered rows, excluding headers and fully blank template rows. Complete and Partial require a nonnegative count, including zero. Failed and NotCollected require NULL and no data rows. Count alone does not prove scope completeness.",
           "platforms": {
             "PowerBI": {
               "status": "Conditional",
               "source": "Count from the completed export",
-              "valueRule": "Nonnegative delivered row count. Complete requires an exact count, including a legitimate zero. Failed/NotCollected use NULL.",
-              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "valueRule": "Complete and Partial require the exact nonnegative delivered row count. Zero is valid. Failed and NotCollected require NULL and no dataset rows. Only independently verified complete scope supports absence comparisons.",
+              "nullRule": "NULL only for Failed or NotCollected. A missing count blocks a Complete or Partial delivery.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
             },
             "Tableau": {
               "status": "Conditional",
               "source": "Count from the completed export",
-              "valueRule": "Nonnegative delivered row count. Complete requires an exact count, including a legitimate zero. Failed/NotCollected use NULL.",
-              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "valueRule": "Complete and Partial require the exact nonnegative delivered row count. Zero is valid. Failed and NotCollected require NULL and no dataset rows. Only independently verified complete scope supports absence comparisons.",
+              "nullRule": "NULL only for Failed or NotCollected. A missing count blocks a Complete or Partial delivery.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
             },
             "Alteryx": {
               "status": "Conditional",
               "source": "Count from the completed export",
-              "valueRule": "Nonnegative delivered row count. Complete requires an exact count, including a legitimate zero. Failed/NotCollected use NULL.",
-              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "valueRule": "Complete and Partial require the exact nonnegative delivered row count. Zero is valid. Failed and NotCollected require NULL and no dataset rows. Only independently verified complete scope supports absence comparisons.",
+              "nullRule": "NULL only for Failed or NotCollected. A missing count blocks a Complete or Partial delivery.",
               "example": "",
               "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
@@ -470,7 +470,7 @@
           "name": "NativeWorkspaceID",
           "type": "nvarchar(200)",
           "required": "Yes",
-          "purpose": "Power BI workspace GUID, Tableau project LUID, or Alteryx CollectionId. Resolve with platform, instance, scope, and type.",
+          "purpose": "Power BI workspace GUID, Tableau project LUID, or Alteryx CollectionId. Resolve with platform, instance, native scope, entity kind Workspace, and this native ID. Workspace subtype is not part of this key.",
           "platforms": {
             "PowerBI": {
               "status": "Required",
@@ -503,7 +503,7 @@
           "name": "NativeWorkspaceType",
           "type": "nvarchar(50)",
           "required": "Yes",
-          "purpose": "Workspace, PersonalGroup, Project, or Collection in these extracts. Keep the native type as part of the scoped object identity.",
+          "purpose": "Observed workspace subtype: Workspace, PersonalGroup, Project, or Collection. Preserve it as source evidence. A Workspace/PersonalGroup change does not create another durable workspace identity.",
           "platforms": {
             "PowerBI": {
               "status": "Required",
@@ -1038,7 +1038,7 @@
           "name": "NativeConnectionID",
           "type": "nvarchar(200)",
           "required": "Yes",
-          "purpose": "Tableau data connection LUID or returned Power BI source-instance ID. Alteryx V1 does not collect connections. Missing or unstable keys require review.",
+          "purpose": "Tableau data connection LUID or returned Power BI source-instance ID. Resolves a Connection RegistryObject within its platform, instance, and native scope. Alteryx V1.1 does not collect connections. Names and endpoint details do not identify this object.",
           "platforms": {
             "PowerBI": {
               "status": "Profile dependent",
@@ -1071,7 +1071,7 @@
           "name": "DisplayName",
           "type": "nvarchar(200)",
           "required": "No",
-          "purpose": "Source caption when available. The Power BI adapter uses an explicit technology-and-ID label when no supported name is provided. Maps to ObservedConnection.DisplayName.",
+          "purpose": "Source caption when available. The Power BI adapter uses a technology-and-ID label when no supported name is provided. Maps to ObjectObservation.DisplayName, never the business name.",
           "platforms": {
             "PowerBI": {
               "status": "Profile dependent",
@@ -1104,7 +1104,7 @@
           "name": "TechnologyCode",
           "type": "nvarchar(40)",
           "required": "Yes",
-          "purpose": "Source technology, such as Oracle or SQL Server. Null source types become Undefined. Preserve other vendor values for mapping review. Maps to resolved DataSource.TechnologyCode.",
+          "purpose": "Source technology, such as Oracle or SQL Server. Missing source types become Undefined. Preserve other vendor values, including dataengine and hyper. Maps to ObjectObservation.TechnologyCode. HasExtract records extract evidence separately.",
           "platforms": {
             "PowerBI": {
               "status": "Profile dependent",
@@ -1117,7 +1117,7 @@
             "Tableau": {
               "status": "Required",
               "source": "public.data_connections.dbclass",
-              "valueRule": "Map oracle to Oracle, sqlserver to SQL Server, dataengine/hyper to Extract; retain other known values or Undefined.",
+              "valueRule": "Map oracle to Oracle and sqlserver to SQL Server. Preserve other native dbclass values, including dataengine and hyper. Use Undefined only when missing; HasExtract is independent.",
               "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
@@ -1137,7 +1137,7 @@
           "name": "HasExtract",
           "type": "bit",
           "required": "No",
-          "purpose": "Tableau extract indicator, separate from source technology. Retained in staging. Power BI leaves it null; Alteryx V1 returns no connection rows.",
+          "purpose": "Tableau extract indicator, independent from source technology. Maps to ObjectObservation.HasExtract with its value state. Preserve explicit true and false. Power BI leaves it null; Alteryx V1.1 returns no connection rows.",
           "platforms": {
             "PowerBI": {
               "status": "Profile dependent",
@@ -1170,7 +1170,7 @@
           "name": "ServerHostname",
           "type": "nvarchar(255)",
           "required": "No",
-          "purpose": "Allowed endpoint host from the source. Maps to DataSource.ServerHostname after endpoint resolution. Do not merge by host alone.",
+          "purpose": "Allowed endpoint host from the source. Maps to ObjectObservation.ServerHostname on this connection. Do not merge connection identities by host or infer a shared cross-platform data source.",
           "platforms": {
             "PowerBI": {
               "status": "Profile dependent",
@@ -1203,7 +1203,7 @@
           "name": "DatabaseName",
           "type": "nvarchar(200)",
           "required": "No",
-          "purpose": "Source database or provider-specific database identifier. Maps to DataSource.DatabaseName after validation.",
+          "purpose": "Source database or provider-specific database identifier. Maps to ObjectObservation.DatabaseName on this connection. Shared data-source records and cross-platform endpoint matching are deferred.",
           "platforms": {
             "PowerBI": {
               "status": "Profile dependent",
@@ -1236,7 +1236,7 @@
           "name": "AuthenticationTypeCode",
           "type": "nvarchar(40)",
           "required": "No",
-          "purpose": "Tableau native authentication method when present. Maps to ObservedConnection.AuthenticationTypeCode after vocabulary validation. Missing does not imply anonymous access.",
+          "purpose": "Tableau native authentication method when present. Maps to ObjectObservation.AuthenticationTypeCode. Preserve the source code for mapping review. Missing does not imply anonymous access.",
           "platforms": {
             "PowerBI": {
               "status": "Profile dependent",
@@ -1269,7 +1269,7 @@
           "name": "IdentityClassificationCode",
           "type": "nvarchar(40)",
           "required": "No",
-          "purpose": "Unknown for this pass. Maps to ObservedConnection.IdentityClassificationCode. Later identity evidence may support a service/personal classification.",
+          "purpose": "Optional verified connection credential classification. Current query profiles establish only Unknown. Do not infer a service or personal account from a hostname, username, or authentication method. Unknown establishes no credential compliance conclusion.",
           "platforms": {
             "PowerBI": {
               "status": "Profile dependent",
@@ -1302,7 +1302,7 @@
           "name": "EvidenceStatusCode",
           "type": "nvarchar(30)",
           "required": "Yes",
-          "purpose": "Observed for the row's captured facts. Maps to ObservedConnection.EvidenceStatusCode. Dataset coverage controls what absences can mean.",
+          "purpose": "Evidence for captured connection facts. Maps to ObjectObservation.EvidenceStatusCode. This projection reports Partial while credential controls remain unverified. Dataset coverage separately controls what absences can mean.",
           "platforms": {
             "PowerBI": {
               "status": "Profile dependent",
@@ -2318,7 +2318,7 @@
             },
             "Alteryx": {
               "status": "Required",
-              "source": "ar_source.Alteryx_Collections.OwnerId / UsersJson -> Users[].UserId; ar_source.Alteryx_AppInfos.CreatedBy (SQL adapter for collections.OwnerId, collections.Users[].UserId, appInfos.CreatedBy; optional verified current owner mapping)",
+              "source": "ar_source.Alteryx_Collections.OwnerId / UsersJson; ar_source.Alteryx_AppInfos.CreatedBy (SQL adapter for collections and appInfos; current workflow owner mapping remains unverified).",
               "valueRule": "TechnicalOwner for collection OwnerId; CollectionMember for Users; CreatedBy for appInfos.CreatedBy. Current workflow TechnicalOwner is unverified",
               "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
@@ -2351,9 +2351,9 @@
             },
             "Alteryx": {
               "status": "Conditional",
-              "source": "ar_source.Alteryx_Collections.OwnerId / UsersJson -> Users[].UserId; ar_source.Alteryx_AppInfos.CreatedBy (SQL adapter for collections.OwnerId, collections.Users[].UserId, appInfos.CreatedBy; optional verified current owner mapping)",
-              "valueRule": "Preserve the raw reference when supplied. NULL for missing reference or unverified workflow ownership; retain the object-role row for Platform Manager.",
-              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "source": "ar_source.Alteryx_Collections.OwnerId / UsersJson: Users[].UserId or Users[].ActiveDirectoryObject.Sid; ar_source.Alteryx_AppInfos.CreatedBy. The adapter accepts ActiveDirectoryObject as an object or an empty/single-object array.",
+              "valueRule": "Use valid nonblank UserId first. Otherwise preserve an available raw Sid in ActiveDirectorySID. Reject malformed or ambiguous references before narrowing to 200 characters. Never substitute array position or login. Keep missing and unverified object-role rows for Platform Manager.",
+              "nullRule": "Blank when both valid source references are absent, or workflow ownership is unverified. Keep the object-role row.",
               "example": "",
               "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
@@ -2385,7 +2385,7 @@
             "Alteryx": {
               "status": "Conditional",
               "source": "Documented reference kind",
-              "valueRule": "AlteryxMongoUserID for documented OwnerId, UserId, and CreatedBy references even when unmatched. NULL for missing or unverified workflow owner.",
+              "valueRule": "AlteryxMongoUserID for OwnerId, UserId, and CreatedBy, including unmatched references. ActiveDirectorySID only for collection-member SID fallback. A SID is not a Gallery user key. Blank for missing or unverified references.",
               "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
               "example": "",
               "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
@@ -2417,8 +2417,8 @@
             },
             "Alteryx": {
               "status": "Conditional",
-              "source": "Verified reference-to-Platform_Users join",
-              "valueRule": "Populate only after exact unique namespace match. NULL when unresolved; preserve raw source reference.",
+              "source": "Exact ar_source.Alteryx_Users.UserId join, only when SourceReferenceNamespace is AlteryxMongoUserID.",
+              "valueRule": "Populate only after the exact unique Gallery user match. Keep blank for ActiveDirectorySID even when its text equals a Gallery UserId. Preserve the raw reference.",
               "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
               "example": "",
               "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
@@ -2451,7 +2451,7 @@
             "Alteryx": {
               "status": "Conditional",
               "source": "Resolved Platform_Users.IdentifierNamespace",
-              "valueRule": "NULL when unresolved. Must accompany NativePrincipalID.",
+              "valueRule": "AlteryxMongoUserID only with a resolved NativePrincipalID. Keep blank for ActiveDirectorySID and other unresolved references.",
               "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
               "example": "",
               "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
@@ -2517,7 +2517,7 @@
             "Alteryx": {
               "status": "Required",
               "source": "Reference resolution result",
-              "valueRule": "ReadyForEmailMatch when the account and email resolve; MissingEmail, MissingSourceReference, UnresolvedUserReference, or UnverifiedMapping otherwise. This does not prove a directory match. Route unresolved cases to Platform Manager.",
+              "valueRule": "ReadyForEmailMatch requires a Gallery user and email. Unmatched references, including SID-only members, stay UnresolvedUserReference. Other states: MissingEmail, MissingSourceReference, UnverifiedMapping. Directory status is separate.",
               "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
               "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"

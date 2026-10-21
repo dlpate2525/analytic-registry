@@ -1,0 +1,4 @@
+RunKey,NativePrincipalID,IdentifierNamespace,PrincipalTypeCode,DisplayName,SourceEmail,SourceStatus
+12000000-0000-4000-8000-000000000002,22300000-0000-4000-8000-000000000001,TableauUserLUID,User,Alex Sample,alex@example.test,TableauSiteRole=Creator
+12000000-0000-4000-8000-000000000002,22300000-0000-4000-8000-000000000002,TableauUserLUID,User,Casey Sample,casey@example.test,TableauSiteRole=Creator
+12000000-0000-4000-8000-000000000002,22300000-0000-4000-8000-000000000003,TableauUserLUID,User,Morgan Sample,unmatched@example.test,TableauSiteRole=Creator

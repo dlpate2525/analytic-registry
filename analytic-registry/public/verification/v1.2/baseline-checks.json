@@ -1,0 +1,63 @@
+{
+  "fixture": "C:\\Users\\dlpat\\Documents\\Codex\\2026-10-06\\files-pasted-by-the-user-build\\outputs\\analytic-registry\\.scratch\\b-anmKov",
+  "usedWindowsFallback": true,
+  "checks": [
+    {
+      "name": "Stale workbook revision rejects creation",
+      "pass": true
+    },
+    {
+      "name": "Changed public content rejects creation",
+      "pass": true
+    },
+    {
+      "name": "Rejected public content creates no baseline",
+      "pass": true
+    },
+    {
+      "name": "Changed source rejects the saved bundle",
+      "pass": true
+    },
+    {
+      "name": "Rejected source creates no baseline",
+      "pass": true
+    },
+    {
+      "name": "Current public content and bundle create a snapshot",
+      "pass": true
+    },
+    {
+      "name": "In-memory comparison leaves preview unchanged",
+      "pass": true
+    },
+    {
+      "name": "Manifest records workbook revision and current handoff",
+      "pass": true
+    },
+    {
+      "name": "Repeated creation verifies the existing snapshot",
+      "pass": true
+    },
+    {
+      "name": "Repeated creation leaves manifest unchanged",
+      "pass": true
+    },
+    {
+      "name": "Frozen check works without live source, public, or preview files",
+      "pass": true
+    },
+    {
+      "name": "Frozen check accepts an explicit baseline ID",
+      "pass": true
+    },
+    {
+      "name": "Explicit baseline rejects path traversal",
+      "pass": true
+    },
+    {
+      "name": "Frozen check detects changed snapshot bytes",
+      "pass": true
+    }
+  ],
+  "limitations": []
+}

@@ -1,6 +1,6 @@
-# V1.1 platform query handoff
+# V1.2 platform query handoff
 
-Query revision **2**, 9 October 2026. These files produce the existing [Excel contract](analytic-registry-v1.1-extract.xlsx): 11 input tables and 72 columns. No source database was available for live execution.
+V1.2 query corrections, 21 October 2026. These files use input schema **1.1** and the [V1.2 workbook](../v1.2-workbook/analytic-registry-v1.2-extract.xlsx): 11 input tables and 72 columns. No source database was available for live execution.
 
 ## Files for platform managers
 
@@ -18,7 +18,7 @@ The SQL adapter views are mappings over your supplied data. They are not native 
 2. Set the existing delivery parameters and run the matching SQL batch.
 3. Save each named result in its matching Excel input table.
 4. Load [SQL staging](sqlserver-staging.sql) and review [validation](sqlserver-validation.sql) plus query diagnostics.
-5. Have Platform Manager review coverage and unresolved references before accepting the delivery.
+5. Have the registry operator accept the structurally valid delivery. Assign unresolved references to Platform Manager without an extra import approval.
 
 Preserve native IDs as text. Keep SQL NULL values as blank Excel cells. Do not paste diagnostics into input tables. Header-only results mean no dataset rows; they do not mean the platform has no such objects.
 
@@ -30,7 +30,7 @@ The user-supplied [Gallery field reference](https://help.alteryx.com/20251/en/se
 
 Use `collections.CollectionId` for collections, `appInfos._id` for workflows, and `users._id` for platform accounts. Keep their existing namespaces. `ServiceId` supports a supplemental join to `AS_Applications`; it never replaces the workflow ID.
 
-`appInfos.CreatedBy` is the original author. Service `UserName` is not proof of the current workflow owner. Connections and lineage remain uncollected until verified source evidence is available. The query retains unresolved references and ambiguous revision evidence for Platform Manager.
+`appInfos.CreatedBy` is the original author. Service `UserName` is not proof of the current workflow owner. Connections and lineage remain uncollected until verified source evidence is available. The query retains unresolved references and ambiguous revision evidence for Platform Manager. A verified SID-only member remains an unresolved raw `ActiveDirectorySID` reference. It does not become a Gallery user or an email match.
 
 ## Tableau: PostgreSQL repository
 
@@ -48,7 +48,7 @@ The Fabric SQL route provides workspaces, reports, semantic models, and direct w
 
 Retain `PlatformCode=PowerBI`, `NativeAssetType=Report` or `Dataset`, and membership `ContainedIn`. Renaming these keys to Fabric or SemanticModel would break reconciliation with earlier accepted deliveries.
 
-For an existing completed scan JSON export, the [SQL Server transform](queries/powerbi-export-sqlserver.sql) remains a richer alternative. It makes no API call. It requires SQL Server OPENJSON support and must not be run unchanged in Fabric. [Microsoft OPENJSON](https://learn.microsoft.com/en-us/sql/t-sql/functions/openjson-transact-sql)
+For an existing completed scan JSON export, the [SQL Server transform](queries/powerbi-export-sqlserver.sql) remains a richer alternative. It makes no API call. It requires SQL Server OPENJSON support and must not be run unchanged in Fabric. Coverage counts describe the emitted rowsets, including collected empty results; Partial remains Partial. [Microsoft OPENJSON](https://learn.microsoft.com/en-us/sql/t-sql/functions/openjson-transact-sql)
 
 The workbook's PowerBI_Output tab explicitly distinguishes these two profiles. In the scan export, Microsoft defines report `createdById` as the report owner's ID. Its role remains TechnicalOwner. Do not apply Alteryx's author semantics to this differently defined field. [Microsoft report fields](https://learn.microsoft.com/en-us/rest/api/power-bi/admin/workspace-info-get-scan-result#workspaceinforeport)
 
@@ -60,7 +60,7 @@ Resolve source account references within their declared namespaces. Match explic
 
 Do not infer deletion from Partial, NotCollected, or Failed coverage. NotCollected and Failed use NULL RowCount; collected empty datasets use zero. Technical observations never overwrite approved business owners, declarations, Champions, or historical approvals. See [monthly reconciliation](monthly-reconciliation.md).
 
-Before acceptance, exercise rename, workspace move, duplicate key, omitted dataset, disabled account, and changed-email cases using real captures. Static checks cannot certify the installed SQL schema, export completeness, or runtime behavior.
+Use documented examples and labeled synthetic records to exercise rename, workspace move, duplicate key, omitted dataset, disabled account, and changed-email cases locally. Repeat representative checks against real captures before the first live acceptance. Local checks cannot certify the installed SQL schema, export completeness, or runtime behavior.
 
 ## Retained earlier artifacts
 

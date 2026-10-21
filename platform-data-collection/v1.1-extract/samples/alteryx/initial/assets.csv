@@ -1,0 +1,3 @@
+RunKey,NativeAssetID,NativeAssetType,DisplayName,NativeVersionReference,NativeLifecycleCode
+11000000-0000-4000-8000-000000000001,0000000000000000000000c9,Workflow,Sample daily balance,0000000000000000000001f5,Present
+11000000-0000-4000-8000-000000000001,0000000000000000000000ca,Workflow,Sample legacy workflow,0000000000000000000001fe,Present

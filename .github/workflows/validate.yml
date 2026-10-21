@@ -20,6 +20,12 @@ jobs:
       - name: Check prototype
         run: npm run check
         working-directory: analytic-registry
+      - name: Check documentation and preparation
+        run: |
+          npm run check:docs
+          npm run check:preparation
+          npm run prepare:release -- --check
+        working-directory: analytic-registry
       - name: Build prototype
         run: npm run build
         working-directory: analytic-registry
@@ -28,8 +34,8 @@ jobs:
       - name: Check release resources
         run: npm run check:release
         working-directory: analytic-registry
-      - name: Verify workbook and collection archive
-        run: python3 platform-data-collection/verify-delivery.py
+      - name: Verify historical V1 workbook
+        run: python3 platform-data-collection/verify-delivery.py --workbook-only
       - name: Check V1.1 query contracts
         run: node platform-data-collection/v1.1-extract/queries/verify-queries.mjs
       - name: Verify V1.1 workbook
@@ -39,3 +45,12 @@ jobs:
           node platform-data-collection/v1.1-extract/scripts/verify-tableau-selects.mjs
           node platform-data-collection/v1.1-extract/scripts/verify-alteryx-sqlserver.mjs
           node platform-data-collection/v1.1-extract/queries/verify-fabric.mjs
+      - name: Check V1.2 workbook and delivery behavior
+        run: |
+          python3 platform-data-collection/v1.2-workbook/verify-workbook.py
+          python3 platform-data-collection/v1.1-extract/scripts/verify-producer-fixtures.py
+          python3 platform-data-collection/v1.1-extract/scripts/verify-delivery-validation.py
+      - name: Verify publication artifacts
+        run: |
+          python3 scripts/package-publication.check.py
+          python3 scripts/package-publication.py --check

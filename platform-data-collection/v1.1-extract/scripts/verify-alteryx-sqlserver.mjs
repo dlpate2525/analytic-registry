@@ -114,4 +114,16 @@ check('Manifest guards run before narrowing conversions', () => {
   assert.match(sql,/@ServiceSchemaVersion IS NULL/);
   assert.match(sql,/@SourceProductVersion IS NULL/);
 });
+check('Directory-only member references retain a separate raw namespace', () => {
+  assert.match(sql,/WHEN NULLIF\(Sid,N''\) IS NOT NULL THEN N'ActiveDirectorySID'/);
+  assert.match(sql,/ON r\.SourceReferenceNamespace=N'AlteryxMongoUserID'\s+AND u\.UserId/);
+  assert.match(sql,/COALESCE\(NULLIF\(UserId,N''\),NULLIF\(Sid,N''\)\)/);
+});
+check('Directory shape and raw SID guards precede output conversion', () => {
+  for (const code of [51027,51028]) assert.ok(sql.indexOf(`THROW ${code}`)<markers[0].index);
+  assert.match(sql,/p\.\[key\]=N'ActiveDirectoryObject' AND p\.type NOT IN \(0,4,5\)/);
+  assert.match(sql,/SELECT COUNT_BIG\(\*\) FROM OPENJSON\(p\.value\)\)>1/);
+  assert.match(sql,/sid\.type NOT IN \(0,1\) OR DATALENGTH\(sid\.value\)>400/);
+  assert.match(sql,/DATALENGTH\(sid\.value\)<>DATALENGTH\(LTRIM\(RTRIM\(sid\.value\)\)\)/);
+});
 console.log(`Alteryx SQL Server handoff: ${checks} static checks passed. SQL Server execution remains unverified.`);

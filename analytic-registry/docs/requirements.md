@@ -1,3 +1,5 @@
+> **Historical requirements.** Use [V1.2 requirements](v1.2-requirements.md) for implemented behavior, intended integration, and unresolved policy. The earlier status assessments below remain unchanged.
+
 > **V1.1 update, 9 October 2026:** [Current baseline](v1.1-prototype-baseline.md), [operating review and repair status](v1.1-product-operating-review.md), [simplified foundation](v1.1-model-simplification.md), and [verification](v1.1-verification.md) take precedence where this earlier document differs. The frozen V1 release remains unchanged in its Git tag.
 
 # Analytic Registry — requirements and acceptance criteria
@@ -7,6 +9,8 @@
 The [V1 baseline](v1-prototype-baseline.md) freezes the local prototype and current extraction handoff. **Prototype** means demonstrated local behavior, not production authorization. **Partial** identifies known gaps. **Design** means future implementation. **V1 handoff** means an offline artifact for manual use, not a live app integration.
 
 Requirements remain valid when implementation is deferred. In particular, classification, PRL, and risk repairs are outside this V1 freeze. Proposed operational targets still need acceptance; approving the prototype does not approve them.
+
+The tables below retain the historical V1 implementation assessment, except requirements explicitly updated for V1.1. Use the V1.1 section for current repairs.
 
 ## Functional requirements
 
@@ -64,7 +68,7 @@ Requirements remain valid when implementation is deferred. In particular, classi
 | FR-45 | Load SQL staging manually. Validate records before review; apply approved data through the manual database process. | Staging, validation, and match scripts supplied; no live SQL execution or automated registry importer |
 | FR-46 | Match exact normalized SourceEmail to Graph Mail in the configured tenant. Require one distinct user; review duplicate/conflicting rows. Never substitute UPN or display name. | V1 SQL matching contract, separate from the app's mock person status |
 | FR-47 | Preserve scoped native principal IDs, object-role references, directory IDs, raw email, UPN, and account state separately. Send all unresolved cases to Platform Manager. Keep resolved-disabled distinct from no match. | V1 Platform_Users, Directory_Users, Object_Users and review result sets |
-| FR-48 | Collect Alteryx through MongoDB backend queries only. Preserve unverified current ownership as unknown. Do not substitute original authorship. | Read-only query template and schema preflight; installed 2025.2 schema requires validation |
+| FR-48 | Query SQL Server copies of Alteryx Gallery and Service data through explicit adapter views. Preserve unknown current ownership; authorship does not prove ownership. | V1.1 SQL query and mapping guide; installed 2025.2 export shape requires validation |
 | FR-49 | Preserve existing RunKey, ObservedAt, and manifest behavior. Keep directory-run context separate. Do not add RunDate or redesign runs for V1. | V1 contract retained; future timestamp consistency work remains R14 |
 
 ## Nonfunctional requirements
@@ -73,7 +77,7 @@ Requirements remain valid when implementation is deferred. In particular, classi
 |---|---|---|
 | NFR-01 | Use five main sections and fewer than six steps per process. Disclose detailed context progressively. | Current requests 5, assessments 5, reviews 3, annual 3, external administration 5 |
 | NFR-02 | Use readable labels, visible focus, keyboard operation, accessible names, text alternatives, and status text independent of color. | Improved labels, focus, skip link, and status colors. Formal WCAG 2.2 AA audit remains required |
-| NFR-03 | Support desktop and narrow screens. Wide data tables may scroll within their container. Main navigation remains reachable. | Browser desktop/narrow inspection recorded in audit; not a full device matrix |
+| NFR-03 | Use a fixed 1366 × 768 tablet landscape canvas. Scale proportionally within the player. Scroll long pages and wide tables internally. | [V1.1 layout contract](v1.1-canvas-layout.md) supersedes earlier narrow-screen reflow. Power Apps player validation remains pending. |
 | NFR-04 | Enforce authentication, record-level authorization, role eligibility, and scope server-side. Permit self-approval when the actor holds the required role. | Design. View switch is a simulation; no blanket independent-approver requirement |
 | NFR-05 | Store no passwords, tokens, raw credential strings, or secret values. Collect only approved metadata. | Prototype reference fields; collector allowlists; production classification review required |
 | NFR-06 | Use parameterized queries and managed credentials. Collectors run read-only with the minimum approved scope. | Collection pack design; no live connections configured |
@@ -124,5 +128,6 @@ The prototype remains suitable for product review within its documented limits. 
 | Separate disabled, unresolved, duplicate, and non-person identity evidence. | Reference matcher and SQL preview aligned; SQL engine execution is pending. |
 | Keep fewer than six main sections and process steps. | Five main sections retained; existing guided processes retained. |
 | Use white backgrounds with purple and coral accents. | Implemented; status text remains explicit. |
+| Use 1366 × 768 fixed landscape coordinates with proportional scaling. | Implemented locally; internal scrolling and unchanged logical layout checked across five viewport sizes. |
 
 Nonfunctional boundaries remain unchanged: production requires authenticated commands, transaction safety, SQL constraints, authorization, monitoring, and recovery. Local tests do not establish those controls.

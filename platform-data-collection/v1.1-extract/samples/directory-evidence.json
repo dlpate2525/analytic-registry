@@ -1,0 +1,19 @@
+{
+  "notice": "Synthetic companion directory evidence for resolveEmail tests. Not collected by platform SQL. Not an Office 365 lookup.",
+  "observedAt": "2026-09-01T12:00:00Z",
+  "scope": "Only the listed test identities; completeness is an explicit test condition, never an estate claim.",
+  "rows": [
+    {
+      "tenant": "90000000-0000-4000-8000-000000000001",
+      "directoryId": "24000000-0000-4000-8000-000000000001",
+      "mail": "alex@example.test",
+      "accountEnabled": true
+    },
+    {
+      "tenant": "90000000-0000-4000-8000-000000000001",
+      "directoryId": "24000000-0000-4000-8000-000000000002",
+      "mail": "casey@example.test",
+      "accountEnabled": false
+    }
+  ]
+}

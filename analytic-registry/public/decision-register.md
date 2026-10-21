@@ -1,6 +1,16 @@
+> **Historical decision register.** Use the [V1.2 guide](v1.2-guide.md) and [current requirements](v1.2-requirements.md) for the present implementation. Earlier decisions and status notes below retain their original context.
+
 > **V1.1 update, 9 October 2026:** [Current baseline](v1.1-prototype-baseline.md), [operating review and repair status](v1.1-product-operating-review.md), [simplified foundation](v1.1-model-simplification.md), and [verification](v1.1-verification.md) take precedence where this earlier document differs. The frozen V1 release remains unchanged in its Git tag.
 
 # Analytic Registry — decision register
+
+> **Local asset-page decisions, 20 October 2026:** Define asset pages and data-source language (local review evidence; not included in this browser copy) replaces general asset approval outcomes with governance and risk qualification. The user accepted calculated PRL and its decision table, superseding the manual-only requirement below. High risk follows PRL 1 OR PII Yes OR EUCT Yes OR DMP Tier 1, Tier 2, or Tier 3. Untiered alone does not qualify. This is an accepted design change; runtime behavior and published baselines remain unchanged.
+
+> **Accepted interview decisions, 9 October 2026:** The first live pilot targets observed inventory, approved business accountability, and assigned exceptions. Owner and Champion changes take effect after required approval on the recorded effective date, without separate incoming-person acceptance. See [the interview](v1.1-design-interview.md) and [ADR 0001](adr/0001-effective-business-responsibility.md). These decisions supersede conflicting proposals below. Q2 is implemented and verified locally; no further GitHub push is authorized yet.
+
+> **Accepted Q3 and Q4:** Use available V1 evidence with trust and ease of use as priorities. Accept structurally valid partial deliveries with unresolved references. Structural errors block the whole delivery. The registry operator records acceptance; Platform Manager handles unresolved cases. See [ADR 0002](adr/0002-accept-valid-evidence-with-visible-gaps.md). Local SQL diagnostics, workbook instructions, and evidence indicators now follow this decision. A deployed importer and persistent acceptance ledger remain future work.
+
+> **Accepted Q5 and Q6:** Register Existing may complete business registration after required information, approvals, and the effective date. Required technical changes remain linked and open. Start validation with a small scope from each platform, using vendor documentation and clearly labeled samples. Synthetic records do not prove live execution or complete coverage. See [ADR 0003](adr/0003-separate-business-registration-from-technical-work.md) and [the interview](v1.1-design-interview.md). All six interview choices are settled. The user authorized local implementation and validation before another GitHub push. Q5 now has separate business and technical states; local verification is recorded in the interview.
 
 **Version:** `1.0.0-prototype.1` · 8 October 2026 · intended tag `v1.0.0-prototype.1`.
 
@@ -100,7 +110,7 @@ These settings remain proposals for an operational release. The V1 prototype app
 | O-14 | Set Low Adoption against a declared audience or usage target over a 90-day window. Set performance and concentration thresholds per platform and workload. | Do not invent one universal runtime, user percentage, or capacity threshold. A missing target produces Unable to Verify. The platform owner supplies versioned technical thresholds. |
 | O-15 | Use restore targets of at most 24 hours of data loss and restoration within one business day. | Treat these as pilot design targets. The database team must prove backup and restoration can meet them before live reliance. |
 | O-16 | Target common pages and first-page searches within 2 seconds at p95, and saves within 3 seconds at p95. Test at twice forecast pilot volume and concurrency. | The platform teams must supply the volume forecast. Imports remain asynchronous. Server paging and filtering are required; a local row cap cannot establish a complete result. |
-| O-17 | Require new-owner acceptance and platform validation for ownership transfer. Notify the previous owner when available. | An inactive previous owner cannot block reassignment forever. Preserve both identities and the effective date. Existing role-based approval requirements remain in force. |
+| O-17 | Superseded by interview Q2: owner and Champion changes require the existing approval and a recorded effective date. No separate incoming-person acceptance is required. | Business responsibility is independent of technical implementation. Preserve historical identities and frozen annual recipients. See ADR 0001; the local responsibility workflow is implemented and verified. |
 | O-18 | Confirmed: keep six calendar months of historical business metadata. The registry is not the official source system. | Apply to superseded versions, completed historical work, activity events, and source extracts. Keep current records, their supporting active approvals, and the identity index needed for refreshes. Detailed cleanup semantics follow Q-05 below. |
 
 ### Future risk-rule catalog — implementation deferred
@@ -128,7 +138,7 @@ Critical severity requires documented current business or security impact. A buc
 | Event | Eligible decision maker | Decision evidence |
 |---|---|---|
 | Technical setup | Platform Administrator | Exact request revision and validated prerequisites. |
-| Sensitive-data/access change or owner acceptance | Business Owner / Workspace Owner | Applicable business revision and changed scope. |
+| Sensitive-data/access change or business ownership approval | Business Owner / Workspace Owner | Applicable business revision and changed scope. No separate incoming-person acceptance under interview Q2. |
 | Custom setup or material Custom change | Application Owner or Platform Owner | Exact entitlement baseline and exception conditions. |
 | Annual completion | Application Owner or Platform Owner | Frozen annual packet, response, and linked follow-up. |
 | Evidence closure | Platform Manager, Platform Team member, or Platform Owner | Exact evidence revision, verification method, resolution, and linked findings. |

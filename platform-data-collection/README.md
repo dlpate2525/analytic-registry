@@ -1,4 +1,4 @@
-> **Current V1.1 handoff:** use [the V1.1 Excel and query contract](v1.1-extract/README.md). It supersedes the V1 input layout for new deliveries. Earlier collector scripts and V1 artifacts remain historical references; they are not the V1.1 acquisition route.
+> **Current V1.2 handoff:** use [the V1.2 workbook](v1.2-workbook/README.md) with input schema 1.1. Earlier V1 artifacts below remain historical references. Use the [current source queries](v1.1-extract/source-query-design.md) for new deliveries.
 
 # Analytic Registry — V1 platform data collection
 
