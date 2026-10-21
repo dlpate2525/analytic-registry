@@ -1,4 +1,4 @@
-import type { AssetAssessment, Attestation, AttestationSnapshot, RegistryData, WorkspaceRequest } from '../types';
+import type { AssetAssessment, Attestation, AttestationSnapshot, RegistryData } from '../types';
 import { attestationPacket, hasAttestationExceptions, questions } from './attestation';
 import { isAttestationComplete } from './approvals';
 import { todayLocal } from './dates';
@@ -7,16 +7,7 @@ import { attestationRecipientIds } from './authority';
 
 // These guards bind commands to the visible prototype profile. Production must
 // derive the actor and authorization from authenticated server-side context.
-export function requestActorIssue(edited:WorkspaceRequest,d:RegistryData,actorId:string){
- if(!d.people.some(person=>person.id===actorId&&person.status==='Active'))return 'The current prototype profile must be active to save or submit a request.';
- const original=d.requests.find(request=>request.id===edited.id);
- if(original?.status==='Submitted')return 'Submitted requests are read-only. Create an authorized correction instead.';
- const scope=original||edited;
- if(![scope.createdById,scope.ownerId,'P3'].includes(actorId))return 'Only the requester, workspace owner, or administrator can save or submit this draft.';
- if(original&&edited.createdById!==original.createdById)return 'The original requester cannot be changed.';
- if(!original&&edited.createdById&&edited.createdById!==actorId)return 'New requests must record the current prototype profile as requester.';
- return '';
-}
+export { requestActorIssue } from '../domain/requestPolicy';
 
 export function prepareAttestationResponse(edited:Attestation,d:RegistryData,actorId:string,submit:boolean):Attestation & {snapshot:AttestationSnapshot}{
  const original=d.attestations.find(record=>record.id===edited.id);

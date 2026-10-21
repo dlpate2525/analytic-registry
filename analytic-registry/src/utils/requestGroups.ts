@@ -32,3 +32,9 @@ export function withDataSourcesGroup(groups: GroupSpecification[], technicalName
     ? groups
     : [...groups, newRequestGroup('Data Sources', technicalName)];
 }
+
+/** Propose missing Standard groups only when the user opts into technical work. */
+export function withTechnicalGroupSpecifications(groups:GroupSpecification[],technicalName:string,configuration:'Standard'|'Custom'){
+  const next=withDataSourcesGroup(groups,technicalName);
+  return configuration==='Custom'?next:[...next,...requestGroupPurposes.filter(purpose=>!next.some(group=>group.purpose===purpose)).map(purpose=>newRequestGroup(purpose,technicalName))];
+}

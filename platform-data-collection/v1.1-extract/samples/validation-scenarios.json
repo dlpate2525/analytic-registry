@@ -1,0 +1,23 @@
+{
+  "status": "Synthetic local samples; no installed-source execution",
+  "contractVersion": "1.1",
+  "queryRevision": 2,
+  "scenarios": [
+    {"name": "initial", "expected": "Two new assets per platform; one or two workspaces; collected coverage remains Partial."},
+    {"name": "identical-replay", "expected": "All files match initial byte-for-byte. Reference comparison preserves existing registry IDs and returns Unchanged."},
+    {"name": "changed-refresh", "expected": "The first asset is renamed with stable native identity. A new asset appears. The omitted second asset is Not verified because coverage is Partial."},
+    {"name": "Tableau project move", "expected": "Workbook identity remains stable while Workspace_Assets changes the project membership."},
+    {"name": "Alteryx shared workflow", "expected": "One workflow appears in two collections. Assets has one row for that workflow."},
+    {"name": "Repeated unresolved owner", "expected": "Alteryx current workflow owner stays UnverifiedMapping across runs. The desired persistent result is one case with multiple occurrences; persistence is not implemented by the reference comparator."},
+    {"name": "Directory account status", "expected": "An Alteryx Active=true user can resolve to a disabled directory account. Preserve the directory ID and route to Platform Manager."},
+    {"name": "Business metadata", "expected": "Reference comparison does not mutate prior evidence or attached approved business metadata. Database merge behavior remains unverified."}
+  ],
+  "notValidated": [
+    "Installed SQL Server, PostgreSQL, or Fabric query execution",
+    "Full-estate coverage or source completeness",
+    "Persistent delivery replay protection and changed-content rejection under an existing RunKey",
+    "Transactional business metadata preservation during database import",
+    "Persistent finding and case deduplication across refreshes",
+    "Office 365 or Microsoft Graph account lookup"
+  ]
+}

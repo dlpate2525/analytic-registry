@@ -39,6 +39,9 @@ check(blocks.get('Object_Users').includes('LEFT JOIN public.users'), 'Unresolved
 check(blocks.get('Assets').includes('x.parent_workbook_id IS NULL'), 'Exclude embedded sources from published inventory');
 check(blocks.get('Workspace_Assets').includes('public.projects_contents'), 'Use documented membership relationship');
 check(blocks.get('Connections').includes("'Partial'::text AS \"EvidenceStatusCode\""), 'Do not claim full credential evidence');
+check(!/WHEN '(?:dataengine|hyper)' THEN 'Extract'/.test(sql), 'Preserve native extract engine technology instead of replacing it with storage mode');
+check(blocks.get('Connections').includes('x.has_extract::text AS "HasExtract"'), 'Extract indicator remains an independent source fact');
+check(blocks.get('Connections').includes("ELSE coalesce(nullif(x.dbclass,''),'Undefined') END AS \"TechnologyCode\""), 'Retain other native connection technologies without inventing a classification');
 for (const empty of ['Asset_Dependencies', 'Directory_Users']) {
   check(/WHERE false/i.test(blocks.get(empty)), `${empty} has headers and zero rows`);
   check(blocks.get('Coverage').includes(`'${empty}'::text, 'NotCollected'::text, NULL::bigint`), `${empty} has honest coverage`);

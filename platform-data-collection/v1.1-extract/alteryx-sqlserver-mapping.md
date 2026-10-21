@@ -95,6 +95,23 @@ Reconstruct only the original relationships using the documented parent key. The
 
 Use this only when the child export is complete for the parent. Missing or uncollected child tables must stay unknown; they must not produce `[]`. A flattened revision adapter must restore `Revisions[].Applications[]` with boolean `IsPublishedRevision` and `IsPrimaryApp` properties. Do not replace the relationship with a join on workflow names. Microsoft documents the SQL array construction in [FOR JSON PATH](https://learn.microsoft.com/en-us/sql/relational-databases/json/format-nested-json-output-with-path-mode-sql-server).
 
+The minimal UsersJson example above includes only Gallery user IDs. If the export contains directory-only members, also retain their original `ActiveDirectoryObject` evidence. Omitting that evidence loses an available raw reference. Confirm the exported child columns before reconstructing this nested field.
+
+### Directory-only collection members
+
+This adapter accepts `ActiveDirectoryObject` as an object or as an array containing at most one object. The current vendor reference calls it an array. Object support accommodates a verified, normalized export shape; it does not certify the installed 2025.2 export.
+
+Both examples below retain the same raw SID:
+
+```json
+{"UserId": null, "ActiveDirectoryObject": {"Sid": "S-1-5-21-123"}}
+{"UserId": null, "ActiveDirectoryObject": [{"Sid": "S-1-5-21-123"}]}
+```
+
+The query rejects multi-object arrays, duplicate properties, wrong types, oversized references, and leading or trailing spaces before workbook output. Missing fields, NULL, empty arrays, and blank SID values remain missing references. The adapter never chooses the first of several directory objects, even when their SID values agree. Preserve rejected source evidence for the Platform Manager.
+
+A valid Gallery `UserId` takes precedence. Otherwise, a usable SID populates `SourcePrincipalReference` with namespace `ActiveDirectorySID`. `NativePrincipalID` and `IdentifierNamespace` stay NULL, with status `UnresolvedUserReference`. A SID is not matched to Gallery IDs, email, display names, or logins. Malformed `UserId` evidence still fails validation; a SID cannot conceal it.
+
 ## Result-to-workbook mapping
 
 | Result | Workbook table | Source and treatment |
@@ -120,7 +137,7 @@ The durable source key remains platform + instance + native scope + object type 
 
 `CreatedBy` produces `PrincipalRoleCode = CreatedBy`. It never populates current workflow ownership. `ServiceId` is a bridge to the Service record, not a second workflow ID. `AS_Applications.UserName` remains supplemental because its meaning and identifier namespace can differ from Gallery users.
 
-A direct collection user without a Gallery `UserId` stays unresolved. Group grants, studio inheritance, expiration, and effective permissions are outside this query. Multiple unresolved rows may need manual mapping before staging accepts their keys. Do not drop them or infer users from display names.
+A direct collection user without a Gallery `UserId` stays unresolved. Distinct raw SIDs remain distinct references. Duplicate raw references and members with no distinct reference remain visible; staging may reject their duplicate keys. Group grants, studio inheritance, expiration, and effective permissions are outside this query. Do not drop unresolved rows or invent array-index identities.
 
 Join resolved Gallery user IDs to the Gallery user table first. Then use the established exact email rule: `lower(trim(SourceEmail)) = lower(trim(Mail))` within the configured directory tenant. A failed match goes to the Platform Manager. It does not prove the person is inactive. Only directory evidence can establish `AccountEnabled`.
 
@@ -131,3 +148,5 @@ The SQL fails before workbook output for duplicate source keys, malformed arrays
 Preflight reads SQL object metadata through [sys.columns](https://learn.microsoft.com/en-us/sql/relational-databases/system-catalog-views/sys-columns-transact-sql). It cannot establish that the source export was complete. Retain export receipts and the exact source boundary outside the workbook. Do not infer deletion from a `Partial` delivery.
 
 Static contract validation checks output headers, source-read-only behavior, and guard presence. These checks do not execute SQL Server or certify the user's installed export. Physical table names, imported array layout, and real-source execution remain to be validated by the platform team.
+
+[Producer fixtures](scripts/verify-producer-fixtures.py) execute the source projections and raw-reference guards using explicit SQLite substitutions. They check SID preservation, namespace isolation, rejected ambiguity, duplicate visibility, and Power BI output counts. These local checks do not certify SQL Server execution or the installed export.

@@ -1,0 +1,2 @@
+RunKey,PlatformCode,PlatformInstanceKey,NativeScopeKey,ObservedAt,DirectoryTenantKey,MappingVersion,ScopeDescription
+12000000-0000-4000-8000-000000000002,Tableau,synthetic-tableau-instance,22000000-0000-4000-8000-000000000001,2026-10-01T12:00:00Z,90000000-0000-4000-8000-000000000001,1.1,SYNTHETIC TEST ONLY. Named small scope; intentionally partial inventory. Not an extract from an installed platform.

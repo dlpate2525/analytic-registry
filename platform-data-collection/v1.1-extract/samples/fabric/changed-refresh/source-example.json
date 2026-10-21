@@ -1,0 +1,23 @@
+{
+  "notice": "Synthetic rows for our organization-owned landing adapter. This is not a built-in Fabric table.",
+  "registry_source.FabricInventory": [
+    {
+      "RunKey": "13000000-0000-4000-8000-000000000002",
+      "WorkspaceId": "23100000-0000-4000-8000-000000000001",
+      "WorkspaceName": "Sample Fabric renamed",
+      "WorkspaceType": "Workspace",
+      "ItemId": "23200000-0000-4000-8000-000000000001",
+      "ItemName": "Sample revenue renamed",
+      "ItemType": "Report"
+    },
+    {
+      "RunKey": "13000000-0000-4000-8000-000000000002",
+      "WorkspaceId": "23100000-0000-4000-8000-000000000001",
+      "WorkspaceName": "Sample Fabric renamed",
+      "WorkspaceType": "Workspace",
+      "ItemId": "23200000-0000-4000-8000-000000000003",
+      "ItemName": "Sample new report",
+      "ItemType": "Report"
+    }
+  ]
+}

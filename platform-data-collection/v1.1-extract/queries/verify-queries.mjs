@@ -161,6 +161,17 @@ check('Power BI returns all nine conservative coverage records', () => {
   for (const name of Object.keys(expected).filter(n=>!['Run_Context','Coverage'].includes(n))) assert(section.includes(`'${name}'`));
   assert(!section.includes("'Complete'"));
 });
+check('Power BI counts the same materialized rows that it exports', () => {
+  const section=powerbi.slice(powerbi.indexOf('-- Coverage:'), powerbi.indexOf('-- SUPPLEMENTAL:'));
+  for (const [name, variable] of Object.entries({Asset_Connections:'AC',Asset_Dependencies:'AD',Platform_Users:'PU',Object_Users:'OU'})) {
+    assert.match(powerbi,new RegExp(`INSERT @${variable}\\s+SELECT`));
+    assert.match(section,new RegExp(`COUNT_BIG\\(\\*\\) FROM @${variable}\\b`));
+    const block=powerbi.slice(powerbi.indexOf(`-- ${name}:`)).replace(/--[^\n]*/g,'').split(';')[0];
+    assert.match(block,new RegExp(`FROM @${variable}\\b`));
+  }
+  const sql=powerbi.replace(/--[^\n]*/g,'').replace(/\/\*[\s\S]*?\*\//g,'');
+  assert(!/\bINSERT\s+(?!@)/i.test(sql), 'Only local table-variable inserts are permitted');
+});
 check('Connection observations do not claim verified credential evidence', () => {
   assert.match(tableau, /'Partial'::text AS "EvidenceStatusCode"/);
   assert.match(powerbi, /'Partial' AS EvidenceStatusCode FROM @C/);

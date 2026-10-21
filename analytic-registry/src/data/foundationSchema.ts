@@ -1,5 +1,3 @@
-import type { TableSpec } from './schema';
-
 export type FoundationPlatform = 'PowerBI' | 'Tableau' | 'Alteryx';
 export interface FoundationColumn {
   name: string;
@@ -126,7 +124,7 @@ export const foundationTables: FoundationTable[] = [
   },
   {
     name: 'RegistryObject', domain: 'Registry', grain: 'One durable workspace, asset, or connection', source: 'Native inventory identity plus app-owned registration state', originTables: ['RegistryObject', 'Workspace', 'Asset', 'Connection'],
-    rules: 'Unique populated native tuple: instance + scope + native type + native ID. Workspace, Asset, and Connection are typed views. Renames and moves preserve ObjectID. Source ownership never assigns business ownership.',
+    rules: 'Unique native tuple: instance + native scope + object kind + native ID; assets also include the controlled native asset type. Workspace subtype and connection technology do not partition identity. Derive the asset display type from native type; do not store a second editable business classification. Renames preserve ObjectID. Source ownership never assigns business accountability.',
     columns: [
       id('ObjectID', 'Permanent registry object ID, independent from source IDs.'),
       column('ObjectKindCode', 'nvarchar(20)', 'Workspace, Asset, or Connection; controls typed views and valid relationships.', 'Validated registry command / ingestion'),
@@ -136,7 +134,6 @@ export const foundationTables: FoundationTable[] = [
       observed('NativeObjectID', 'nvarchar(200)', 'Exact source object ID as text.', true, 'Required for observed objects; a requested object may predate provisioning.', 'Awaiting verified provisioning or binding; never match the draft by name alone.'),
       column('RegistryNumber', 'nvarchar(30)', 'Unique readable registry reference for the object.', 'Registry command'),
       column('RegistrationStatusCode', 'nvarchar(30)', 'Business registration state, distinct from native lifecycle state.', 'Registry command'),
-      column('AssetTypeCode', 'nvarchar(50)', 'Report, model, workbook, workflow, or other controlled asset classification.', 'Validated registry command / ingestion', true, 'ObjectKindCode is Asset.', 'Not applicable to workspaces and connections; Unknown asset classification remains explicit.'),
       observed('FirstSeenAt', 'datetime2(3)', 'Earliest accepted platform observation.', true, 'Observed objects on all three platforms.', 'No source observation exists yet for an app-created draft.'),
       observed('LastSeenAt', 'datetime2(3)', 'Latest accepted platform observation.', true, 'Observed objects on all three platforms.', 'No source observation exists yet; failed refreshes do not invent a seen time.'),
     ],
@@ -152,6 +149,9 @@ export const foundationTables: FoundationTable[] = [
       observed('NativeLifecycleCode', 'nvarchar(40)', 'Original platform lifecycle state, when collected.', true, 'Applicable when the source exposes a lifecycle fact for this object type.', 'Unknown or not collected; never infer retirement.'),
       observed('NativeVersionReference', 'nvarchar(100)', 'Observed source revision, separate from a business release.', true, 'Asset observations when a verified source revision is available.', 'Not returned or not applicable; no business AssetVersion is invented.'),
       observed('TechnologyCode', 'nvarchar(40)', 'Connection technology such as Oracle or SQL Server.', true, 'Connection objects; Alteryx connection inventory remains uncollected in the current handoff.', 'Not applicable to other objects; unknown connection technology is displayed as Undefined.'),
+      observed('ServerHostname', 'nvarchar(500)', 'Observed server or host, stored on this connection without shared source matching.', true, 'Connection observations when returned by a verified query.', 'Not supplied or not applicable; never infer a host from a display name.'),
+      observed('DatabaseName', 'nvarchar(500)', 'Observed database label on this connection.', true, 'Connection observations when returned by a verified query.', 'Not supplied or not applicable; no cross-platform database identity is implied.'),
+      observed('AuthenticationTypeCode', 'nvarchar(100)', 'Observed authentication method; no credentials or secrets.', true, 'Connection observations when returned by a verified query.', 'Unknown or not collected; do not infer a service account.'),
       observed('HasExtract', 'bit', 'Tableau extract indicator, independent from connection technology.', true, 'Tableau connection observations only.', 'Unknown if absent for Tableau; not applicable to this native flag on other platforms.', ['Tableau']),
       observed('ExtractValueStateCode', 'nvarchar(30)', 'Evidence state for HasExtract; false is an observed value, not a missing value.'),
       observed('IdentityClassificationCode', 'nvarchar(40)', 'Verified connection credential class, or explicit Unknown.', true, 'Connection objects only; metadata must not contain secrets.', 'Not applicable to other object kinds; no credential inference is permitted.'),
@@ -174,7 +174,7 @@ export const foundationTables: FoundationTable[] = [
   },
   {
     name: 'ObjectSourceRoleObservation', domain: 'Observation', grain: 'One observed object-to-source-identity role reference in one run', source: 'Object_Users; replaces duplicate scalar owner and author fields', originTables: ['ConfiguredAccessSnapshot'],
-    rules: 'TechnicalOwner, CreatedBy, ModifiedBy, and Access are bridge rows, not Person flags. Retain unresolved references. Access does not imply business ownership or approval authority. Native scope is inherited from the run; account namespaces remain explicit.',
+    rules: 'TechnicalOwner, CreatedBy, ModifiedBy, Access, and CollectionMember are bridge rows, not Person flags. Retain unresolved references. Access and collection membership do not imply business ownership or approval authority. Native scope is inherited from the run; account namespaces remain explicit.',
     columns: [
       id('ObjectRoleObservationID', 'Immutable source role reference.'),
       fk('ExtractRunID', 'Execution that supplied this role reference.'),
@@ -184,8 +184,8 @@ export const foundationTables: FoundationTable[] = [
       observed('NativeObjectID', 'nvarchar(200)', 'Exact source object ID as text.'),
       observed('SourcePrincipalReference', 'nvarchar(200)', 'Original account reference returned for this object role.', true, undefined, 'Source omitted the reference; route unresolved work to Platform Manager.'),
       observed('SourceReferenceNamespace', 'nvarchar(60)', 'Namespace of the original principal reference.', true, undefined, 'Unknown namespace; do not join only by matching ID text.'),
-      observed('PrincipalRoleCode', 'nvarchar(40)', 'TechnicalOwner, CreatedBy, ModifiedBy, or Access.'),
-      observed('NativeRole', 'nvarchar(100)', 'Unchanged permission vocabulary for an Access assignment.', true, 'PrincipalRoleCode is Access.', 'Not applicable to non-access roles, or unknown native permission requiring review.'),
+      observed('PrincipalRoleCode', 'nvarchar(40)', 'TechnicalOwner, CreatedBy, ModifiedBy, Access, or CollectionMember.'),
+      observed('NativeRole', 'nvarchar(100)', 'Unchanged source permission or collection membership role.', true, 'PrincipalRoleCode is Access or CollectionMember when the source supplies a role.', 'Not supplied or not applicable; never infer business authority from this role.'),
       observed('ResolutionStatusCode', 'nvarchar(30)', 'Resolved or Unresolved relationship; independent from enabled account state.'),
       observed('SourceReferenceStatusCode', 'nvarchar(40)', 'ReadyForEmailMatch or the explicit unresolved-reference reason.'),
     ],
@@ -223,22 +223,3 @@ export const foundationTables: FoundationTable[] = [
     ],
   },
 ];
-
-/** Compatibility shape for existing dictionary helpers; does not import the historical catalog at runtime. */
-export const foundationSchema: TableSpec[] = foundationTables.map(table => ({
-  name: table.name,
-  domain: table.domain,
-  grain: table.grain,
-  writer: table.source,
-  columns: table.columns.map(field => `${field.name} ${field.type}`),
-  rules: table.rules,
-}));
-
-export const foundationModelStatus = {
-  version: '1.1',
-  foundationTableCount: foundationTables.length,
-  historicalTableCount: 53,
-  completeConsolidationProposalCount: 45,
-  deployed: false,
-  purpose: 'Inventory and identity foundation; workflow modules remain required before live operations.',
-} as const;

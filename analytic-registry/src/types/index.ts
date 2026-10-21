@@ -1,16 +1,77 @@
 export type Platform = 'Power BI / Fabric' | 'Tableau' | 'Alteryx';
 export type Result = 'Aligned' | 'Pending Implementation' | 'Flagged for Review' | 'Discrepancy' | 'Unable to Verify' | 'Not Applicable';
 export type Severity = 'Critical' | 'High' | 'Medium' | 'Low';
+export type AssetRisk = 'High risk' | 'Does not meet the High risk rule' | 'Not determined';
+export type CalculatedPRL = 'PRL 1' | 'PRL 2' | 'PRL 3' | 'Not determined';
+export type GovernanceAnswer = 'Yes' | 'No' | 'Unknown';
+export type AssetDmpTier = 'Tier 1' | 'Tier 2' | 'Tier 3' | 'Untiered' | 'Unknown';
+export interface AssetEvaluationAnswers {
+  complexity:'Simple'|'Moderate'|'Complex'|'Unknown';
+  sourceCount:number|'Unknown';
+  audienceSize:number|'Unknown'|'Not applicable';
+  audienceApplicabilityReason:string;
+  pii:GovernanceAnswer;
+  euct:GovernanceAnswer;
+  dmp:AssetDmpTier;
+  rls:string;
+  processingType:string;
+  datasetSize:string;
+  duration:string;
+}
+export interface AssetBusinessVersion {
+  id:string;
+  assetId:string;
+  reference:string;
+  origin:'Initial baseline'|'Material business change'|'Existing recorded version';
+  declaredAt?:string;
+  declaredById?:string;
+  evaluationId?:string;
+  previousVersionId?:string;
+}
+export interface AssetGovernanceEvaluation {
+  id:string;
+  assetId:string;
+  businessVersionId:string;
+  version:string;
+  workspaceId:string;
+  reviewerId:string;
+  evaluatedOn:string;
+  recordedAt:string;
+  purpose:string;
+  audience:string;
+  answers:AssetEvaluationAnswers;
+  methodVersion:'PRL-01';
+  calculatedPrl:CalculatedPRL;
+  risk:AssetRisk;
+  qualificationReasons:string[];
+  evidenceReference:string;
+  comments:string;
+  externalWorkReference:string;
+  changeKind:'Initial baseline'|'Material business change'|'Technical change'|'Corrected declaration'|'Updated evidence'|'Historical evidence';
+  mode:'Current version'|'New current version'|'Historical version';
+  previousEvaluationId?:string;
+}
+export interface AssetAssociationRecord {
+  id:string;
+  assetId:string;
+  previousWorkspaceId:string|null;
+  workspaceId:string;
+  actorId:string;
+  recordedAt:string;
+  reason:string;
+  confirmationReference:string;
+  kind:'Initial confirmation'|'Transfer or correction';
+}
 export type RequestType = 'Create New' | 'Register Existing' | 'Update Existing' | 'Annual Attestation';
 export interface Person { id:string; name:string; email:string; lob:string; manager:string; status:'Active'|'Inactive'|'Unverified' }
-export interface Workspace { observationComplete?:boolean; containsPii?: string; containsEuct?: string; highestDmpTier?: string; id:string; nativeId:string; platform:Platform; name:string; businessName:string; purpose:string; ownerId:string; originalOwnerLob:string; lob:string; requesterId:string; configuration:'Standard'|'Custom'; standardVersion:string; lifecycle:string; classification:string; criticality:string; lastAttestation:string; nextAttestation:string; createdDate:string; registryStatus:'Registered'|'Discovered'; contentReadiness:string; requestedVersionId:string; implementedVersionId:string; observedDate:string }
+export interface Workspace { businessLineStatus?:'Declared'|'Inherited'|'Unknown'; businessRequestId?:string; observationComplete?:boolean; containsPii?: string; containsEuct?: string; highestDmpTier?: string; id:string; nativeId:string; platform:Platform; name:string; businessName:string; purpose:string; ownerId:string; originalOwnerLob:string; lob:string; requesterId:string; configuration:'Standard'|'Custom'; standardVersion:string; lifecycle:string; classification:string; criticality:string; lastAttestation:string; nextAttestation:string; createdDate:string; registryStatus:'Registered'|'Discovered'; contentReadiness:string; requestedVersionId:string; implementedVersionId:string; observedDate:string }
 export interface WorkspaceConfigurationVersion { id:string; workspaceId:string; version:number; type:'Standard'|'Custom'; technicalName:string; customReason:string; customExplanation:string; alternateSecurity:string; alternateAuthentication:string; createdDate:string }
 export interface ChampionAssignment { configurationVersionId:string; personId:string }
 export interface GroupSpecification { businessOwnerId?:string; id:string; configurationVersionId:string; purpose:string; mode:'Existing'|'New'; groupId:string; displayName:string; suggestedName:string; requestedName:string; provisioningStatus:string }
 export interface ObservedPrincipal { id:string; workspaceId:string; principalId:string; name:string; kind:'Group'|'User'; accessLevel:string; purpose:string; memberIds:string[]; evidenceDate:string }
 export interface EffectiveUserAccess { workspaceId:string; userId:string; accessLevel:string; viaPrincipalId:string }
-export interface WorkspaceRequest { supersedesRequestId?:string; createdById?:string; targetDate?:string; execution?:{requestKey:string;implementationReference:string;implementedAt:string;implementedBy:string;verificationReference?:string;verifiedAt?:string;verifiedBy?:string}; containsPii?: string; containsEuct?: string; highestDmpTier?: string; classification:string; criticality:string; id:string; type:RequestType; platform:Platform; workspaceId:string; businessName:string; purpose:string; ownerId:string; configuration:'Standard'|'Custom'; technicalName:string; championIds:string[]; groups:GroupSpecification[]; customReason:string; customExplanation:string; alternateSecurity:string; alternateAuthentication:string; status:'Draft'|'Submitted'; createdDate:string }
-export interface Asset { id:string; platform:Platform; type:string; name:string; workspaceId:string|null; nativeId:string; environment:string; version:string; purpose:string; audience:string; developerId:string; championId:string; createdDate:string; modifiedDate:string; lastActivity:string; production:boolean; personalSpace:boolean; assessmentStatus:string; prl:string; euct:string; dmp:string; pii:boolean }
+export interface WorkspaceRequest { approvalPolicy?:'champion-v1'; workspaceBusinessLine?:string; nativeWorkspaceId?:string; submittedAt?:string; effectiveDate?:string; technicalWorkRequired?:boolean; businessApplied?:{requestKey:string;appliedAt:string;effectiveDate:string;ownerId:string;championIds:string[];nativeWorkspaceId:string;approvalIds:string[]}; supersedesRequestId?:string; createdById?:string; targetDate?:string; execution?:{requestKey:string;implementationReference:string;implementedAt:string;implementedBy:string;verificationReference?:string;verifiedAt?:string;verifiedBy?:string}; containsPii?: string; containsEuct?: string; highestDmpTier?: string; classification:string; criticality:string; id:string; type:RequestType; platform:Platform; workspaceId:string; businessName:string; purpose:string; ownerId:string; configuration:'Standard'|'Custom'; technicalName:string; championIds:string[]; groups:GroupSpecification[]; customReason:string; customExplanation:string; alternateSecurity:string; alternateAuthentication:string; status:'Draft'|'Submitted'; createdDate:string }
+export interface Asset { nativeType?:string; nativeVersionReference?:string; currentBusinessVersionId?:string; currentEvaluationId?:string; governanceRisk?:AssetRisk; id:string; platform:Platform; type:string; name:string; workspaceId:string|null; nativeId:string; environment:string; version:string; purpose:string; audience:string; developerId:string; championId:string; createdDate:string; modifiedDate:string; lastActivity:string; production:boolean; personalSpace:boolean; assessmentStatus:string; prl:string; euct:string; dmp:string; pii:boolean }
 export interface AssetAssessment { prlApprovalReference?:string; prlApprovedBy?:string; id:string; assetId:string; version:string; purpose:string; audience:string; developerId:string; championId:string; solutionLink:string; developmentLink:string; requirementsLink:string; evidenceLink:string; reviewNumber:number; date:string; reviewerId:string; status:string; outcome:string; comments:string; rls:string; processingType:string; datasetSize:string; calculationComplexity:string; sourceCount:number; duration:string; audienceSize:number; prlScore:number; prlTag:string; observedPrlTag:string; euct:string; dmp:string; pii:boolean }
 export interface Connection { id:string; name:string; platform:Platform; technology:string; environment:string; hostname:string; port:number; database:string; schema:string; username:string; authenticationType:string; identityClassification:string; credentialReferenceId:string; gatewayId:string; dataSourceId:string; createdBy:string; modifiedDate:string; status:string }
 export interface AssetConnection { assetId:string; connectionId:string }
@@ -20,7 +81,7 @@ export interface Attestation { snapshot?: AttestationSnapshot; followUpReviewId?
 export interface DetectionRule { id:string; bucket:string; name:string; description:string }
 export interface DetectionCoverage { ruleId:string; platform:Platform; capability:'Available'|'Partial'|'Manual Review Required'|'Not Available'; note:string }
 export interface ActivityEvent { id:string; workspaceId:string|null; date:string; actor:string; category:'Requested'|'Implemented'|'Observed'|'Review'|'Attestation'; description:string }
-export interface RegistryData { evidencePolicies?:Record<string,number>; approvals?:ApprovalRecord[]; workspaces:Workspace[]; people:Person[]; configurations:WorkspaceConfigurationVersion[]; champions:ChampionAssignment[]; groups:GroupSpecification[]; principals:ObservedPrincipal[]; effectiveAccess:EffectiveUserAccess[]; assets:Asset[]; assessments:AssetAssessment[]; connections:Connection[]; lineage:AssetConnection[]; findings:Finding[]; reviews:AdministrativeReview[]; attestations:Attestation[]; requests:WorkspaceRequest[]; rules:DetectionRule[]; coverage:DetectionCoverage[]; events:ActivityEvent[] }
+export interface RegistryData { assetEvaluations?:AssetGovernanceEvaluation[]; assetBusinessVersions?:AssetBusinessVersion[]; assetAssociations?:AssetAssociationRecord[]; evidencePolicies?:Record<string,number>; approvals?:ApprovalRecord[]; workspaces:Workspace[]; people:Person[]; configurations:WorkspaceConfigurationVersion[]; champions:ChampionAssignment[]; groups:GroupSpecification[]; principals:ObservedPrincipal[]; effectiveAccess:EffectiveUserAccess[]; assets:Asset[]; assessments:AssetAssessment[]; connections:Connection[]; lineage:AssetConnection[]; findings:Finding[]; reviews:AdministrativeReview[]; attestations:Attestation[]; requests:WorkspaceRequest[]; rules:DetectionRule[]; coverage:DetectionCoverage[]; events:ActivityEvent[] }
 
-export interface ApprovalRecord { eligibilityEvidence?:{personId:string;role:string;personStatus:'Active';checkedAt:string;basis:'Prototype role assignment'|'Workspace owner at decision';businessOwnerId?:string}; id:string; targetType:'Request'|'Review'|'Attestation'; targetId:string; purpose:string; contextKey:string; role:string; personId:string; decision:'Approved'|'Changes required'; reference:string; decidedAt:string }
+export interface ApprovalRecord { eligibilityEvidence?:{personId:string;role:string;personStatus:'Active';checkedAt:string;basis:'Prototype role assignment'|'Workspace owner at decision'|'Current workspace Champion at decision'|'Proposed initial Champion at decision';requestId?:string;workspaceId?:string;eligibleChampionIds?:string[];businessOwnerId?:string}; id:string; targetType:'Request'|'Review'|'Attestation'; targetId:string; purpose:string; contextKey:string; role:string; personId:string; decision:'Approved'|'Changes required'; reference:string; decidedAt:string }
 export interface AttestationSnapshot { championIds?:string[]; capturedAt:string; workspace:Workspace; people:Person[]; groups:GroupSpecification[]; assets:Asset[]; connections:Connection[]; findings:Finding[]; events:ActivityEvent[] }

@@ -5,6 +5,7 @@ const arrays=['workspaces','people','configurations','champions','groups','princ
 export function decodeRegistry(raw:string):RegistryData {
   const value=JSON.parse(raw);
   if(!value||arrays.some(k=>!Array.isArray(value[k])))throw Error('Saved registry has an unsupported structure.');
+  if(['approvals','assetEvaluations','assetBusinessVersions','assetAssociations'].some(k=>value[k]!==undefined&&!Array.isArray(value[k])))throw Error('Saved registry history has an unsupported structure.');
   return migrateData(value);
 }
 export function persistRegistry(storage:Pick<Storage,'getItem'|'setItem'>,expected:string|null,next:RegistryData){

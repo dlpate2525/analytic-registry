@@ -2,6 +2,7 @@
 from pathlib import Path
 import csv
 import json
+import sys
 import re
 import zipfile
 import xml.etree.ElementTree as ET
@@ -58,6 +59,10 @@ for table in contract:
         row = dictionary[table["sheet"], column["name"]]
         assert row["SQLType"] == column["type"] and row["Purpose"] == column["purpose"]
         assert 0 < len(column["purpose"].split()) < 200
+
+if '--workbook-only' in sys.argv:
+    print('Historical V1 workbook verified: 15 sheets, 9 blank tables, 117 columns, 28 output sections. Current V1.2 archive verification runs through prepare:release -- --check.')
+    raise SystemExit(0)
 
 bundle = root / "analytic-registry-platform-data-pack.zip"
 files = {str(file.relative_to(root)).replace("\\", "/"): file for file in root.rglob("*")

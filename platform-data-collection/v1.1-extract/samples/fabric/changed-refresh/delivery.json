@@ -1,0 +1,119 @@
+{
+  "Run_Context": [
+    {
+      "RunKey": "13000000-0000-4000-8000-000000000002",
+      "PlatformCode": "PowerBI",
+      "PlatformInstanceKey": "synthetic-powerbi-instance",
+      "NativeScopeKey": "90000000-0000-4000-8000-000000000001",
+      "ObservedAt": "2026-10-01T12:00:00Z",
+      "DirectoryTenantKey": "90000000-0000-4000-8000-000000000001",
+      "MappingVersion": "1.1",
+      "ScopeDescription": "SYNTHETIC TEST ONLY. Named small scope; intentionally partial inventory. Not an extract from an installed platform."
+    }
+  ],
+  "Coverage": [
+    {
+      "RunKey": "13000000-0000-4000-8000-000000000002",
+      "DatasetCode": "Workspaces",
+      "CoverageStatus": "Partial",
+      "RowCount": 1
+    },
+    {
+      "RunKey": "13000000-0000-4000-8000-000000000002",
+      "DatasetCode": "Assets",
+      "CoverageStatus": "Partial",
+      "RowCount": 2
+    },
+    {
+      "RunKey": "13000000-0000-4000-8000-000000000002",
+      "DatasetCode": "Workspace_Assets",
+      "CoverageStatus": "Partial",
+      "RowCount": 2
+    },
+    {
+      "RunKey": "13000000-0000-4000-8000-000000000002",
+      "DatasetCode": "Connections",
+      "CoverageStatus": "NotCollected",
+      "RowCount": null
+    },
+    {
+      "RunKey": "13000000-0000-4000-8000-000000000002",
+      "DatasetCode": "Asset_Connections",
+      "CoverageStatus": "NotCollected",
+      "RowCount": null
+    },
+    {
+      "RunKey": "13000000-0000-4000-8000-000000000002",
+      "DatasetCode": "Asset_Dependencies",
+      "CoverageStatus": "NotCollected",
+      "RowCount": null
+    },
+    {
+      "RunKey": "13000000-0000-4000-8000-000000000002",
+      "DatasetCode": "Platform_Users",
+      "CoverageStatus": "NotCollected",
+      "RowCount": null
+    },
+    {
+      "RunKey": "13000000-0000-4000-8000-000000000002",
+      "DatasetCode": "Directory_Users",
+      "CoverageStatus": "NotCollected",
+      "RowCount": null
+    },
+    {
+      "RunKey": "13000000-0000-4000-8000-000000000002",
+      "DatasetCode": "Object_Users",
+      "CoverageStatus": "NotCollected",
+      "RowCount": null
+    }
+  ],
+  "Workspaces": [
+    {
+      "RunKey": "13000000-0000-4000-8000-000000000002",
+      "NativeWorkspaceID": "23100000-0000-4000-8000-000000000001",
+      "NativeWorkspaceType": "Workspace",
+      "DisplayName": "Sample Fabric renamed",
+      "NativeLifecycleCode": null
+    }
+  ],
+  "Assets": [
+    {
+      "RunKey": "13000000-0000-4000-8000-000000000002",
+      "NativeAssetID": "23200000-0000-4000-8000-000000000001",
+      "NativeAssetType": "Report",
+      "DisplayName": "Sample revenue renamed",
+      "NativeVersionReference": null,
+      "NativeLifecycleCode": null
+    },
+    {
+      "RunKey": "13000000-0000-4000-8000-000000000002",
+      "NativeAssetID": "23200000-0000-4000-8000-000000000003",
+      "NativeAssetType": "Report",
+      "DisplayName": "Sample new report",
+      "NativeVersionReference": null,
+      "NativeLifecycleCode": null
+    }
+  ],
+  "Workspace_Assets": [
+    {
+      "RunKey": "13000000-0000-4000-8000-000000000002",
+      "NativeWorkspaceID": "23100000-0000-4000-8000-000000000001",
+      "NativeAssetID": "23200000-0000-4000-8000-000000000001",
+      "NativeAssetType": "Report",
+      "NativeAssociationType": "ContainedIn"
+    },
+    {
+      "RunKey": "13000000-0000-4000-8000-000000000002",
+      "NativeWorkspaceID": "23100000-0000-4000-8000-000000000001",
+      "NativeAssetID": "23200000-0000-4000-8000-000000000003",
+      "NativeAssetType": "Report",
+      "NativeAssociationType": "ContainedIn"
+    }
+  ],
+  "Connections": [],
+  "Asset_Connections": [],
+  "Asset_Dependencies": [],
+  "Platform_Users": [],
+  "Directory_Users": [],
+  "Object_Users": []
+}

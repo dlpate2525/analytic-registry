@@ -1,5 +1,7 @@
 # Stable IDs and refresh rules
 
+This is the historical V1 design. Use [V1.2 delivery guidance](v1.2-workbook/README.md) and [current reconciliation](v1.1-extract/monthly-reconciliation.md) for new deliveries.
+
 **Prototype release 1.0.0-prototype.1 — 8 October 2026. Intended Git tag: `v1.0.0-prototype.1`.**
 
 [Download Excel workbook](https://github.com/dlpate2525/analytic-registry/raw/refs/tags/v1.0.0-prototype.1/platform-data-collection/v1-extract/analytic-registry-v1-extract.xlsx). Field contract 1.0 remains separate from this prototype release.

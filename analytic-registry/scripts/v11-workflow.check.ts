@@ -10,7 +10,8 @@ const w=d.workspaces[0];
 d.champions=d.champions.filter(c=>c.configurationVersionId!==w.requestedVersionId);
 d.champions.push({configurationVersionId:w.requestedVersionId,personId:'P4'});
 d.principals.find(p=>p.workspaceId===w.id&&p.purpose==='Champion')!.memberIds=['P15'];
-check(()=>assert.equal(comparison(w,d).find(x=>x.field==='Champion roster')?.status,'Flagged for Review'));
+// The accepted policy separates business Champions from observed group membership.
+check(()=>assert.equal(comparison(w,d).find(x=>x.field==='Champion roster')?.status,'Not Applicable'));
 const a={...d.attestations[0],dueDate:'2026-09-01'};
 check(()=>assert.equal(annualStatus({...a,status:'In progress'},'2026-10-09'),'Overdue'));
 check(()=>assert.equal(annualStatus({...a,status:'Pending Owner Approval'},'2026-10-09'),'Overdue'));
@@ -26,4 +27,16 @@ const review={...d.reviews[0],status:'Investigating',resolution:'Fixed configura
 const ready={...d,reviews:[review],approvals:[]};
 check(()=>assert.ok(filterWorkItems(workItems(ready,'P3',true),'approval').some(x=>x.id===review.id&&x.nextAction==='Approve closing evidence')));
 check(()=>assert.ok(!filterWorkItems(workItems({...ready,reviews:[{...review,closureEvidence:''}]},'P3',true),'approval').some(x=>x.id===review.id)));
+for (const [status, ownerId, reviewerId, expected] of [
+  ['Investigating', 'P1', 'UNRESOLVED-REVIEWER', 'UNRESOLVED-REVIEWER'],
+  ['Pending Business Response', 'UNRESOLVED-OWNER', 'P3', 'UNRESOLVED-OWNER'],
+  ['Investigating', 'P1', '', 'Unassigned'],
+  ['Pending Business Response', '', 'P3', 'Unassigned'],
+]) {
+  const reference = { ...d.reviews[0], status, ownerId, reviewerId, closureEvidence: '' };
+  const dataset = { ...d, reviews: [reference] };
+  const original = JSON.stringify(dataset);
+  check(() => assert.equal(workItems(dataset, 'P3', true).find(item => item.id === reference.id)?.assignee, expected));
+  check(() => assert.equal(JSON.stringify(dataset), original));
+}
 console.log(`V1.1 workflow: ${n} checks passed.`);

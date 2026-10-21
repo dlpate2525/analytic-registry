@@ -30,7 +30,8 @@ custom.observationComplete=true;d.evidencePolicies={[custom.platform]:365};
 check(comparison(custom,d).find(x=>x.field==='Direct user access')?.status==='Unable to Verify','Custom direct access needs an explicit approved baseline');
 const w=d.workspaces[0];w.observationComplete=false;
 d.principals.find(p=>p.workspaceId===w.id&&p.purpose==='Champion')!.memberIds=[];
-check(comparison(w,d).find(x=>x.field==='Champion roster')?.status==='Unable to Verify','Incomplete roster cannot assert mismatch');
+check(comparison(w,d).find(x=>x.field==='Champion roster')?.status==='Not Applicable','Business Champion responsibility is not an observed access-membership comparison');
+check(!comparison(w,d).some(x=>['Aligned','Discrepancy'].includes(x.status)),'Incomplete access evidence cannot assert alignment or mismatch');
 const review={...d.reviews[0],status:'Closed',resolution:'Verified',closureEvidence:'TEST',verificationMethod:'Manual verification',verificationDate:'2099-01-01'};
 d.approvals=[{id:'TEST',targetType:'Review',targetId:review.id,purpose:'Evidence closure',contextKey:closureKey(review),role:'Platform Manager',personId:'P8',decision:'Approved',reference:'TEST',decidedAt:'2026-10-06T12:00:00Z'}];
 check(validateClosure(review,d).length>0,'Future closure evidence rejected despite approval');
@@ -60,6 +61,9 @@ d.requests.push(corrected);check(requestStage(submitted,d)==='Superseded','Super
 const raw=JSON.stringify(initialData);check(decodeRegistry(raw).workspaces.length===12,'Saved data remains compatible');
 rejects(()=>decodeRegistry('{invalid'),'Malformed storage is detected');
 rejects(()=>decodeRegistry('{}'),'Unsupported storage structure is detected');
+for(const field of ['approvals','assetEvaluations','assetBusinessVersions','assetAssociations']){
+  rejects(()=>decodeRegistry(JSON.stringify({...initialData,[field]:{}})),`Malformed optional ${field} triggers recovery`);
+}
 let stored:string|null=raw;const storage={getItem:(_key:string)=>stored,setItem:(_key:string,value:string)=>{stored=value;}};
 persistRegistry(storage,raw,initialData);check(stored===raw,'Valid refresh preserves saved shape');
 stored='another-tab';rejects(()=>persistRegistry(storage,raw,initialData),'Cross-tab overwrite blocked');

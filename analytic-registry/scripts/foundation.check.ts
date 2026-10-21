@@ -41,4 +41,11 @@ check(()=>assert.equal(resolveEmail('alex@example.test','corp',directory,true,'G
 check(()=>assert.equal(resolveEmail('alex@example.test','corp',directory,true,'App').route,'Platform Manager'));
 check(()=>assert.equal(nativeKey({...base,kind:'Workspace',nativeType:'PersonalGroup'}),nativeKey({...base,kind:'Workspace',nativeType:'Workspace'})));
 check(()=>assert.equal(compareDelivery([prior],[renamed],{...delivery,observedAt:prior.lastSeenAt})[0].state,'Conflicting observation time'));
+check(()=>assert.throws(()=>nativeKey({...base,nativeType:'Unsupported'})));
+check(()=>assert.throws(()=>nativeKey({...base,platform:'Alteryx'})));
+check(()=>assert.throws(()=>compareDelivery([],[],{...delivery,platform:'Directory',expectedRows:0})));
+check(()=>assert.throws(()=>compareDelivery([],[],{...delivery,coverage:'Partial',expectedRows:null})));
+check(()=>assert.throws(()=>compareDelivery([],[],{...delivery,scope:'',expectedRows:0})));
+check(()=>assert.throws(()=>compareDelivery([],[],{...delivery,coverage:'Failed',expectedRows:0})));
+check(()=>assert.throws(()=>compareDelivery([],[],{...delivery,coverage:'NotCollected',expectedRows:0})));
 console.log(`V1.1 foundation: ${n} reconciliation and identity checks passed.`);
