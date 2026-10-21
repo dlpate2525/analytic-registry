@@ -22,7 +22,7 @@
     },
     "collectionPack": {
       "path": "resources/platform-data-collection/analytic-registry-v1.2-extract.zip",
-      "sha256": "ea878de13cc30dffe9c5ef4466d507be4612747514db79e7fa4d6bd2c26dc424"
+      "sha256": "2948511de069129a649fd12d81ce8fc4aafd103757e31370596e00f6494245ed"
     },
     "documentation": {
       "path": "guide.html",
@@ -38,7 +38,7 @@
     },
     "verification": {
       "path": "v1.2-publication-verification.md",
-      "sha256": "9bed17f213e9a07092ac37242e3686b65c5d0c071f00dff87a7c03801078e053"
+      "sha256": "0a4d764c481949f3084f8012ef51d359e8a4df39da4a0278f84c4b5dd3f63644"
     },
     "currentBaseline": {
       "path": "v1.2-release.md",

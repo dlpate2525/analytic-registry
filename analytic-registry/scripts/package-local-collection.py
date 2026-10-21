@@ -60,7 +60,7 @@ def descriptor():
 
 def inputs(current, workbook):
     found = {}
-    for file in sorted(source.rglob('*')):
+    for file in sorted(source.rglob('*'), key=lambda item: item.relative_to(source).as_posix()):
         relative = file.relative_to(source)
         if any(part.startswith('.') or part in {'node_modules', '__pycache__'} for part in relative.parts):
             continue
@@ -117,6 +117,8 @@ if not check_only:
         with zipfile.ZipFile(temporary, 'w', compression=zipfile.ZIP_DEFLATED) as output:
             for name, data in {**files, manifest_name: manifest_bytes}.items():
                 info = zipfile.ZipInfo(name, date_time=(2026, 10, 20, 0, 0, 0))
+                info.create_system = 3
+                info.external_attr = 0o100644 << 16
                 info.compress_type = zipfile.ZIP_DEFLATED
                 output.writestr(info, data)
         temporary.replace(archive)

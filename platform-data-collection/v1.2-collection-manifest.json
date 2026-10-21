@@ -33,6 +33,11 @@
   ],
   "files": [
     {
+      "path": "README.md",
+      "bytes": 7800,
+      "sha256": "4a6ebc11adbbc46f42bbd0a5f499e1eff67de2f4f5aaebdc84649532ab572622"
+    },
+    {
       "path": "alteryx-guidance.md",
       "bytes": 3017,
       "sha256": "513d1abee2c20d11f4ff01ff91445c03256ec817ec4bb85ea0102b4d5fb58b28"
@@ -61,11 +66,6 @@
       "path": "powerbi/normalize-scan.mjs",
       "bytes": 13197,
       "sha256": "fd8a73fda1e2f7e34d1224abd989d26a3bf44da6a4032ba9175a0243172fc942"
-    },
-    {
-      "path": "README.md",
-      "bytes": 7800,
-      "sha256": "4a6ebc11adbbc46f42bbd0a5f499e1eff67de2f4f5aaebdc84649532ab572622"
     },
     {
       "path": "samples/normalized-powerbi/asset_connections.csv",
@@ -128,6 +128,11 @@
       "sha256": "1a2abbdb4d24b6a41f44e52954abb7036a7e98b2f7d8fae0555285caf8e76755"
     },
     {
+      "path": "tableau/README.md",
+      "bytes": 7130,
+      "sha256": "c0105b4b251efb07adee69526b43d5985382814c4c56480ba501aa270eb7990f"
+    },
+    {
       "path": "tableau/build-sql.mjs",
       "bytes": 8495,
       "sha256": "172a15d12f18cd449490670188871d10d3ffffff1ae0f3b2febec1fa4ebac0fd"
@@ -143,14 +148,14 @@
       "sha256": "535662e1caca9c98bbf7af7c58b74b2e11936bfea9e829a09c9b2dd6935adfcf"
     },
     {
-      "path": "tableau/README.md",
-      "bytes": 7130,
-      "sha256": "c0105b4b251efb07adee69526b43d5985382814c4c56480ba501aa270eb7990f"
-    },
-    {
       "path": "tests/normalize.test.mjs",
       "bytes": 8378,
       "sha256": "d2d8795972f8d0514122110e32b1c08b8e5f7faba7e6b176a0e0842b9b6f052a"
+    },
+    {
+      "path": "v1-extract/README.md",
+      "bytes": 13972,
+      "sha256": "df601d088a0953e0c2796a3c8fbcfc89502be888c2e3460b66f3e66ed469ddc4"
     },
     {
       "path": "v1-extract/alteryx-backend-extract.md",
@@ -176,6 +181,11 @@
       "path": "v1-extract/column-dictionary.csv",
       "bytes": 26596,
       "sha256": "c0ecbb0e61f6460294cc55fa478d32b7d08d7d34a4e715ea594d2f70765541cf"
+    },
+    {
+      "path": "v1-extract/csv-headers/README.md",
+      "bytes": 500,
+      "sha256": "936f83df24b8534d1d6af4440b75c5c78bee5da0b7ef8a221400f882912f4b8d"
     },
     {
       "path": "v1-extract/csv-headers/asset_connections.csv",
@@ -213,11 +223,6 @@
       "sha256": "8605ade7352c17e7f0b96ea33828e299f23bc210559ef3472be521a6395fd325"
     },
     {
-      "path": "v1-extract/csv-headers/README.md",
-      "bytes": 500,
-      "sha256": "936f83df24b8534d1d6af4440b75c5c78bee5da0b7ef8a221400f882912f4b8d"
-    },
-    {
       "path": "v1-extract/csv-headers/workspace_assets.csv",
       "bytes": 136,
       "sha256": "f65cf3602ba426c11eddcb8ff413e942323a21784e6bb3a68089b22416c9c0b8"
@@ -241,11 +246,6 @@
       "path": "v1-extract/powerbi-identity-extract.md",
       "bytes": 15415,
       "sha256": "5b45d790f0101ff5364293c9282f50a0b980e723b472933d47fe536fd5cc15a7"
-    },
-    {
-      "path": "v1-extract/README.md",
-      "bytes": 13972,
-      "sha256": "df601d088a0953e0c2796a3c8fbcfc89502be888c2e3460b66f3e66ed469ddc4"
     },
     {
       "path": "v1-extract/sqlserver-email-match.sql",
@@ -286,6 +286,11 @@
       "path": "v1-extract/workbook-contract.json",
       "bytes": 30213,
       "sha256": "00884d1574c22fd25919cf0b8fe5db4758d3b0e554400cd14aba4690464a1f89"
+    },
+    {
+      "path": "v1.1-extract/README.md",
+      "bytes": 6702,
+      "sha256": "7fe4e03c7d1370cd540210302988d766bdb0a3d5dbc3db84b2abe25f94b97de1"
     },
     {
       "path": "v1.1-extract/alteryx-sqlserver-mapping.md",
@@ -438,9 +443,9 @@
       "sha256": "df5c7cd580f74623fd3c5717fade9fe75434e8eb97527fad604da7a432c2b3ae"
     },
     {
-      "path": "v1.1-extract/README.md",
-      "bytes": 6702,
-      "sha256": "7fe4e03c7d1370cd540210302988d766bdb0a3d5dbc3db84b2abe25f94b97de1"
+      "path": "v1.1-extract/samples/README.md",
+      "bytes": 4993,
+      "sha256": "464fc883315507d4667ab1a0bde1608a8c4d5e27633d93d5e605925319860348"
     },
     {
       "path": "v1.1-extract/samples/alteryx/changed-refresh/asset_connections.csv",
@@ -848,11 +853,6 @@
       "sha256": "27fea2f1ec34c982fcb846147c25086a09ccce7d5533e39a8cdb2531e809d575"
     },
     {
-      "path": "v1.1-extract/samples/README.md",
-      "bytes": 4993,
-      "sha256": "464fc883315507d4667ab1a0bde1608a8c4d5e27633d93d5e605925319860348"
-    },
-    {
       "path": "v1.1-extract/samples/source-evidence.md",
       "bytes": 4760,
       "sha256": "ef4e6cf26bfd0fae23ed1b1991dcde74388da6f6e8f7acb7056050e5b5477244"
@@ -1113,6 +1113,11 @@
       "sha256": "ed66175c63eaf4bdb67f57d0af849bea7b827bf8daefe4962e8634f3c21af20b"
     },
     {
+      "path": "v1.2-workbook/README.md",
+      "bytes": 3033,
+      "sha256": "fcc16de1147e969806a59f10f6aabfcebfdc918e48f873752049017c310cc1de"
+    },
+    {
       "path": "v1.2-workbook/analytic-registry-v1.2-extract.xlsx",
       "bytes": 57963,
       "sha256": "28a1357d4a90dcc970710f6ce938ceb090198d6dd923bff75b4e576413e28635"
@@ -1131,11 +1136,6 @@
       "path": "v1.2-workbook/contract.json",
       "bytes": 155742,
       "sha256": "34b9475e7f370bc3da606bee7779cd39a3c4dfa8408bd98e7f9b7a597c55d6af"
-    },
-    {
-      "path": "v1.2-workbook/README.md",
-      "bytes": 3033,
-      "sha256": "fcc16de1147e969806a59f10f6aabfcebfdc918e48f873752049017c310cc1de"
     },
     {
       "path": "v1.2-workbook/verify-workbook.py",

@@ -38,16 +38,30 @@ public.mkdir(parents=True)
 (source / '.private').mkdir()
 (source / '.private/secret.txt').write_text('Excluded', encoding='utf-8')
 (source / 'analytic-registry-v1.2-extract.zip.preparing').write_text('Failed staging', encoding='utf-8')
+for name in ['ordering/zeta.txt', 'ordering/nested/leaf.txt', 'ordering/Alpha.txt', 'ordering/nested-first.txt']:
+    file = source / name
+    file.parent.mkdir(parents=True, exist_ok=True)
+    file.write_text(name, encoding='utf-8')
 checks = []
 
 
-def run(*args, metadata=None):
-    return subprocess.run([sys.executable, str(script), '--descriptor-stdin', *args], input=json.dumps(descriptor if metadata is None else metadata), capture_output=True, text=True)
+def run(*args, metadata=None, path_order=None):
+    command = [sys.executable, str(script), '--descriptor-stdin', *args]
+    if path_order:
+        # Exercise the CLI with either host's pathlib ordering, on either test host.
+        wrapper = '''import pathlib, runpy, sys
+flavor = pathlib.PureWindowsPath if sys.argv.pop(1) == 'windows' else pathlib.PurePosixPath
+pathlib.Path.__lt__ = lambda left, right: flavor(*left.parts) < flavor(*right.parts)
+sys.argv = sys.argv[1:]
+runpy.run_path(sys.argv[0], run_name='__main__')
+'''
+        command = [sys.executable, '-c', wrapper, path_order, str(script), '--descriptor-stdin', *args]
+    return subprocess.run(command, input=json.dumps(descriptor if metadata is None else metadata), capture_output=True, text=True)
 
 
-def check(name, passed):
+def check(name, passed, detail=''):
     if not passed:
-        raise AssertionError(name)
+        raise AssertionError(name + (': ' + detail.strip() if detail else ''))
     checks.append({'name': name, 'pass': True})
 
 
@@ -62,6 +76,10 @@ check('Descriptor selects the release archive', archive.exists())
 first = archive.read_bytes()
 with zipfile.ZipFile(archive) as saved:
     check('Private files, archives and stale staging are excluded', not any(name.startswith('.') or name.endswith(('.preparing', '.zip')) for name in saved.namelist()))
+    check('ZIP entries have portable file metadata', all(info.create_system == 3 and info.external_attr == 0o100644 << 16 for info in saved.infolist()))
+    check('Archive names use case-sensitive POSIX string order', [name for name in saved.namelist() if name.startswith('ordering/')] == [
+        'ordering/Alpha.txt', 'ordering/nested-first.txt', 'ordering/nested/leaf.txt', 'ordering/zeta.txt',
+    ])
     manifest = json.loads(saved.read('v1.2-collection-manifest.json'))
     check('Manifest separates release, workbook and input versions', manifest['applicationVersion'] == descriptor['applicationVersion'] and manifest['workbookRevision'] == '1.2' and manifest['inputSchemaVersion'] == '1.1')
     check('Manifest hashes describe exact entries', all(hashlib.sha256(saved.read(row['path'])).hexdigest() == row['sha256'] for row in manifest['files']))
@@ -71,6 +89,11 @@ check('Historical archives remain unchanged', (source / 'old.zip').read_bytes() 
 before = snapshot()
 check('Read-only validation succeeds without writes', run('--check').returncode == 0 and snapshot() == before)
 check('Repeat packaging preserves exact archive bytes', run().returncode == 0 and archive.read_bytes() == first)
+for path_order in ['posix', 'windows']:
+    result = run('--check', path_order=path_order)
+    check(f'Read-only validation accepts {path_order} path ordering', result.returncode == 0 and snapshot() == before, result.stderr)
+    result = run(path_order=path_order)
+    check(f'Packaging preserves exact bytes with {path_order} path ordering', result.returncode == 0 and snapshot() == before, result.stderr)
 (source / 'v1.1-extract/test.md').write_text('Changed guide', encoding='utf-8')
 before = snapshot()
 check('Source drift is rejected without writes', run('--check').returncode != 0 and snapshot() == before)

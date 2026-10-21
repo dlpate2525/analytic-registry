@@ -53,7 +53,7 @@ def build_inputs(release):
     if (folder / 'release.json').read_bytes() != (root / 'analytic-registry/public/release.json').read_bytes():
         raise ValueError('Built release metadata differs from public metadata')
     found = {}
-    for file in sorted(folder.rglob('*')):
+    for file in sorted(folder.rglob('*'), key=lambda item: item.relative_to(folder).as_posix()):
         name = file.relative_to(folder).as_posix()
         inside(folder, name)
         if file.is_file():

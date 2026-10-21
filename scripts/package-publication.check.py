@@ -77,6 +77,8 @@ write('analytic-registry/public/release.json', metadata)
 write('analytic-registry/dist/release.json', metadata)
 write('analytic-registry/dist/index.html', '<html>Fixture build</html>\n')
 write('analytic-registry/dist/assets/app.js', 'console.log("Synthetic build");\n')
+for name in ['ordering/a.txt', 'ordering/Z.txt', 'ordering/nested/entry.txt', 'ordering/nested.txt']:
+    write('analytic-registry/dist/' + name, 'Ordering fixture: ' + name)
 before = snapshot()
 check('Check mode rejects absent package without writes', run('--check').returncode != 0 and snapshot() == before)
 result = run()
@@ -95,6 +97,9 @@ check('Inventory excludes ignored files even when tracked', 'ignored.txt' not in
 check('Every inventory hash describes the current file', all(digest((fixture / name).read_bytes()) == line.split('  ', 1)[0] for line, name in zip(entries, names)))
 with zipfile.ZipFile(archive) as saved:
     check('Preview has build-relative paths and exact content', 'index.html' in saved.namelist() and saved.read('assets/app.js') == (fixture / 'analytic-registry/dist/assets/app.js').read_bytes())
+    check('Preview orders mixed-case and nested paths by portable archive name',
+          [name for name in saved.namelist() if name.startswith('ordering/')] ==
+          ['ordering/Z.txt', 'ordering/a.txt', 'ordering/nested.txt', 'ordering/nested/entry.txt'])
 before = snapshot()
 check('Read-only validation succeeds without changes', run('--check').returncode == 0 and snapshot() == before)
 check('Repeated packaging is byte-identical', run().returncode == 0 and snapshot() == before)
