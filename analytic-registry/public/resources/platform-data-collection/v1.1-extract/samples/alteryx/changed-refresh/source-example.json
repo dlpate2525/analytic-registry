@@ -1,0 +1,109 @@
+{
+  "notice": "Synthetic MongoDB-shaped subset. ObjectIds are decoded text; omitted properties are outside this query.",
+  "AlteryxGallery.collections": [
+    {
+      "_id": "00000000000000000000012d",
+      "CollectionId": "sample-collection-01",
+      "Name": "Sample operations renamed",
+      "OwnerId": "000000000000000000000065",
+      "Apps": [
+        {
+          "ApplicationId": "0000000000000000000000c9"
+        },
+        {
+          "ApplicationId": "0000000000000000000000cb"
+        }
+      ],
+      "Users": [
+        {
+          "UserId": "000000000000000000000066"
+        },
+        {
+          "UserId": "0000000000000000000003e7"
+        }
+      ]
+    },
+    {
+      "_id": "00000000000000000000012e",
+      "CollectionId": "sample-collection-02",
+      "Name": "Sample shared workflows",
+      "OwnerId": "000000000000000000000065",
+      "Apps": [
+        {
+          "ApplicationId": "0000000000000000000000c9"
+        }
+      ],
+      "Users": []
+    }
+  ],
+  "AlteryxGallery.appInfos": [
+    {
+      "_id": "0000000000000000000000c9",
+      "CreatedBy": "000000000000000000000065",
+      "ServiceId": "000000000000000000000191",
+      "IsDeleted": false,
+      "Revisions": [
+        {
+          "RevisionId": "0000000000000000000001f6",
+          "IsPublishedRevision": true,
+          "Applications": [
+            {
+              "IsPrimaryApp": true,
+              "MetaInfo": {
+                "Name": "Sample monthly balance"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "_id": "0000000000000000000000cb",
+      "CreatedBy": "000000000000000000000065",
+      "ServiceId": "000000000000000000000193",
+      "IsDeleted": false,
+      "Revisions": [
+        {
+          "RevisionId": "0000000000000000000001ff",
+          "IsPublishedRevision": true,
+          "Applications": [
+            {
+              "IsPrimaryApp": true,
+              "MetaInfo": {
+                "Name": "Sample new workflow"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "AlteryxGallery.users": [
+    {
+      "_id": "000000000000000000000065",
+      "FirstName": "Alex",
+      "LastName": "Sample",
+      "Email": "alex@example.test",
+      "Active": true
+    },
+    {
+      "_id": "000000000000000000000066",
+      "FirstName": "Casey",
+      "LastName": "Sample",
+      "Email": "casey@example.test",
+      "Active": true
+    }
+  ],
+  "AlteryxService.AS_Applications": [
+    {
+      "_id": "000000000000000000000191",
+      "UserName": "000000000000000000000065",
+      "ModuleName": "Sample monthly balance.yxmd"
+    },
+    {
+      "_id": "000000000000000000000193",
+      "UserName": "000000000000000000000065",
+      "ModuleName": "Sample new workflow.yxmd"
+    }
+  ]
+}

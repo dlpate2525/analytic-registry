@@ -1,0 +1,420 @@
+{
+  "runId": "2026-10-21T03-43-45-183Z-69dda7ec",
+  "root": "C:\\Users\\dlpat\\Documents\\Codex\\2026-10-06\\files-pasted-by-the-user-build\\outputs\\analytic-registry",
+  "base": "http://127.0.0.1:5191",
+  "requested": "all",
+  "startedAt": "2026-10-21T03:43:45.184Z",
+  "features": [
+    {
+      "feature": "workspaces",
+      "checks": [
+        {
+          "name": "Expected shell and seeded workspace are usable",
+          "pass": true
+        },
+        {
+          "name": "Dashboard count matches its workspace destination",
+          "pass": true
+        },
+        {
+          "name": "Workspace list has five columns",
+          "pass": true
+        },
+        {
+          "name": "Global search replaces old workspace filters",
+          "pass": true
+        },
+        {
+          "name": "Back and reload retain URL workspace filters",
+          "pass": true
+        },
+        {
+          "name": "Workspace detail has five tabs",
+          "pass": true
+        },
+        {
+          "name": "Legacy Connections deep link reaches the merged tab",
+          "pass": true
+        },
+        {
+          "name": "Legacy Extract identifies processing without inventing technology",
+          "pass": true
+        },
+        {
+          "name": "Displaying connection technology preserves the raw value",
+          "pass": true
+        },
+        {
+          "name": "Overview identifies inventory scope",
+          "pass": true
+        },
+        {
+          "name": "Inventory does not establish access readiness",
+          "pass": true
+        },
+        {
+          "name": "Administrator My workspaces uses the active profile and hides retired records",
+          "pass": true
+        },
+        {
+          "name": "Include retired adds only the assigned retired workspace",
+          "pass": true
+        },
+        {
+          "name": "Registered count matches its destination",
+          "pass": true
+        },
+        {
+          "name": "Including retired retains registration scope",
+          "pass": true
+        },
+        {
+          "name": "Clear filters removes hidden registration restriction",
+          "pass": true
+        },
+        {
+          "name": "Canvas scales while keeping 1366 by 768 design coordinates",
+          "pass": true
+        },
+        {
+          "name": "No browser runtime or external-request errors",
+          "pass": true,
+          "observed": []
+        }
+      ],
+      "errors": [],
+      "fixtures": [
+        "Synthetic current inventory, explicit 31-day fixture policy, and legacy Extract technology; source facts otherwise unchanged"
+      ],
+      "pass": true
+    },
+    {
+      "feature": "assets",
+      "checks": [
+        {
+          "name": "Expected shell and seeded workspace are usable",
+          "pass": true
+        },
+        {
+          "name": "Asset registry has five columns",
+          "pass": true
+        },
+        {
+          "name": "Asset detail has four tabs",
+          "pass": true
+        },
+        {
+          "name": "Completed evaluation has four steps and no saved draft",
+          "pass": true
+        },
+        {
+          "name": "Business version and evaluation become current together",
+          "pass": true
+        },
+        {
+          "name": "PRL 3 and non-high-risk qualification calculate",
+          "pass": true
+        },
+        {
+          "name": "Completed evaluation survives reload",
+          "pass": true
+        },
+        {
+          "name": "Initial association records workspace, actor, and date",
+          "pass": true
+        },
+        {
+          "name": "Association does not create an evaluation",
+          "pass": true
+        },
+        {
+          "name": "Transfer requires reason and business confirmation",
+          "pass": true
+        },
+        {
+          "name": "Correction records the selected Platform Manager actor",
+          "pass": true
+        },
+        {
+          "name": "Transfer applies while preserving native identity and earlier association",
+          "pass": true
+        },
+        {
+          "name": "Accountability correction preserves existing cases",
+          "pass": true
+        },
+        {
+          "name": "Non-Champion profile cannot save an evaluation",
+          "pass": true
+        },
+        {
+          "name": "No browser runtime or external-request errors",
+          "pass": true,
+          "observed": []
+        }
+      ],
+      "errors": [],
+      "fixtures": [],
+      "pass": true
+    },
+    {
+      "feature": "requests",
+      "checks": [
+        {
+          "name": "Expected shell and seeded workspace are usable",
+          "pass": true
+        },
+        {
+          "name": "Existing-workspace request opens with three business steps",
+          "pass": true
+        },
+        {
+          "name": "New submission uses Champion policy without technical work",
+          "pass": true
+        },
+        {
+          "name": "Business approval applies the request",
+          "pass": true
+        },
+        {
+          "name": "Approval records the acting Champion",
+          "pass": true
+        },
+        {
+          "name": "Independent business line applies",
+          "pass": true
+        },
+        {
+          "name": "Business-only approval preserves configuration and groups",
+          "pass": true
+        },
+        {
+          "name": "Approval preserves native identity",
+          "pass": true
+        },
+        {
+          "name": "Approved request survives reload",
+          "pass": true
+        },
+        {
+          "name": "Technical request has five steps",
+          "pass": true
+        },
+        {
+          "name": "Data Sources group retains the _DS suffix",
+          "pass": true
+        },
+        {
+          "name": "Groups do not ask for a business group owner",
+          "pass": true
+        },
+        {
+          "name": "Stale tab write is rejected",
+          "pass": true
+        },
+        {
+          "name": "Stale save preserves the other tab bytes",
+          "pass": true
+        },
+        {
+          "name": "No browser runtime or external-request errors",
+          "pass": true,
+          "observed": []
+        }
+      ],
+      "errors": [],
+      "fixtures": [],
+      "pass": true
+    },
+    {
+      "feature": "work",
+      "checks": [
+        {
+          "name": "Expected shell and seeded workspace are usable",
+          "pass": true
+        },
+        {
+          "name": "Work queue maps Workspace and Asset",
+          "pass": true
+        },
+        {
+          "name": "Work platform filter survives reload",
+          "pass": true
+        },
+        {
+          "name": "Search and theme survive reload",
+          "pass": true
+        },
+        {
+          "name": "Business line and severity survive reload",
+          "pass": true
+        },
+        {
+          "name": "Findings map Workspace and Asset",
+          "pass": true
+        },
+        {
+          "name": "Findings link restores the selected risk bucket",
+          "pass": true
+        },
+        {
+          "name": "Review has three steps and recorded Workspace Owner wording",
+          "pass": true
+        },
+        {
+          "name": "Evidence closure retains approval context",
+          "pass": true
+        },
+        {
+          "name": "Annual list uses Champion recipients",
+          "pass": true
+        },
+        {
+          "name": "Annual packet has three steps and frozen ownership context",
+          "pass": true
+        },
+        {
+          "name": "Inspecting cases and annual packets does not change stored evidence",
+          "pass": true
+        },
+        {
+          "name": "No browser runtime or external-request errors",
+          "pass": true,
+          "observed": []
+        }
+      ],
+      "errors": [],
+      "fixtures": [],
+      "pass": true
+    },
+    {
+      "feature": "administration",
+      "checks": [
+        {
+          "name": "Expected shell and seeded workspace are usable",
+          "pass": true
+        },
+        {
+          "name": "Import walkthrough has five steps",
+          "pass": true
+        },
+        {
+          "name": "Missing or partial evidence remains unverified",
+          "pass": true
+        },
+        {
+          "name": "Walkthrough does not claim live acceptance",
+          "pass": true
+        },
+        {
+          "name": "Walkthrough leaves registry data unchanged",
+          "pass": true
+        },
+        {
+          "name": "Detection coverage renders",
+          "pass": true
+        },
+        {
+          "name": "Configuration standards renders",
+          "pass": true
+        },
+        {
+          "name": "Data foundation renders",
+          "pass": true
+        },
+        {
+          "name": "Reference data renders",
+          "pass": true
+        },
+        {
+          "name": "Activity & history renders",
+          "pass": true
+        },
+        {
+          "name": "Reference data describes calculated PRL-01",
+          "pass": true
+        },
+        {
+          "name": "Downloaded export contains the current workspace identities",
+          "pass": true
+        },
+        {
+          "name": "Help uses the current release label",
+          "pass": true
+        },
+        {
+          "name": "App help opens the readable current guide",
+          "pass": true
+        },
+        {
+          "name": "Guide separates current guidance, unchanged delivery contract, and earlier designs",
+          "pass": true
+        },
+        {
+          "name": "Guide explains streamlined requests and completed evaluations",
+          "pass": true
+        },
+        {
+          "name": "Guide fits the tablet viewport without horizontal overflow",
+          "pass": true
+        },
+        {
+          "name": "Both relationship diagrams load and fit the guide",
+          "pass": true
+        },
+        {
+          "name": "Every guide resource resolves to an actual file",
+          "pass": true,
+          "observed": 13
+        },
+        {
+          "name": "workbook bytes match their own release checksum",
+          "pass": true
+        },
+        {
+          "name": "collectionPack bytes match their own release checksum",
+          "pass": true
+        },
+        {
+          "name": "Existing current-workflows link resolves to V1.2 guidance",
+          "pass": true
+        },
+        {
+          "name": "Opening documentation preserves registry records",
+          "pass": true
+        },
+        {
+          "name": "Malformed approval history enters recovery",
+          "pass": true
+        },
+        {
+          "name": "Recovery preserves the exact original bytes",
+          "pass": true
+        },
+        {
+          "name": "No browser runtime or external-request errors",
+          "pass": true,
+          "observed": []
+        }
+      ],
+      "errors": [],
+      "fixtures": [
+        "Synthetic unreadable approval history in the disposable context"
+      ],
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "cleanup": {
+    "browserClosed": true,
+    "stoppedPid": 33708,
+    "portReleased": true
+  },
+  "application": {
+    "packageVersion": "1.2.0-prototype.1-local",
+    "entrySha256": "a8487595cb5066b30db769d64c0fbade7871d024a3080aa13ef8c0b14ccf0138"
+  },
+  "pid": 33708,
+  "finishedAt": "2026-10-21T03:44:20.724Z",
+  "pass": true
+}

@@ -1,0 +1,248 @@
+{
+  "Run_Context": [
+    {
+      "RunKey": "12000000-0000-4000-8000-000000000001",
+      "PlatformCode": "Tableau",
+      "PlatformInstanceKey": "synthetic-tableau-instance",
+      "NativeScopeKey": "22000000-0000-4000-8000-000000000001",
+      "ObservedAt": "2026-09-01T12:00:00Z",
+      "DirectoryTenantKey": "90000000-0000-4000-8000-000000000001",
+      "MappingVersion": "1.1",
+      "ScopeDescription": "SYNTHETIC TEST ONLY. Named small scope; intentionally partial inventory. Not an extract from an installed platform."
+    }
+  ],
+  "Coverage": [
+    {
+      "RunKey": "12000000-0000-4000-8000-000000000001",
+      "DatasetCode": "Workspaces",
+      "CoverageStatus": "Partial",
+      "RowCount": 2
+    },
+    {
+      "RunKey": "12000000-0000-4000-8000-000000000001",
+      "DatasetCode": "Assets",
+      "CoverageStatus": "Partial",
+      "RowCount": 2
+    },
+    {
+      "RunKey": "12000000-0000-4000-8000-000000000001",
+      "DatasetCode": "Workspace_Assets",
+      "CoverageStatus": "Partial",
+      "RowCount": 2
+    },
+    {
+      "RunKey": "12000000-0000-4000-8000-000000000001",
+      "DatasetCode": "Connections",
+      "CoverageStatus": "Partial",
+      "RowCount": 1
+    },
+    {
+      "RunKey": "12000000-0000-4000-8000-000000000001",
+      "DatasetCode": "Asset_Connections",
+      "CoverageStatus": "Partial",
+      "RowCount": 1
+    },
+    {
+      "RunKey": "12000000-0000-4000-8000-000000000001",
+      "DatasetCode": "Asset_Dependencies",
+      "CoverageStatus": "NotCollected",
+      "RowCount": null
+    },
+    {
+      "RunKey": "12000000-0000-4000-8000-000000000001",
+      "DatasetCode": "Platform_Users",
+      "CoverageStatus": "Partial",
+      "RowCount": 3
+    },
+    {
+      "RunKey": "12000000-0000-4000-8000-000000000001",
+      "DatasetCode": "Directory_Users",
+      "CoverageStatus": "NotCollected",
+      "RowCount": null
+    },
+    {
+      "RunKey": "12000000-0000-4000-8000-000000000001",
+      "DatasetCode": "Object_Users",
+      "CoverageStatus": "Partial",
+      "RowCount": 6
+    }
+  ],
+  "Workspaces": [
+    {
+      "RunKey": "12000000-0000-4000-8000-000000000001",
+      "NativeWorkspaceID": "22100000-0000-4000-8000-000000000001",
+      "NativeWorkspaceType": "Project",
+      "DisplayName": "Sample projects",
+      "NativeLifecycleCode": "active"
+    },
+    {
+      "RunKey": "12000000-0000-4000-8000-000000000001",
+      "NativeWorkspaceID": "22100000-0000-4000-8000-000000000002",
+      "NativeWorkspaceType": "Project",
+      "DisplayName": "Sample archive",
+      "NativeLifecycleCode": "active"
+    }
+  ],
+  "Assets": [
+    {
+      "RunKey": "12000000-0000-4000-8000-000000000001",
+      "NativeAssetID": "22200000-0000-4000-8000-000000000001",
+      "NativeAssetType": "Workbook",
+      "DisplayName": "Sample revenue",
+      "NativeVersionReference": "1.0",
+      "NativeLifecycleCode": "active"
+    },
+    {
+      "RunKey": "12000000-0000-4000-8000-000000000001",
+      "NativeAssetID": "22200000-0000-4000-8000-000000000002",
+      "NativeAssetType": "PublishedDatasource",
+      "DisplayName": "Sample published source",
+      "NativeVersionReference": "1.0",
+      "NativeLifecycleCode": "active"
+    }
+  ],
+  "Workspace_Assets": [
+    {
+      "RunKey": "12000000-0000-4000-8000-000000000001",
+      "NativeWorkspaceID": "22100000-0000-4000-8000-000000000001",
+      "NativeAssetID": "22200000-0000-4000-8000-000000000001",
+      "NativeAssetType": "Workbook",
+      "NativeAssociationType": "ProjectContent"
+    },
+    {
+      "RunKey": "12000000-0000-4000-8000-000000000001",
+      "NativeWorkspaceID": "22100000-0000-4000-8000-000000000001",
+      "NativeAssetID": "22200000-0000-4000-8000-000000000002",
+      "NativeAssetType": "PublishedDatasource",
+      "NativeAssociationType": "ProjectContent"
+    }
+  ],
+  "Connections": [
+    {
+      "RunKey": "12000000-0000-4000-8000-000000000001",
+      "NativeConnectionID": "22400000-0000-4000-8000-000000000001",
+      "DisplayName": "Sample SQL source",
+      "TechnologyCode": "SQL Server",
+      "HasExtract": true,
+      "ServerHostname": "sql.example.test",
+      "DatabaseName": "SampleOperations",
+      "AuthenticationTypeCode": null,
+      "IdentityClassificationCode": "Unknown",
+      "EvidenceStatusCode": "Partial"
+    }
+  ],
+  "Asset_Connections": [
+    {
+      "RunKey": "12000000-0000-4000-8000-000000000001",
+      "NativeAssetID": "22200000-0000-4000-8000-000000000001",
+      "NativeAssetType": "Workbook",
+      "NativeConnectionID": "22400000-0000-4000-8000-000000000001",
+      "EvidenceStatusCode": "Observed"
+    }
+  ],
+  "Asset_Dependencies": [],
+  "Platform_Users": [
+    {
+      "RunKey": "12000000-0000-4000-8000-000000000001",
+      "NativePrincipalID": "22300000-0000-4000-8000-000000000001",
+      "IdentifierNamespace": "TableauUserLUID",
+      "PrincipalTypeCode": "User",
+      "DisplayName": "Alex Sample",
+      "SourceEmail": "alex@example.test",
+      "SourceStatus": "TableauSiteRole=Creator"
+    },
+    {
+      "RunKey": "12000000-0000-4000-8000-000000000001",
+      "NativePrincipalID": "22300000-0000-4000-8000-000000000002",
+      "IdentifierNamespace": "TableauUserLUID",
+      "PrincipalTypeCode": "User",
+      "DisplayName": "Casey Sample",
+      "SourceEmail": "casey@example.test",
+      "SourceStatus": "TableauSiteRole=Creator"
+    },
+    {
+      "RunKey": "12000000-0000-4000-8000-000000000001",
+      "NativePrincipalID": "22300000-0000-4000-8000-000000000003",
+      "IdentifierNamespace": "TableauUserLUID",
+      "PrincipalTypeCode": "User",
+      "DisplayName": "Morgan Sample",
+      "SourceEmail": "unmatched@example.test",
+      "SourceStatus": "TableauSiteRole=Creator"
+    }
+  ],
+  "Directory_Users": [],
+  "Object_Users": [
+    {
+      "RunKey": "12000000-0000-4000-8000-000000000001",
+      "NativeObjectType": "Project",
+      "NativeObjectID": "22100000-0000-4000-8000-000000000001",
+      "PrincipalRoleCode": "TechnicalOwner",
+      "SourcePrincipalReference": "101",
+      "SourceReferenceNamespace": "TableauRepositoryUserID",
+      "NativePrincipalID": "22300000-0000-4000-8000-000000000001",
+      "IdentifierNamespace": "TableauUserLUID",
+      "NativeRole": null,
+      "SourceReferenceStatusCode": "ReadyForEmailMatch"
+    },
+    {
+      "RunKey": "12000000-0000-4000-8000-000000000001",
+      "NativeObjectType": "Project",
+      "NativeObjectID": "22100000-0000-4000-8000-000000000002",
+      "PrincipalRoleCode": "TechnicalOwner",
+      "SourcePrincipalReference": "999",
+      "SourceReferenceNamespace": "TableauRepositoryUserID",
+      "NativePrincipalID": null,
+      "IdentifierNamespace": null,
+      "NativeRole": null,
+      "SourceReferenceStatusCode": "UnresolvedUserReference"
+    },
+    {
+      "RunKey": "12000000-0000-4000-8000-000000000001",
+      "NativeObjectType": "Workbook",
+      "NativeObjectID": "22200000-0000-4000-8000-000000000001",
+      "PrincipalRoleCode": "TechnicalOwner",
+      "SourcePrincipalReference": "101",
+      "SourceReferenceNamespace": "TableauRepositoryUserID",
+      "NativePrincipalID": "22300000-0000-4000-8000-000000000001",
+      "IdentifierNamespace": "TableauUserLUID",
+      "NativeRole": null,
+      "SourceReferenceStatusCode": "ReadyForEmailMatch"
+    },
+    {
+      "RunKey": "12000000-0000-4000-8000-000000000001",
+      "NativeObjectType": "Workbook",
+      "NativeObjectID": "22200000-0000-4000-8000-000000000001",
+      "PrincipalRoleCode": "ModifiedBy",
+      "SourcePrincipalReference": "102",
+      "SourceReferenceNamespace": "TableauRepositoryUserID",
+      "NativePrincipalID": "22300000-0000-4000-8000-000000000002",
+      "IdentifierNamespace": "TableauUserLUID",
+      "NativeRole": null,
+      "SourceReferenceStatusCode": "ReadyForEmailMatch"
+    },
+    {
+      "RunKey": "12000000-0000-4000-8000-000000000001",
+      "NativeObjectType": "PublishedDatasource",
+      "NativeObjectID": "22200000-0000-4000-8000-000000000002",
+      "PrincipalRoleCode": "TechnicalOwner",
+      "SourcePrincipalReference": "103",
+      "SourceReferenceNamespace": "TableauRepositoryUserID",
+      "NativePrincipalID": "22300000-0000-4000-8000-000000000003",
+      "IdentifierNamespace": "TableauUserLUID",
+      "NativeRole": null,
+      "SourceReferenceStatusCode": "ReadyForEmailMatch"
+    },
+    {
+      "RunKey": "12000000-0000-4000-8000-000000000001",
+      "NativeObjectType": "PublishedDatasource",
+      "NativeObjectID": "22200000-0000-4000-8000-000000000002",
+      "PrincipalRoleCode": "ModifiedBy",
+      "SourcePrincipalReference": "101",
+      "SourceReferenceNamespace": "TableauRepositoryUserID",
+      "NativePrincipalID": "22300000-0000-4000-8000-000000000001",
+      "IdentifierNamespace": "TableauUserLUID",
+      "NativeRole": null,
+      "SourceReferenceStatusCode": "ReadyForEmailMatch"
+    }
+  ]
+}

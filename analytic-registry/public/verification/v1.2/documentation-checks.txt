@@ -1,0 +1,3 @@
+Prepared 16 local documentation files; 126 links resolved; archive hashes match their exact files.
+Verified 16 local documentation files; 126 links resolved; archive hashes match their exact files.
+16 documentation command checks passed. Fixture: C:\Users\dlpat\AppData\Local\Temp\analytic-registry-docs-TkbTnu

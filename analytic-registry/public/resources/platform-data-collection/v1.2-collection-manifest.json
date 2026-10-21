@@ -1,0 +1,1151 @@
+{
+  "status": "Prototype release; installed-source execution remains unverified",
+  "applicationVersion": "1.2.0-prototype.1",
+  "workbookRevision": "1.2",
+  "inputSchemaVersion": "1.1",
+  "startHere": "v1.2-workbook/README.md",
+  "workbook": "v1.2-workbook/analytic-registry-v1.2-extract.xlsx",
+  "historicalMaterial": "Earlier workbooks and descriptions remain for comparison. Use startHere for current delivery guidance.",
+  "publicFiles": [
+    "tableau/preflight.sql",
+    "v1.1-extract/README.md",
+    "v1.1-extract/alteryx-sqlserver-mapping.md",
+    "v1.1-extract/fabric-query-mapping.md",
+    "v1.1-extract/monthly-reconciliation.md",
+    "v1.1-extract/queries/alteryx-sqlserver-preflight.sql",
+    "v1.1-extract/queries/alteryx-sqlserver.sql",
+    "v1.1-extract/queries/fabric-inventory.sql",
+    "v1.1-extract/queries/fabric-model-discovery.dax",
+    "v1.1-extract/queries/powerbi-export-sqlserver.sql",
+    "v1.1-extract/queries/tableau-postgresql-selects.sql",
+    "v1.1-extract/scripts/verify-producer-fixtures.py",
+    "v1.1-extract/source-query-design.md",
+    "v1.1-extract/sqlserver-email-match.sql",
+    "v1.1-extract/sqlserver-staging.sql",
+    "v1.1-extract/sqlserver-validation.sql",
+    "v1.1-extract/tableau-postgresql-mapping.md",
+    "v1.2-workbook/README.md",
+    "v1.2-workbook/analytic-registry-v1.2-extract.xlsx",
+    "v1.2-workbook/build-workbook.mjs",
+    "v1.2-workbook/column-dictionary.csv",
+    "v1.2-workbook/contract.json",
+    "v1.2-workbook/verify-workbook.py"
+  ],
+  "files": [
+    {
+      "path": "alteryx-guidance.md",
+      "bytes": 3017,
+      "sha256": "513d1abee2c20d11f4ff01ff91445c03256ec817ec4bb85ea0102b4d5fb58b28"
+    },
+    {
+      "path": "build-bundle.py",
+      "bytes": 828,
+      "sha256": "c19b3882bf895925c3a6e11d3063ce3d2383beb8d3d217fe66d62aaaa7067167"
+    },
+    {
+      "path": "data-contract.md",
+      "bytes": 19244,
+      "sha256": "40e665e37cf043a56004cd7dd13bc1e81ac6645ef9fd9abf913f0791020d909d"
+    },
+    {
+      "path": "identity-and-refresh.md",
+      "bytes": 8380,
+      "sha256": "0d343981f1b465d19d7947b6f1b56817f04a75a246aaf9feff8ed6bdb7efb8b4"
+    },
+    {
+      "path": "powerbi/collector-pseudocode.md",
+      "bytes": 8599,
+      "sha256": "38bee959d7428e061d4c7371405059e4a37b3e0ac61095f1f472463dfbc2a66b"
+    },
+    {
+      "path": "powerbi/normalize-scan.mjs",
+      "bytes": 13197,
+      "sha256": "fd8a73fda1e2f7e34d1224abd989d26a3bf44da6a4032ba9175a0243172fc942"
+    },
+    {
+      "path": "README.md",
+      "bytes": 7800,
+      "sha256": "4a6ebc11adbbc46f42bbd0a5f499e1eff67de2f4f5aaebdc84649532ab572622"
+    },
+    {
+      "path": "samples/normalized-powerbi/asset_connections.csv",
+      "bytes": 658,
+      "sha256": "b2d47fc237b1fc8380ae9a9ca6d11fdf3276935c2234c00293255803d8cd3f13"
+    },
+    {
+      "path": "samples/normalized-powerbi/asset_dependencies.csv",
+      "bytes": 549,
+      "sha256": "f134d11deeac2d45a7c040741d13611b149e9f6aaa261fd7f6f70a708e50f2ca"
+    },
+    {
+      "path": "samples/normalized-powerbi/assets.csv",
+      "bytes": 1143,
+      "sha256": "50e5c8d5d22afbfdf657c2208403e8b47b5445c09fe9014c71dc834dc75a6660"
+    },
+    {
+      "path": "samples/normalized-powerbi/connections.csv",
+      "bytes": 1058,
+      "sha256": "06e8f286220441f7cedeb1d5a53d2f5ae323e79385ec1dd64dae186ecbcb2a8f"
+    },
+    {
+      "path": "samples/normalized-powerbi/manifest.json",
+      "bytes": 3535,
+      "sha256": "972df2f42770675699c64a76b60b1f62ac2ac77e09e4c0582c2c15603e6b43a2"
+    },
+    {
+      "path": "samples/normalized-powerbi/normalized.json",
+      "bytes": 12217,
+      "sha256": "d61fa7343c47a7eeeff6a84205a17e42bcbba1c118f885980660a5636b791685"
+    },
+    {
+      "path": "samples/normalized-powerbi/workspace_assets.csv",
+      "bytes": 920,
+      "sha256": "619241fe778d943b0e12ffb551f95d5a6b89bef821215979f731d1c976ce264f"
+    },
+    {
+      "path": "samples/normalized-powerbi/workspaces.csv",
+      "bytes": 699,
+      "sha256": "a49377129a43edd03fa7004e7d41d22c8d4d4e40ee7f07787bbb48e4924522c1"
+    },
+    {
+      "path": "samples/powerbi-context.json",
+      "bytes": 480,
+      "sha256": "e818ec418704a8b1189626cdd80cb29a72e37614701d1f3c1e47b560ff8b4566"
+    },
+    {
+      "path": "samples/powerbi-scan.json",
+      "bytes": 1956,
+      "sha256": "db0ece6a3dfdc85e58ccae605eb39fa0cddbbb8c0ca641f4d5adaf605b238dd9"
+    },
+    {
+      "path": "samples/tableau-manifest.template.json",
+      "bytes": 2095,
+      "sha256": "df184c19c93305b994a33d5b8cfc8e677df6bf26f0137224d971dc6626dc69e8"
+    },
+    {
+      "path": "sources.md",
+      "bytes": 6398,
+      "sha256": "1a2abbdb4d24b6a41f44e52954abb7036a7e98b2f7d8fae0555285caf8e76755"
+    },
+    {
+      "path": "tableau/build-sql.mjs",
+      "bytes": 8495,
+      "sha256": "172a15d12f18cd449490670188871d10d3ffffff1ae0f3b2febec1fa4ebac0fd"
+    },
+    {
+      "path": "tableau/export.sql",
+      "bytes": 10788,
+      "sha256": "f8076d45c481c07188a4e8a571be103aba032da9b276eea3bfc2820c9966ac60"
+    },
+    {
+      "path": "tableau/preflight.sql",
+      "bytes": 2677,
+      "sha256": "535662e1caca9c98bbf7af7c58b74b2e11936bfea9e829a09c9b2dd6935adfcf"
+    },
+    {
+      "path": "tableau/README.md",
+      "bytes": 7130,
+      "sha256": "c0105b4b251efb07adee69526b43d5985382814c4c56480ba501aa270eb7990f"
+    },
+    {
+      "path": "tests/normalize.test.mjs",
+      "bytes": 8378,
+      "sha256": "d2d8795972f8d0514122110e32b1c08b8e5f7faba7e6b176a0e0842b9b6f052a"
+    },
+    {
+      "path": "v1-extract/alteryx-backend-extract.md",
+      "bytes": 9235,
+      "sha256": "de3e460a23e3d81dca705efc79cbfc279ec06abcf6ffe5d86ec4904c380dd9a2"
+    },
+    {
+      "path": "v1-extract/alteryx-backend-extract.mongosh.js",
+      "bytes": 17534,
+      "sha256": "65c100c805f68d3419f8c395f38eb2d671cc1a39780f3555f2f9cea4b7848f4c"
+    },
+    {
+      "path": "v1-extract/alteryx-field-map.json",
+      "bytes": 19827,
+      "sha256": "bde9a2fb2bac7beab2363f2483af7d45ad7112058d123e9b397108819bddf4ff"
+    },
+    {
+      "path": "v1-extract/analytic-registry-v1-extract.xlsx",
+      "bytes": 213930,
+      "sha256": "08d11e4b6be4fb42574063e53e7c1945f49e23332428bab45bce31623f2f87c5"
+    },
+    {
+      "path": "v1-extract/column-dictionary.csv",
+      "bytes": 26596,
+      "sha256": "c0ecbb0e61f6460294cc55fa478d32b7d08d7d34a4e715ea594d2f70765541cf"
+    },
+    {
+      "path": "v1-extract/csv-headers/asset_connections.csv",
+      "bytes": 134,
+      "sha256": "d1866e90d4d725dc8ad82b399041562e3d811ff4831ae30ecc99450f3f56683e"
+    },
+    {
+      "path": "v1-extract/csv-headers/asset_dependencies.csv",
+      "bytes": 204,
+      "sha256": "40b1887055cbb2dcef4adad13227461a0d23333dfefce03c7e9ebda360ea30c5"
+    },
+    {
+      "path": "v1-extract/csv-headers/assets.csv",
+      "bytes": 268,
+      "sha256": "1a5193528b87178d7bbc635c19bc6245d4fbfe6e9d35acc1b95fddf0901b730e"
+    },
+    {
+      "path": "v1-extract/csv-headers/connections.csv",
+      "bytes": 292,
+      "sha256": "470daa9d27937fbb3ebb5e489860392c5f56ef1758fda5bb650280e1c07075b9"
+    },
+    {
+      "path": "v1-extract/csv-headers/directory_users.csv",
+      "bytes": 105,
+      "sha256": "385afebe21e9d9e1400a952bbb422253f8f5fd47d59d29daf5f2566d09e324e2"
+    },
+    {
+      "path": "v1-extract/csv-headers/object_users.csv",
+      "bytes": 271,
+      "sha256": "ee4ae061d907e77f70272dc82ab47a6304faee9ded69bd39fe7f981df85cf66b"
+    },
+    {
+      "path": "v1-extract/csv-headers/platform_users.csv",
+      "bytes": 233,
+      "sha256": "8605ade7352c17e7f0b96ea33828e299f23bc210559ef3472be521a6395fd325"
+    },
+    {
+      "path": "v1-extract/csv-headers/README.md",
+      "bytes": 500,
+      "sha256": "936f83df24b8534d1d6af4440b75c5c78bee5da0b7ef8a221400f882912f4b8d"
+    },
+    {
+      "path": "v1-extract/csv-headers/workspace_assets.csv",
+      "bytes": 136,
+      "sha256": "f65cf3602ba426c11eddcb8ff413e942323a21784e6bb3a68089b22416c9c0b8"
+    },
+    {
+      "path": "v1-extract/csv-headers/workspaces.csv",
+      "bytes": 181,
+      "sha256": "1ce28532fcce6319481a125199d65f545e525dff7fc1868e371135f6c409e624"
+    },
+    {
+      "path": "v1-extract/platform-output-layouts.json",
+      "bytes": 23688,
+      "sha256": "e79e8d0e4c6ec83abe386fd07482446f628ffd7b8a37627f749cf97ba3a3fe5d"
+    },
+    {
+      "path": "v1-extract/powerbi-field-map.json",
+      "bytes": 22825,
+      "sha256": "c24d252065c0fb5d5eb9db780937d7599f51590f0fe7c7c3c8729767b3897cda"
+    },
+    {
+      "path": "v1-extract/powerbi-identity-extract.md",
+      "bytes": 15415,
+      "sha256": "5b45d790f0101ff5364293c9282f50a0b980e723b472933d47fe536fd5cc15a7"
+    },
+    {
+      "path": "v1-extract/README.md",
+      "bytes": 13972,
+      "sha256": "df601d088a0953e0c2796a3c8fbcfc89502be888c2e3460b66f3e66ed469ddc4"
+    },
+    {
+      "path": "v1-extract/sqlserver-email-match.sql",
+      "bytes": 10740,
+      "sha256": "ca36796ea1a0a851b49fff2effbe3e2b93bafa8720499d12d2bd48d1e90fc5cd"
+    },
+    {
+      "path": "v1-extract/sqlserver-staging.sql",
+      "bytes": 10639,
+      "sha256": "e0177488b9636e67be23ab81001dfd5e60673afe2f4a109af1532b00053c8112"
+    },
+    {
+      "path": "v1-extract/sqlserver-validate.sql",
+      "bytes": 39702,
+      "sha256": "44f7455b2cde5283a8e1f58295bf75acb1dbb54b83eda9eb648daec70e43ef79"
+    },
+    {
+      "path": "v1-extract/tableau-field-map.json",
+      "bytes": 14921,
+      "sha256": "824e0ad993878bf31b2f7991a642abd0038c6c92aa03cfcd97aa0318763a60d1"
+    },
+    {
+      "path": "v1-extract/tableau-identity-export.sql",
+      "bytes": 5885,
+      "sha256": "70196c9329f89bcc9272fcba57610bf40c0f53a20b2acb0685caa5c557b30da3"
+    },
+    {
+      "path": "v1-extract/tableau-identity-extract.md",
+      "bytes": 4306,
+      "sha256": "0a81e3287f2988a6fc6b87166c477489ebe846fe145a2c4290017103b76b9638"
+    },
+    {
+      "path": "v1-extract/tests/alteryx-backend.test.mjs",
+      "bytes": 5823,
+      "sha256": "0bf795f13e09df12dcb9387ef918bb45eeeac0beead8a80b7e41918f5035c0f9"
+    },
+    {
+      "path": "v1-extract/workbook-contract.json",
+      "bytes": 30213,
+      "sha256": "00884d1574c22fd25919cf0b8fe5db4758d3b0e554400cd14aba4690464a1f89"
+    },
+    {
+      "path": "v1.1-extract/alteryx-sqlserver-mapping.md",
+      "bytes": 13968,
+      "sha256": "54241cad94b4a872307dbbc4fbf289f20d09d8c8fe79e2b99098fc99c23a7736"
+    },
+    {
+      "path": "v1.1-extract/analytic-registry-v1.1-extract.xlsx",
+      "bytes": 79356,
+      "sha256": "94473204f0d779d95a3acfb8637edce7c945f449eef6fc8827f8c32a29642a73"
+    },
+    {
+      "path": "v1.1-extract/analytic-registry-v1.1-extract.xlsx.inspect.ndjson",
+      "bytes": 1704539,
+      "sha256": "112ed7d10b2ab13200526b9f45b6e62ccddc86b0f02865f8427909d1c6ed1663"
+    },
+    {
+      "path": "v1.1-extract/column-dictionary.csv",
+      "bytes": 82219,
+      "sha256": "d74cda32a7d45d7a818beebe9c2a5b258b8dd93e9664c57143f8f32473585871"
+    },
+    {
+      "path": "v1.1-extract/contract.json",
+      "bytes": 155119,
+      "sha256": "d6d40f14f39e7df9c12117a1ea21e2d838f34d462089368ac041f57288df1147"
+    },
+    {
+      "path": "v1.1-extract/csv-headers/asset_connections.csv",
+      "bytes": 75,
+      "sha256": "4ae53bb31bdb0bdc6d19ef671cbf2a355a40e17784a3b24b1d871cf2ec7ea745"
+    },
+    {
+      "path": "v1.1-extract/csv-headers/asset_dependencies.csv",
+      "bytes": 119,
+      "sha256": "d3d41fabc91f62dc9408fb2ec75ef98d087990b206ec724b3908ebf32de4d71c"
+    },
+    {
+      "path": "v1.1-extract/csv-headers/assets.csv",
+      "bytes": 92,
+      "sha256": "d17e63f9e518c1294c13d93ee9be1f41c65a83d228bb291e1de307abca2c7230"
+    },
+    {
+      "path": "v1.1-extract/csv-headers/connections.csv",
+      "bytes": 161,
+      "sha256": "d4588c6daddd4daebb9b4a81d7580444f2b60d3cfae5627ae0cfe3b01e61ac50"
+    },
+    {
+      "path": "v1.1-extract/csv-headers/coverage.csv",
+      "bytes": 43,
+      "sha256": "75b22dc8a791ad2594243146337b9033575ef98ba9706c734dbf94ce9649addc"
+    },
+    {
+      "path": "v1.1-extract/csv-headers/directory_users.csv",
+      "bytes": 57,
+      "sha256": "457957b6913da915507676f87b71a64504b17d174d47bc4e47348ec0ac04b325"
+    },
+    {
+      "path": "v1.1-extract/csv-headers/object_users.csv",
+      "bytes": 182,
+      "sha256": "5e8879c4c91f31d420b61de57a144ab9fe07c17e3e1b44712d5642e8631b02ca"
+    },
+    {
+      "path": "v1.1-extract/csv-headers/platform_users.csv",
+      "bytes": 100,
+      "sha256": "ae1bd6b42a658c9f11284e1f643d9d975f0eaed72a8b26bc41b4c9d88e5a47ac"
+    },
+    {
+      "path": "v1.1-extract/csv-headers/run_context.csv",
+      "bytes": 117,
+      "sha256": "680f4e39ac979cde53e5b8bb279d05340f43a98ae88069c6978082a3dc8f4086"
+    },
+    {
+      "path": "v1.1-extract/csv-headers/workspace_assets.csv",
+      "bytes": 77,
+      "sha256": "b7e49fe67d757d86a82fa334af22737dc7b516f364c1a05c0e0dc1eb175f45f8"
+    },
+    {
+      "path": "v1.1-extract/csv-headers/workspaces.csv",
+      "bytes": 77,
+      "sha256": "23e87ef3b508f5bc32f2c61f74790a039b41529c7bfe8c59252a52d2029a372b"
+    },
+    {
+      "path": "v1.1-extract/fabric-query-mapping.md",
+      "bytes": 10606,
+      "sha256": "397f5add4822b3cc66ac7cf7706c926c9e479d7b57541056e40b94f1c3bca70c"
+    },
+    {
+      "path": "v1.1-extract/migration-map.json",
+      "bytes": 28114,
+      "sha256": "6714c5246443af2ad68117e76b58d307068e5fd696c7ae227a47546ae88294f7"
+    },
+    {
+      "path": "v1.1-extract/monthly-reconciliation.md",
+      "bytes": 9523,
+      "sha256": "41f2fc6d694398abb76176598e4a11573c5ec642990a72095496c845f286f8cb"
+    },
+    {
+      "path": "v1.1-extract/queries/alteryx-mongodb.js",
+      "bytes": 12552,
+      "sha256": "af5c3b9ea058c5c60cc5043273b7f1c8faf06cf215ac083614f0a1db51c2be16"
+    },
+    {
+      "path": "v1.1-extract/queries/alteryx-service-crosswalk.sql",
+      "bytes": 2751,
+      "sha256": "47072993b4ecda76cee7b8ff73207155819db03e3868a1779da4ac33c5127176"
+    },
+    {
+      "path": "v1.1-extract/queries/alteryx-sqlserver-preflight.sql",
+      "bytes": 3381,
+      "sha256": "3c8590c8b548ba59e1050072c0968fbc4ebc131c234bd443242f23d76d6aca62"
+    },
+    {
+      "path": "v1.1-extract/queries/alteryx-sqlserver.sql",
+      "bytes": 26022,
+      "sha256": "6cc7669e5b006404b3f64721a5c9ec5817c28df7d8ba4c868ecc4e104b84794d"
+    },
+    {
+      "path": "v1.1-extract/queries/fabric-inventory.sql",
+      "bytes": 11711,
+      "sha256": "49c3190b04c61436bbc937db06710d5ad68da97cbcc16c708c8f25354c29b93b"
+    },
+    {
+      "path": "v1.1-extract/queries/fabric-model-discovery.dax",
+      "bytes": 2153,
+      "sha256": "e2a237b5473696e7b283aacd01f92a23756ffa990fb57c1214953c83e17822a0"
+    },
+    {
+      "path": "v1.1-extract/queries/powerbi-export-sqlserver.sql",
+      "bytes": 17731,
+      "sha256": "40c218f15e531160f7b9a8a0de4a86fcc8370d47b3235cdae2c96b9febde1f3d"
+    },
+    {
+      "path": "v1.1-extract/queries/tableau-postgresql-selects.sql",
+      "bytes": 27102,
+      "sha256": "8d8ec027f5232166771adc948aad4ebcee53b5baf1dfdf34f908d8c3688f7563"
+    },
+    {
+      "path": "v1.1-extract/queries/tableau-postgresql.sql",
+      "bytes": 19671,
+      "sha256": "d8b88833117b06407dc62c957b886cffb57085ce99bbc8889b2355fe0f9b93f1"
+    },
+    {
+      "path": "v1.1-extract/queries/verify-fabric.mjs",
+      "bytes": 4187,
+      "sha256": "0625f265f03d8d0a7a659b5757ca58c7986948b6a25549b7c3f6ed7fd1f1118b"
+    },
+    {
+      "path": "v1.1-extract/queries/verify-queries.mjs",
+      "bytes": 10506,
+      "sha256": "df5c7cd580f74623fd3c5717fade9fe75434e8eb97527fad604da7a432c2b3ae"
+    },
+    {
+      "path": "v1.1-extract/README.md",
+      "bytes": 6702,
+      "sha256": "7fe4e03c7d1370cd540210302988d766bdb0a3d5dbc3db84b2abe25f94b97de1"
+    },
+    {
+      "path": "v1.1-extract/samples/alteryx/changed-refresh/asset_connections.csv",
+      "bytes": 75,
+      "sha256": "4ae53bb31bdb0bdc6d19ef671cbf2a355a40e17784a3b24b1d871cf2ec7ea745"
+    },
+    {
+      "path": "v1.1-extract/samples/alteryx/changed-refresh/asset_dependencies.csv",
+      "bytes": 119,
+      "sha256": "d3d41fabc91f62dc9408fb2ec75ef98d087990b206ec724b3908ebf32de4d71c"
+    },
+    {
+      "path": "v1.1-extract/samples/alteryx/changed-refresh/assets.csv",
+      "bytes": 343,
+      "sha256": "8e0b404ab56c5bf8ee422fbbbd0da35a73ecc46516d8a69ac8542bb911360d4e"
+    },
+    {
+      "path": "v1.1-extract/samples/alteryx/changed-refresh/connections.csv",
+      "bytes": 161,
+      "sha256": "d4588c6daddd4daebb9b4a81d7580444f2b60d3cfae5627ae0cfe3b01e61ac50"
+    },
+    {
+      "path": "v1.1-extract/samples/alteryx/changed-refresh/coverage.csv",
+      "bytes": 610,
+      "sha256": "c78e266a5b4d4fc0e59a60bf338d5955d633db2f60e362c29e2fefbc5966194f"
+    },
+    {
+      "path": "v1.1-extract/samples/alteryx/changed-refresh/delivery.json",
+      "bytes": 8652,
+      "sha256": "c82af3e0f2ad841d6ec70c38be76f6d15b7e280bd69f2eaefec60dee0d2e1544"
+    },
+    {
+      "path": "v1.1-extract/samples/alteryx/changed-refresh/directory_users.csv",
+      "bytes": 57,
+      "sha256": "457957b6913da915507676f87b71a64504b17d174d47bc4e47348ec0ac04b325"
+    },
+    {
+      "path": "v1.1-extract/samples/alteryx/changed-refresh/object_users.csv",
+      "bytes": 1513,
+      "sha256": "02f6a26e12f39b7a97ffdccfaf120a02bc14eeb426ee5f5bb35afde96cb303fd"
+    },
+    {
+      "path": "v1.1-extract/samples/alteryx/changed-refresh/platform_users.csv",
+      "bytes": 344,
+      "sha256": "f3dd94119c28a7ebf7a48aa415ad11bb725b41b6e7aa887985427735e3ce93e0"
+    },
+    {
+      "path": "v1.1-extract/samples/alteryx/changed-refresh/run_context.csv",
+      "bytes": 391,
+      "sha256": "5dbfd806a80a976cd23a7c82850e8502b1fdcc4c4bd3fd5048a0b15b076840b6"
+    },
+    {
+      "path": "v1.1-extract/samples/alteryx/changed-refresh/source-example.json",
+      "bytes": 2744,
+      "sha256": "70463627ca677641b1ac8fb42cf096891927927917dbb9041e192a546f67832b"
+    },
+    {
+      "path": "v1.1-extract/samples/alteryx/changed-refresh/workspace_assets.csv",
+      "bytes": 416,
+      "sha256": "8bf6afa9509a7a91c4fbe4f9f48e945c5f62926fed1953a9c198c8022de5bc65"
+    },
+    {
+      "path": "v1.1-extract/samples/alteryx/changed-refresh/workspaces.csv",
+      "bytes": 267,
+      "sha256": "28c10c49c2a9f27f43a5c8fff4af604ff5eef9640ddc28b025c87c34281ee2fd"
+    },
+    {
+      "path": "v1.1-extract/samples/alteryx/identical-replay/asset_connections.csv",
+      "bytes": 75,
+      "sha256": "4ae53bb31bdb0bdc6d19ef671cbf2a355a40e17784a3b24b1d871cf2ec7ea745"
+    },
+    {
+      "path": "v1.1-extract/samples/alteryx/identical-replay/asset_dependencies.csv",
+      "bytes": 119,
+      "sha256": "d3d41fabc91f62dc9408fb2ec75ef98d087990b206ec724b3908ebf32de4d71c"
+    },
+    {
+      "path": "v1.1-extract/samples/alteryx/identical-replay/assets.csv",
+      "bytes": 344,
+      "sha256": "f76666441edf36e3765cc8981332ba087d620e83d00d06280947618a0a16716f"
+    },
+    {
+      "path": "v1.1-extract/samples/alteryx/identical-replay/connections.csv",
+      "bytes": 161,
+      "sha256": "d4588c6daddd4daebb9b4a81d7580444f2b60d3cfae5627ae0cfe3b01e61ac50"
+    },
+    {
+      "path": "v1.1-extract/samples/alteryx/identical-replay/coverage.csv",
+      "bytes": 610,
+      "sha256": "aefa9ef5150b5d95e81586b89a78fd3386c4db21ceac9a6194c4f8524ad2da9b"
+    },
+    {
+      "path": "v1.1-extract/samples/alteryx/identical-replay/delivery.json",
+      "bytes": 8645,
+      "sha256": "93ec093cbcbe230fa12cd7a8ea7344f0f642b80ec18f735258d7bf637eba03a6"
+    },
+    {
+      "path": "v1.1-extract/samples/alteryx/identical-replay/directory_users.csv",
+      "bytes": 57,
+      "sha256": "457957b6913da915507676f87b71a64504b17d174d47bc4e47348ec0ac04b325"
+    },
+    {
+      "path": "v1.1-extract/samples/alteryx/identical-replay/object_users.csv",
+      "bytes": 1513,
+      "sha256": "68c44804dbd7aa633765203527a81c3a12963704094510a78c22543ca8412fc1"
+    },
+    {
+      "path": "v1.1-extract/samples/alteryx/identical-replay/platform_users.csv",
+      "bytes": 344,
+      "sha256": "192b2bb75446b2bb8885da65b95b73e17bb7c15b26f22e35dd65f4ff2a529b32"
+    },
+    {
+      "path": "v1.1-extract/samples/alteryx/identical-replay/run_context.csv",
+      "bytes": 391,
+      "sha256": "82477c9bb7c3ef83e93b404f0b3668ebdc3a97608252b7c43f22cc8a4012aa72"
+    },
+    {
+      "path": "v1.1-extract/samples/alteryx/identical-replay/source-example.json",
+      "bytes": 2738,
+      "sha256": "bc897a974e4d760412d2d056ea15d10cd20f28f2ef433901211b6ddeebfd7545"
+    },
+    {
+      "path": "v1.1-extract/samples/alteryx/identical-replay/workspace_assets.csv",
+      "bytes": 416,
+      "sha256": "e9653494a6116b0a323a4af879b37d8c953d200f0e008a02676b1f352eefa351"
+    },
+    {
+      "path": "v1.1-extract/samples/alteryx/identical-replay/workspaces.csv",
+      "bytes": 259,
+      "sha256": "26a30b14e47fb2219fa084566be972a69e646810dc7891351e4f8b48d656fbf4"
+    },
+    {
+      "path": "v1.1-extract/samples/alteryx/initial/asset_connections.csv",
+      "bytes": 75,
+      "sha256": "4ae53bb31bdb0bdc6d19ef671cbf2a355a40e17784a3b24b1d871cf2ec7ea745"
+    },
+    {
+      "path": "v1.1-extract/samples/alteryx/initial/asset_dependencies.csv",
+      "bytes": 119,
+      "sha256": "d3d41fabc91f62dc9408fb2ec75ef98d087990b206ec724b3908ebf32de4d71c"
+    },
+    {
+      "path": "v1.1-extract/samples/alteryx/initial/assets.csv",
+      "bytes": 344,
+      "sha256": "f76666441edf36e3765cc8981332ba087d620e83d00d06280947618a0a16716f"
+    },
+    {
+      "path": "v1.1-extract/samples/alteryx/initial/connections.csv",
+      "bytes": 161,
+      "sha256": "d4588c6daddd4daebb9b4a81d7580444f2b60d3cfae5627ae0cfe3b01e61ac50"
+    },
+    {
+      "path": "v1.1-extract/samples/alteryx/initial/coverage.csv",
+      "bytes": 610,
+      "sha256": "aefa9ef5150b5d95e81586b89a78fd3386c4db21ceac9a6194c4f8524ad2da9b"
+    },
+    {
+      "path": "v1.1-extract/samples/alteryx/initial/delivery.json",
+      "bytes": 8645,
+      "sha256": "93ec093cbcbe230fa12cd7a8ea7344f0f642b80ec18f735258d7bf637eba03a6"
+    },
+    {
+      "path": "v1.1-extract/samples/alteryx/initial/directory_users.csv",
+      "bytes": 57,
+      "sha256": "457957b6913da915507676f87b71a64504b17d174d47bc4e47348ec0ac04b325"
+    },
+    {
+      "path": "v1.1-extract/samples/alteryx/initial/object_users.csv",
+      "bytes": 1513,
+      "sha256": "68c44804dbd7aa633765203527a81c3a12963704094510a78c22543ca8412fc1"
+    },
+    {
+      "path": "v1.1-extract/samples/alteryx/initial/platform_users.csv",
+      "bytes": 344,
+      "sha256": "192b2bb75446b2bb8885da65b95b73e17bb7c15b26f22e35dd65f4ff2a529b32"
+    },
+    {
+      "path": "v1.1-extract/samples/alteryx/initial/run_context.csv",
+      "bytes": 391,
+      "sha256": "82477c9bb7c3ef83e93b404f0b3668ebdc3a97608252b7c43f22cc8a4012aa72"
+    },
+    {
+      "path": "v1.1-extract/samples/alteryx/initial/source-example.json",
+      "bytes": 2738,
+      "sha256": "bc897a974e4d760412d2d056ea15d10cd20f28f2ef433901211b6ddeebfd7545"
+    },
+    {
+      "path": "v1.1-extract/samples/alteryx/initial/workspace_assets.csv",
+      "bytes": 416,
+      "sha256": "e9653494a6116b0a323a4af879b37d8c953d200f0e008a02676b1f352eefa351"
+    },
+    {
+      "path": "v1.1-extract/samples/alteryx/initial/workspaces.csv",
+      "bytes": 259,
+      "sha256": "26a30b14e47fb2219fa084566be972a69e646810dc7891351e4f8b48d656fbf4"
+    },
+    {
+      "path": "v1.1-extract/samples/build-samples.py",
+      "bytes": 13450,
+      "sha256": "c13f752633a77226a51bc313d854f2efd1fa1b4353c000672ac5c34ecc4b5890"
+    },
+    {
+      "path": "v1.1-extract/samples/directory-evidence.json",
+      "bytes": 698,
+      "sha256": "463873cf7ff9551e6ec7e2a054efc3259a96e33332a232c812de443d3eaad763"
+    },
+    {
+      "path": "v1.1-extract/samples/fabric/changed-refresh/asset_connections.csv",
+      "bytes": 75,
+      "sha256": "4ae53bb31bdb0bdc6d19ef671cbf2a355a40e17784a3b24b1d871cf2ec7ea745"
+    },
+    {
+      "path": "v1.1-extract/samples/fabric/changed-refresh/asset_dependencies.csv",
+      "bytes": 119,
+      "sha256": "d3d41fabc91f62dc9408fb2ec75ef98d087990b206ec724b3908ebf32de4d71c"
+    },
+    {
+      "path": "v1.1-extract/samples/fabric/changed-refresh/assets.csv",
+      "bytes": 299,
+      "sha256": "c32d9468407768b42de8096af9990cb4a17ffa7d78712fe2d26e85d5e1583545"
+    },
+    {
+      "path": "v1.1-extract/samples/fabric/changed-refresh/connections.csv",
+      "bytes": 161,
+      "sha256": "d4588c6daddd4daebb9b4a81d7580444f2b60d3cfae5627ae0cfe3b01e61ac50"
+    },
+    {
+      "path": "v1.1-extract/samples/fabric/changed-refresh/coverage.csv",
+      "bytes": 618,
+      "sha256": "675c09c6222039dc3f733e51ebad4bbca2bf0f9417656597a92636b3adb00d34"
+    },
+    {
+      "path": "v1.1-extract/samples/fabric/changed-refresh/delivery.json",
+      "bytes": 3664,
+      "sha256": "493fdb0f0afd128cddaab316bbf532be671f14970522980e336bcb3e940693f2"
+    },
+    {
+      "path": "v1.1-extract/samples/fabric/changed-refresh/directory_users.csv",
+      "bytes": 57,
+      "sha256": "457957b6913da915507676f87b71a64504b17d174d47bc4e47348ec0ac04b325"
+    },
+    {
+      "path": "v1.1-extract/samples/fabric/changed-refresh/object_users.csv",
+      "bytes": 182,
+      "sha256": "5e8879c4c91f31d420b61de57a144ab9fe07c17e3e1b44712d5642e8631b02ca"
+    },
+    {
+      "path": "v1.1-extract/samples/fabric/changed-refresh/platform_users.csv",
+      "bytes": 100,
+      "sha256": "ae1bd6b42a658c9f11284e1f643d9d975f0eaed72a8b26bc41b4c9d88e5a47ac"
+    },
+    {
+      "path": "v1.1-extract/samples/fabric/changed-refresh/run_context.csv",
+      "bytes": 404,
+      "sha256": "739e6d968892f1cbc8d977d73bf2253d68880beb4d0e3ca566d9cccaf5b5dad8"
+    },
+    {
+      "path": "v1.1-extract/samples/fabric/changed-refresh/source-example.json",
+      "bytes": 834,
+      "sha256": "c73a953687c2a5af7785074e33401806b1e527ab89d0aa7befd8c2dec4750be5"
+    },
+    {
+      "path": "v1.1-extract/samples/fabric/changed-refresh/workspace_assets.csv",
+      "bytes": 337,
+      "sha256": "5b5122a14c191f50a09189029c0d92551c26a61ce17beca25599289fceb30eeb"
+    },
+    {
+      "path": "v1.1-extract/samples/fabric/changed-refresh/workspaces.csv",
+      "bytes": 184,
+      "sha256": "f9d34a46eb420fbb702442a90c9488949e27f0bb84adbccd3651b2569c14f561"
+    },
+    {
+      "path": "v1.1-extract/samples/fabric/identical-replay/asset_connections.csv",
+      "bytes": 75,
+      "sha256": "4ae53bb31bdb0bdc6d19ef671cbf2a355a40e17784a3b24b1d871cf2ec7ea745"
+    },
+    {
+      "path": "v1.1-extract/samples/fabric/identical-replay/asset_dependencies.csv",
+      "bytes": 119,
+      "sha256": "d3d41fabc91f62dc9408fb2ec75ef98d087990b206ec724b3908ebf32de4d71c"
+    },
+    {
+      "path": "v1.1-extract/samples/fabric/identical-replay/assets.csv",
+      "bytes": 296,
+      "sha256": "abffc5c5e839337fb9001a247ff85f04a828f3560f24443637132033f51865c9"
+    },
+    {
+      "path": "v1.1-extract/samples/fabric/identical-replay/connections.csv",
+      "bytes": 161,
+      "sha256": "d4588c6daddd4daebb9b4a81d7580444f2b60d3cfae5627ae0cfe3b01e61ac50"
+    },
+    {
+      "path": "v1.1-extract/samples/fabric/identical-replay/coverage.csv",
+      "bytes": 618,
+      "sha256": "c6aa1d7c149292259118774ff09072dd73f6926a579c03c5c94b76f9c20ffb2b"
+    },
+    {
+      "path": "v1.1-extract/samples/fabric/identical-replay/delivery.json",
+      "bytes": 3654,
+      "sha256": "78d256746f6a0b8769b9b69714ace74896bb454371b9e100df0529afec41fe7f"
+    },
+    {
+      "path": "v1.1-extract/samples/fabric/identical-replay/directory_users.csv",
+      "bytes": 57,
+      "sha256": "457957b6913da915507676f87b71a64504b17d174d47bc4e47348ec0ac04b325"
+    },
+    {
+      "path": "v1.1-extract/samples/fabric/identical-replay/object_users.csv",
+      "bytes": 182,
+      "sha256": "5e8879c4c91f31d420b61de57a144ab9fe07c17e3e1b44712d5642e8631b02ca"
+    },
+    {
+      "path": "v1.1-extract/samples/fabric/identical-replay/platform_users.csv",
+      "bytes": 100,
+      "sha256": "ae1bd6b42a658c9f11284e1f643d9d975f0eaed72a8b26bc41b4c9d88e5a47ac"
+    },
+    {
+      "path": "v1.1-extract/samples/fabric/identical-replay/run_context.csv",
+      "bytes": 404,
+      "sha256": "c7e98d101ad7b78d637d5559dd4a859c957fc9056834395629ae51affcdf6f3a"
+    },
+    {
+      "path": "v1.1-extract/samples/fabric/identical-replay/source-example.json",
+      "bytes": 821,
+      "sha256": "0ddb508bc9113a844e6af8cf125b061d49c79c35f2d7a0838bc3e6aff027566e"
+    },
+    {
+      "path": "v1.1-extract/samples/fabric/identical-replay/workspace_assets.csv",
+      "bytes": 338,
+      "sha256": "31975fbd6ad77f2bea52cc2a101dc4e839a1aff5b497578860982ce294dc12cd"
+    },
+    {
+      "path": "v1.1-extract/samples/fabric/identical-replay/workspaces.csv",
+      "bytes": 176,
+      "sha256": "94435d2a5efd7b75fa6978e97887d1174255540e26ad9aaf741d276a34ce1c55"
+    },
+    {
+      "path": "v1.1-extract/samples/fabric/initial/asset_connections.csv",
+      "bytes": 75,
+      "sha256": "4ae53bb31bdb0bdc6d19ef671cbf2a355a40e17784a3b24b1d871cf2ec7ea745"
+    },
+    {
+      "path": "v1.1-extract/samples/fabric/initial/asset_dependencies.csv",
+      "bytes": 119,
+      "sha256": "d3d41fabc91f62dc9408fb2ec75ef98d087990b206ec724b3908ebf32de4d71c"
+    },
+    {
+      "path": "v1.1-extract/samples/fabric/initial/assets.csv",
+      "bytes": 296,
+      "sha256": "abffc5c5e839337fb9001a247ff85f04a828f3560f24443637132033f51865c9"
+    },
+    {
+      "path": "v1.1-extract/samples/fabric/initial/connections.csv",
+      "bytes": 161,
+      "sha256": "d4588c6daddd4daebb9b4a81d7580444f2b60d3cfae5627ae0cfe3b01e61ac50"
+    },
+    {
+      "path": "v1.1-extract/samples/fabric/initial/coverage.csv",
+      "bytes": 618,
+      "sha256": "c6aa1d7c149292259118774ff09072dd73f6926a579c03c5c94b76f9c20ffb2b"
+    },
+    {
+      "path": "v1.1-extract/samples/fabric/initial/delivery.json",
+      "bytes": 3654,
+      "sha256": "78d256746f6a0b8769b9b69714ace74896bb454371b9e100df0529afec41fe7f"
+    },
+    {
+      "path": "v1.1-extract/samples/fabric/initial/directory_users.csv",
+      "bytes": 57,
+      "sha256": "457957b6913da915507676f87b71a64504b17d174d47bc4e47348ec0ac04b325"
+    },
+    {
+      "path": "v1.1-extract/samples/fabric/initial/object_users.csv",
+      "bytes": 182,
+      "sha256": "5e8879c4c91f31d420b61de57a144ab9fe07c17e3e1b44712d5642e8631b02ca"
+    },
+    {
+      "path": "v1.1-extract/samples/fabric/initial/platform_users.csv",
+      "bytes": 100,
+      "sha256": "ae1bd6b42a658c9f11284e1f643d9d975f0eaed72a8b26bc41b4c9d88e5a47ac"
+    },
+    {
+      "path": "v1.1-extract/samples/fabric/initial/run_context.csv",
+      "bytes": 404,
+      "sha256": "c7e98d101ad7b78d637d5559dd4a859c957fc9056834395629ae51affcdf6f3a"
+    },
+    {
+      "path": "v1.1-extract/samples/fabric/initial/source-example.json",
+      "bytes": 821,
+      "sha256": "0ddb508bc9113a844e6af8cf125b061d49c79c35f2d7a0838bc3e6aff027566e"
+    },
+    {
+      "path": "v1.1-extract/samples/fabric/initial/workspace_assets.csv",
+      "bytes": 338,
+      "sha256": "31975fbd6ad77f2bea52cc2a101dc4e839a1aff5b497578860982ce294dc12cd"
+    },
+    {
+      "path": "v1.1-extract/samples/fabric/initial/workspaces.csv",
+      "bytes": 176,
+      "sha256": "94435d2a5efd7b75fa6978e97887d1174255540e26ad9aaf741d276a34ce1c55"
+    },
+    {
+      "path": "v1.1-extract/samples/fixtures.sha256",
+      "bytes": 12443,
+      "sha256": "27fea2f1ec34c982fcb846147c25086a09ccce7d5533e39a8cdb2531e809d575"
+    },
+    {
+      "path": "v1.1-extract/samples/README.md",
+      "bytes": 4993,
+      "sha256": "464fc883315507d4667ab1a0bde1608a8c4d5e27633d93d5e605925319860348"
+    },
+    {
+      "path": "v1.1-extract/samples/source-evidence.md",
+      "bytes": 4760,
+      "sha256": "ef4e6cf26bfd0fae23ed1b1991dcde74388da6f6e8f7acb7056050e5b5477244"
+    },
+    {
+      "path": "v1.1-extract/samples/tableau/changed-refresh/asset_connections.csv",
+      "bytes": 204,
+      "sha256": "71ec717380e19600b1ed8991e7a070feaa31dd43fd282dea08ba95ccc3a610d0"
+    },
+    {
+      "path": "v1.1-extract/samples/tableau/changed-refresh/asset_dependencies.csv",
+      "bytes": 119,
+      "sha256": "d3d41fabc91f62dc9408fb2ec75ef98d087990b206ec724b3908ebf32de4d71c"
+    },
+    {
+      "path": "v1.1-extract/samples/tableau/changed-refresh/assets.csv",
+      "bytes": 323,
+      "sha256": "b8896ba1eb77ef7924b17722fa62ab9064e3db7b5099fdf702b9b10996ee0d17"
+    },
+    {
+      "path": "v1.1-extract/samples/tableau/changed-refresh/connections.csv",
+      "bytes": 320,
+      "sha256": "de0ddb4da33bf8177caf448a286b6f9fc2a354c89c6fe3e53e16ce2fc8422b2b"
+    },
+    {
+      "path": "v1.1-extract/samples/tableau/changed-refresh/coverage.csv",
+      "bytes": 602,
+      "sha256": "efc9e51c36fe8b624923c2bd958872248998f192f6a133de20f0660a34898aed"
+    },
+    {
+      "path": "v1.1-extract/samples/tableau/changed-refresh/delivery.json",
+      "bytes": 8733,
+      "sha256": "84829887828134adf998828eccc2dfa5a9d41b149ec0bcb70f186053bfcf60cd"
+    },
+    {
+      "path": "v1.1-extract/samples/tableau/changed-refresh/directory_users.csv",
+      "bytes": 57,
+      "sha256": "457957b6913da915507676f87b71a64504b17d174d47bc4e47348ec0ac04b325"
+    },
+    {
+      "path": "v1.1-extract/samples/tableau/changed-refresh/object_users.csv",
+      "bytes": 1320,
+      "sha256": "a09e6c2d8219c8ebf9a710db15627973b9da6f434ff1d8da959364b3342d403e"
+    },
+    {
+      "path": "v1.1-extract/samples/tableau/changed-refresh/platform_users.csv",
+      "bytes": 556,
+      "sha256": "6e85fdd9a421c65e3566fef1f0ed192b3ca42d865880e57c888f5abc2f9effc3"
+    },
+    {
+      "path": "v1.1-extract/samples/tableau/changed-refresh/run_context.csv",
+      "bytes": 404,
+      "sha256": "9207fd693c8f41435c755293bf75488c3499bf5d44ba5e0da1ed71b0c80f0bb6"
+    },
+    {
+      "path": "v1.1-extract/samples/tableau/changed-refresh/source-example.json",
+      "bytes": 2826,
+      "sha256": "21c67b3642b90f1e5124b2867415e9aab18965a60b9d6def1aedd392ee206fdc"
+    },
+    {
+      "path": "v1.1-extract/samples/tableau/changed-refresh/workspace_assets.csv",
+      "bytes": 347,
+      "sha256": "71458e2830dc8e285d0e839fb1bfcecc3cef8a02bf7f0f4c7b8b94c104579d85"
+    },
+    {
+      "path": "v1.1-extract/samples/tableau/changed-refresh/workspaces.csv",
+      "bytes": 294,
+      "sha256": "d3c6ca4b762eb03f88063f88e9e422a8577ba73411a2e429d78924c708b89d31"
+    },
+    {
+      "path": "v1.1-extract/samples/tableau/identical-replay/asset_connections.csv",
+      "bytes": 204,
+      "sha256": "99d86202372190cd5eb3146d58160dc9e3a0203a5fcc6ff082a97497d4a1830c"
+    },
+    {
+      "path": "v1.1-extract/samples/tableau/identical-replay/asset_dependencies.csv",
+      "bytes": 119,
+      "sha256": "d3d41fabc91f62dc9408fb2ec75ef98d087990b206ec724b3908ebf32de4d71c"
+    },
+    {
+      "path": "v1.1-extract/samples/tableau/identical-replay/assets.csv",
+      "bytes": 330,
+      "sha256": "338fc14b297a5c460967e56b2c77e8793256a079d49ec4a785c372e269e2bbdf"
+    },
+    {
+      "path": "v1.1-extract/samples/tableau/identical-replay/connections.csv",
+      "bytes": 320,
+      "sha256": "52e2433701faccd9277aa981d9896a0d7cc9badab3f9cd40f3aec98f38210d45"
+    },
+    {
+      "path": "v1.1-extract/samples/tableau/identical-replay/coverage.csv",
+      "bytes": 602,
+      "sha256": "e6efb4ced3d2783ee86172ea50ffc565f09ac11d9ac5f5e9837b01f7ecfa001f"
+    },
+    {
+      "path": "v1.1-extract/samples/tableau/identical-replay/delivery.json",
+      "bytes": 8765,
+      "sha256": "040ee93a59fe108270fb057d20e02c65186555f1e3b3ab48157df5de1da70c9e"
+    },
+    {
+      "path": "v1.1-extract/samples/tableau/identical-replay/directory_users.csv",
+      "bytes": 57,
+      "sha256": "457957b6913da915507676f87b71a64504b17d174d47bc4e47348ec0ac04b325"
+    },
+    {
+      "path": "v1.1-extract/samples/tableau/identical-replay/object_users.csv",
+      "bytes": 1342,
+      "sha256": "015aee2247fc3c7c88b25b510d922057c45ba58996aa1237ef639f7c0cde7ca4"
+    },
+    {
+      "path": "v1.1-extract/samples/tableau/identical-replay/platform_users.csv",
+      "bytes": 556,
+      "sha256": "affeaa7fd3e8b816a53f8adc1d0379a40d3570ff6396c7ba4d8b917086f1b384"
+    },
+    {
+      "path": "v1.1-extract/samples/tableau/identical-replay/run_context.csv",
+      "bytes": 404,
+      "sha256": "af9c3022cce069e368c7f23e3dcca660a698dd9890245d5cf14f7a9d66857e30"
+    },
+    {
+      "path": "v1.1-extract/samples/tableau/identical-replay/source-example.json",
+      "bytes": 2852,
+      "sha256": "2d71011760bd669298385d8d965e8ceaa7f048e24590b129ce3465b19310595c"
+    },
+    {
+      "path": "v1.1-extract/samples/tableau/identical-replay/workspace_assets.csv",
+      "bytes": 358,
+      "sha256": "37a3da4653e2edcd824ec85f4612ce6ed005a4a343977c3a41f2638dce51543a"
+    },
+    {
+      "path": "v1.1-extract/samples/tableau/identical-replay/workspaces.csv",
+      "bytes": 286,
+      "sha256": "e0a0873433dae76929f3d6e4d973f69bb132a90f8de6ff0e9adfe22bb18104a5"
+    },
+    {
+      "path": "v1.1-extract/samples/tableau/initial/asset_connections.csv",
+      "bytes": 204,
+      "sha256": "99d86202372190cd5eb3146d58160dc9e3a0203a5fcc6ff082a97497d4a1830c"
+    },
+    {
+      "path": "v1.1-extract/samples/tableau/initial/asset_dependencies.csv",
+      "bytes": 119,
+      "sha256": "d3d41fabc91f62dc9408fb2ec75ef98d087990b206ec724b3908ebf32de4d71c"
+    },
+    {
+      "path": "v1.1-extract/samples/tableau/initial/assets.csv",
+      "bytes": 330,
+      "sha256": "338fc14b297a5c460967e56b2c77e8793256a079d49ec4a785c372e269e2bbdf"
+    },
+    {
+      "path": "v1.1-extract/samples/tableau/initial/connections.csv",
+      "bytes": 320,
+      "sha256": "52e2433701faccd9277aa981d9896a0d7cc9badab3f9cd40f3aec98f38210d45"
+    },
+    {
+      "path": "v1.1-extract/samples/tableau/initial/coverage.csv",
+      "bytes": 602,
+      "sha256": "e6efb4ced3d2783ee86172ea50ffc565f09ac11d9ac5f5e9837b01f7ecfa001f"
+    },
+    {
+      "path": "v1.1-extract/samples/tableau/initial/delivery.json",
+      "bytes": 8765,
+      "sha256": "040ee93a59fe108270fb057d20e02c65186555f1e3b3ab48157df5de1da70c9e"
+    },
+    {
+      "path": "v1.1-extract/samples/tableau/initial/directory_users.csv",
+      "bytes": 57,
+      "sha256": "457957b6913da915507676f87b71a64504b17d174d47bc4e47348ec0ac04b325"
+    },
+    {
+      "path": "v1.1-extract/samples/tableau/initial/object_users.csv",
+      "bytes": 1342,
+      "sha256": "015aee2247fc3c7c88b25b510d922057c45ba58996aa1237ef639f7c0cde7ca4"
+    },
+    {
+      "path": "v1.1-extract/samples/tableau/initial/platform_users.csv",
+      "bytes": 556,
+      "sha256": "affeaa7fd3e8b816a53f8adc1d0379a40d3570ff6396c7ba4d8b917086f1b384"
+    },
+    {
+      "path": "v1.1-extract/samples/tableau/initial/run_context.csv",
+      "bytes": 404,
+      "sha256": "af9c3022cce069e368c7f23e3dcca660a698dd9890245d5cf14f7a9d66857e30"
+    },
+    {
+      "path": "v1.1-extract/samples/tableau/initial/source-example.json",
+      "bytes": 2852,
+      "sha256": "2d71011760bd669298385d8d965e8ceaa7f048e24590b129ce3465b19310595c"
+    },
+    {
+      "path": "v1.1-extract/samples/tableau/initial/workspace_assets.csv",
+      "bytes": 358,
+      "sha256": "37a3da4653e2edcd824ec85f4612ce6ed005a4a343977c3a41f2638dce51543a"
+    },
+    {
+      "path": "v1.1-extract/samples/tableau/initial/workspaces.csv",
+      "bytes": 286,
+      "sha256": "e0a0873433dae76929f3d6e4d973f69bb132a90f8de6ff0e9adfe22bb18104a5"
+    },
+    {
+      "path": "v1.1-extract/samples/validation-scenarios.json",
+      "bytes": 1970,
+      "sha256": "9a90dc507b1f4b2067904e5e40fc3c8e3bb3bd88171b6e76302c27f17d9d3ffc"
+    },
+    {
+      "path": "v1.1-extract/scripts/build-workbook.mjs",
+      "bytes": 15491,
+      "sha256": "ec663a80f628a90a5bdb5e19d1500bf19dfd430e8d3e2193e25649bc2a85ccf5"
+    },
+    {
+      "path": "v1.1-extract/scripts/verify-alteryx-sqlserver.mjs",
+      "bytes": 6595,
+      "sha256": "febe965f3e7e7a936208e280bed43cc1da5cd8acfa40dd59d9850b14307226c6"
+    },
+    {
+      "path": "v1.1-extract/scripts/verify-delivery-validation.py",
+      "bytes": 19992,
+      "sha256": "6f61f5c65e836317a5002a6dd2b63a505397b91420efaa740a5f06e66fe8af27"
+    },
+    {
+      "path": "v1.1-extract/scripts/verify-producer-fixtures.py",
+      "bytes": 14956,
+      "sha256": "0536cd1825c24b66eb6f4716df91de5b06bc1fd70eaa673ccdd8577a10318de2"
+    },
+    {
+      "path": "v1.1-extract/scripts/verify-tableau-selects.mjs",
+      "bytes": 4158,
+      "sha256": "377ae922b6da428ffff617ef7db5033652a219cbdbe1f61e13c006e4f71b23a5"
+    },
+    {
+      "path": "v1.1-extract/scripts/verify-workbook.py",
+      "bytes": 8153,
+      "sha256": "4a97fe0a66a447422054c7b9935b8eaae3aff41b2b853d54d121f643e78e5872"
+    },
+    {
+      "path": "v1.1-extract/source-query-design.md",
+      "bytes": 8009,
+      "sha256": "9825d1b10c7434103617b1bbe3e713274926be3832a1ddb6e0a97fa81d2e4ee8"
+    },
+    {
+      "path": "v1.1-extract/sqlserver-email-match.sql",
+      "bytes": 2543,
+      "sha256": "73c46759e9c0ce288ac8956547952dca14bb944be649f02156049b4e1c0f74b7"
+    },
+    {
+      "path": "v1.1-extract/sqlserver-staging.sql",
+      "bytes": 6805,
+      "sha256": "b887792ae92a83651d54588eb30e5400581003a40292f2c2726c248c3b641571"
+    },
+    {
+      "path": "v1.1-extract/sqlserver-validation.sql",
+      "bytes": 44058,
+      "sha256": "316944be91c975a998d481c972e6c103a6efc9dafd2aa46b309ceb38b37eabc5"
+    },
+    {
+      "path": "v1.1-extract/tableau-postgresql-mapping.md",
+      "bytes": 9945,
+      "sha256": "ed66175c63eaf4bdb67f57d0af849bea7b827bf8daefe4962e8634f3c21af20b"
+    },
+    {
+      "path": "v1.2-workbook/analytic-registry-v1.2-extract.xlsx",
+      "bytes": 57963,
+      "sha256": "28a1357d4a90dcc970710f6ce938ceb090198d6dd923bff75b4e576413e28635"
+    },
+    {
+      "path": "v1.2-workbook/build-workbook.mjs",
+      "bytes": 16166,
+      "sha256": "25fc6f4a8d771d6f131bc15d406dd519a780df5ae4d0d76edd9e766b198a263a"
+    },
+    {
+      "path": "v1.2-workbook/column-dictionary.csv",
+      "bytes": 13279,
+      "sha256": "6fccc41efa0112a7acf0d00b9196856dd4fc8cd82eb211999c8cc91267be238b"
+    },
+    {
+      "path": "v1.2-workbook/contract.json",
+      "bytes": 155742,
+      "sha256": "34b9475e7f370bc3da606bee7779cd39a3c4dfa8408bd98e7f9b7a597c55d6af"
+    },
+    {
+      "path": "v1.2-workbook/README.md",
+      "bytes": 3033,
+      "sha256": "fcc16de1147e969806a59f10f6aabfcebfdc918e48f873752049017c310cc1de"
+    },
+    {
+      "path": "v1.2-workbook/verify-workbook.py",
+      "bytes": 8565,
+      "sha256": "5fa4b8652101564db60f5f45860663d8912c3e8b6927f15df6cff35f3193ac73"
+    },
+    {
+      "path": "verify-delivery.py",
+      "bytes": 4175,
+      "sha256": "272245111951e3615695fbc191f00bd93d940f77dbe5cbe1ef375b1fc1048771"
+    }
+  ]
+}

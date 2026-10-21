@@ -1,0 +1,3 @@
+RunKey,NativePrincipalID,IdentifierNamespace,PrincipalTypeCode,DisplayName,SourceEmail,SourceStatus
+11000000-0000-4000-8000-000000000001,000000000000000000000065,AlteryxMongoUserID,User,Alex Sample,alex@example.test,true
+11000000-0000-4000-8000-000000000001,000000000000000000000066,AlteryxMongoUserID,User,Casey Sample,casey@example.test,true

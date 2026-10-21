@@ -1,0 +1,38 @@
+{
+  "checks": [
+    {
+      "name": "Initial packaging succeeds",
+      "pass": true
+    },
+    {
+      "name": "Stale staging is excluded",
+      "pass": true
+    },
+    {
+      "name": "Manifest hashes describe exact entries",
+      "pass": true
+    },
+    {
+      "name": "Read-only validation succeeds",
+      "pass": true
+    },
+    {
+      "name": "Repeat packaging preserves exact archive bytes",
+      "pass": true
+    },
+    {
+      "name": "Source drift is rejected",
+      "pass": true
+    },
+    {
+      "name": "Explicit packaging refreshes source drift",
+      "pass": true
+    },
+    {
+      "name": "Public drift is rejected",
+      "pass": true
+    }
+  ],
+  "fixture": "C:\\Users\\dlpat\\AppData\\Local\\Temp\\registry-pack-3ypowizu",
+  "note": "Synthetic bytes test packaging behavior, not Excel compatibility."
+}

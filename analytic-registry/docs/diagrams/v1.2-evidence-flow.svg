@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1140 650" width="1140" height="650" role="img" aria-labelledby="title description">
+  <title id="title">V1.2 intended evidence handoff and current prototype boundary</title>
+  <desc id="description">Platform teams use query references to produce the existing Excel delivery. The operator loads SQL Server staging manually. Validation, matching, comparison, and accepted registry observations describe the intended integration. The React prototype is not connected to that pipeline. Its business workflows keep approved responsibility and completed evaluations separate from source observations.</desc>
+  <defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="none" stroke="#74677e" stroke-width="1.4"/></marker></defs>
+  <style>text{font-family:'Segoe UI',Arial,sans-serif;fill:#302b38}.title{font-size:26px;font-weight:700}.heading{font-size:19px;font-weight:650}.body{font-size:16px}.small{font-size:15px;fill:#635b6d}.label{font-size:15px;font-weight:600;fill:#65419c}.line{fill:none;stroke:#74677e;stroke-width:2;marker-end:url(#arrow)}.planned{stroke-dasharray:7 5}</style>
+  <rect width="1140" height="650" fill="#fff"/>
+  <text x="30" y="43" class="title">Platform evidence and business metadata have separate authority</text>
+  <text x="30" y="75" class="body">Preparation: platform queries → workbook 1.2 (schema 1.1) → manual SQL staging. Then follow these five stages.</text>
+  <rect x="30" y="112" width="184" height="180" rx="10" fill="#f8f8fa" stroke="#b9b3c2"/>
+  <text x="46" y="142" class="label">1 · RECEIVE</text>
+  <text x="46" y="176" class="heading">Source delivery</text>
+  <text x="46" y="207" class="body">Native IDs</text>
+  <text x="46" y="235" class="body">Scope and dates</text>
+  <text x="46" y="263" class="body">Coverage and rows</text>
+  <path d="M219 201 H246" class="line planned"/>
+  <rect x="254" y="112" width="174" height="180" rx="10" fill="#fff" stroke="#b9b3c2" stroke-dasharray="7 5"/>
+  <text x="270" y="142" class="label">2 · VALIDATE</text>
+  <text x="270" y="176" class="heading">Check structure</text>
+  <text x="270" y="207" class="body">Required columns</text>
+  <text x="270" y="235" class="body">Types and keys</text>
+  <text x="270" y="263" class="body">Coverage counts</text>
+  <path d="M433 201 H460" class="line planned"/>
+  <rect x="468" y="112" width="174" height="180" rx="10" fill="#fff" stroke="#b9b3c2" stroke-dasharray="7 5"/>
+  <text x="484" y="142" class="label">3 · MATCH</text>
+  <text x="484" y="176" class="heading">Resolve identity</text>
+  <text x="484" y="207" class="body">Native identifiers</text>
+  <text x="484" y="235" class="body">Directory email</text>
+  <text x="484" y="263" class="small">Keep ambiguity</text>
+  <path d="M647 201 H674" class="line planned"/>
+  <rect x="682" y="112" width="190" height="180" rx="10" fill="#fff" stroke="#a98bc8" stroke-dasharray="7 5"/>
+  <text x="698" y="142" class="label">4 · COMPARE</text>
+  <text x="698" y="176" class="heading">Compare evidence</text>
+  <text x="698" y="207" class="body">Identify changes</text>
+  <text x="698" y="235" class="body">Keep business facts</text>
+  <text x="698" y="263" class="body">Respect coverage</text>
+  <path d="M877 201 H904" class="line planned"/>
+  <rect x="912" y="112" width="198" height="180" rx="10" fill="#fff" stroke="#a98bc8" stroke-dasharray="7 5"/>
+  <text x="928" y="142" class="label">5 · ACCEPT</text>
+  <text x="928" y="176" class="heading">Registry evidence</text>
+  <text x="928" y="207" class="body">Retain observations</text>
+  <text x="928" y="235" class="body">and a receipt.</text>
+  <text x="928" y="263" class="small">Integration not built</text>
+  <text x="30" y="329" class="small">Dashed shapes and arrows mark unconnected integration. Validation scripts and comparison examples are supporting artifacts.</text>
+  <rect x="30" y="367" width="1080" height="206" rx="12" fill="#faf7fd" stroke="#a98bc8"/>
+  <text x="51" y="403" class="heading">Current React prototype · fictional records and browser storage</text>
+  <text x="51" y="438" class="body">Workspace requests → approved business responsibility</text>
+  <text x="51" y="468" class="body">Completed Champion evaluations → business versions, calculated PRL, and risk qualification</text>
+  <text x="51" y="510" class="label">Source refresh must not overwrite these business decisions.</text>
+  <text x="51" y="543" class="body">Platform imports is a walkthrough. There is no connected SQL-to-browser acceptance path.</text>
+  <text x="30" y="616" class="small">Missing or ambiguous identity is not proof of inactivity. Unresolved follow-up goes to Platform Manager.</text>
+</svg>

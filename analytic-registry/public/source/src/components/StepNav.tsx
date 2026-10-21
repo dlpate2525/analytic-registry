@@ -1,0 +1,3 @@
+import { ArrowLeft, ArrowRight } from 'lucide-react';
+export function StepNav({steps,step,onChange}:{steps:string[];step:number;onChange:(n:number)=>void}){return <div className="guided-nav"><span>Step {step+1} of {steps.length}</span><div className="steps">{steps.map((s,i)=><button key={s} className={i===step?'active':i<step?'done':''} onClick={()=>onChange(i)}><span>{i+1}</span>{s}</button>)}</div></div>}
+export function StepActions({step,count,onChange}:{step:number;count:number;onChange:(n:number)=>void}){return <><button disabled={step===0} onClick={()=>onChange(step-1)}><ArrowLeft size={15}/>Back</button>{step<count-1&&<button className="primary" onClick={()=>onChange(step+1)}>Continue<ArrowRight size={15}/></button>}</>}

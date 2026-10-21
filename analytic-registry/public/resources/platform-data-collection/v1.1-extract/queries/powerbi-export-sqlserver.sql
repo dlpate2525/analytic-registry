@@ -102,38 +102,14 @@ SELECT a.Type,a.ID,JSON_VALUE(u.value,'$.graphId'),JSON_VALUE(u.value,'$.identif
              WHEN 'Dataset' THEN JSON_VALUE(u.value,'$.datasetUserAccessRight') END
 FROM @A a CROSS APPLY OPENJSON(a.Doc,'$.users') u;
 
--- Run_Context: one row; this is the platform extract context, not directory context.
-SELECT CONVERT(nvarchar(36),@RunKey) AS RunKey,'PowerBI' AS PlatformCode,
- @PlatformInstanceKey AS PlatformInstanceKey,@NativeScopeKey AS NativeScopeKey,
- @ObservedAt AS ObservedAt,@DirectoryTenantKey AS DirectoryTenantKey,
- '1.1' AS MappingVersion,@ScopeDescription AS ScopeDescription;
-
--- Workspaces
-SELECT @RunKey AS RunKey,ID AS NativeWorkspaceID,COALESCE(Type,'Workspace') AS NativeWorkspaceType,
- Name AS DisplayName,State AS NativeLifecycleCode FROM @W;
-
--- Assets. NativeType remains Report/Dataset, separate from report format.
-SELECT @RunKey AS RunKey,ID AS NativeAssetID,Type AS NativeAssetType,Name AS DisplayName,
- CAST(NULL AS nvarchar(256)) AS NativeVersionReference,
- CAST(NULL AS nvarchar(80)) AS NativeLifecycleCode FROM @A;
-
--- Workspace_Assets
-SELECT @RunKey AS RunKey,WorkspaceID AS NativeWorkspaceID,ID AS NativeAssetID,
- Type AS NativeAssetType,'ContainedIn' AS NativeAssociationType FROM @A;
-
--- Connections. Do not infer extract mode or authentication from datasource type.
-SELECT @RunKey AS RunKey,ID AS NativeConnectionID,
- COALESCE(Type,'Undefined')+' ('+ID+')' AS DisplayName,
- CASE LOWER(Type) WHEN 'sql' THEN 'SQL Server' WHEN 'sqlserver' THEN 'SQL Server'
-      WHEN 'oracle' THEN 'Oracle' ELSE COALESCE(NULLIF(Type,''),'Undefined') END AS TechnologyCode,
- CAST(NULL AS bit) AS HasExtract,
- CASE WHEN ServerName NOT LIKE N'%[/?@#=; ]%'
-       AND CHARINDEX(CHAR(9),ServerName)=0 AND CHARINDEX(CHAR(10),ServerName)=0
-       AND CHARINDEX(CHAR(13),ServerName)=0 THEN ServerName END AS ServerHostname,DatabaseName,
- CAST(NULL AS nvarchar(80)) AS AuthenticationTypeCode,'Unknown' AS IdentityClassificationCode,
- 'Partial' AS EvidenceStatusCode FROM @C;
-
--- Asset_Connections: dataset direct use only; do not attach a model's connection to a report.
+-- Materialize these output rows once so Coverage counts the exact exported rows.
+DECLARE @AC TABLE (
+ RunKey uniqueidentifier,
+ NativeAssetID nvarchar(4000) COLLATE Latin1_General_100_BIN2,
+ NativeAssetType nvarchar(80),
+ NativeConnectionID nvarchar(4000) COLLATE Latin1_General_100_BIN2,
+ EvidenceStatusCode nvarchar(40));
+INSERT @AC
 SELECT @RunKey AS RunKey,a.ID AS NativeAssetID,a.Type AS NativeAssetType,
  JSON_VALUE(u.value,'$.datasourceInstanceId') AS NativeConnectionID,
  CASE WHEN EXISTS(SELECT 1 FROM @C c WHERE c.ID=JSON_VALUE(u.value,'$.datasourceInstanceId') COLLATE Latin1_General_100_BIN2)
@@ -145,7 +121,15 @@ SELECT @RunKey,a.ID,a.Type,JSON_VALUE(u.value,'$.datasourceInstanceId'),
       THEN 'Observed' ELSE 'Unresolved' END
 FROM @A a CROSS APPLY OPENJSON(a.Doc,'$.misconfiguredDatasourceUsages') u WHERE a.Type='Dataset';
 
--- Asset_Dependencies: report-to-model only. Preserve cross-workspace scope below.
+DECLARE @AD TABLE (
+ RunKey uniqueidentifier,
+ NativeAssetID nvarchar(4000) COLLATE Latin1_General_100_BIN2,
+ NativeAssetType nvarchar(80),
+ UpstreamNativeAssetID nvarchar(4000) COLLATE Latin1_General_100_BIN2,
+ UpstreamNativeAssetType nvarchar(80),
+ RelationshipCode nvarchar(40),
+ EvidenceStatusCode nvarchar(40));
+INSERT @AD
 SELECT @RunKey AS RunKey,ID AS NativeAssetID,Type AS NativeAssetType,
  JSON_VALUE(Doc,'$.datasetId') AS UpstreamNativeAssetID,'Dataset' AS UpstreamNativeAssetType,
  'UsesSemanticModel' AS RelationshipCode,
@@ -155,20 +139,33 @@ SELECT @RunKey AS RunKey,ID AS NativeAssetID,Type AS NativeAssetType,
       THEN 'Observed' ELSE 'Unresolved' END AS EvidenceStatusCode
 FROM @A r WHERE Type='Report' AND NULLIF(JSON_VALUE(Doc,'$.datasetId'),'') IS NOT NULL;
 
--- Platform_Users: identical observations collapse; conflicting values remain separate.
--- Missing native IDs remain in supplemental exceptions and Object_Users below.
+DECLARE @PU TABLE (
+ RunKey uniqueidentifier,
+ NativePrincipalID nvarchar(4000) COLLATE Latin1_General_100_BIN2,
+ IdentifierNamespace nvarchar(80),
+ PrincipalTypeCode nvarchar(80),
+ DisplayName nvarchar(4000),
+ SourceEmail nvarchar(4000),
+ SourceStatus nvarchar(80));
+INSERT @PU
 SELECT DISTINCT @RunKey AS RunKey,COALESCE(NULLIF(GraphID,''),NULLIF(Identifier,'')) AS NativePrincipalID,
  CASE WHEN NULLIF(GraphID,'') IS NOT NULL THEN 'PowerBIGraphID' ELSE 'PowerBIPrincipalIdentifier' END AS IdentifierNamespace,
  COALESCE(NULLIF(PrincipalType,''),'Unknown') AS PrincipalTypeCode,DisplayName,Email AS SourceEmail,
  CAST(NULL AS nvarchar(80)) AS SourceStatus
 FROM @P WHERE COALESCE(NULLIF(GraphID,''),NULLIF(Identifier,'')) IS NOT NULL;
 
--- Directory_Users: header-only; collect directory evidence under its own Run_Context.
-SELECT CAST(NULL AS uniqueidentifier) AS RunKey,CAST(NULL AS nvarchar(256)) AS DirectoryObjectID,
- CAST(NULL AS nvarchar(1024)) AS DisplayName,CAST(NULL AS nvarchar(320)) AS Mail,
- CAST(NULL AS bit) AS AccountEnabled WHERE 1=0;
-
--- Object_Users: direct access observations plus report owner/modifier references.
+DECLARE @OU TABLE (
+ RunKey uniqueidentifier,
+ NativeObjectType nvarchar(80),
+ NativeObjectID nvarchar(4000) COLLATE Latin1_General_100_BIN2,
+ PrincipalRoleCode nvarchar(40),
+ SourcePrincipalReference nvarchar(4000) COLLATE Latin1_General_100_BIN2,
+ SourceReferenceNamespace nvarchar(80),
+ NativePrincipalID nvarchar(4000) COLLATE Latin1_General_100_BIN2,
+ IdentifierNamespace nvarchar(80),
+ NativeRole nvarchar(4000),
+ SourceReferenceStatusCode nvarchar(40));
+INSERT @OU
 SELECT @RunKey AS RunKey,ObjectType AS NativeObjectType,ObjectID AS NativeObjectID,
  'Access' AS PrincipalRoleCode,COALESCE(NULLIF(Identifier,''),NULLIF(GraphID,'')) AS SourcePrincipalReference,
  CASE WHEN NULLIF(Identifier,'') IS NOT NULL THEN 'PowerBIPrincipalIdentifier'
@@ -201,8 +198,57 @@ OUTER APPLY (
    AND p.PrincipalType='User'
 ) matched WHERE a.Type='Report';
 
+-- Run_Context: one row; this is the platform extract context, not directory context.
+SELECT CONVERT(nvarchar(36),@RunKey) AS RunKey,'PowerBI' AS PlatformCode,
+ @PlatformInstanceKey AS PlatformInstanceKey,@NativeScopeKey AS NativeScopeKey,
+ @ObservedAt AS ObservedAt,@DirectoryTenantKey AS DirectoryTenantKey,
+ '1.1' AS MappingVersion,@ScopeDescription AS ScopeDescription;
+
+-- Workspaces
+SELECT @RunKey AS RunKey,ID AS NativeWorkspaceID,COALESCE(Type,'Workspace') AS NativeWorkspaceType,
+ Name AS DisplayName,State AS NativeLifecycleCode FROM @W;
+
+-- Assets. NativeType remains Report/Dataset, separate from report format.
+SELECT @RunKey AS RunKey,ID AS NativeAssetID,Type AS NativeAssetType,Name AS DisplayName,
+ CAST(NULL AS nvarchar(256)) AS NativeVersionReference,
+ CAST(NULL AS nvarchar(80)) AS NativeLifecycleCode FROM @A;
+
+-- Workspace_Assets
+SELECT @RunKey AS RunKey,WorkspaceID AS NativeWorkspaceID,ID AS NativeAssetID,
+ Type AS NativeAssetType,'ContainedIn' AS NativeAssociationType FROM @A;
+
+-- Connections. Do not infer extract mode or authentication from datasource type.
+SELECT @RunKey AS RunKey,ID AS NativeConnectionID,
+ COALESCE(Type,'Undefined')+' ('+ID+')' AS DisplayName,
+ CASE LOWER(Type) WHEN 'sql' THEN 'SQL Server' WHEN 'sqlserver' THEN 'SQL Server'
+      WHEN 'oracle' THEN 'Oracle' ELSE COALESCE(NULLIF(Type,''),'Undefined') END AS TechnologyCode,
+ CAST(NULL AS bit) AS HasExtract,
+ CASE WHEN ServerName NOT LIKE N'%[/?@#=; ]%'
+       AND CHARINDEX(CHAR(9),ServerName)=0 AND CHARINDEX(CHAR(10),ServerName)=0
+       AND CHARINDEX(CHAR(13),ServerName)=0 THEN ServerName END AS ServerHostname,DatabaseName,
+ CAST(NULL AS nvarchar(80)) AS AuthenticationTypeCode,'Unknown' AS IdentityClassificationCode,
+ 'Partial' AS EvidenceStatusCode FROM @C;
+
+-- Asset_Connections: dataset direct use only; do not attach a model's connection to a report.
+SELECT RunKey, NativeAssetID, NativeAssetType, NativeConnectionID, EvidenceStatusCode FROM @AC;
+
+-- Asset_Dependencies: report-to-model only. Preserve cross-workspace scope below.
+SELECT RunKey, NativeAssetID, NativeAssetType, UpstreamNativeAssetID, UpstreamNativeAssetType, RelationshipCode, EvidenceStatusCode FROM @AD;
+
+-- Platform_Users: identical observations collapse; conflicting values remain separate.
+-- Missing native IDs remain in supplemental exceptions and Object_Users below.
+SELECT RunKey, NativePrincipalID, IdentifierNamespace, PrincipalTypeCode, DisplayName, SourceEmail, SourceStatus FROM @PU;
+
+-- Directory_Users: header-only; collect directory evidence under its own Run_Context.
+SELECT CAST(NULL AS uniqueidentifier) AS RunKey,CAST(NULL AS nvarchar(256)) AS DirectoryObjectID,
+ CAST(NULL AS nvarchar(1024)) AS DisplayName,CAST(NULL AS nvarchar(320)) AS Mail,
+ CAST(NULL AS bit) AS AccountEnabled WHERE 1=0;
+
+-- Object_Users: direct access observations plus report owner/modifier references.
+SELECT RunKey, NativeObjectType, NativeObjectID, PrincipalRoleCode, SourcePrincipalReference, SourceReferenceNamespace, NativePrincipalID, IdentifierNamespace, NativeRole, SourceReferenceStatusCode FROM @OU;
+
 -- Coverage: conservative Partial; this query cannot prove complete tenant coverage.
--- RowCount NULL for datasets not counted here or not collected. Confirm counts on saved results.
+-- Collected counts come from the exported rowsets; NotCollected counts remain NULL.
 SELECT @RunKey AS RunKey,'Workspaces' AS DatasetCode,'Partial' AS CoverageStatus,COUNT_BIG(*) AS RowCount FROM @W
 UNION ALL SELECT @RunKey,'Assets','Partial',COUNT_BIG(*) FROM @A
 UNION ALL SELECT @RunKey,'Workspace_Assets','Partial',COUNT_BIG(*) FROM @A
@@ -210,13 +256,16 @@ UNION ALL SELECT @RunKey,'Connections',CASE WHEN JSON_QUERY(@ScanJson,'$.datasou
  AND JSON_QUERY(@ScanJson,'$.misconfiguredDatasourceInstances') IS NULL THEN 'NotCollected' ELSE 'Partial' END,
  CASE WHEN JSON_QUERY(@ScanJson,'$.datasourceInstances') IS NULL
  AND JSON_QUERY(@ScanJson,'$.misconfiguredDatasourceInstances') IS NULL THEN NULL ELSE COUNT_BIG(*) END FROM @C
-UNION ALL SELECT @RunKey,'Asset_Connections','Partial',NULL
-UNION ALL SELECT @RunKey,'Asset_Dependencies','Partial',NULL
+UNION ALL SELECT @RunKey,'Asset_Connections','Partial',COUNT_BIG(*) FROM @AC
+UNION ALL SELECT @RunKey,'Asset_Dependencies','Partial',COUNT_BIG(*) FROM @AD
 UNION ALL SELECT @RunKey,'Platform_Users',CASE WHEN
  EXISTS(SELECT 1 FROM @W WHERE JSON_QUERY(Doc,'$.users') IS NOT NULL)
  OR EXISTS(SELECT 1 FROM @A WHERE JSON_QUERY(Doc,'$.users') IS NOT NULL)
- THEN 'Partial' ELSE 'NotCollected' END,NULL
-UNION ALL SELECT @RunKey,'Object_Users','Partial',NULL
+ THEN 'Partial' ELSE 'NotCollected' END,
+ CASE WHEN EXISTS(SELECT 1 FROM @W WHERE JSON_QUERY(Doc,'$.users') IS NOT NULL)
+ OR EXISTS(SELECT 1 FROM @A WHERE JSON_QUERY(Doc,'$.users') IS NOT NULL)
+ THEN (SELECT COUNT_BIG(*) FROM @PU) END
+UNION ALL SELECT @RunKey,'Object_Users','Partial',COUNT_BIG(*) FROM @OU
 UNION ALL SELECT @RunKey,'Directory_Users','NotCollected',NULL;
 
 -- SUPPLEMENTAL: preserve information that is outside the 72-column workbook.

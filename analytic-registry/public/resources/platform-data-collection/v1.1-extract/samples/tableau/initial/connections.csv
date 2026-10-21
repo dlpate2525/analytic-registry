@@ -1,0 +1,2 @@
+RunKey,NativeConnectionID,DisplayName,TechnologyCode,HasExtract,ServerHostname,DatabaseName,AuthenticationTypeCode,IdentityClassificationCode,EvidenceStatusCode
+12000000-0000-4000-8000-000000000001,22400000-0000-4000-8000-000000000001,Sample SQL source,SQL Server,true,sql.example.test,SampleOperations,,Unknown,Partial

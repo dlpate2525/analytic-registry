@@ -1,0 +1,36 @@
+{
+  "features": {
+    "workspaces": {
+      "pass": true,
+      "assertions": 18,
+      "runtimeErrors": [],
+      "source": "C:\\Users\\dlpat\\Documents\\Codex\\2026-10-06\\files-pasted-by-the-user-build\\outputs\\analytic-registry\\.scratch\\verification-2026-10-21T04-18-10-942Z-1c4eaaa3"
+    },
+    "assets": {
+      "pass": true,
+      "assertions": 15,
+      "runtimeErrors": [],
+      "source": "C:\\Users\\dlpat\\Documents\\Codex\\2026-10-06\\files-pasted-by-the-user-build\\outputs\\analytic-registry\\.scratch\\verification-2026-10-21T04-18-10-942Z-1c4eaaa3"
+    },
+    "requests": {
+      "pass": true,
+      "assertions": 15,
+      "runtimeErrors": [],
+      "source": "C:\\Users\\dlpat\\Documents\\Codex\\2026-10-06\\files-pasted-by-the-user-build\\outputs\\analytic-registry\\.scratch\\verification-2026-10-21T04-18-10-942Z-1c4eaaa3"
+    },
+    "work": {
+      "pass": true,
+      "assertions": 18,
+      "runtimeErrors": [],
+      "source": "C:\\Users\\dlpat\\Documents\\Codex\\2026-10-06\\files-pasted-by-the-user-build\\outputs\\analytic-registry\\.scratch\\verification-2026-10-21T04-19-30-655Z-751eaaf4"
+    },
+    "administration": {
+      "pass": true,
+      "assertions": 35,
+      "runtimeErrors": [],
+      "source": "C:\\Users\\dlpat\\Documents\\Codex\\2026-10-06\\files-pasted-by-the-user-build\\outputs\\analytic-registry\\.scratch\\verification-2026-10-21T04-18-10-942Z-1c4eaaa3"
+    }
+  },
+  "passingAssertions": 101,
+  "note": "Work rerun passed after adding an explicit-link test fixture. Other accepted feature results are from the preceding full run."
+}

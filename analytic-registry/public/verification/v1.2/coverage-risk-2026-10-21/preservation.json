@@ -1,0 +1,16 @@
+{
+  "frozenFilesVerified": 1090,
+  "protectedFilesUnchanged": [
+    "src/data/mock.ts",
+    "src/data/migrate.ts",
+    "src/data/persistence.ts",
+    "src/data/store.tsx",
+    "src/types/index.ts",
+    "src/utils/approvals.ts",
+    "src/utils/workflow.ts",
+    "src/domain/assetGovernance.ts"
+  ],
+  "workbookUnchanged": true,
+  "workbookSha256": "e7acf60dcdba348dc6c4da1b7d9508365cfa6d7476e10ae928b2eca48b916f2f",
+  "externalWrites": false
+}

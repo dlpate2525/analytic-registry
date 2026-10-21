@@ -1,7 +1,7 @@
 {
   "version": "1.1",
   "status": "Prototype contract; installed-source validation pending",
-  "date": "2026-10-09",
+  "date": "2026-10-20",
   "previousVersion": "1.0",
   "tables": [
     {
@@ -392,29 +392,29 @@
           "name": "RowCount",
           "type": "bigint",
           "required": "Conditional",
-          "purpose": "Number of delivered data rows, excluding header and fully blank template rows. Complete requires a count; zero is valid only for a verified empty collection.",
+          "purpose": "Exact number of delivered rows, excluding headers and fully blank template rows. Complete and Partial require a nonnegative count, including zero. Failed and NotCollected require NULL and no data rows. Count alone does not prove scope completeness.",
           "platforms": {
             "PowerBI": {
               "status": "Conditional",
               "source": "Count from the completed export",
-              "valueRule": "Nonnegative delivered row count. Complete requires an exact count, including a legitimate zero. Failed/NotCollected use NULL.",
-              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "valueRule": "Complete and Partial require the exact nonnegative delivered row count. Zero is valid. Failed and NotCollected require NULL and no dataset rows. Only independently verified complete scope supports absence comparisons.",
+              "nullRule": "NULL only for Failed or NotCollected. A missing count blocks a Complete or Partial delivery.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
             },
             "Tableau": {
               "status": "Conditional",
               "source": "Count from the completed export",
-              "valueRule": "Nonnegative delivered row count. Complete requires an exact count, including a legitimate zero. Failed/NotCollected use NULL.",
-              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "valueRule": "Complete and Partial require the exact nonnegative delivered row count. Zero is valid. Failed and NotCollected require NULL and no dataset rows. Only independently verified complete scope supports absence comparisons.",
+              "nullRule": "NULL only for Failed or NotCollected. A missing count blocks a Complete or Partial delivery.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
             },
             "Alteryx": {
               "status": "Conditional",
               "source": "Count from the completed export",
-              "valueRule": "Nonnegative delivered row count. Complete requires an exact count, including a legitimate zero. Failed/NotCollected use NULL.",
-              "nullRule": "NULL when absent from this export. NULL means unknown, not false or not applicable.",
+              "valueRule": "Complete and Partial require the exact nonnegative delivered row count. Zero is valid. Failed and NotCollected require NULL and no dataset rows. Only independently verified complete scope supports absence comparisons.",
+              "nullRule": "NULL only for Failed or NotCollected. A missing count blocks a Complete or Partial delivery.",
               "example": "",
               "verification": "Documented 2025.1 fields; verify the 2025.2 SQL export and adapter before acceptance"
             }
@@ -1038,7 +1038,7 @@
           "name": "NativeConnectionID",
           "type": "nvarchar(200)",
           "required": "Yes",
-          "purpose": "Tableau data connection LUID or returned Power BI source-instance ID. Alteryx V1 does not collect connections. Missing or unstable keys require review.",
+          "purpose": "Tableau data connection LUID or returned Power BI source-instance ID. Resolves a Connection RegistryObject within its platform, instance, and native scope. Alteryx V1.1 does not collect connections. Names and endpoint details do not identify this object.",
           "platforms": {
             "PowerBI": {
               "status": "Profile dependent",
@@ -1071,7 +1071,7 @@
           "name": "DisplayName",
           "type": "nvarchar(200)",
           "required": "No",
-          "purpose": "Source caption when available. The Power BI adapter uses an explicit technology-and-ID label when no supported name is provided. Maps to ObservedConnection.DisplayName.",
+          "purpose": "Source caption when available. The Power BI adapter uses a technology-and-ID label when no supported name is provided. Maps to ObjectObservation.DisplayName, never the business name.",
           "platforms": {
             "PowerBI": {
               "status": "Profile dependent",
@@ -1104,7 +1104,7 @@
           "name": "TechnologyCode",
           "type": "nvarchar(40)",
           "required": "Yes",
-          "purpose": "Source technology, such as Oracle or SQL Server. Null source types become Undefined. Preserve other vendor values for mapping review. Maps to resolved DataSource.TechnologyCode.",
+          "purpose": "Source technology, such as Oracle or SQL Server. Missing source types become Undefined. Preserve other vendor values, including dataengine and hyper. Maps to ObjectObservation.TechnologyCode. HasExtract records extract evidence separately.",
           "platforms": {
             "PowerBI": {
               "status": "Profile dependent",
@@ -1117,7 +1117,7 @@
             "Tableau": {
               "status": "Required",
               "source": "public.data_connections.dbclass",
-              "valueRule": "Map oracle to Oracle, sqlserver to SQL Server, dataengine/hyper to Extract; retain other known values or Undefined.",
+              "valueRule": "Map oracle to Oracle and sqlserver to SQL Server. Preserve other native dbclass values, including dataengine and hyper. Use Undefined only when missing; HasExtract is independent.",
               "nullRule": "Reject or quarantine a nonblank row if missing. Never substitute a display name.",
               "example": "",
               "verification": "Documented mapping; installed export validation pending"
@@ -1137,7 +1137,7 @@
           "name": "HasExtract",
           "type": "bit",
           "required": "No",
-          "purpose": "Tableau extract indicator, separate from source technology. Retained in staging. Power BI leaves it null; Alteryx V1 returns no connection rows.",
+          "purpose": "Tableau extract indicator, independent from source technology. Maps to ObjectObservation.HasExtract with its value state. Preserve explicit true and false. Power BI leaves it null; Alteryx V1.1 returns no connection rows.",
           "platforms": {
             "PowerBI": {
               "status": "Profile dependent",
@@ -1170,7 +1170,7 @@
           "name": "ServerHostname",
           "type": "nvarchar(255)",
           "required": "No",
-          "purpose": "Allowed endpoint host from the source. Maps to DataSource.ServerHostname after endpoint resolution. Do not merge by host alone.",
+          "purpose": "Allowed endpoint host from the source. Maps to ObjectObservation.ServerHostname on this connection. Do not merge connection identities by host or infer a shared cross-platform data source.",
           "platforms": {
             "PowerBI": {
               "status": "Profile dependent",
@@ -1203,7 +1203,7 @@
           "name": "DatabaseName",
           "type": "nvarchar(200)",
           "required": "No",
-          "purpose": "Source database or provider-specific database identifier. Maps to DataSource.DatabaseName after validation.",
+          "purpose": "Source database or provider-specific database identifier. Maps to ObjectObservation.DatabaseName on this connection. Shared data-source records and cross-platform endpoint matching are deferred.",
           "platforms": {
             "PowerBI": {
               "status": "Profile dependent",
@@ -1236,7 +1236,7 @@
           "name": "AuthenticationTypeCode",
           "type": "nvarchar(40)",
           "required": "No",
-          "purpose": "Tableau native authentication method when present. Maps to ObservedConnection.AuthenticationTypeCode after vocabulary validation. Missing does not imply anonymous access.",
+          "purpose": "Tableau native authentication method when present. Maps to ObjectObservation.AuthenticationTypeCode. Preserve the source code for mapping review. Missing does not imply anonymous access.",
           "platforms": {
             "PowerBI": {
               "status": "Profile dependent",
@@ -1269,7 +1269,7 @@
           "name": "IdentityClassificationCode",
           "type": "nvarchar(40)",
           "required": "No",
-          "purpose": "Unknown for this pass. Maps to ObservedConnection.IdentityClassificationCode. Later identity evidence may support a service/personal classification.",
+          "purpose": "Unknown for this pass. Maps to ObjectObservation.IdentityClassificationCode. Later verified identity evidence may establish a service or personal classification.",
           "platforms": {
             "PowerBI": {
               "status": "Profile dependent",
@@ -1302,7 +1302,7 @@
           "name": "EvidenceStatusCode",
           "type": "nvarchar(30)",
           "required": "Yes",
-          "purpose": "Observed for the row's captured facts. Maps to ObservedConnection.EvidenceStatusCode. Dataset coverage controls what absences can mean.",
+          "purpose": "Evidence for captured connection facts. Maps to ObjectObservation.EvidenceStatusCode. This projection reports Partial while credential controls remain unverified. Dataset coverage separately controls what absences can mean.",
           "platforms": {
             "PowerBI": {
               "status": "Profile dependent",
